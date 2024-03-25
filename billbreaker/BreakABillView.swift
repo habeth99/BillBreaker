@@ -15,7 +15,7 @@ struct BreakABillView: View {
     @State private var hasCameraPermission: Bool = false
 
     var body: some View {
-        NavigationView{
+        
             VStack {
                 Image(systemName: "camera")
                     .font(.largeTitle)
@@ -28,8 +28,6 @@ struct BreakABillView: View {
                     .padding()
                 NavigationLink("Or enter Receipt Manually", destination:BILLView())
             }
-                
-        }
     }
 }
 

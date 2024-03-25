@@ -12,7 +12,7 @@ struct BILLView: View {
     @StateObject var viewModel = BillViewModel()
     
     var body: some View {
-        NavigationView {
+        
             VStack {
                 List(viewModel.items) { item in
                     HStack {
@@ -23,9 +23,8 @@ struct BILLView: View {
                 }
                 .navigationTitle("Bill Items")
             .navigationBarItems(trailing: NavigationLink("Add Item", destination: AddItemView(viewModel: viewModel)))
-                Text("Total Price: \(viewModel.totalPrice(), specifier: "%.2f")")
+                Text("Total Price: \(viewModel.totalPrice(), specifier: "$%.2f")")
             }
-        }
     }
 }
 

@@ -12,10 +12,9 @@ struct AddItemView: View {
     @ObservedObject var viewModel: BillViewModel
     @State private var itemName: String = ""
     @State private var itemPrice: String = ""
-    @State private var showBillView = false // State to control navigation
     
     var body: some View {
-        NavigationStack{
+
             VStack {
                 TextField("Item Name", text: $itemName)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -31,7 +30,6 @@ struct AddItemView: View {
                         viewModel.addItem(name: itemName, price: price)
                         itemName = ""
                         itemPrice = ""
-                        showBillView = true
                     }
                 }
                 .padding()
@@ -39,10 +37,7 @@ struct AddItemView: View {
                 .background(Color.blue)
                 .clipShape(Capsule())
             }
-            .navigationDestination(isPresented: $showBillView) {
-                BILLView() // Destination view
-                
-            }
-        }
+
+        
     }
 }
