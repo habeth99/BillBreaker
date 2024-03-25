@@ -23,7 +23,28 @@ struct BILLView: View {
                 }
                 .navigationTitle("Bill Items")
             .navigationBarItems(trailing: NavigationLink("Add Item", destination: AddItemView(viewModel: viewModel)))
+                
+
+                HStack {
+                    Button(action: {viewModel.decrementTip()}) {
+                        Image(systemName: "minus.circle.fill")
+                            .font(.largeTitle)
+                    }
+                    .padding()
+                    
+                    Text("Tip: \(viewModel.tipPercentage)%")
+                        .padding()
+                    
+                    Button(action: {viewModel.incrementTip()}) {
+                        Image(systemName: "plus.circle.fill")
+                            .font(.largeTitle)
+                    }
+                    .padding()
+                }
+
                 Text("Total Price: \(viewModel.totalPrice(), specifier: "$%.2f")")
+                Text("Total with Tip: \(viewModel.totalWithTip(), specifier: "$%.2f")")
+                
             }
     }
 }
