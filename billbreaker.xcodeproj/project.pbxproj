@@ -14,6 +14,23 @@
 		E21466D52BAE72B7000A61DB /* billbreakerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21466D42BAE72B7000A61DB /* billbreakerTests.swift */; };
 		E21466DF2BAE72B7000A61DB /* billbreakerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21466DE2BAE72B7000A61DB /* billbreakerUITests.swift */; };
 		E21466E12BAE72B7000A61DB /* billbreakerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21466E02BAE72B7000A61DB /* billbreakerUITestsLaunchTests.swift */; };
+		E2DDFBEB2BAF735E00BAD5AC /* BreakABillView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFBEA2BAF735E00BAD5AC /* BreakABillView.swift */; };
+		E2DDFBF22BB1E74A00BAD5AC /* CachedImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFBF12BB1E74A00BAD5AC /* CachedImageManager.swift */; };
+		E2DDFBF42BB1E77300BAD5AC /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFBF32BB1E77200BAD5AC /* Camera.swift */; };
+		E2DDFBF62BB1E79900BAD5AC /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFBF52BB1E79900BAD5AC /* CameraView.swift */; };
+		E2DDFBF82BB1E7A500BAD5AC /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFBF72BB1E7A500BAD5AC /* DataModel.swift */; };
+		E2DDFBFA2BB1E7B600BAD5AC /* PhotoAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFBF92BB1E7B600BAD5AC /* PhotoAsset.swift */; };
+		E2DDFBFC2BB1E7C000BAD5AC /* PhotoAssetCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFBFB2BB1E7C000BAD5AC /* PhotoAssetCollection.swift */; };
+		E2DDFBFE2BB1E7C900BAD5AC /* PhotoCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFBFD2BB1E7C900BAD5AC /* PhotoCollection.swift */; };
+		E2DDFC002BB1E7D500BAD5AC /* PhotoCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFBFF2BB1E7D400BAD5AC /* PhotoCollectionView.swift */; };
+		E2DDFC022BB1E7DD00BAD5AC /* PhotoItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC012BB1E7DD00BAD5AC /* PhotoItemView.swift */; };
+		E2DDFC042BB1E7E600BAD5AC /* PhotoLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC032BB1E7E600BAD5AC /* PhotoLibrary.swift */; };
+		E2DDFC062BB1E7ED00BAD5AC /* PhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC052BB1E7ED00BAD5AC /* PhotoView.swift */; };
+		E2DDFC082BB1E7F700BAD5AC /* ThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC072BB1E7F700BAD5AC /* ThumbnailView.swift */; };
+		E2DDFC0A2BB1E80300BAD5AC /* ViewfinderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC092BB1E80300BAD5AC /* ViewfinderView.swift */; };
+		E2DDFC0D2BB1EA0200BAD5AC /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC0C2BB1EA0200BAD5AC /* User.swift */; };
+		E2DDFC0F2BB1EA3200BAD5AC /* Bill.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC0E2BB1EA3200BAD5AC /* Bill.swift */; };
+		E2DDFC112BB1EB9900BAD5AC /* JoinBillView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC102BB1EB9900BAD5AC /* JoinBillView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +61,23 @@
 		E21466DA2BAE72B7000A61DB /* billbreakerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = billbreakerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E21466DE2BAE72B7000A61DB /* billbreakerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = billbreakerUITests.swift; sourceTree = "<group>"; };
 		E21466E02BAE72B7000A61DB /* billbreakerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = billbreakerUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		E2DDFBEA2BAF735E00BAD5AC /* BreakABillView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreakABillView.swift; sourceTree = "<group>"; };
+		E2DDFBF12BB1E74A00BAD5AC /* CachedImageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CachedImageManager.swift; sourceTree = "<group>"; };
+		E2DDFBF32BB1E77200BAD5AC /* Camera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
+		E2DDFBF52BB1E79900BAD5AC /* CameraView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
+		E2DDFBF72BB1E7A500BAD5AC /* DataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
+		E2DDFBF92BB1E7B600BAD5AC /* PhotoAsset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoAsset.swift; sourceTree = "<group>"; };
+		E2DDFBFB2BB1E7C000BAD5AC /* PhotoAssetCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoAssetCollection.swift; sourceTree = "<group>"; };
+		E2DDFBFD2BB1E7C900BAD5AC /* PhotoCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCollection.swift; sourceTree = "<group>"; };
+		E2DDFBFF2BB1E7D400BAD5AC /* PhotoCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCollectionView.swift; sourceTree = "<group>"; };
+		E2DDFC012BB1E7DD00BAD5AC /* PhotoItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoItemView.swift; sourceTree = "<group>"; };
+		E2DDFC032BB1E7E600BAD5AC /* PhotoLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoLibrary.swift; sourceTree = "<group>"; };
+		E2DDFC052BB1E7ED00BAD5AC /* PhotoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoView.swift; sourceTree = "<group>"; };
+		E2DDFC072BB1E7F700BAD5AC /* ThumbnailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThumbnailView.swift; sourceTree = "<group>"; };
+		E2DDFC092BB1E80300BAD5AC /* ViewfinderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewfinderView.swift; sourceTree = "<group>"; };
+		E2DDFC0C2BB1EA0200BAD5AC /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		E2DDFC0E2BB1EA3200BAD5AC /* Bill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bill.swift; sourceTree = "<group>"; };
+		E2DDFC102BB1EB9900BAD5AC /* JoinBillView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinBillView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +108,8 @@
 		E21466B72BAE72B2000A61DB = {
 			isa = PBXGroup;
 			children = (
+				E2DDFC0B2BB1E9DB00BAD5AC /* Classes */,
+				E2DDFBF02BB1E2F400BAD5AC /* Camera */,
 				E21466C22BAE72B2000A61DB /* billbreaker */,
 				E21466D32BAE72B7000A61DB /* billbreakerTests */,
 				E21466DD2BAE72B7000A61DB /* billbreakerUITests */,
@@ -96,6 +132,8 @@
 			children = (
 				E21466C32BAE72B2000A61DB /* billbreakerApp.swift */,
 				E21466C52BAE72B2000A61DB /* ContentView.swift */,
+				E2DDFBEA2BAF735E00BAD5AC /* BreakABillView.swift */,
+				E2DDFC102BB1EB9900BAD5AC /* JoinBillView.swift */,
 				E21466C72BAE72B6000A61DB /* Assets.xcassets */,
 				E21466C92BAE72B6000A61DB /* Preview Content */,
 			);
@@ -125,6 +163,35 @@
 				E21466E02BAE72B7000A61DB /* billbreakerUITestsLaunchTests.swift */,
 			);
 			path = billbreakerUITests;
+			sourceTree = "<group>";
+		};
+		E2DDFBF02BB1E2F400BAD5AC /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+				E2DDFBF12BB1E74A00BAD5AC /* CachedImageManager.swift */,
+				E2DDFBF32BB1E77200BAD5AC /* Camera.swift */,
+				E2DDFBF52BB1E79900BAD5AC /* CameraView.swift */,
+				E2DDFBF72BB1E7A500BAD5AC /* DataModel.swift */,
+				E2DDFBF92BB1E7B600BAD5AC /* PhotoAsset.swift */,
+				E2DDFBFB2BB1E7C000BAD5AC /* PhotoAssetCollection.swift */,
+				E2DDFBFD2BB1E7C900BAD5AC /* PhotoCollection.swift */,
+				E2DDFBFF2BB1E7D400BAD5AC /* PhotoCollectionView.swift */,
+				E2DDFC012BB1E7DD00BAD5AC /* PhotoItemView.swift */,
+				E2DDFC032BB1E7E600BAD5AC /* PhotoLibrary.swift */,
+				E2DDFC072BB1E7F700BAD5AC /* ThumbnailView.swift */,
+				E2DDFC052BB1E7ED00BAD5AC /* PhotoView.swift */,
+				E2DDFC092BB1E80300BAD5AC /* ViewfinderView.swift */,
+			);
+			path = Camera;
+			sourceTree = "<group>";
+		};
+		E2DDFC0B2BB1E9DB00BAD5AC /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				E2DDFC0C2BB1EA0200BAD5AC /* User.swift */,
+				E2DDFC0E2BB1EA3200BAD5AC /* Bill.swift */,
+			);
+			path = Classes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -257,7 +324,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E2DDFBF82BB1E7A500BAD5AC /* DataModel.swift in Sources */,
+				E2DDFC042BB1E7E600BAD5AC /* PhotoLibrary.swift in Sources */,
 				E21466C62BAE72B2000A61DB /* ContentView.swift in Sources */,
+				E2DDFBF42BB1E77300BAD5AC /* Camera.swift in Sources */,
+				E2DDFBEB2BAF735E00BAD5AC /* BreakABillView.swift in Sources */,
+				E2DDFC112BB1EB9900BAD5AC /* JoinBillView.swift in Sources */,
+				E2DDFBF62BB1E79900BAD5AC /* CameraView.swift in Sources */,
+				E2DDFBFA2BB1E7B600BAD5AC /* PhotoAsset.swift in Sources */,
+				E2DDFC0D2BB1EA0200BAD5AC /* User.swift in Sources */,
+				E2DDFC022BB1E7DD00BAD5AC /* PhotoItemView.swift in Sources */,
+				E2DDFBFE2BB1E7C900BAD5AC /* PhotoCollection.swift in Sources */,
+				E2DDFC062BB1E7ED00BAD5AC /* PhotoView.swift in Sources */,
+				E2DDFBF22BB1E74A00BAD5AC /* CachedImageManager.swift in Sources */,
+				E2DDFBFC2BB1E7C000BAD5AC /* PhotoAssetCollection.swift in Sources */,
+				E2DDFC082BB1E7F700BAD5AC /* ThumbnailView.swift in Sources */,
+				E2DDFC0A2BB1E80300BAD5AC /* ViewfinderView.swift in Sources */,
+				E2DDFC002BB1E7D500BAD5AC /* PhotoCollectionView.swift in Sources */,
+				E2DDFC0F2BB1EA3200BAD5AC /* Bill.swift in Sources */,
 				E21466C42BAE72B2000A61DB /* billbreakerApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -425,11 +509,13 @@
 				DEVELOPMENT_TEAM = BM6RWHC29F;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "\"Bill Breaker needs camera access to scan receipt\"";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -454,11 +540,13 @@
 				DEVELOPMENT_TEAM = BM6RWHC29F;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "\"Bill Breaker needs camera access to scan receipt\"";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
