@@ -25,7 +25,10 @@ struct BreakABillView: View {
                     .foregroundColor(.white)
                     .controlSize(.large)
                 NavigationLink("Take a photo of a Receipt", destination:CameraView())
+                    .padding()
+                NavigationLink("Or enter Receipt Manually", destination:BILLView())
             }
+                
         }
     }
 }

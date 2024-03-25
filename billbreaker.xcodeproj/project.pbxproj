@@ -31,6 +31,10 @@
 		E2DDFC0D2BB1EA0200BAD5AC /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC0C2BB1EA0200BAD5AC /* User.swift */; };
 		E2DDFC0F2BB1EA3200BAD5AC /* Bill.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC0E2BB1EA3200BAD5AC /* Bill.swift */; };
 		E2DDFC112BB1EB9900BAD5AC /* JoinBillView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC102BB1EB9900BAD5AC /* JoinBillView.swift */; };
+		E2DDFC132BB1FAE100BAD5AC /* BILLView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC122BB1FAE000BAD5AC /* BILLView.swift */; };
+		E2DDFC152BB1FF8900BAD5AC /* Bill_Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC142BB1FF8900BAD5AC /* Bill_Item.swift */; };
+		E2DDFC182BB1FFCD00BAD5AC /* BillViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC172BB1FFCD00BAD5AC /* BillViewModel.swift */; };
+		E2DDFC1A2BB2014600BAD5AC /* AddItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC192BB2014600BAD5AC /* AddItemView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +82,10 @@
 		E2DDFC0C2BB1EA0200BAD5AC /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		E2DDFC0E2BB1EA3200BAD5AC /* Bill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bill.swift; sourceTree = "<group>"; };
 		E2DDFC102BB1EB9900BAD5AC /* JoinBillView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinBillView.swift; sourceTree = "<group>"; };
+		E2DDFC122BB1FAE000BAD5AC /* BILLView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BILLView.swift; sourceTree = "<group>"; };
+		E2DDFC142BB1FF8900BAD5AC /* Bill_Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bill_Item.swift; sourceTree = "<group>"; };
+		E2DDFC172BB1FFCD00BAD5AC /* BillViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillViewModel.swift; sourceTree = "<group>"; };
+		E2DDFC192BB2014600BAD5AC /* AddItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItemView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +116,7 @@
 		E21466B72BAE72B2000A61DB = {
 			isa = PBXGroup;
 			children = (
+				E2DDFC162BB1FFA800BAD5AC /* ViewModel */,
 				E2DDFC0B2BB1E9DB00BAD5AC /* Classes */,
 				E2DDFBF02BB1E2F400BAD5AC /* Camera */,
 				E21466C22BAE72B2000A61DB /* billbreaker */,
@@ -134,6 +143,8 @@
 				E21466C52BAE72B2000A61DB /* ContentView.swift */,
 				E2DDFBEA2BAF735E00BAD5AC /* BreakABillView.swift */,
 				E2DDFC102BB1EB9900BAD5AC /* JoinBillView.swift */,
+				E2DDFC122BB1FAE000BAD5AC /* BILLView.swift */,
+				E2DDFC192BB2014600BAD5AC /* AddItemView.swift */,
 				E21466C72BAE72B6000A61DB /* Assets.xcassets */,
 				E21466C92BAE72B6000A61DB /* Preview Content */,
 			);
@@ -190,8 +201,17 @@
 			children = (
 				E2DDFC0C2BB1EA0200BAD5AC /* User.swift */,
 				E2DDFC0E2BB1EA3200BAD5AC /* Bill.swift */,
+				E2DDFC142BB1FF8900BAD5AC /* Bill_Item.swift */,
 			);
 			path = Classes;
+			sourceTree = "<group>";
+		};
+		E2DDFC162BB1FFA800BAD5AC /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				E2DDFC172BB1FFCD00BAD5AC /* BillViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -326,12 +346,14 @@
 			files = (
 				E2DDFBF82BB1E7A500BAD5AC /* DataModel.swift in Sources */,
 				E2DDFC042BB1E7E600BAD5AC /* PhotoLibrary.swift in Sources */,
+				E2DDFC132BB1FAE100BAD5AC /* BILLView.swift in Sources */,
 				E21466C62BAE72B2000A61DB /* ContentView.swift in Sources */,
 				E2DDFBF42BB1E77300BAD5AC /* Camera.swift in Sources */,
 				E2DDFBEB2BAF735E00BAD5AC /* BreakABillView.swift in Sources */,
 				E2DDFC112BB1EB9900BAD5AC /* JoinBillView.swift in Sources */,
 				E2DDFBF62BB1E79900BAD5AC /* CameraView.swift in Sources */,
 				E2DDFBFA2BB1E7B600BAD5AC /* PhotoAsset.swift in Sources */,
+				E2DDFC182BB1FFCD00BAD5AC /* BillViewModel.swift in Sources */,
 				E2DDFC0D2BB1EA0200BAD5AC /* User.swift in Sources */,
 				E2DDFC022BB1E7DD00BAD5AC /* PhotoItemView.swift in Sources */,
 				E2DDFBFE2BB1E7C900BAD5AC /* PhotoCollection.swift in Sources */,
@@ -342,7 +364,9 @@
 				E2DDFC0A2BB1E80300BAD5AC /* ViewfinderView.swift in Sources */,
 				E2DDFC002BB1E7D500BAD5AC /* PhotoCollectionView.swift in Sources */,
 				E2DDFC0F2BB1EA3200BAD5AC /* Bill.swift in Sources */,
+				E2DDFC1A2BB2014600BAD5AC /* AddItemView.swift in Sources */,
 				E21466C42BAE72B2000A61DB /* billbreakerApp.swift in Sources */,
+				E2DDFC152BB1FF8900BAD5AC /* Bill_Item.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

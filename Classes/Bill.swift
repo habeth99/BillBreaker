@@ -11,5 +11,6 @@ import Foundation
 // each bill needs a unique sharecode so other people can join a bill to be broken up
 
 class Bill: ObservableObject{
-    var shareCode: Int = 0
+    let shareCode: Int = Int.random(in: 100000...999999)
+    
 }

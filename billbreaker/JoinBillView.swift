@@ -30,6 +30,7 @@ struct JoinBillView: View {
                 .padding()
                 .border(Color.gray)
                 .frame(maxWidth: 300)
+            
             Spacer()
         }
     }
