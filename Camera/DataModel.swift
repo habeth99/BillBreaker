@@ -15,6 +15,10 @@ final class DataModel: ObservableObject {
     
     var isPhotosLoaded = false
     
+    // intialize visionview object
+    private let textRecognitionService = TextRecognitionService()
+    @Published var recognizedText: String = "stupid"
+    
     init() {
         Task {
             await handleCameraPreviews()
@@ -45,6 +49,15 @@ final class DataModel: ObservableObject {
                 thumbnailImage = photoData.thumbnailImage
             }
             savePhoto(imageData: photoData.imageData)
+            
+            // Recognize text in the photo
+            textRecognitionService.performTextRecognition(imageData: photoData.imageData) { recognizedText in
+                DispatchQueue.main.async {
+                    self.recognizedText = recognizedText
+                    logger.debug("Recognized text: \(recognizedText)")
+                    // Here, update the UI or handle the recognized text as needed
+                }
+            }
         }
     }
     

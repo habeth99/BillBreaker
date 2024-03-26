@@ -38,6 +38,7 @@
 		E2DDFC1C2BB25D6E00BAD5AC /* HorizontalNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC1B2BB25D6E00BAD5AC /* HorizontalNameView.swift */; };
 		E2DDFC1F2BB26AB800BAD5AC /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC1E2BB26AB800BAD5AC /* Helper.swift */; };
 		E2DDFC212BB26C1900BAD5AC /* Seeing.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC202BB26C1900BAD5AC /* Seeing.swift */; };
+		E2DDFC232BB292E200BAD5AC /* TextRecognitionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC222BB292E200BAD5AC /* TextRecognitionService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +93,7 @@
 		E2DDFC1B2BB25D6E00BAD5AC /* HorizontalNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalNameView.swift; sourceTree = "<group>"; };
 		E2DDFC1E2BB26AB800BAD5AC /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		E2DDFC202BB26C1900BAD5AC /* Seeing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Seeing.swift; sourceTree = "<group>"; };
+		E2DDFC222BB292E200BAD5AC /* TextRecognitionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextRecognitionService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -227,6 +229,7 @@
 			children = (
 				E2DDFC1E2BB26AB800BAD5AC /* Helper.swift */,
 				E2DDFC202BB26C1900BAD5AC /* Seeing.swift */,
+				E2DDFC222BB292E200BAD5AC /* TextRecognitionService.swift */,
 			);
 			path = CmpVision;
 			sourceTree = "<group>";
@@ -374,6 +377,7 @@
 				E2DDFC182BB1FFCD00BAD5AC /* BillViewModel.swift in Sources */,
 				E2DDFC0D2BB1EA0200BAD5AC /* User.swift in Sources */,
 				E2DDFC022BB1E7DD00BAD5AC /* PhotoItemView.swift in Sources */,
+				E2DDFC232BB292E200BAD5AC /* TextRecognitionService.swift in Sources */,
 				E2DDFBFE2BB1E7C900BAD5AC /* PhotoCollection.swift in Sources */,
 				E2DDFC062BB1E7ED00BAD5AC /* PhotoView.swift in Sources */,
 				E2DDFBF22BB1E74A00BAD5AC /* CachedImageManager.swift in Sources */,

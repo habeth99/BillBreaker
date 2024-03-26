@@ -13,6 +13,7 @@ import AVFoundation
 
 struct BreakABillView: View {
     @State private var hasCameraPermission: Bool = false
+    @StateObject private var dataModel = DataModel()
 
     var body: some View {
         
@@ -27,6 +28,8 @@ struct BreakABillView: View {
                 NavigationLink("Take a photo of a Receipt", destination:CameraView())
                     .padding()
                 NavigationLink("Or enter Receipt Manually", destination:BILLView())
+                    .padding()
+                //NavigationLink("See Text", destination:VisionView(dataModel: dataModel))
             }
     }
 }

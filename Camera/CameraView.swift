@@ -12,7 +12,6 @@ struct CameraView: View {
     
     var body: some View {
         
-        NavigationStack {
             GeometryReader { geometry in
                 ViewfinderView(image:  $model.viewfinderImage )
                     .overlay(alignment: .top) {
@@ -41,10 +40,11 @@ struct CameraView: View {
             }
             .navigationTitle("Camera")
             .navigationBarTitleDisplayMode(.inline)
-            .navigationBarHidden(true)
+            .navigationBarItems(trailing: NavigationLink("Text", destination: VisionView(model: model)))
+            //.navigationBarHidden(true)
             .ignoresSafeArea()
             .statusBar(hidden: true)
-        }
+        
     }
     
     private func buttonsView() -> some View {
