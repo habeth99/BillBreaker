@@ -22,7 +22,8 @@ struct BILLView: View {
                     }
                 }
                 .navigationTitle("Bill Items")
-            .navigationBarItems(trailing: NavigationLink("Add Item", destination: AddItemView(viewModel: viewModel)))
+                .navigationBarItems(leading: NavigationLink("Add Item", destination: AddItemView(viewModel: viewModel)))
+                
                 
 
                 HStack {
@@ -44,7 +45,8 @@ struct BILLView: View {
 
                 Text("Total Price: \(viewModel.totalPrice(), specifier: "$%.2f")")
                 Text("Total with Tip: \(viewModel.totalWithTip(), specifier: "$%.2f")")
-                
+                HorizontalScrollView()
+                    .frame(height: 150)
             }
     }
 }

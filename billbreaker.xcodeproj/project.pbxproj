@@ -35,6 +35,9 @@
 		E2DDFC152BB1FF8900BAD5AC /* Bill_Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC142BB1FF8900BAD5AC /* Bill_Item.swift */; };
 		E2DDFC182BB1FFCD00BAD5AC /* BillViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC172BB1FFCD00BAD5AC /* BillViewModel.swift */; };
 		E2DDFC1A2BB2014600BAD5AC /* AddItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC192BB2014600BAD5AC /* AddItemView.swift */; };
+		E2DDFC1C2BB25D6E00BAD5AC /* HorizontalNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC1B2BB25D6E00BAD5AC /* HorizontalNameView.swift */; };
+		E2DDFC1F2BB26AB800BAD5AC /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC1E2BB26AB800BAD5AC /* Helper.swift */; };
+		E2DDFC212BB26C1900BAD5AC /* Seeing.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC202BB26C1900BAD5AC /* Seeing.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,6 +89,9 @@
 		E2DDFC142BB1FF8900BAD5AC /* Bill_Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bill_Item.swift; sourceTree = "<group>"; };
 		E2DDFC172BB1FFCD00BAD5AC /* BillViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillViewModel.swift; sourceTree = "<group>"; };
 		E2DDFC192BB2014600BAD5AC /* AddItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItemView.swift; sourceTree = "<group>"; };
+		E2DDFC1B2BB25D6E00BAD5AC /* HorizontalNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalNameView.swift; sourceTree = "<group>"; };
+		E2DDFC1E2BB26AB800BAD5AC /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
+		E2DDFC202BB26C1900BAD5AC /* Seeing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Seeing.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +122,7 @@
 		E21466B72BAE72B2000A61DB = {
 			isa = PBXGroup;
 			children = (
+				E2DDFC1D2BB268E800BAD5AC /* CmpVision */,
 				E2DDFC162BB1FFA800BAD5AC /* ViewModel */,
 				E2DDFC0B2BB1E9DB00BAD5AC /* Classes */,
 				E2DDFBF02BB1E2F400BAD5AC /* Camera */,
@@ -145,6 +152,7 @@
 				E2DDFC102BB1EB9900BAD5AC /* JoinBillView.swift */,
 				E2DDFC122BB1FAE000BAD5AC /* BILLView.swift */,
 				E2DDFC192BB2014600BAD5AC /* AddItemView.swift */,
+				E2DDFC1B2BB25D6E00BAD5AC /* HorizontalNameView.swift */,
 				E21466C72BAE72B6000A61DB /* Assets.xcassets */,
 				E21466C92BAE72B6000A61DB /* Preview Content */,
 			);
@@ -212,6 +220,15 @@
 				E2DDFC172BB1FFCD00BAD5AC /* BillViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		E2DDFC1D2BB268E800BAD5AC /* CmpVision */ = {
+			isa = PBXGroup;
+			children = (
+				E2DDFC1E2BB26AB800BAD5AC /* Helper.swift */,
+				E2DDFC202BB26C1900BAD5AC /* Seeing.swift */,
+			);
+			path = CmpVision;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -348,6 +365,7 @@
 				E2DDFC042BB1E7E600BAD5AC /* PhotoLibrary.swift in Sources */,
 				E2DDFC132BB1FAE100BAD5AC /* BILLView.swift in Sources */,
 				E21466C62BAE72B2000A61DB /* ContentView.swift in Sources */,
+				E2DDFC212BB26C1900BAD5AC /* Seeing.swift in Sources */,
 				E2DDFBF42BB1E77300BAD5AC /* Camera.swift in Sources */,
 				E2DDFBEB2BAF735E00BAD5AC /* BreakABillView.swift in Sources */,
 				E2DDFC112BB1EB9900BAD5AC /* JoinBillView.swift in Sources */,
@@ -361,10 +379,12 @@
 				E2DDFBF22BB1E74A00BAD5AC /* CachedImageManager.swift in Sources */,
 				E2DDFBFC2BB1E7C000BAD5AC /* PhotoAssetCollection.swift in Sources */,
 				E2DDFC082BB1E7F700BAD5AC /* ThumbnailView.swift in Sources */,
+				E2DDFC1C2BB25D6E00BAD5AC /* HorizontalNameView.swift in Sources */,
 				E2DDFC0A2BB1E80300BAD5AC /* ViewfinderView.swift in Sources */,
 				E2DDFC002BB1E7D500BAD5AC /* PhotoCollectionView.swift in Sources */,
 				E2DDFC0F2BB1EA3200BAD5AC /* Bill.swift in Sources */,
 				E2DDFC1A2BB2014600BAD5AC /* AddItemView.swift in Sources */,
+				E2DDFC1F2BB26AB800BAD5AC /* Helper.swift in Sources */,
 				E21466C42BAE72B2000A61DB /* billbreakerApp.swift in Sources */,
 				E2DDFC152BB1FF8900BAD5AC /* Bill_Item.swift in Sources */,
 			);
@@ -533,7 +553,8 @@
 				DEVELOPMENT_TEAM = BM6RWHC29F;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSCameraUsageDescription = "\"Bill Breaker needs camera access to scan receipt\"";
+				INFOPLIST_KEY_NSCameraUsageDescription = "\"Bill Breaker needs Camera access to scan receipt\"";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "\"Bill Breaker needs Photo Library access\"";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -564,7 +585,8 @@
 				DEVELOPMENT_TEAM = BM6RWHC29F;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSCameraUsageDescription = "\"Bill Breaker needs camera access to scan receipt\"";
+				INFOPLIST_KEY_NSCameraUsageDescription = "\"Bill Breaker needs Camera access to scan receipt\"";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "\"Bill Breaker needs Photo Library access\"";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
