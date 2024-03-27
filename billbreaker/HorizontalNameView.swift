@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct HorizontalScrollView: View {
-    @State private var names = ["Alice", "Bob", "Charlie", "Diana", "Evan", "Fiona", "George"]
+    @State private var names: [String] = []
     @State private var showingSheet = false
     @State private var newName = ""
 
@@ -41,6 +41,7 @@ struct HorizontalScrollView: View {
                         Text("Add Person")
                             .foregroundColor(.blue)
                             .padding()
+                        
                     }
                     .frame(width: 95, height: 100) // Specify the frame for the button
                     .background(Color.white) // Apply background after setting the frame
@@ -53,7 +54,7 @@ struct HorizontalScrollView: View {
         }
         .sheet(isPresented: $showingSheet) {
             // Present a simple form to enter a new name
-            NameEntryView(newName: $newName, names: $names)
+            NameEntryView(newName: $newName, names: $names, showingSheet: $showingSheet)
         }
     }
 }
@@ -61,6 +62,7 @@ struct HorizontalScrollView: View {
 struct NameEntryView: View {
     @Binding var newName: String
     @Binding var names: [String]
+    @Binding var showingSheet: Bool
     
     var body: some View {
         VStack {
@@ -70,6 +72,7 @@ struct NameEntryView: View {
             Button("Add") {
                 names.append(newName)
                 newName = "" // Clear the text field
+                showingSheet = false
             }
             .padding()
          
