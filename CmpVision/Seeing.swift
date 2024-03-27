@@ -34,12 +34,14 @@ import Vision
 struct VisionView: View {
     @ObservedObject var model : DataModel
     
+    
     var body: some View {
         VStack{
             Text(model.recognizedText)
                 .foregroundColor(.white)
-            Text("Hello World")
-                .foregroundColor(.blue)
+            List(model.prices, id: \.self) { price in
+                Text("$\(price)")
+            }
             Button("Update Text") {
                 model.recognizedText = "Manually Updated Text"
             }

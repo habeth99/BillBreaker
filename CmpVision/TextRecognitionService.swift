@@ -29,7 +29,9 @@ struct TextRecognitionService {
                 observation.topCandidates(1).first?.string
             }.joined(separator: ", ")
             
+            
             DispatchQueue.main.async {
+                //this was recognizedStrings.isEmpty
                 completion(recognizedStrings.isEmpty ? "No text recognized." : recognizedStrings)
             }
         }
@@ -46,5 +48,25 @@ struct TextRecognitionService {
             }
         }
     }
+    
+    func extractPrices(from text: String) -> [String] {
+        // Define the regex pattern for prices
+        let pattern = "\\b\\d+\\.\\d{2}\\b"
+        do {
+            // Create a regular expression
+            let regex = try NSRegularExpression(pattern: pattern)
+            let results = regex.matches(in: text, range: NSRange(text.startIndex..., in: text))
+            
+            // Extract the matching strings
+            return results.compactMap {
+                Range($0.range, in: text).map { String(text[$0]) }
+            }
+        } catch {
+            print("Invalid regex: \(error.localizedDescription)")
+            return []
+        }
+    }
 }
+
+//try to implement reading the string text
 

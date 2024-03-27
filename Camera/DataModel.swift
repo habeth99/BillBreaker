@@ -18,6 +18,7 @@ final class DataModel: ObservableObject {
     // intialize visionview object
     private let textRecognitionService = TextRecognitionService()
     @Published var recognizedText: String = "stupid"
+    @Published var prices: [String] = []
     
     init() {
         Task {
@@ -57,6 +58,7 @@ final class DataModel: ObservableObject {
                     logger.debug("Recognized text: \(recognizedText)")
                     // Here, update the UI or handle the recognized text as needed
                 }
+                self.prices = self.textRecognitionService.extractPrices(from: recognizedText)
             }
         }
     }
