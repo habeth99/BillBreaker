@@ -22,7 +22,7 @@ struct BILLView: View {
                     }
                 }
                 .navigationTitle("Bill Items")
-                .navigationBarItems(leading: NavigationLink("Add Item", destination: AddItemView(viewModel: viewModel)))
+                .navigationBarItems(trailing: NavigationLink("Add Item", destination: AddItemView(viewModel: viewModel)))
                 
                 
 
