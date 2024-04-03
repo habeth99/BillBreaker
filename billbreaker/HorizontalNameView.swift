@@ -12,6 +12,7 @@ struct HorizontalScrollView: View {
     @State private var names: [String] = []
     @State private var showingSheet = false
     @State private var newName = ""
+    @State private var selectedName: String? = nil
 
     var body: some View {
         VStack {
@@ -23,16 +24,17 @@ struct HorizontalScrollView: View {
                                 .font(.largeTitle)
                                 .foregroundColor(.blue)
                                 .frame(width: 50, height: 50)
-                                .background(Color.gray.opacity(0.2))
+                                .background(Color.gray) // Highlight selected
                                 .clipShape(Circle())
-                            
+                                
                             Text(name)
-                                .foregroundColor(.black)
+                                .foregroundColor(selectedName == name ? .white : .black) // Change text color when selected
                         }
                         .frame(width: 70, height: 100)
-                        .background(Color.white)
-                        .cornerRadius(10)
-                        .shadow(radius: 2)
+                        .background(selectedName == name ? Color.blue: Color.white) // Highlight background
+                        .onTapGesture {
+                            selectedName = name // Set selected name
+                        }
                     }
                     Button(action: {
                         // Action to show sheet or another view for entering the name

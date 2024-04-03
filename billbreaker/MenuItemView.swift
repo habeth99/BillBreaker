@@ -9,27 +9,47 @@ import Foundation
 import SwiftUI
 
 struct MenuItemView: View {
+    @State private var selectedItems: [String] = []
     let billItems: [BillItem] = [
         BillItem(name: "Chicken Tenders", price: 5.99),
         BillItem(name: "Bacon Cheeseburger", price: 7.99),
         BillItem(name: "Veggie Pizza", price: 8.99)
         // Add more items as needed
     ]
+    var totalPrice: Double {
+        billItems.filter { selectedItems.contains($0.name) }
+                  .reduce(0) { $0 + $1.price }
+    }
     
     var body: some View {
-        List(billItems) { item in
-            HStack {
-                Text(item.name)
-                Spacer()
-                Text(String(format: "$%.2f", item.price))
+        VStack {
+            List(billItems) { item in
+                HStack {
+                    Text(item.name)
+                    Spacer()
+                    Text(String(format: "$%.2f", item.price))
+                }
+                .onTapGesture {
+                    if selectedItems.contains(item.name) {
+                        selectedItems.removeAll(where: { $0 == item.name }) // Deselect
+                    } else {
+                        selectedItems.append(item.name) // Select
+                    }
+                }
+                .listRowBackground(selectedItems.contains(item.name) ? Color.blue : Color.white) // Apply background to the entire row
+                
             }
+            .background(Color.gray)
+            Spacer()
+            Text("Total Price: $\(totalPrice, specifier: "%.2f")")
         }
     }
 }
 
-struct MenuView_Previews: PreviewProvider {
+struct MenuItemView_Previews: PreviewProvider {
     static var previews: some View {
         MenuItemView()
     }
 }
+
 
