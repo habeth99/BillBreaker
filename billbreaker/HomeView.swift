@@ -13,6 +13,7 @@ struct HomeView: View {
     @State private var showActionSheet = false
     @State private var showingCreateBillSheet = false
     @State private var newBillTitle = ""
+    @State private var participants = [String](repeating: "", count: 1) // Start with one empty participant
 
     var body: some View {
         NavigationView {
@@ -31,35 +32,52 @@ struct HomeView: View {
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
-                        self.showActionSheet = true
+                        self.showActionSheet = true // Trigger the action sheet
                     }) {
                         Image(systemName: "plus")
                     }
                 }
             }
-            .actionSheet(isPresented: $showActionSheet) {
+            .actionSheet(isPresented: $showActionSheet) { // Present the action sheet
+                //action sheet
                 ActionSheet(
                     title: Text("What would you like to do?"),
                     buttons: [
-                        .default(Text("Create New Bill")) { self.showingCreateBillSheet = true },
+                        .default(Text("Create New Bill")) { self.resetCreateBillForm(); self.showingCreateBillSheet = true },
                         .default(Text("Join Bill")) { self.joinBill() },
                         .cancel()
                     ]
                 )
             }
-            .sheet(isPresented: $showingCreateBillSheet) {
+            .sheet(isPresented: $showingCreateBillSheet) { // Present the create bill sheet
                 NavigationView {
                     Form {
                         TextField("Title", text: $newBillTitle)
+                        
+                        Section(header: Text("Participants")) {
+                            ForEach(0..<participants.count, id: \.self) { index in
+                                TextField("Name", text: $participants[index])
+                                    .onChange(of: participants[index]) { _ in
+                                        if index == participants.count - 1 && participants.count < 20 {
+                                            participants.append("") // Add new field if the last one is being edited
+                                        }
+                                    }
+                            }
+                            .onDelete { indices in
+                                participants.remove(atOffsets: indices)
+                            }
+                        }
+                        
                         Button("Add Bill") {
-                            self.addBill(title: self.newBillTitle)
-                            self.newBillTitle = "" // Reset title
+                            self.addBill(title: self.newBillTitle, participants: self.participants.filter { !$0.isEmpty })
+                            self.resetCreateBillForm()
                             self.showingCreateBillSheet = false // Dismiss sheet
                         }
-                        .disabled(newBillTitle.isEmpty)
+                        .disabled(newBillTitle.isEmpty || participants.allSatisfy { $0.isEmpty })
                     }
                     .navigationTitle("New Bill")
                     .navigationBarItems(trailing: Button("Cancel") {
+                        self.resetCreateBillForm()
                         self.showingCreateBillSheet = false
                     })
                 }
@@ -71,22 +89,19 @@ struct HomeView: View {
         bills.remove(atOffsets: offsets)
     }
     
-    func addBill(title: String) {
-        bills.append(title)
+    func addBill(title: String, participants: [String]) {
+        // Logic to add a new bill with the specified title and participants
+        bills.append(title) // Simplified for this example
     }
     
     func joinBill() {
         // Placeholder for join bill logic
         print("Joining an existing bill...")
     }
-}
-
-struct BillDetailView: View {
-    let billName: String
     
-    var body: some View {
-        Text("Details for \(billName)")
-            .navigationTitle(billName)
+    func resetCreateBillForm() {
+        newBillTitle = ""
+        participants = [""]
     }
 }
 

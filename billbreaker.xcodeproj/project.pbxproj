@@ -12,6 +12,7 @@
 		E20EC61B2BB3D96500223B19 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = E20EC61A2BB3D96500223B19 /* FirebaseFirestore */; };
 		E20EC61D2BB3D96500223B19 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E20EC61C2BB3D96500223B19 /* FirebaseFirestoreSwift */; };
 		E20EC6212BB60C5500223B19 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20EC6202BB60C5500223B19 /* HomeView.swift */; };
+		E20EC6232BB7962C00223B19 /* BillDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20EC6222BB7962C00223B19 /* BillDetailView.swift */; };
 		E21466C42BAE72B2000A61DB /* billbreakerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21466C32BAE72B2000A61DB /* billbreakerApp.swift */; };
 		E21466C62BAE72B2000A61DB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21466C52BAE72B2000A61DB /* ContentView.swift */; };
 		E21466C82BAE72B6000A61DB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E21466C72BAE72B6000A61DB /* Assets.xcassets */; };
@@ -19,6 +20,7 @@
 		E21466D52BAE72B7000A61DB /* billbreakerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21466D42BAE72B7000A61DB /* billbreakerTests.swift */; };
 		E21466DF2BAE72B7000A61DB /* billbreakerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21466DE2BAE72B7000A61DB /* billbreakerUITests.swift */; };
 		E21466E12BAE72B7000A61DB /* billbreakerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21466E02BAE72B7000A61DB /* billbreakerUITestsLaunchTests.swift */; };
+		E28374792BBD0065006C0FFE /* MenuItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28374782BBD0065006C0FFE /* MenuItemView.swift */; };
 		E2DDFBEB2BAF735E00BAD5AC /* BreakABillView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFBEA2BAF735E00BAD5AC /* BreakABillView.swift */; };
 		E2DDFBF22BB1E74A00BAD5AC /* CachedImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFBF12BB1E74A00BAD5AC /* CachedImageManager.swift */; };
 		E2DDFBF42BB1E77300BAD5AC /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFBF32BB1E77200BAD5AC /* Camera.swift */; };
@@ -37,7 +39,7 @@
 		E2DDFC0F2BB1EA3200BAD5AC /* Bill.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC0E2BB1EA3200BAD5AC /* Bill.swift */; };
 		E2DDFC112BB1EB9900BAD5AC /* JoinBillView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC102BB1EB9900BAD5AC /* JoinBillView.swift */; };
 		E2DDFC132BB1FAE100BAD5AC /* BILLView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC122BB1FAE000BAD5AC /* BILLView.swift */; };
-		E2DDFC152BB1FF8900BAD5AC /* Bill_Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC142BB1FF8900BAD5AC /* Bill_Item.swift */; };
+		E2DDFC152BB1FF8900BAD5AC /* BillItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC142BB1FF8900BAD5AC /* BillItem.swift */; };
 		E2DDFC182BB1FFCD00BAD5AC /* BillViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC172BB1FFCD00BAD5AC /* BillViewModel.swift */; };
 		E2DDFC1A2BB2014600BAD5AC /* AddItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC192BB2014600BAD5AC /* AddItemView.swift */; };
 		E2DDFC1C2BB25D6E00BAD5AC /* HorizontalNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC1B2BB25D6E00BAD5AC /* HorizontalNameView.swift */; };
@@ -66,6 +68,7 @@
 /* Begin PBXFileReference section */
 		E20EC6152BB3D84E00223B19 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		E20EC6202BB60C5500223B19 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		E20EC6222BB7962C00223B19 /* BillDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillDetailView.swift; sourceTree = "<group>"; };
 		E21466C02BAE72B2000A61DB /* billbreaker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = billbreaker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E21466C32BAE72B2000A61DB /* billbreakerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = billbreakerApp.swift; sourceTree = "<group>"; };
 		E21466C52BAE72B2000A61DB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -76,6 +79,7 @@
 		E21466DA2BAE72B7000A61DB /* billbreakerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = billbreakerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E21466DE2BAE72B7000A61DB /* billbreakerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = billbreakerUITests.swift; sourceTree = "<group>"; };
 		E21466E02BAE72B7000A61DB /* billbreakerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = billbreakerUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		E28374782BBD0065006C0FFE /* MenuItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemView.swift; sourceTree = "<group>"; };
 		E2DDFBEA2BAF735E00BAD5AC /* BreakABillView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreakABillView.swift; sourceTree = "<group>"; };
 		E2DDFBF12BB1E74A00BAD5AC /* CachedImageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CachedImageManager.swift; sourceTree = "<group>"; };
 		E2DDFBF32BB1E77200BAD5AC /* Camera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
@@ -94,7 +98,7 @@
 		E2DDFC0E2BB1EA3200BAD5AC /* Bill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bill.swift; sourceTree = "<group>"; };
 		E2DDFC102BB1EB9900BAD5AC /* JoinBillView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinBillView.swift; sourceTree = "<group>"; };
 		E2DDFC122BB1FAE000BAD5AC /* BILLView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BILLView.swift; sourceTree = "<group>"; };
-		E2DDFC142BB1FF8900BAD5AC /* Bill_Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bill_Item.swift; sourceTree = "<group>"; };
+		E2DDFC142BB1FF8900BAD5AC /* BillItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillItem.swift; sourceTree = "<group>"; };
 		E2DDFC172BB1FFCD00BAD5AC /* BillViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillViewModel.swift; sourceTree = "<group>"; };
 		E2DDFC192BB2014600BAD5AC /* AddItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItemView.swift; sourceTree = "<group>"; };
 		E2DDFC1B2BB25D6E00BAD5AC /* HorizontalNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalNameView.swift; sourceTree = "<group>"; };
@@ -177,6 +181,8 @@
 				E21466C72BAE72B6000A61DB /* Assets.xcassets */,
 				E20EC6152BB3D84E00223B19 /* GoogleService-Info.plist */,
 				E21466C92BAE72B6000A61DB /* Preview Content */,
+				E20EC6222BB7962C00223B19 /* BillDetailView.swift */,
+				E28374782BBD0065006C0FFE /* MenuItemView.swift */,
 			);
 			path = billbreaker;
 			sourceTree = "<group>";
@@ -231,7 +237,7 @@
 			children = (
 				E2DDFC0C2BB1EA0200BAD5AC /* User.swift */,
 				E2DDFC0E2BB1EA3200BAD5AC /* Bill.swift */,
-				E2DDFC142BB1FF8900BAD5AC /* Bill_Item.swift */,
+				E2DDFC142BB1FF8900BAD5AC /* BillItem.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -396,6 +402,8 @@
 				E2DDFBF82BB1E7A500BAD5AC /* DataModel.swift in Sources */,
 				E20EC6212BB60C5500223B19 /* HomeView.swift in Sources */,
 				E2DDFC042BB1E7E600BAD5AC /* PhotoLibrary.swift in Sources */,
+				E20EC6232BB7962C00223B19 /* BillDetailView.swift in Sources */,
+				E28374792BBD0065006C0FFE /* MenuItemView.swift in Sources */,
 				E2DDFC132BB1FAE100BAD5AC /* BILLView.swift in Sources */,
 				E21466C62BAE72B2000A61DB /* ContentView.swift in Sources */,
 				E2DDFC212BB26C1900BAD5AC /* Seeing.swift in Sources */,
@@ -420,7 +428,7 @@
 				E2DDFC1A2BB2014600BAD5AC /* AddItemView.swift in Sources */,
 				E2DDFC1F2BB26AB800BAD5AC /* Helper.swift in Sources */,
 				E21466C42BAE72B2000A61DB /* billbreakerApp.swift in Sources */,
-				E2DDFC152BB1FF8900BAD5AC /* Bill_Item.swift in Sources */,
+				E2DDFC152BB1FF8900BAD5AC /* BillItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
