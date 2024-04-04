@@ -13,7 +13,10 @@ struct HomeView: View {
     @State private var showActionSheet = false
     @State private var showingCreateBillSheet = false
     @State private var newBillTitle = ""
-    @State private var participants = [String](repeating: "", count: 1) // Start with one empty participant
+    //@State private var participants = [String](repeating: "", count: 1)
+    
+    //declare viewmodel variable
+    @EnvironmentObject var viewModel: BillViewModel
 
     var body: some View {
         NavigationView {
@@ -32,48 +35,38 @@ struct HomeView: View {
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
-                        self.showActionSheet = true // Trigger the action sheet
+                        self.showingCreateBillSheet = true // Trigger the action sheet
                     }) {
                         Image(systemName: "plus")
                     }
                 }
             }
-            .actionSheet(isPresented: $showActionSheet) { // Present the action sheet
-                //action sheet
-                ActionSheet(
-                    title: Text("What would you like to do?"),
-                    buttons: [
-                        .default(Text("Create New Bill")) { self.resetCreateBillForm(); self.showingCreateBillSheet = true },
-                        .default(Text("Join Bill")) { self.joinBill() },
-                        .cancel()
-                    ]
-                )
-            }
             .sheet(isPresented: $showingCreateBillSheet) { // Present the create bill sheet
                 NavigationView {
                     Form {
-                        TextField("Title", text: $newBillTitle)
-                        
+                        //new
+                        TextField("Title", text: $viewModel.newBill.restaurantName)
+                        //get names
                         Section(header: Text("Participants")) {
-                            ForEach(0..<participants.count, id: \.self) { index in
-                                TextField("Name", text: $participants[index])
-                                    .onChange(of: participants[index]) { _ in
-                                        if index == participants.count - 1 && participants.count < 20 {
-                                            participants.append("") // Add new field if the last one is being edited
+                            ForEach(0..<viewModel.newBill.participants.count, id: \.self) { index in
+                                TextField("Name", text: $viewModel.newBill.participants[index])
+                                    .onChange(of: viewModel.newBill.participants[index]) { _ in
+                                        if index == viewModel.newBill.participants.count - 1 && viewModel.newBill.participants.count < 20 {
+                                            viewModel.newBill.participants.append("") // Add new field if the last one is being edited
                                         }
                                     }
                             }
                             .onDelete { indices in
-                                participants.remove(atOffsets: indices)
+                                viewModel.newBill.participants.remove(atOffsets: indices)
                             }
                         }
                         
                         Button("Add Bill") {
-                            self.addBill(title: self.newBillTitle, participants: self.participants.filter { !$0.isEmpty })
+                            self.addBill(title: viewModel.newBill.restaurantName, participants: viewModel.newBill.participants.filter { !$0.isEmpty })
                             self.resetCreateBillForm()
                             self.showingCreateBillSheet = false // Dismiss sheet
                         }
-                        .disabled(newBillTitle.isEmpty || participants.allSatisfy { $0.isEmpty })
+                        .disabled(viewModel.newBill.restaurantName.isEmpty || viewModel.newBill.participants.allSatisfy { $0.isEmpty })
                     }
                     .navigationTitle("New Bill")
                     .navigationBarItems(trailing: Button("Cancel") {
@@ -100,8 +93,8 @@ struct HomeView: View {
     }
     
     func resetCreateBillForm() {
-        newBillTitle = ""
-        participants = [""]
+        viewModel.newBill.restaurantName = ""
+        viewModel.newBill.participants = [""]
     }
 }
 

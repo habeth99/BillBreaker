@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct billbreakerApp: App {
+    //var viewModel = BillViewModel()
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            TestView(billName: "Chipotle")
+                //.environmentObject(viewModel)
         }
     }
 }

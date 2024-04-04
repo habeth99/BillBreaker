@@ -9,27 +9,50 @@ import Foundation
 import SwiftUI
 
 struct BillDetailView: View {
-    @State private var menuItems = ["Chicken Tenders", "Bacon CheeseBurger"] // Corrected a typo in "CheeseBurger"
+    @State private var menuItems = ["Chicken Tenders", "Bacon CheeseBurger"] 
+
     @StateObject var viewModel = BillViewModel()
     let billName: String
     
+    struct Person: Identifiable {
+        let id = UUID() // Unique identifier for each person
+        let name: String
+        // Add other properties here, such as duration and calories
+    }
+
+    // Then, your list of people would be an array of `Person` structs:
+    let billPeople: [Person] = [
+        Person(name: "Gary"),
+        Person(name: "Nick"),
+        Person(name: "Vince"),
+        Person(name: "Mason"),
+        Person(name: "Gary"),
+        Person(name: "Nick"),
+        Person(name: "Vince"),
+        Person(name: "Mason")
+        // Add more people as needed
+    ]
+    
     var body: some View {
-        VStack {
-            MenuItemView() // Assuming MenuItemView is another component you've defined
-            Spacer()
-            HorizontalScrollView() // Assuming HorizontalScrollView is another component you've defined
-        }
-        .navigationTitle(billName) // Sets the navigation title to the value of `billName`
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) { // Adds an item to the navigation bar on the trailing side
-                Button("Add") {
-                    // Action to perform when the "Add" button is tapped
-                    // For example, showing an AddItemView or updating the viewModel
+            VStack {
+                // Menu items view (top half of the screen)
+                //MenuItemView()
+                List(billPeople) { person in
+                    Text(person.name).font(.headline)
+                        .padding()
+                    // Additional details here
                 }
             }
-        }
+            .navigationBarTitle("Chipotle", displayMode: .inline)
+            .navigationBarItems(trailing: Button(action: {
+                // Actions for your trailing navigation bar button
+            }) {
+                Text("Add")
+            })
     }
 }
+    
+
 
 // To define a preview provider for SwiftUI previews
 struct BillDetailView_Previews: PreviewProvider {

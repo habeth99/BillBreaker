@@ -13,7 +13,10 @@ struct MenuItemView: View {
     let billItems: [BillItem] = [
         BillItem(name: "Chicken Tenders", price: 5.99),
         BillItem(name: "Bacon Cheeseburger", price: 7.99),
-        BillItem(name: "Veggie Pizza", price: 8.99)
+        BillItem(name: "Veggie Pizza", price: 8.99),
+        BillItem(name: "Milkshake", price: 5.99),
+        BillItem(name: "Seed Oil Salad", price: 7.99),
+        BillItem(name: "Keener Teener Tenner", price: 8.99)
         // Add more items as needed
     ]
     var totalPrice: Double {
@@ -22,7 +25,7 @@ struct MenuItemView: View {
     }
     
     var body: some View {
-        VStack {
+        //VStack {
             List(billItems) { item in
                 HStack {
                     Text(item.name)
@@ -36,13 +39,12 @@ struct MenuItemView: View {
                         selectedItems.append(item.name) // Select
                     }
                 }
-                .listRowBackground(selectedItems.contains(item.name) ? Color.blue : Color.white) // Apply background to the entire row
+                .listRowBackground(selectedItems.contains(item.name) ? Color.blue : Color.clear) // Apply background to the entire row
                 
             }
-            .background(Color.gray)
-            Spacer()
-            Text("Total Price: $\(totalPrice, specifier: "%.2f")")
-        }
+            //.background(Color.gray)
+            //Text("Total Price: $\(totalPrice, specifier: "%.2f")")
+        //}
     }
 }
 

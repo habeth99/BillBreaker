@@ -8,8 +8,37 @@
 import Foundation
 
 class BillViewModel: ObservableObject {
+    
+    //OG objects
     @Published var items: [BillItem] = []
     @Published var tipPercentage: Int = 15
+    //New wave objects
+    @Published var newBill: Bill = Bill()
+    
+    @Published var bills: [Bill] = []
+    
+    func addBill(_ bill: Bill) {
+        bills.append(bill)
+    }
+    
+    func removeBill(at index: IndexSet) {
+        bills.remove(atOffsets: index)
+    }
+    ///________________________________________
+    ///
+    ///
+    ///________________________________________
+    
+    
+    func addParticipant(name: String) {
+        // Manually notify observers that a change will occur
+        self.objectWillChange.send()
+        
+        // Modify the struct, which is actually creating and assigning a modified copy
+        var updatedBill = newBill
+        updatedBill.participants.append(name)
+        newBill = updatedBill // Assign the modified copy back to the original property
+    }
     
     func addItem(name: String, price: Double) {
         let newItem = BillItem(name: name, price: price)
