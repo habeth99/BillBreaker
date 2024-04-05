@@ -12,7 +12,7 @@ struct billbreakerApp: App {
     //var viewModel = BillViewModel()
     var body: some Scene {
         WindowGroup {
-            TestView(billName: "Chipotle")
+            HomeView21()
                 //.environmentObject(viewModel)
         }
     }

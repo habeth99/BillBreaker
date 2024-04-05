@@ -21,8 +21,10 @@
 		E21466DF2BAE72B7000A61DB /* billbreakerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21466DE2BAE72B7000A61DB /* billbreakerUITests.swift */; };
 		E21466E12BAE72B7000A61DB /* billbreakerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21466E02BAE72B7000A61DB /* billbreakerUITestsLaunchTests.swift */; };
 		E225080C2BBE58DF00FB97B8 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E225080B2BBE58DF00FB97B8 /* TestView.swift */; };
-		E24EEFFA2BBF46AA00E24B56 /* TestView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24EEFF92BBF46AA00E24B56 /* TestView2.swift */; };
+		E24EEFFC2BBFF8A100E24B56 /* HomeView21.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24EEFFB2BBFF8A100E24B56 /* HomeView21.swift */; };
 		E28374792BBD0065006C0FFE /* MenuItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28374782BBD0065006C0FFE /* MenuItemView.swift */; };
+		E2D1F29C2BC0595C00B27278 /* ClaimItemsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D1F29B2BC0595C00B27278 /* ClaimItemsView.swift */; };
+		E2D1F29E2BC05E3400B27278 /* PersonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D1F29D2BC05E3400B27278 /* PersonView.swift */; };
 		E2DDFBEB2BAF735E00BAD5AC /* BreakABillView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFBEA2BAF735E00BAD5AC /* BreakABillView.swift */; };
 		E2DDFBF22BB1E74A00BAD5AC /* CachedImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFBF12BB1E74A00BAD5AC /* CachedImageManager.swift */; };
 		E2DDFBF42BB1E77300BAD5AC /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFBF32BB1E77200BAD5AC /* Camera.swift */; };
@@ -37,7 +39,7 @@
 		E2DDFC062BB1E7ED00BAD5AC /* PhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC052BB1E7ED00BAD5AC /* PhotoView.swift */; };
 		E2DDFC082BB1E7F700BAD5AC /* ThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC072BB1E7F700BAD5AC /* ThumbnailView.swift */; };
 		E2DDFC0A2BB1E80300BAD5AC /* ViewfinderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC092BB1E80300BAD5AC /* ViewfinderView.swift */; };
-		E2DDFC0D2BB1EA0200BAD5AC /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC0C2BB1EA0200BAD5AC /* User.swift */; };
+		E2DDFC0D2BB1EA0200BAD5AC /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC0C2BB1EA0200BAD5AC /* Person.swift */; };
 		E2DDFC0F2BB1EA3200BAD5AC /* Bill.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC0E2BB1EA3200BAD5AC /* Bill.swift */; };
 		E2DDFC112BB1EB9900BAD5AC /* JoinBillView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC102BB1EB9900BAD5AC /* JoinBillView.swift */; };
 		E2DDFC132BB1FAE100BAD5AC /* BILLView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC122BB1FAE000BAD5AC /* BILLView.swift */; };
@@ -82,8 +84,10 @@
 		E21466DE2BAE72B7000A61DB /* billbreakerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = billbreakerUITests.swift; sourceTree = "<group>"; };
 		E21466E02BAE72B7000A61DB /* billbreakerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = billbreakerUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		E225080B2BBE58DF00FB97B8 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
-		E24EEFF92BBF46AA00E24B56 /* TestView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView2.swift; sourceTree = "<group>"; };
+		E24EEFFB2BBFF8A100E24B56 /* HomeView21.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView21.swift; sourceTree = "<group>"; };
 		E28374782BBD0065006C0FFE /* MenuItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemView.swift; sourceTree = "<group>"; };
+		E2D1F29B2BC0595C00B27278 /* ClaimItemsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaimItemsView.swift; sourceTree = "<group>"; };
+		E2D1F29D2BC05E3400B27278 /* PersonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonView.swift; sourceTree = "<group>"; };
 		E2DDFBEA2BAF735E00BAD5AC /* BreakABillView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreakABillView.swift; sourceTree = "<group>"; };
 		E2DDFBF12BB1E74A00BAD5AC /* CachedImageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CachedImageManager.swift; sourceTree = "<group>"; };
 		E2DDFBF32BB1E77200BAD5AC /* Camera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
@@ -98,7 +102,7 @@
 		E2DDFC052BB1E7ED00BAD5AC /* PhotoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoView.swift; sourceTree = "<group>"; };
 		E2DDFC072BB1E7F700BAD5AC /* ThumbnailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThumbnailView.swift; sourceTree = "<group>"; };
 		E2DDFC092BB1E80300BAD5AC /* ViewfinderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewfinderView.swift; sourceTree = "<group>"; };
-		E2DDFC0C2BB1EA0200BAD5AC /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		E2DDFC0C2BB1EA0200BAD5AC /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
 		E2DDFC0E2BB1EA3200BAD5AC /* Bill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bill.swift; sourceTree = "<group>"; };
 		E2DDFC102BB1EB9900BAD5AC /* JoinBillView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinBillView.swift; sourceTree = "<group>"; };
 		E2DDFC122BB1FAE000BAD5AC /* BILLView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BILLView.swift; sourceTree = "<group>"; };
@@ -182,13 +186,15 @@
 				E2DDFC192BB2014600BAD5AC /* AddItemView.swift */,
 				E2DDFC1B2BB25D6E00BAD5AC /* HorizontalNameView.swift */,
 				E20EC6202BB60C5500223B19 /* HomeView.swift */,
-				E21466C72BAE72B6000A61DB /* Assets.xcassets */,
-				E20EC6152BB3D84E00223B19 /* GoogleService-Info.plist */,
-				E21466C92BAE72B6000A61DB /* Preview Content */,
 				E20EC6222BB7962C00223B19 /* BillDetailView.swift */,
 				E28374782BBD0065006C0FFE /* MenuItemView.swift */,
 				E225080B2BBE58DF00FB97B8 /* TestView.swift */,
-				E24EEFF92BBF46AA00E24B56 /* TestView2.swift */,
+				E24EEFFB2BBFF8A100E24B56 /* HomeView21.swift */,
+				E2D1F29B2BC0595C00B27278 /* ClaimItemsView.swift */,
+				E2D1F29D2BC05E3400B27278 /* PersonView.swift */,
+				E21466C72BAE72B6000A61DB /* Assets.xcassets */,
+				E20EC6152BB3D84E00223B19 /* GoogleService-Info.plist */,
+				E21466C92BAE72B6000A61DB /* Preview Content */,
 			);
 			path = billbreaker;
 			sourceTree = "<group>";
@@ -241,7 +247,7 @@
 		E2DDFC0B2BB1E9DB00BAD5AC /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				E2DDFC0C2BB1EA0200BAD5AC /* User.swift */,
+				E2DDFC0C2BB1EA0200BAD5AC /* Person.swift */,
 				E2DDFC0E2BB1EA3200BAD5AC /* Bill.swift */,
 				E2DDFC142BB1FF8900BAD5AC /* BillItem.swift */,
 			);
@@ -420,15 +426,17 @@
 				E2DDFBF62BB1E79900BAD5AC /* CameraView.swift in Sources */,
 				E2DDFBFA2BB1E7B600BAD5AC /* PhotoAsset.swift in Sources */,
 				E2DDFC182BB1FFCD00BAD5AC /* BillViewModel.swift in Sources */,
-				E2DDFC0D2BB1EA0200BAD5AC /* User.swift in Sources */,
+				E2DDFC0D2BB1EA0200BAD5AC /* Person.swift in Sources */,
 				E2DDFC022BB1E7DD00BAD5AC /* PhotoItemView.swift in Sources */,
 				E2DDFC232BB292E200BAD5AC /* TextRecognitionService.swift in Sources */,
+				E24EEFFC2BBFF8A100E24B56 /* HomeView21.swift in Sources */,
 				E2DDFBFE2BB1E7C900BAD5AC /* PhotoCollection.swift in Sources */,
 				E2DDFC062BB1E7ED00BAD5AC /* PhotoView.swift in Sources */,
 				E2DDFBF22BB1E74A00BAD5AC /* CachedImageManager.swift in Sources */,
 				E2DDFBFC2BB1E7C000BAD5AC /* PhotoAssetCollection.swift in Sources */,
+				E2D1F29E2BC05E3400B27278 /* PersonView.swift in Sources */,
+				E2D1F29C2BC0595C00B27278 /* ClaimItemsView.swift in Sources */,
 				E2DDFC082BB1E7F700BAD5AC /* ThumbnailView.swift in Sources */,
-				E24EEFFA2BBF46AA00E24B56 /* TestView2.swift in Sources */,
 				E2DDFC1C2BB25D6E00BAD5AC /* HorizontalNameView.swift in Sources */,
 				E2DDFC0A2BB1E80300BAD5AC /* ViewfinderView.swift in Sources */,
 				E2DDFC002BB1E7D500BAD5AC /* PhotoCollectionView.swift in Sources */,
