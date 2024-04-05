@@ -44,23 +44,25 @@ struct TestView: View {
         ScrollView {
             VStack { // This adds space between each item in the stack
                 VStack(alignment: .leading) {
-                    Text("Food")
+                    Text("Receipt")
                         .fontWeight(.heavy)
                         .font(.system(size: 36))
                         .padding()
-                    
                     ForEach(billItems, id: \.self) { item in
-                        HStack {
-                            Text(item.name)
-                                .padding()
-                            Spacer()
-                            Text(String(format: "$%.2f", item.price))
-                                .padding()
+                        VStack {
+                            HStack {
+                                Text(item.name)
+                                    .padding()
+                                Spacer()
+                                Text(String(format: "$%.2f", item.price))
+                                    .padding()
+                            }
                         }
                     }
+                    //.background(Color.white)
                 }
                 
-                VStack (alignment: .leading, spacing: 30){
+                VStack (alignment: .leading, spacing: 15){
                     Text("People")
                         .fontWeight(.heavy)
                         .font(.system(size: 36))
@@ -75,6 +77,7 @@ struct TestView: View {
                         .cornerRadius(20)
                         .shadow(radius: 1)
                     }
+
                 }
             }
         }

@@ -25,10 +25,6 @@ struct BillDetailView: View {
         Person(name: "Gary"),
         Person(name: "Nick"),
         Person(name: "Vince"),
-        Person(name: "Mason"),
-        Person(name: "Gary"),
-        Person(name: "Nick"),
-        Person(name: "Vince"),
         Person(name: "Mason")
         // Add more people as needed
     ]
