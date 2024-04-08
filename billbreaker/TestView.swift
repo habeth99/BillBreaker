@@ -26,10 +26,10 @@ struct TestView: View {
 }
 
 // Assuming you want to provide a preview for TestView
-struct TestView_Previews: PreviewProvider {
-    static var previews: some View {
-        // Create a temporary User instance for previews
-        TestView(user: User(name: "Sample User", venmoHandle: "@SampleVenmo", cashAppHandle: "$SampleCash"))
-    }
-}
+//struct TestView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        // Create a temporary User instance for previews
+//        TestView(user: User(name: "Sample User", venmoHandle: "@SampleVenmo", cashAppHandle: "$SampleCash"))
+//    }
+//}
 

@@ -26,6 +26,8 @@
 		E27966052BC46D89000B0368 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27966042BC46D89000B0368 /* UserViewModel.swift */; };
 		E27966072BC476BD000B0368 /* LegitP.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27966062BC476BD000B0368 /* LegitP.swift */; };
 		E27966092BC48178000B0368 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27966082BC48178000B0368 /* Item.swift */; };
+		E279660B2BC493CD000B0368 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E279660A2BC493CD000B0368 /* LoginView.swift */; };
+		E279660D2BC49D83000B0368 /* WhichView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E279660C2BC49D83000B0368 /* WhichView.swift */; };
 		E28374792BBD0065006C0FFE /* MenuItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28374782BBD0065006C0FFE /* MenuItemView.swift */; };
 		E2C759EF2BC34A6F00F8894C /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = E2C759EE2BC34A6F00F8894C /* FirebaseDatabase */; };
 		E2D1F29C2BC0595C00B27278 /* ClaimItemsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D1F29B2BC0595C00B27278 /* ClaimItemsView.swift */; };
@@ -96,6 +98,8 @@
 		E27966042BC46D89000B0368 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		E27966062BC476BD000B0368 /* LegitP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegitP.swift; sourceTree = "<group>"; };
 		E27966082BC48178000B0368 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		E279660A2BC493CD000B0368 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		E279660C2BC49D83000B0368 /* WhichView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhichView.swift; sourceTree = "<group>"; };
 		E28374782BBD0065006C0FFE /* MenuItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemView.swift; sourceTree = "<group>"; };
 		E2D1F29B2BC0595C00B27278 /* ClaimItemsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaimItemsView.swift; sourceTree = "<group>"; };
 		E2D1F29D2BC05E3400B27278 /* PersonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonView.swift; sourceTree = "<group>"; };
@@ -204,12 +208,14 @@
 				E28374782BBD0065006C0FFE /* MenuItemView.swift */,
 				E225080B2BBE58DF00FB97B8 /* TestView.swift */,
 				E24EEFFB2BBFF8A100E24B56 /* HomeView21.swift */,
+				E279660A2BC493CD000B0368 /* LoginView.swift */,
 				E2D1F29B2BC0595C00B27278 /* ClaimItemsView.swift */,
 				E2D1F29D2BC05E3400B27278 /* PersonView.swift */,
 				E27966022BC38F65000B0368 /* SignUpView.swift */,
 				E21466C72BAE72B6000A61DB /* Assets.xcassets */,
 				E20EC6152BB3D84E00223B19 /* GoogleService-Info.plist */,
 				E21466C92BAE72B6000A61DB /* Preview Content */,
+				E279660C2BC49D83000B0368 /* WhichView.swift */,
 			);
 			path = billbreaker;
 			sourceTree = "<group>";
@@ -454,6 +460,7 @@
 				E2DDFC232BB292E200BAD5AC /* TextRecognitionService.swift in Sources */,
 				E27966092BC48178000B0368 /* Item.swift in Sources */,
 				E24EEFFC2BBFF8A100E24B56 /* HomeView21.swift in Sources */,
+				E279660D2BC49D83000B0368 /* WhichView.swift in Sources */,
 				E2DDFBFE2BB1E7C900BAD5AC /* PhotoCollection.swift in Sources */,
 				E27966072BC476BD000B0368 /* LegitP.swift in Sources */,
 				E2DDFC062BB1E7ED00BAD5AC /* PhotoView.swift in Sources */,
@@ -471,6 +478,7 @@
 				E2D1F2A22BC0CD3400B27278 /* User.swift in Sources */,
 				E2DDFC1F2BB26AB800BAD5AC /* Helper.swift in Sources */,
 				E21466C42BAE72B2000A61DB /* billbreakerApp.swift in Sources */,
+				E279660B2BC493CD000B0368 /* LoginView.swift in Sources */,
 				E2DDFC152BB1FF8900BAD5AC /* BillItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

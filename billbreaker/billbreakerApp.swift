@@ -10,16 +10,17 @@ import Firebase
 
 @main
 struct billbreakerApp: App {
-    //var viewModel = BillViewModel()
+    
+    @StateObject var viewModel = UserViewModel()
+    
     init(){
         FirebaseApp.configure()
     }
     var body: some Scene {
         WindowGroup {
-            SignUpView()
-            //TestView()
-            //HomeView21()
-                //.environmentObject(viewModel)
+            WhichView()
+                .environmentObject(UserViewModel())
+
         }
     }
 }
