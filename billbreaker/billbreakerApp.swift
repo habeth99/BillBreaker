@@ -6,13 +6,19 @@
 //
 
 import SwiftUI
+import Firebase
 
 @main
 struct billbreakerApp: App {
     //var viewModel = BillViewModel()
+    init(){
+        FirebaseApp.configure()
+    }
     var body: some Scene {
         WindowGroup {
-            HomeView21()
+            SignUpView()
+            //TestView()
+            //HomeView21()
                 //.environmentObject(viewModel)
         }
     }

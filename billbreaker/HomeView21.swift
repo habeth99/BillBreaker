@@ -40,84 +40,80 @@ struct HomeView21: View {
     ]
 
     var body: some View {
-        ZStack {
-            //Make background gray
-            Color.gray.opacity(0.2).edgesIgnoringSafeArea(.all)
-            ScrollView{
-                VStack(alignment: .leading, spacing: 20) {
-                    // MARK: Header
-                    Text("Receipt")
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
-                    VStack{
-                        ForEach(billItems, id: \.self) { item in
-                            HStack {
-                                Text(item.name)
-                                .padding()
-                                Spacer()
-                                Text(String(format: "$%.2f", item.price))
-                                .padding()
+        NavigationView{
+            ZStack {
+                //Make background gray
+                Color.gray.opacity(0.2).edgesIgnoringSafeArea(.all)
+                ScrollView{
+                    VStack(alignment: .leading, spacing: 10) {
+                        // MARK: Header
+                        //Text("Friday, Apr 5")
+                        //.foregroundColor(.accentColor)
+                        Text("Items")
+                            .font(.title)
+                            .fontWeight(.bold)
+                        VStack (alignment: .leading){
+                            ForEach(billItems, id: \.self) { item in
+                                HStack {
+                                    Text(item.name)
+                                        .padding()
+                                    Spacer()
+                                    Text(String(format: "$%.2f", item.price))
+                                        .padding()
+                                }
                             }
                         }
-                    }
-                    .background(Color.white)
-                    .cornerRadius(20)
-                    .frame(width: 350)
-                    
-                    VStack (alignment: .leading, spacing: 15){
-                        Text("People")
-                            .fontWeight(.bold)
-                            .font(.largeTitle)
+                        .background(Color.white)
+                        .cornerRadius(12)
+                        .frame(width: 361)
+                        .shadow(radius: 1)
+                        
+                        VStack (alignment: .leading, spacing: 15){
+                            Text("People")
+                                .padding(EdgeInsets(top: 25, leading: 0, bottom: -1, trailing: 0))
+                                .fontWeight(.bold)
+                                .font(.title)
                             //.font(.system(size: 36))
                             //.padding()
-                        ForEach(billPeople) { person in
-                            PersonView(person: person)
-                                .onTapGesture {
-                                    selectedPerson = person
-                        
-                                }
+                            ForEach(billPeople) { person in
+                                PersonView(person: person)
+                                    .onTapGesture {
+                                        selectedPerson = person
+                                        
+                                    }
+                            }
+                            
                         }
+                    }
+                    .padding(EdgeInsets(top: 30, leading: 19, bottom: 0, trailing: 24))
+                    .sheet(item: $selectedPerson, content: {person in
+                        ClaimItemsView(billItems: billItems, person: person, anotherValue: $anotherValue)
                         
+                    })
+                }
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        VStack {
+                            Text("Friday, Apr 5") // Your date here
+                                .font(.subheadline)
+                                .foregroundColor(.primary)
+                            
+                        }
+                        .frame(width: 100)
                     }
                 }
-                .sheet(item: $selectedPerson, content: {person in
-                    ClaimItemsView(person: person, anotherValue: $anotherValue)
-//                    VStack {
-//                        Text("Claim \(person.name)'s items")
-//                            .fontWeight(.bold)
-//                            .font(.largeTitle)
-//                            .padding()
-//                        Spacer()
-//                    }
-                })
+                //.navigationBarTitle("Chipotle", displayMode: .automatic)
             }
-            .navigationBarTitle("Chipotle", displayMode: .inline)
+            .navigationBarTitle("Chipotle", displayMode: .automatic)
         }
+        //.navigationBarTitle("Chipotle", displayMode: .automatic)
     }
 }
-
-
-//struct PersonView: View {
-//    let person: HomeView21.Person
-//
-//    var body: some View {
-//        VStack(alignment: .leading) {
-//            Text(person.name).font(.headline)
-//        }
-//        .frame(width: 346, height: 175)
-//        .background(Color.white)
-//        .cornerRadius(20)
-//        .shadow(radius: 1)
-//    }
-//}
-
 
 
 
 struct HomeView21_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView { // Wrap in a NavigationView for the preview
             HomeView21()
-        }
     }
 }

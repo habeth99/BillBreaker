@@ -15,9 +15,9 @@ struct PersonView: View {
         VStack(alignment: .leading) {
             Text(person.name).font(.headline)
         }
-        .frame(width: 346, height: 175)
+        .frame(width: 360, height: 175)
         .background(Color.white)
-        .cornerRadius(20)
+        .cornerRadius(12)
         .shadow(radius: 1)
     }
 }
