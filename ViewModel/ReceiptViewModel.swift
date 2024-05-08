@@ -30,8 +30,22 @@ class ReceiptViewModel: ObservableObject {
         //TODO
     }
     
-    func createReceipt(){
+    func getReceipt(){
+        // TODO
+        // should return the info for one receipt that is tied to the current user
+        // probably one receipt object
+        
+        // return receipt
+    }
+    
+    func addReceiptToUser(){
         //TODO
+        let userId = self.user.currentUser?.id ?? "null"
+        let userReceiptsRef = dbRef.child("users").child(userId).child("receipts")
+        let newReceiptRef = userReceiptsRef.childByAutoId()
+        newReceiptRef.setValue(self.receipt)
+        
+        self.receipt.id = newReceiptRef.key ?? "null"
     }
     
     func updateReceipt(){
@@ -40,10 +54,12 @@ class ReceiptViewModel: ObservableObject {
     
     func addPersonReceipt(){
         //TODO
+        
     }
     
     func addItemReceipt(){
         //TODO
+        
     }
     
     func deleteReceipt(){

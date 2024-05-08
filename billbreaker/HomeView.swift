@@ -22,7 +22,7 @@ struct HomeView: View {
         NavigationView {
             List {
                 ForEach(bills, id: \.self) { bill in
-                    NavigationLink(destination: BillDetailView(billName: bill)) {
+                    NavigationLink(destination: HomeView21()) {
                         Text(bill)
                     }
                 }
