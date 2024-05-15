@@ -15,15 +15,15 @@ struct Receipt: Codable, Identifiable {
     var createdAt: String
     var tax: Double
     var price: Double
-    var items: [String]
-    var people: [String]
+    var items: [Item]?
+    var people: [LegitP]?
     
     enum CodingKeys: CodingKey {
         case id, userId, name, date, createdAt, tax, price, items, people
     }
 
     // Custom initializer
-    init(id: String = UUID().uuidString, userId: String, name: String, date: String, createdAt: String, tax: Double, price: Double, items: [String] = [], people: [String] = []) {
+    init(id: String = UUID().uuidString, userId: String, name: String, date: String, createdAt: String, tax: Double, price: Double, items: [Item] = [], people: [LegitP] = []) {
         self.id = id // Assign a UUID by default or use a specific id if provided
         self.userId = userId
         self.name = name
@@ -45,7 +45,7 @@ struct Receipt: Codable, Identifiable {
         createdAt = try container.decode(String.self, forKey: .createdAt)
         tax = try container.decode(Double.self, forKey: .tax)
         price = try container.decode(Double.self, forKey: .price)
-        items = try container.decode([String].self, forKey: .items)
-        people = try container.decode([String].self, forKey: .people)
+        items = try container.decode([Item].self, forKey: .items)
+        people = try container.decode([LegitP].self, forKey: .people)
     }
 }

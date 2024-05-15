@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct HomeView21: View {
+struct BillDetailsView: View {
     // State variables for showing the sheet and knowing
     // if a person is selected
     //@State private var isSheetPresented = false
@@ -112,8 +112,8 @@ struct HomeView21: View {
 
 
 
-struct HomeView21_Previews: PreviewProvider {
+struct BillDetailsView_Previews: PreviewProvider {
     static var previews: some View {
-            HomeView21()
+            BillDetailsView()
     }
 }

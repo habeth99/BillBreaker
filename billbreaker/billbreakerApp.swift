@@ -16,10 +16,11 @@ struct billbreakerApp: App {
     init(){
         FirebaseApp.configure()
     }
+    
     var body: some Scene {
         WindowGroup {
             WhichView()
-                .environmentObject(UserViewModel())
+                .environmentObject(viewModel)
 
         }
     }

@@ -38,9 +38,9 @@ struct LoginView: View {
 }
 
 // Preview
-struct LoginView_Previews: PreviewProvider {
-    static var previews: some View {
-        LoginView()
-            .environmentObject(UserViewModel())
-    }
-}
+//struct LoginView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        LoginView()
+//            .environmentObject(UserViewModel())
+//    }
+//}

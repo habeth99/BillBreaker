@@ -4,7 +4,7 @@
 //
 //  Created by Nick Habeth on 4/8/24.
 //
-
+import Foundation
 import Combine
 import FirebaseDatabase
 import FirebaseAuth
@@ -53,9 +53,13 @@ class UserViewModel: ObservableObject {
                 return
             }
             guard let user = authResult?.user else { return }
-            let newUser = User(id: user.uid, name: name, email: email, venmoHandle: venmoHandle, cashAppHandle: cashAppHandle) // Assuming your User struct includes an email field now.
+            let newUser = User(id: user.uid, name: name, email: email, venmoHandle: venmoHandle, cashAppHandle: cashAppHandle, receipts: []) // Assuming your User struct includes an email field now.
             self.writeUserToFirebase(newUser)
             self.currentUser = newUser
+            
+//            guard let user = authResult?.user else { return }
+//            self.fetchUser(userId: user.uid)
+            
         }
     }
 
@@ -68,8 +72,10 @@ class UserViewModel: ObservableObject {
                 return
             }
             guard let user = authResult?.user else { return }
+            print("User1: \(user.uid)")
             self.fetchUser(userId: user.uid)
         }
+        print("User2: \(self.currentUser?.id ?? "BAD")")
     }
 
     func signOut() {
@@ -84,11 +90,18 @@ class UserViewModel: ObservableObject {
 
     func fetchUser(userId: String) {
         dbRef.child("users").child(userId).observeSingleEvent(of: .value, with: { snapshot in
-            guard let value = snapshot.value as? [String: Any],
-                  let userData = try? JSONSerialization.data(withJSONObject: value),
-                  let user = try? JSONDecoder().decode(User.self, from: userData) else { return }
-            DispatchQueue.main.async {
-                self.currentUser = user
+            guard let value = snapshot.value as? [String: Any] else {
+                print("Error: Snapshot is not a valid dictionary")
+                return
+            }
+            do {
+                let userData = try JSONSerialization.data(withJSONObject: value)
+                let user = try JSONDecoder().decode(User.self, from: userData)
+                DispatchQueue.main.async {
+                    self.currentUser = user
+                }
+            } catch let error {
+                print("Decoding error: \(error)")
             }
         })
     }
@@ -104,6 +117,18 @@ class UserViewModel: ObservableObject {
     func updateUser() {
         guard let currentUser = currentUser else { return }
         writeUserToFirebase(currentUser)
+    }
+    
+    func deleteAccount() {
+        //TODO
+    }
+    
+    func printCurrentUserId() {
+        if let currentUser = self.currentUser {
+            print("Current user ID is: \(currentUser.id)")
+        } else {
+            print("No current user is logged in.")
+        }
     }
 }
 

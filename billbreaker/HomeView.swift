@@ -9,95 +9,73 @@ import Foundation
 import SwiftUI
 
 struct HomeView: View {
-    @State private var bills = ["Bill 1", "Bill 2"]
+    @State private var bills = ["Bill 1"]
     @State private var showActionSheet = false
-    @State private var showingCreateBillSheet = false
+    @State private var showingNewReceiptSheet = false
     @State private var newBillTitle = ""
-    //@State private var participants = [String](repeating: "", count: 1)
+    @EnvironmentObject var rviewModel: ReceiptViewModel
+    @EnvironmentObject var viewModel: UserViewModel
     
-    //declare viewmodel variable
-    @EnvironmentObject var viewModel: BillViewModel
-
+    
     var body: some View {
         NavigationView {
-            List {
-                ForEach(bills, id: \.self) { bill in
-                    NavigationLink(destination: HomeView21()) {
-                        Text(bill)
-                    }
-                }
-                .onDelete(perform: deleteItems)
-            }
-            .navigationTitle("My Bills")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    EditButton()
-                }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        self.showingCreateBillSheet = true // Trigger the action sheet
-                    }) {
-                        Image(systemName: "plus")
-                    }
-                }
-            }
-            .sheet(isPresented: $showingCreateBillSheet) { // Present the create bill sheet
-                NavigationView {
-                    Form {
-                        //new
-                        TextField("Title", text: $viewModel.newBill.restaurantName)
-                        //get names
-                        Section(header: Text("Participants")) {
-                            ForEach(0..<viewModel.newBill.participants.count, id: \.self) { index in
-                                TextField("Name", text: $viewModel.newBill.participants[index])
-                                    .onChange(of: viewModel.newBill.participants[index]) { _ in
-                                        if index == viewModel.newBill.participants.count - 1 && viewModel.newBill.participants.count < 20 {
-                                            viewModel.newBill.participants.append("") // Add new field if the last one is being edited
-                                        }
-                                    }
-                            }
-                            .onDelete { indices in
-                                viewModel.newBill.participants.remove(atOffsets: indices)
-                            }
+            VStack {
+                List {
+                    ForEach(bills, id: \.self) { bill in
+                        NavigationLink(destination: BillDetailsView()) {
+                            Text("Chipotle")
+                            // Text(viewModel.receipt.name)
                         }
-                        
-                        Button("Add Bill") {
-                            self.addBill(title: viewModel.newBill.restaurantName, participants: viewModel.newBill.participants.filter { !$0.isEmpty })
-                            self.resetCreateBillForm()
-                            self.showingCreateBillSheet = false // Dismiss sheet
-                        }
-                        .disabled(viewModel.newBill.restaurantName.isEmpty || viewModel.newBill.participants.allSatisfy { $0.isEmpty })
                     }
-                    .navigationTitle("New Bill")
-                    .navigationBarItems(trailing: Button("Cancel") {
-                        self.resetCreateBillForm()
-                        self.showingCreateBillSheet = false
-                    })
+                    //.onDelete(perform: deleteItems)
                 }
+                .navigationTitle("My Receipts")
+                .toolbar {
+                    ToolbarItemGroup(placement: .navigationBarLeading) {
+                        Button(action: {
+                            print("edit Button was tapped")
+                        }) {
+                            Text("Edit")
+                        }
+                    }
+                    
+                    ToolbarItemGroup(placement: .navigationBarTrailing) {
+                        Button(action: {
+                            print("add Button was tapped")
+                            showingNewReceiptSheet = true
+                        }) {
+                            Image(systemName: "plus")
+                        }
+                    }
+                }
+                .sheet(isPresented: $showingNewReceiptSheet) {
+                    NewReceiptView(isPresented: $showingNewReceiptSheet)
+                }
+                
+                
+                NavigationLink(destination: ProfileView()) {
+                    Text("Profile")
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                }
+                
+                Button(action: {
+                    viewModel.signOut()
+                }, label: {
+                    Text("Sign Out")
+                })
+                
+                Button(action: {
+                    viewModel.printCurrentUserId()
+                }, label: {
+                    Text("User is")
+                })
             }
         }
     }
-    
-    func deleteItems(at offsets: IndexSet) {
-        bills.remove(atOffsets: offsets)
-    }
-    
-    func addBill(title: String, participants: [String]) {
-        // Logic to add a new bill with the specified title and participants
-        bills.append(title) // Simplified for this example
-    }
-    
-    func joinBill() {
-        // Placeholder for join bill logic
-        print("Joining an existing bill...")
-    }
-    
-    func resetCreateBillForm() {
-        viewModel.newBill.restaurantName = ""
-        viewModel.newBill.participants = [""]
-    }
 }
-
 
 
 #Preview {
