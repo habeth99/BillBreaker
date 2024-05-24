@@ -112,8 +112,14 @@ struct ProfileView: View {
                     }
                 }
             } else {
-                Text("No user info available")
-                
+                VStack{
+                    Text("No user info available")
+                    Button(action: {
+                        viewModel.signOut()
+                    }, label: {
+                        Text("Dev SignOut")
+                    })
+                }
             }
         }
     }

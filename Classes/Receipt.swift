@@ -23,7 +23,7 @@ struct Receipt: Codable, Identifiable {
     }
 
     // Custom initializer
-    init(id: String = UUID().uuidString, userId: String, name: String, date: String, createdAt: String, tax: Double, price: Double, items: [Item] = [], people: [LegitP] = []) {
+    init(id: String = UUID().uuidString, userId: String = "", name: String = "", date: String = "", createdAt: String = "", tax: Double = 0.00, price: Double = 0.00, items: [Item] = [], people: [LegitP] = []) {
         self.id = id // Assign a UUID by default or use a specific id if provided
         self.userId = userId
         self.name = name

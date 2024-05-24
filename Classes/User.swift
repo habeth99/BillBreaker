@@ -14,14 +14,14 @@ struct User: Identifiable, Codable {
     var email: String
     var venmoHandle: String
     var cashAppHandle: String
-    var receipts: [Receipt]?
+    var receipts: [String]?
 
     enum CodingKeys: CodingKey {
         case id, name, email, venmoHandle, cashAppHandle, receipts
     }
 
     // Modified custom initializer
-    init(id: String? = nil, name: String, email: String, venmoHandle: String, cashAppHandle: String, receipts: [Receipt] = []) {
+    init(id: String? = nil, name: String, email: String, venmoHandle: String, cashAppHandle: String, receipts: [String] = []) {
         self.id = id ?? UUID().uuidString // Use provided id or generate a new UUID
         self.name = name
         self.email = email
@@ -38,7 +38,7 @@ struct User: Identifiable, Codable {
         email = try container.decode(String.self, forKey: .email)
         venmoHandle = try container.decode(String.self, forKey: .venmoHandle)
         cashAppHandle = try container.decode(String.self, forKey: .cashAppHandle)
-        receipts = try container.decode([Receipt].self, forKey: .receipts)
+        receipts = try container.decodeIfPresent([String].self, forKey: .receipts)
     }
 
 }

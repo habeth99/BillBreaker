@@ -40,7 +40,7 @@ struct BillDetailsView: View {
     ]
 
     var body: some View {
-        NavigationView{
+        
             ZStack {
                 //Make background gray
                 Color.gray.opacity(0.2).edgesIgnoringSafeArea(.all)
@@ -105,8 +105,7 @@ struct BillDetailsView: View {
                 //.navigationBarTitle("Chipotle", displayMode: .automatic)
             }
             .navigationBarTitle("Chipotle", displayMode: .automatic)
-        }
-        //.navigationBarTitle("Chipotle", displayMode: .automatic)
+
     }
 }
 

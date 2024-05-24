@@ -17,6 +17,7 @@ struct WhichView: View {
             if viewModel.isUserAuthenticated {
                 // User is authenticated, show the main app view
                 HomeView()
+                    .environmentObject(viewModel)
             } else {
                 // User is not authenticated, show the login view
                 LoginView()
