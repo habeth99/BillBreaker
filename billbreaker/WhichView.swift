@@ -16,7 +16,7 @@ struct WhichView: View {
         //Group{
             if viewModel.isUserAuthenticated {
                 // User is authenticated, show the main app view
-                HomeView()
+                HomeView(viewModel: viewModel)
                     .environmentObject(viewModel)
             } else {
                 // User is not authenticated, show the login view
@@ -26,6 +26,6 @@ struct WhichView: View {
     }
 }
 
-#Preview {
-    WhichView()
-}
+//#Preview {
+//    WhichView()
+//}

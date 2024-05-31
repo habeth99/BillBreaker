@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ClaimItemsView: View {
     let billItems: [BillItem]
-    let person: Person
+    let person: LegitP
     @Binding var anotherValue: String
     @State private var selectedItems = Set<BillItem>() // State to track selected items
 

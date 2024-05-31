@@ -18,7 +18,7 @@ struct Item: Identifiable, Codable {
         case id, name, quantity, price, claimedBy
     }
     
-    init (id: String = UUID().uuidString, name: String = "", quantity: Int = 0, price: Double = 0.00, claimedBy: [String] = []){
+    init (id: String = "", name: String = "", quantity: Int = 0, price: Double = 0.00, claimedBy: [String] = []){
         self.id = id
         self.name = name
         self.quantity = quantity
@@ -31,9 +31,9 @@ struct Item: Identifiable, Codable {
         id = try container.decode(String.self, forKey: .id)
         name = try container.decode(String.self, forKey: .name)
         //quantity = try container.decode(Int.self, forKey: .quantity)
-        quantity = try container.decodeIfPresent(Int.self, forKey: .quantity)
+        quantity = try container.decodeIfPresent(Int.self, forKey: .quantity) ?? 0
         price = try container.decode(Double.self, forKey: .price)
         //claimedBy = try container.decode([String].self, forKey: .claimedBy)
-        claimedBy = try container.decodeIfPresent([String].self, forKey: .claimedBy)
+        claimedBy = try container.decodeIfPresent([String].self, forKey: .claimedBy) ?? []
     }
 }

@@ -8,6 +8,6 @@
 import Foundation
 
 class PersonViewModel: ObservableObject {
-    
+    @Published var people: [LegitP] = []
     // TO-DO
 }

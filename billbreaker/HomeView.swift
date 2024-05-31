@@ -83,18 +83,23 @@ struct HomeView: View {
     @State private var showActionSheet = false
     @State private var showingNewReceiptSheet = false
     @State private var newBillTitle = ""
+    @StateObject private var rviewModel: ReceiptViewModel
     @EnvironmentObject var viewModel: UserViewModel
+    
+    init(viewModel: UserViewModel) {
+        self._rviewModel = StateObject(wrappedValue: ReceiptViewModel(user: viewModel))
+    }
     
     var body: some View {
         TabView {
             NavigationView {
                 VStack {
-                    if viewModel.userReceipts.isEmpty {
-                        Text("No Receipts Available")
-                            .padding()
-                    } else {
-                        List(viewModel.userReceipts) { receipt in
-                            NavigationLink(destination: BillDetailsView()) {
+//                    if viewModel.userReceipts.isEmpty {
+//                        Text("No Receipts Available")
+//                            .padding()
+//                    } else {
+                    List(rviewModel.receiptList) { receipt in
+                        NavigationLink(destination: BillDetailsView(rviewModel: rviewModel, receipt: receipt)) {
                                 VStack(alignment: .leading) {
                                     Text(receipt.name)
                                         .font(.headline)
@@ -128,7 +133,7 @@ struct HomeView: View {
                             NewReceiptView(isPresented: $showingNewReceiptSheet, rviewModel: ReceiptViewModel(user: viewModel))
                         }
                     }
-                }
+                //}
             }
             .tabItem {
                 Label("Home", systemImage: "house")
@@ -141,9 +146,9 @@ struct HomeView: View {
         }
         .onAppear {
             print("HomeView appeared")
-            viewModel.fetchUser()// Fetch user data when the view appears
+            rviewModel.fetchUserReceipts()// Fetch user data when the view appears
             print("User: \(String(describing: viewModel.currentUser))")
-            print("User Receipts: \(viewModel.userReceipts)")
+            print("User Receipts: \(rviewModel.receiptList)")
         }
     }
 }

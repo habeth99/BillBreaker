@@ -9,11 +9,11 @@ import Foundation
 import SwiftUI
 
 struct PersonView: View {
-    let person: Person
+    let people: LegitP
 
     var body: some View {
         VStack(alignment: .leading) {
-            Text(person.name).font(.headline)
+            Text(people.name).font(.headline)
         }
         .frame(width: 360, height: 175)
         .background(Color.white)

@@ -122,13 +122,21 @@ struct NewReceiptView: View {
     }
 
     private var nextButton: some View {
-        Button("Next") {
+        Button(action: {
             guard let total = Double(totalText), let tax = Double(taxText) else {
                 print("Invalid input for total price or tax.")
                 return
             }
             print("Total Price: \(total), Tax: \(tax)")
+            
+            //rviewModel.userViewModel.currentUser.id
+            print("Items before calling newReceipt: \(items)")
+            
             rviewModel.newReceipt(name: name, tax: tax, price: total, items: items, people: people)
+            
+            rviewModel.setItems()
+            rviewModel.setPeople()
+            
             rviewModel.saveReceipt() { success in
                 if success {
                     print("Receipt saved successfully.")
@@ -137,6 +145,8 @@ struct NewReceiptView: View {
                     print("Failed to save the receipt.")
                 }
             }
+        }) {
+            Text("Next")
         }
     }
 

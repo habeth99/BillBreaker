@@ -23,7 +23,7 @@ struct Receipt: Codable, Identifiable {
     }
 
     // Custom initializer
-    init(id: String = UUID().uuidString, userId: String = "", name: String = "", date: String = "", createdAt: String = "", tax: Double = 0.00, price: Double = 0.00, items: [Item] = [], people: [LegitP] = []) {
+    init(id: String = "", userId: String = "", name: String = "", date: String = "", createdAt: String = "", tax: Double = 0.00, price: Double = 0.00, items: [Item] = [], people: [LegitP] = []) {
         self.id = id // Assign a UUID by default or use a specific id if provided
         self.userId = userId
         self.name = name
@@ -36,16 +36,47 @@ struct Receipt: Codable, Identifiable {
     }
 
     // Required for Codable conformance
+//    init(from decoder: Decoder) throws {
+//        let container = try decoder.container(keyedBy: CodingKeys.self)
+//        id = try container.decode(String.self, forKey: .id)
+//        userId = try container.decode(String.self, forKey: .userId)
+//        name = try container.decode(String.self, forKey: .name)
+//        date = try container.decode(String.self, forKey: .date)
+//        createdAt = try container.decode(String.self, forKey: .createdAt)
+//        tax = try container.decode(Double.self, forKey: .tax)
+//        price = try container.decode(Double.self, forKey: .price)
+//        items = try container.decode([Item].self, forKey: .items)
+//        people = try container.decode([LegitP].self, forKey: .people)
+//    }
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        print("Decoding id")
         id = try container.decode(String.self, forKey: .id)
+        
+        print("Decoding userId")
         userId = try container.decode(String.self, forKey: .userId)
+        
+        print("Decoding name")
         name = try container.decode(String.self, forKey: .name)
+        
+        print("Decoding date")
         date = try container.decode(String.self, forKey: .date)
+        
+        print("Decoding createdAt")
         createdAt = try container.decode(String.self, forKey: .createdAt)
+        
+        print("Decoding tax")
         tax = try container.decode(Double.self, forKey: .tax)
+        
+        print("Decoding price")
         price = try container.decode(Double.self, forKey: .price)
-        items = try container.decode([Item].self, forKey: .items)
-        people = try container.decode([LegitP].self, forKey: .people)
+        
+        print("Decoding items")
+        //items = try container.decode([Item].self, forKey: .items)
+        items = try container.decodeIfPresent([Item].self, forKey: .items) ?? []
+        
+        print("Decoding people")
+        //people = try container.decode([LegitP].self, forKey: .people)
+        people = try container.decodeIfPresent([LegitP].self, forKey: .people) ?? []
     }
 }
