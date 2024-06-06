@@ -5,125 +5,10 @@
 //  Created by Nick Habeth on 4/5/24.
 //
 
-//import Foundation
-//import SwiftUI
-//
-//struct BillDetailsView: View {
-//    // State variables for showing the sheet and knowing
-//    // if a person is selected
-//    //@State private var isSheetPresented = false
-//    @State private var selectedPerson: Person?
-//    @State private var anotherValue: String = "Anotha one"
-//    @ObservedObject var rviewModel: ReceiptViewModel
-//    
-//    let billItems: [BillItem] = [
-//        BillItem(name: "Chicken Burrito", price: 8.99),
-//        BillItem(name: "Steak Bowl", price: 9.99),
-//        BillItem(name: "Chicken Bowl", price: 8.99),
-//        BillItem(name: "Barbacoa Bowl", price: 7.99),
-//        BillItem(name: "Lemonade", price: 2.99),
-//        BillItem(name: "Lemonade", price: 2.99),
-//        BillItem(name: "Chips", price: 3.99),
-//        BillItem(name: "Guacamole", price: 4.99)
-//        // ... more items
-//    ]
-////    struct Person: Identifiable, Hashable {
-////        let id = UUID() // Unique identifier for each person
-////        let name: String
-////        // Add other properties here, such as duration and calories
-////    }
-//    let billPeople: [Person] = [
-//        Person(name: "Gary"),
-//        Person(name: "Nick"),
-//        Person(name: "Vince"),
-//        Person(name: "Mason")
-//        // Add more people as needed
-//    ]
-//
-//    var body: some View {
-//        
-//            ZStack {
-//                //Make background gray
-//                Color.gray.opacity(0.2).edgesIgnoringSafeArea(.all)
-//                ScrollView{
-//                    VStack(alignment: .leading, spacing: 10) {
-//                        // MARK: Header
-//                        //Text("Friday, Apr 5")
-//                        //.foregroundColor(.accentColor)
-//                        Text("Items")
-//                            .font(.title)
-//                            .fontWeight(.bold)
-//                        VStack (alignment: .leading){
-//                            ForEach(rviewModel.receipt.items, id: \.self) { item in
-//                                HStack {
-//                                    Text(item.name)
-//                                        .padding()
-//                                    Spacer()
-//                                    Text(String(format: "$%.2f", item.price))
-//                                        .padding()
-//                                }
-//                            }
-//                        }
-//                        .background(Color.white)
-//                        .cornerRadius(12)
-//                        .frame(width: 361)
-//                        .shadow(radius: 1)
-//                        
-//                        VStack (alignment: .leading, spacing: 15){
-//                            Text("People")
-//                                .padding(EdgeInsets(top: 25, leading: 0, bottom: -1, trailing: 0))
-//                                .fontWeight(.bold)
-//                                .font(.title)
-//                            //.font(.system(size: 36))
-//                            //.padding()
-//                            ForEach(billPeople) { person in
-//                                PersonView(person: person)
-//                                    .onTapGesture {
-//                                        selectedPerson = person
-//                                        
-//                                    }
-//                            }
-//                            
-//                        }
-//                    }
-//                    .padding(EdgeInsets(top: 30, leading: 19, bottom: 0, trailing: 24))
-//                    .sheet(item: $selectedPerson, content: {person in
-//                        ClaimItemsView(billItems: billItems, person: person, anotherValue: $anotherValue)
-//                        
-//                    })
-//                }
-//                .toolbar {
-//                    ToolbarItem(placement: .topBarLeading) {
-//                        VStack {
-//                            Text("Friday, Apr 5") // Your date here
-//                                .font(.subheadline)
-//                                .foregroundColor(.primary)
-//                            
-//                        }
-//                        .frame(width: 100)
-//                    }
-//                }
-//                //.navigationBarTitle("Chipotle", displayMode: .automatic)
-//            }
-//            .navigationBarTitle("Chipotle", displayMode: .automatic)
-//
-//    }
-//}
-
-
-
-//struct BillDetailsView_Previews: PreviewProvider {
-//    static var previews: some View {
-//            BillDetailsView()
-//    }
-//}
-
 import Foundation
 import SwiftUI
 
 struct BillDetailsView: View {
-    @State private var selectedPerson: LegitP?
-    @State private var anotherValue: String = "Anotha one"
     @ObservedObject var rviewModel: ReceiptViewModel
     var receipt: Receipt
 
@@ -137,40 +22,14 @@ struct BillDetailsView: View {
                     Text("Items")
                         .font(.title)
                         .fontWeight(.bold)
-                    VStack(alignment: .leading) {
-                        ForEach(receipt.items ?? [], id: \.id) { item in
-                            HStack {
-                                Text(item.name)
-                                    .padding()
-                                Spacer()
-                                Text(String(format: "$%.2f", item.price))
-                                    .padding()
-                            }
-                        }
-                    }
-                    .background(Color.white)
-                    .cornerRadius(12)
-                    .frame(width: 361)
-                    .shadow(radius: 1)
-                    
-                    VStack(alignment: .leading, spacing: 15) {
-                        Text("People")
-                            .padding(EdgeInsets(top: 25, leading: 0, bottom: -1, trailing: 0))
-                            .fontWeight(.bold)
-                            .font(.title)
-                        
-                        ForEach(receipt.people ?? [], id: \.id) { person in
-                            PersonView(people: person)
-                                .onTapGesture {
-                                    selectedPerson = person
-                                }
-                        }
+                    itemsSection
+                    peopleSection
+
+                    if let selectedPerson = rviewModel.selectedPerson {
+                        claimedItemsSection(for: selectedPerson)
                     }
                 }
                 .padding(EdgeInsets(top: 30, leading: 19, bottom: 0, trailing: 24))
-//                .sheet(item: $selectedPerson, content: { person in
-//                    ClaimItemsView(billItems: receipt.items ?? [], person: person, anotherValue: $anotherValue)
-//                })
             }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
@@ -184,29 +43,144 @@ struct BillDetailsView: View {
             }
         }
         .navigationBarTitle(receipt.name, displayMode: .automatic)
+        .onAppear {
+            // set receipt variable
+            rviewModel.setReceipt(receipt: receipt)
+        }
+    }
+
+    // Items section
+    private var itemsSection: some View {
+        VStack(alignment: .leading) {
+            ForEach(receipt.items ?? [], id: \.id) { item in
+                HStack {
+                    Text(item.name)
+                        .padding()
+                    Spacer()
+                    Text(String(format: "$%.2f", item.price))
+                        .padding()
+                }
+                .background(rviewModel.selectedItems.contains(where: { $0.id == item.id }) ? Color.blue.opacity(0.3) : Color.clear)
+                .onTapGesture {
+                    if rviewModel.selectedPerson != nil {
+                        rviewModel.toggleItemSelection(item)
+                    } else {
+                        print("No person selected")
+                    }
+                }
+            }
+        }
+        .background(Color.white)
+        .cornerRadius(12)
+        .frame(width: 361)
+        .shadow(radius: 1)
+    }
+
+    // People section
+    private var peopleSection: some View {
+        VStack(alignment: .leading, spacing: 15) {
+            Text("People")
+                .padding(EdgeInsets(top: 25, leading: 0, bottom: -1, trailing: 0))
+                .fontWeight(.bold)
+                .font(.title)
+
+            ForEach(receipt.people ?? [], id: \.id) { person in
+                PeopleView(rviewModel: rviewModel, person: person, isSelected: rviewModel.selectedPerson?.id == person.id)
+                    .onTapGesture {
+                        rviewModel.selectPerson(person)
+                    }
+            }
+        }
+    }
+
+    // Claimed items section
+    private func claimedItemsSection(for person: LegitP) -> some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text("\(person.name)'s Claimed Items")
+                .font(.title2)
+                .fontWeight(.bold)
+
+            ForEach(person.claims, id: \.id) { item in
+                HStack {
+                    Text(item.name)
+                        .padding()
+                    Spacer()
+                    Text(String(format: "$%.2f", item.price))
+                        .padding()
+                }
+                .background(Color.green.opacity(0.3))
+                .cornerRadius(8)
+                .shadow(radius: 1)
+            }
+        }
+        .padding(.top, 20)
     }
 }
 
-// Mock PersonView for demonstration
-//struct PersonView: View {
-//    let person: LegitP
-//    
-//    var body: some View {
-//        Text(person.name)
-//            .padding()
-//            .background(Color.white)
-//            .cornerRadius(8)
-//            .shadow(radius: 1)
-//    }
-//}
+// Helper view to display each person
+struct PeopleView: View {
+    @ObservedObject var rviewModel: ReceiptViewModel
+    @ObservedObject var person: LegitP
+    var isSelected: Bool
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            HStack {
+                Text(person.name)
+                    .padding([.top, .leading])
+                    .fontWeight(.bold)
+                Spacer()
+            }
+            Spacer()
+        Text("Claims:")
+                .padding([.leading])
+            ForEach(person.claims, id: \.id) { item in
+                HStack {
+                    Text(item.name)
+                    Text(String(format: "$%.2f", item.price))
+                }
+                .padding([.leading, .trailing])
+            }
+                Text("Total: \(rviewModel.personTotal())")
+                .padding([.leading])
+            Spacer()
+        }
+        .frame(maxWidth: .infinity, minHeight: 150) // Adjust the size of the people view
+        .background(isSelected ? Color.blue.opacity(0.3) : Color.white)
+        .cornerRadius(8)
+        .shadow(radius: 1)
+    }
+}
 
-// Mock ClaimItemsView for demonstration
-//struct ClaimItemsView: View {
-//    let billItems: [Item]
-//    let person: LegitP
-//    @Binding var anotherValue: String
-//    
-//    var body: some View {
-//        Text("Claim Items for \(person.name)")
-//    }
-//}
+// Preview
+struct BillDetailsView_Previews: PreviewProvider {
+    static var previews: some View {
+        let mockItems = [
+            Item(id: "1", name: "Item 1", price: 10.0),
+            Item(id: "2", name: "Item 2", price: 15.0),
+            Item(id: "3", name: "Item 3", price: 20.0)
+        ]
+        
+        let mockPeople = [
+            LegitP(id: "1", name: "John", claims: [mockItems[0]]),
+            LegitP(id: "2", name: "Jane", claims: [mockItems[1]]),
+            LegitP(id: "3", name: "Joe", claims: [mockItems[2]])
+        ]
+        
+        let mockReceipt = Receipt(id: "1", userId: "user1", name: "Test Receipt", date: "2024-05-28", createdAt: "12:00 PM", tax: 2.0, price: 45.0, items: mockItems, people: mockPeople)
+        
+        let mockViewModel = ReceiptViewModel(user: UserViewModel())
+        mockViewModel.receipt = mockReceipt
+        
+        return BillDetailsView(rviewModel: mockViewModel, receipt: mockReceipt)
+            .environmentObject(UserViewModel())
+    }
+}
+
+
+
+
+
+
+
+

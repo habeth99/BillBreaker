@@ -62,6 +62,7 @@
 		E2DDFC1F2BB26AB800BAD5AC /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC1E2BB26AB800BAD5AC /* Helper.swift */; };
 		E2DDFC212BB26C1900BAD5AC /* Seeing.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC202BB26C1900BAD5AC /* Seeing.swift */; };
 		E2DDFC232BB292E200BAD5AC /* TextRecognitionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC222BB292E200BAD5AC /* TextRecognitionService.swift */; };
+		E2EE21B12C096D5500A5399C /* ItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EE21B02C096D5500A5399C /* ItemView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -136,6 +137,7 @@
 		E2DDFC1E2BB26AB800BAD5AC /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		E2DDFC202BB26C1900BAD5AC /* Seeing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Seeing.swift; sourceTree = "<group>"; };
 		E2DDFC222BB292E200BAD5AC /* TextRecognitionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextRecognitionService.swift; sourceTree = "<group>"; };
+		E2EE21B02C096D5500A5399C /* ItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -209,6 +211,7 @@
 				E2DDFC1B2BB25D6E00BAD5AC /* HorizontalNameView.swift */,
 				E20EC6202BB60C5500223B19 /* HomeView.swift */,
 				E225080B2BBE58DF00FB97B8 /* TestView.swift */,
+				E2EE21B02C096D5500A5399C /* ItemView.swift */,
 				E24EEFFB2BBFF8A100E24B56 /* BillDetailsView.swift */,
 				E279660A2BC493CD000B0368 /* LoginView.swift */,
 				E2D1F29B2BC0595C00B27278 /* ClaimItemsView.swift */,
@@ -478,6 +481,7 @@
 				E2DDFBFC2BB1E7C000BAD5AC /* PhotoAssetCollection.swift in Sources */,
 				E2D1F29E2BC05E3400B27278 /* PersonView.swift in Sources */,
 				E279660F2BC4D411000B0368 /* ReceiptViewModel.swift in Sources */,
+				E2EE21B12C096D5500A5399C /* ItemView.swift in Sources */,
 				E2D1F29C2BC0595C00B27278 /* ClaimItemsView.swift in Sources */,
 				E2D1F2A02BC0B18200B27278 /* Receipt.swift in Sources */,
 				E2DDFC082BB1E7F700BAD5AC /* ThumbnailView.swift in Sources */,

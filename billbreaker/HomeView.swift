@@ -5,76 +5,6 @@
 //  Created by Nick Habeth on 3/28/24.
 //
 
-//import Foundation
-//import SwiftUI
-//
-//struct HomeView: View {
-//    @State private var bills = ["Bill 1"]
-//    @State private var showActionSheet = false
-//    @State private var showingNewReceiptSheet = false
-//    @State private var newBillTitle = ""
-//    @EnvironmentObject var viewModel: UserViewModel
-//    //@StateObject private var rviewModel: ReceiptViewModel
-//
-//    
-//    
-//    var body: some View {
-//        TabView {
-//            NavigationView {
-//                VStack {
-//                    //Text("\(self.viewModel.userReceipts.isEmpty)")
-//                    List {
-//                        ForEach(bills, id: \.self) { bill in
-//                            NavigationLink(destination: BillDetailsView()) {
-//                                Text("Chipotle")
-//                                // Text(viewModel.receipt.name)
-//                            }
-//                        }
-//                        //.onDelete(perform: deleteItems)
-//                    }
-//                    .navigationTitle("My Receipts")
-//                    .toolbar {
-//                        ToolbarItemGroup(placement: .navigationBarLeading) {
-//                            Button(action: {
-//                                print("edit Button was tapped")
-//                            }) {
-//                                Text("Edit")
-//                            }
-//                        }
-//                        
-//                        ToolbarItemGroup(placement: .navigationBarTrailing) {
-//                            Button(action: {
-//                                print("add Button was tapped")
-//                                showingNewReceiptSheet = true
-//
-//                            }) {
-//                                Image(systemName: "plus")
-//                            }
-//                        }
-//                    }
-//                    .sheet(isPresented: $showingNewReceiptSheet) {
-//                        //_rviewModel = ReceiptViewModel(receipt: Receipt(), userViewModel: viewModel)
-//                        NewReceiptView(isPresented: $showingNewReceiptSheet, rviewModel: ReceiptViewModel( user: viewModel))
-//                    }
-//                }
-//            }
-//            .tabItem {
-//                Label("Home", systemImage: "house")
-//            }
-//                
-//            ProfileView()
-//            .tabItem {
-//                Label("Profile", systemImage: "person")
-//            }
-//        }
-//    }
-//}
-
-
-//#Preview {
-//    HomeView()
-//}
-
 import Foundation
 import SwiftUI
 
@@ -94,10 +24,6 @@ struct HomeView: View {
         TabView {
             NavigationView {
                 VStack {
-//                    if viewModel.userReceipts.isEmpty {
-//                        Text("No Receipts Available")
-//                            .padding()
-//                    } else {
                     List(rviewModel.receiptList) { receipt in
                         NavigationLink(destination: BillDetailsView(rviewModel: rviewModel, receipt: receipt)) {
                                 VStack(alignment: .leading) {
@@ -133,7 +59,12 @@ struct HomeView: View {
                             NewReceiptView(isPresented: $showingNewReceiptSheet, rviewModel: ReceiptViewModel(user: viewModel))
                         }
                     }
-                //}
+                    .onAppear {
+                        print("HomeView appeared")
+                        rviewModel.fetchUserReceipts()// Fetch user data when the view appears
+                        print("User: \(String(describing: viewModel.currentUser))")
+                        print("User Receipts: \(rviewModel.receiptList)")
+                    }
             }
             .tabItem {
                 Label("Home", systemImage: "house")
@@ -144,12 +75,12 @@ struct HomeView: View {
                     Label("Profile", systemImage: "person")
                 }
         }
-        .onAppear {
-            print("HomeView appeared")
-            rviewModel.fetchUserReceipts()// Fetch user data when the view appears
-            print("User: \(String(describing: viewModel.currentUser))")
-            print("User Receipts: \(rviewModel.receiptList)")
-        }
+//        .onAppear {
+//            print("HomeView appeared")
+//            rviewModel.fetchUserReceipts()// Fetch user data when the view appears
+//            print("User: \(String(describing: viewModel.currentUser))")
+//            print("User Receipts: \(rviewModel.receiptList)")
+//        }
     }
 }
 

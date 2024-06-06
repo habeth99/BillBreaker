@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Item: Identifiable, Codable {
+struct Item: Identifiable, Codable, Hashable {
     var id: String
     var name: String
     var quantity: Int?
@@ -35,5 +35,10 @@ struct Item: Identifiable, Codable {
         price = try container.decode(Double.self, forKey: .price)
         //claimedBy = try container.decode([String].self, forKey: .claimedBy)
         claimedBy = try container.decodeIfPresent([String].self, forKey: .claimedBy) ?? []
+    }
+    
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }
