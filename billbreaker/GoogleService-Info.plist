@@ -26,5 +26,7 @@
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:241491922612:ios:56bbbc7a71324d8dc111e1</string>
+	<key>DATABASE_URL</key>
+	<string>https://billbreaker-33aea-default-rtdb.firebaseio.com</string>
 </dict>
 </plist>

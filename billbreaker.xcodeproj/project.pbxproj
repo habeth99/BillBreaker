@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E20EC6162BB3D84F00223B19 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E20EC6152BB3D84E00223B19 /* GoogleService-Info.plist */; };
 		E20EC6192BB3D96500223B19 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = E20EC6182BB3D96500223B19 /* FirebaseAuth */; };
 		E20EC61B2BB3D96500223B19 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = E20EC61A2BB3D96500223B19 /* FirebaseFirestore */; };
 		E20EC61D2BB3D96500223B19 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E20EC61C2BB3D96500223B19 /* FirebaseFirestoreSwift */; };
@@ -32,6 +31,7 @@
 		E279660F2BC4D411000B0368 /* ReceiptViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E279660E2BC4D411000B0368 /* ReceiptViewModel.swift */; };
 		E27966112BC4DA5E000B0368 /* ItemVIewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27966102BC4DA5E000B0368 /* ItemVIewModel.swift */; };
 		E27966132BC4DADB000B0368 /* PersonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27966122BC4DADB000B0368 /* PersonViewModel.swift */; };
+		E2A47A232C17CE000023E29D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E2A47A222C17CE000023E29D /* GoogleService-Info.plist */; };
 		E2B83BC72BEC11EF00A29D71 /* NewReceiptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B83BC62BEC11EF00A29D71 /* NewReceiptView.swift */; };
 		E2C759EF2BC34A6F00F8894C /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = E2C759EE2BC34A6F00F8894C /* FirebaseDatabase */; };
 		E2D1F29C2BC0595C00B27278 /* ClaimItemsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D1F29B2BC0595C00B27278 /* ClaimItemsView.swift */; };
@@ -83,7 +83,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		E20EC6152BB3D84E00223B19 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		E20EC6202BB60C5500223B19 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		E21466C02BAE72B2000A61DB /* billbreaker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = billbreaker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E21466C32BAE72B2000A61DB /* billbreakerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = billbreakerApp.swift; sourceTree = "<group>"; };
@@ -108,6 +107,7 @@
 		E279660E2BC4D411000B0368 /* ReceiptViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptViewModel.swift; sourceTree = "<group>"; };
 		E27966102BC4DA5E000B0368 /* ItemVIewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemVIewModel.swift; sourceTree = "<group>"; };
 		E27966122BC4DADB000B0368 /* PersonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonViewModel.swift; sourceTree = "<group>"; };
+		E2A47A222C17CE000023E29D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E2B83BC62BEC11EF00A29D71 /* NewReceiptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReceiptView.swift; sourceTree = "<group>"; };
 		E2D1F29B2BC0595C00B27278 /* ClaimItemsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaimItemsView.swift; sourceTree = "<group>"; };
 		E2D1F29D2BC05E3400B27278 /* PersonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonView.swift; sourceTree = "<group>"; };
@@ -222,8 +222,8 @@
 				E2409E1D2BED348000A5940D /* EnterItemsView.swift */,
 				E2409E1F2BED3B0800A5940D /* ProfileView.swift */,
 				E2409E212BED9B7B00A5940D /* AppDelegate.swift */,
+				E2A47A222C17CE000023E29D /* GoogleService-Info.plist */,
 				E21466C72BAE72B6000A61DB /* Assets.xcassets */,
-				E20EC6152BB3D84E00223B19 /* GoogleService-Info.plist */,
 				E21466C92BAE72B6000A61DB /* Preview Content */,
 			);
 			path = billbreaker;
@@ -425,7 +425,7 @@
 			files = (
 				E21466CB2BAE72B6000A61DB /* Preview Assets.xcassets in Resources */,
 				E21466C82BAE72B6000A61DB /* Assets.xcassets in Resources */,
-				E20EC6162BB3D84F00223B19 /* GoogleService-Info.plist in Resources */,
+				E2A47A232C17CE000023E29D /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

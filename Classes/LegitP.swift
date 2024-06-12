@@ -7,13 +7,12 @@
 
 import Foundation
 
-//struct LegitP: Identifiable, Codable {
 class LegitP: Identifiable, ObservableObject, Codable {
-    var id: String
-    var name: String
-    var userId: String
-    var claims: [Item]
-    var paid: Bool
+    @Published var id: String
+    @Published var name: String
+    @Published var userId: String
+    @Published var claims: [Item]
+    @Published var paid: Bool
     
     enum CodingKeys: CodingKey {
         case id, name, userId, claims, paid
@@ -40,5 +39,18 @@ class LegitP: Identifiable, ObservableObject, Codable {
         claims = try container.decodeIfPresent([Item].self, forKey: .claims) ?? []
         //paid = try container.decode(Bool.self, forKey: .paid)
         paid = try container.decodeIfPresent(Bool.self, forKey: .paid) ?? false
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(name, forKey: .name)
+        try container.encode(userId, forKey: .userId)
+        try container.encode(claims, forKey: .claims)
+        try container.encode(paid, forKey: .paid)
+    }
+    
+    var description: String {
+        return "LegitP(id: \(id), name: \(name), userId: \(userId), claims: \(claims), paid: \(paid))"
     }
 }

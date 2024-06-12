@@ -141,7 +141,7 @@ struct PeopleView: View {
                 }
                 .padding([.leading, .trailing])
             }
-                Text("Total: \(rviewModel.personTotal())")
+            Text("Total: \(rviewModel.personTotal(for: person))")
                 .padding([.leading])
             Spacer()
         }

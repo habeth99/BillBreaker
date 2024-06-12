@@ -7,16 +7,16 @@
 
 import Foundation
 
-struct Receipt: Codable, Identifiable {
-    var id: String
-    var userId: String
-    var name: String
-    var date: String
-    var createdAt: String
-    var tax: Double
-    var price: Double
-    var items: [Item]?
-    var people: [LegitP]?
+class Receipt: Codable, Identifiable, ObservableObject {
+    @Published var id: String
+    @Published var userId: String
+    @Published var name: String
+    @Published var date: String
+    @Published var createdAt: String
+    @Published var tax: Double
+    @Published var price: Double
+    @Published var items: [Item]?
+    @Published var people: [LegitP]?
     
     enum CodingKeys: CodingKey {
         case id, userId, name, date, createdAt, tax, price, items, people
@@ -35,20 +35,7 @@ struct Receipt: Codable, Identifiable {
         self.people = people
     }
 
-    // Required for Codable conformance
-//    init(from decoder: Decoder) throws {
-//        let container = try decoder.container(keyedBy: CodingKeys.self)
-//        id = try container.decode(String.self, forKey: .id)
-//        userId = try container.decode(String.self, forKey: .userId)
-//        name = try container.decode(String.self, forKey: .name)
-//        date = try container.decode(String.self, forKey: .date)
-//        createdAt = try container.decode(String.self, forKey: .createdAt)
-//        tax = try container.decode(Double.self, forKey: .tax)
-//        price = try container.decode(Double.self, forKey: .price)
-//        items = try container.decode([Item].self, forKey: .items)
-//        people = try container.decode([LegitP].self, forKey: .people)
-//    }
-    init(from decoder: Decoder) throws {
+    required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         print("Decoding id")
         id = try container.decode(String.self, forKey: .id)
@@ -78,5 +65,22 @@ struct Receipt: Codable, Identifiable {
         print("Decoding people")
         //people = try container.decode([LegitP].self, forKey: .people)
         people = try container.decodeIfPresent([LegitP].self, forKey: .people) ?? []
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(userId, forKey: .userId)
+        try container.encode(name, forKey: .name)
+        try container.encode(date, forKey: .date)
+        try container.encode(createdAt, forKey: .createdAt)
+        try container.encode(tax, forKey: .tax)
+        try container.encode(price, forKey: .price)
+        try container.encodeIfPresent(items, forKey: .items)
+        try container.encodeIfPresent(people, forKey: .people)
+    }
+    
+    var description: String {
+        return "Receipt(id: \(id), userId: \(userId), name: \(name), date: \(date), createdAt: \(createdAt), tax: \(tax), price: \(price), items: \(items ?? []), people: \(people ?? []))"
     }
 }

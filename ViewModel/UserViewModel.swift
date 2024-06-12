@@ -3,7 +3,7 @@
 //  billbreaker
 //
 //  Created by Nick Habeth on 4/8/24.
-//
+
 import Foundation
 import Combine
 import FirebaseDatabase
@@ -19,19 +19,20 @@ class UserViewModel: ObservableObject {
     
     private var dbRef = Database.database().reference()
     private var authStateDidChangeListenerHandle: AuthStateDidChangeListenerHandle?
+    private var cancellables = Set<AnyCancellable>()
 
     init() {
-        dbRef = Database.database().reference()
         if let currentUser = Auth.auth().currentUser {
             self.userID = currentUser.uid
+            
             print("Authenticated user ID: \(self.userID ?? "No user ID")")
             self.isUserAuthenticated = true
-            fetchUser()
+            setupUserListener()
+            //fetchUser()
         } else {
             print("No authenticated user found.")
         }
     }
-    
     
     // Fetch user data from Firebase and decode into User
     // Sign up a new user
@@ -43,13 +44,12 @@ class UserViewModel: ObservableObject {
                 return
             }
             guard let user = authResult?.user else { return }
-            let newUser = User(id: user.uid, name: name, email: email, venmoHandle: venmoHandle, cashAppHandle: cashAppHandle, receipts: []) // Assuming your User struct includes an email field now.
+            let newUser = User(id: user.uid, name: name, email: email, venmoHandle: venmoHandle, cashAppHandle: cashAppHandle, receipts: [])
+            print("New user created: \(newUser)")
             self.writeUserToFirebase(newUser)
             self.currentUser = newUser
-            
-//            guard let user = authResult?.user else { return }
-//            self.fetchUser(userId: user.uid)
-            
+            //maybe change
+            self.isUserAuthenticated = true
         }
     }
 
@@ -62,11 +62,9 @@ class UserViewModel: ObservableObject {
                 return
             }
             guard let user = authResult?.user else { return }
-            print("User1: \(user.uid)")
-            //self.fetchUser(userId: user.uid)
+            print("User signed in: \(user.uid)")
             self.fetchUser()
         }
-        //print("User2: \(self.currentUser?.id ?? "BAD1")")
     }
 
     func signOut() {
@@ -74,11 +72,12 @@ class UserViewModel: ObservableObject {
             try Auth.auth().signOut()
             self.isUserAuthenticated = false
             self.currentUser = nil // Clear the local user data
+            print("User signed out successfully.")
         } catch let signOutError as NSError {
             print("Error signing out: %@", signOutError)
         }
     }
-    
+
     func fetchUser() {
         print("fetchUser called.")
         guard let userID = userID else {
@@ -88,7 +87,8 @@ class UserViewModel: ObservableObject {
 
         print("Fetching user data for userID: \(userID)")
 
-        dbRef.child("users").child(userID).observeSingleEvent(of: .value, with: { snapshot in
+        //dbRef.child("users").child(userID).observeSingleEvent(of: .value, with: { snapshot in
+        dbRef.child("users").child(userID).observeSingleEvent(of: .value, with: { [weak self] snapshot in
             print("User data snapshot: \(snapshot)")
 
             guard snapshot.exists() else {
@@ -97,7 +97,7 @@ class UserViewModel: ObservableObject {
             }
 
             guard let value = snapshot.value as? [String: Any] else {
-                print("No user data found for userID: \(userID)")
+                print("Snapshot does not contain a valid dictionary. Snapshot value: \(snapshot.value ?? "nil")")
                 return
             }
 
@@ -107,9 +107,9 @@ class UserViewModel: ObservableObject {
                 let data = try JSONSerialization.data(withJSONObject: value, options: [])
                 let user = try JSONDecoder().decode(User.self, from: data)
                 print("Decoded user: \(user)")
-                self.currentUser = user
-                self.isUserAuthenticated = true
-                //self.getUserReceipts() // Fetch receipts after getting the user
+                self!.currentUser = user
+                self!.isUserAuthenticated = true
+                self?.setupUserListener()
             } catch let error {
                 print("Error decoding user: \(error.localizedDescription)")
             }
@@ -117,17 +117,31 @@ class UserViewModel: ObservableObject {
             print("Error fetching user data: \(error.localizedDescription)")
         }
     }
-    
+
     // Write User instance to Firebase
     func writeUserToFirebase(_ user: User) {
+        print("Writing user to Firebase: \(user)")
         guard let userData = try? JSONEncoder().encode(user),
-              let userDict = try? JSONSerialization.jsonObject(with: userData) as? [String: Any] else { return }
-        dbRef.child("users").child(user.id).setValue(userDict)
+              let userDict = try? JSONSerialization.jsonObject(with: userData) as? [String: Any] else {
+            print("Error encoding user data.")
+            return
+        }
+        dbRef.child("users").child(user.id).setValue(userDict) { error, _ in
+            if let error = error {
+                print("Error writing user to Firebase: \(error.localizedDescription)")
+            } else {
+                print("User written to Firebase successfully.")
+            }
+        }
     }
     
     // Update User data in Firebase
     func updateUser() {
-        guard let currentUser = currentUser else { return }
+        guard let currentUser = currentUser else {
+            print("Current user is nil.")
+            return
+        }
+        print("Updating user with ID: \(currentUser.id)")
         writeUserToFirebase(currentUser)
     }
     
@@ -143,7 +157,7 @@ class UserViewModel: ObservableObject {
         }
     }
     
-    //function to add a receipt a user
+    // Function to add a receipt to a user
     func addReceiptToUser(userId: String, receiptId: String, completion: @escaping (Bool) -> Void) {
         let userReceiptsRef = dbRef.child("users").child(userId).child("receipts")
         
@@ -158,6 +172,7 @@ class UserViewModel: ObservableObject {
 
             // Append the new receipt ID
             receipts.append(receiptId)
+            print("Appending receipt ID: \(receiptId) to user ID: \(userId)")
 
             // Update the user's receipts in Firebase
             userReceiptsRef.setValue(receipts) { error, _ in
@@ -165,12 +180,43 @@ class UserViewModel: ObservableObject {
                     print("Error updating user receipts: \(error.localizedDescription)")
                     completion(false)
                 } else {
+                    print("User receipts updated successfully.")
                     completion(true)
                 }
             }
-        })
+        }) { error in
+            print("Error retrieving user receipts: \(error.localizedDescription)")
+        }
     }
+
+    private func setupUserListener() {
+         guard let userID = userID else { return }
+         dbRef.child("users").child(userID).observe(.value, with: { [weak self] snapshot in
+             print("User data snapshot: \(snapshot)")
+
+             guard snapshot.exists() else {
+                 print("Snapshot does not exist.")
+                 return
+             }
+
+             guard let value = snapshot.value as? [String: Any] else {
+                 print("Snapshot does not contain a valid dictionary. Snapshot value: \(snapshot.value ?? "nil")")
+                 return
+             }
+
+             print("User data snapshot value: \(value)")
+
+             do {
+                 let data = try JSONSerialization.data(withJSONObject: value, options: [])
+                 let user = try JSONDecoder().decode(User.self, from: data)
+                 print("Decoded user: \(user)")
+                 self?.currentUser = user
+             } catch let error {
+                 print("Error decoding user: \(error.localizedDescription)")
+             }
+         }) { error in
+             print("Error fetching user data: \(error.localizedDescription)")
+         }
+     }
+    
 }
-
-
-
