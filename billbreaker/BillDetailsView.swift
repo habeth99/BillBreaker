@@ -34,7 +34,7 @@ struct BillDetailsView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     VStack {
-                        Text(receipt.date) // Your date here
+                        Text(rviewModel.receipt.date) // Your date here
                             .font(.subheadline)
                             .foregroundColor(.primary)
                     }
@@ -42,7 +42,7 @@ struct BillDetailsView: View {
                 }
             }
         }
-        .navigationBarTitle(receipt.name, displayMode: .automatic)
+        .navigationBarTitle(rviewModel.receipt.name, displayMode: .automatic)
         .onAppear {
             // set receipt variable
             rviewModel.setReceipt(receipt: receipt)
@@ -52,7 +52,7 @@ struct BillDetailsView: View {
     // Items section
     private var itemsSection: some View {
         VStack(alignment: .leading) {
-            ForEach(receipt.items ?? [], id: \.id) { item in
+            ForEach(rviewModel.receipt.items ?? [], id: \.id) { item in
                 HStack {
                     Text(item.name)
                         .padding()
@@ -60,10 +60,11 @@ struct BillDetailsView: View {
                     Text(String(format: "$%.2f", item.price))
                         .padding()
                 }
-                .background(rviewModel.selectedItems.contains(where: { $0.id == item.id }) ? Color.blue.opacity(0.3) : Color.clear)
+                .background(itemBackground(for: item))
                 .onTapGesture {
                     if rviewModel.selectedPerson != nil {
                         rviewModel.toggleItemSelection(item)
+
                     } else {
                         print("No person selected")
                     }
@@ -84,12 +85,23 @@ struct BillDetailsView: View {
                 .fontWeight(.bold)
                 .font(.title)
 
-            ForEach(receipt.people ?? [], id: \.id) { person in
+            ForEach(rviewModel.receipt.people ?? [], id: \.id) { person in
                 PeopleView(rviewModel: rviewModel, person: person, isSelected: rviewModel.selectedPerson?.id == person.id)
                     .onTapGesture {
                         rviewModel.selectPerson(person)
+                        
                     }
             }
+        }
+    }
+    
+    private func itemBackground(for item: Item) -> Color {
+        if rviewModel.selectedItems.contains(where: { $0.id == item.id }) {
+            return Color.blue.opacity(0.3)
+        } else if rviewModel.isItemClaimedByAnotherPerson(item) {
+            return Color.red.opacity(0.3)
+        } else {
+            return Color.clear
         }
     }
 
@@ -145,8 +157,9 @@ struct PeopleView: View {
                 .padding([.leading])
             Spacer()
         }
-        .frame(maxWidth: .infinity, minHeight: 150) // Adjust the size of the people view
-        .background(isSelected ? Color.blue.opacity(0.3) : Color.white)
+        .frame(maxWidth: .infinity, minHeight: 150)
+        //.background(isSelected ? Color.blue.opacity(0.3) : Color.white)
+        .background(isSelected ? Color.blue.opacity(0.3) : (rviewModel.personHasClaims(person) ? Color.red.opacity(0.3) : Color.white))
         .cornerRadius(8)
         .shadow(radius: 1)
     }

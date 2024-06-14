@@ -12,6 +12,7 @@ struct HomeView: View {
     @State private var bills = ["Bill 1"]
     @State private var showActionSheet = false
     @State private var showingNewReceiptSheet = false
+    @State private var showingJoinSheet = false
     @State private var newBillTitle = ""
     @StateObject private var rviewModel: ReceiptViewModel
     @EnvironmentObject var viewModel: UserViewModel
@@ -46,6 +47,16 @@ struct HomeView: View {
                                 }
                             }
                             
+                            ToolbarItemGroup(placement: .navigationBarLeading) {
+                                Button(action: {
+
+                                    showingJoinSheet = true
+                                    
+                                }) {
+                                    Text("Join")
+                                }
+                            }
+                            
                             ToolbarItemGroup(placement: .navigationBarTrailing) {
                                 Button(action: {
                                     print("add Button was tapped")
@@ -57,6 +68,10 @@ struct HomeView: View {
                         }
                         .sheet(isPresented: $showingNewReceiptSheet) {
                             NewReceiptView(isPresented: $showingNewReceiptSheet, rviewModel: ReceiptViewModel(user: viewModel))
+                        }
+                        .sheet(isPresented: $showingJoinSheet) {
+                            //JoinReceiptView(isPresented: $showingJoinSheet, rviewModel: ReceiptViewModel(user: viewModel))
+                            JoinReceiptView(isPresented: $showingJoinSheet, rviewModel: rviewModel)
                         }
                     }
                     .onAppear {
@@ -75,12 +90,6 @@ struct HomeView: View {
                     Label("Profile", systemImage: "person")
                 }
         }
-//        .onAppear {
-//            print("HomeView appeared")
-//            rviewModel.fetchUserReceipts()// Fetch user data when the view appears
-//            print("User: \(String(describing: viewModel.currentUser))")
-//            print("User Receipts: \(rviewModel.receiptList)")
-//        }
     }
 }
 
