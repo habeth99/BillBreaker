@@ -20,7 +20,8 @@ struct WhichView: View {
                     .environmentObject(viewModel)
             } else {
                 // User is not authenticated, show the login view
-                LoginView()
+                //LoginView()
+                LandingPageView()
             }
         //}
     }

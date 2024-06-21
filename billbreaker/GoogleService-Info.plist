@@ -9,7 +9,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.nicholashabeth.billbreaker</string>
+	<string>com.vmgmsoftware.billbreaker</string>
 	<key>PROJECT_ID</key>
 	<string>billbreaker-33aea</string>
 	<key>STORAGE_BUCKET</key>
@@ -25,7 +25,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:241491922612:ios:56bbbc7a71324d8dc111e1</string>
+	<string>1:241491922612:ios:189a66c58315c575c111e1</string>
 	<key>DATABASE_URL</key>
 	<string>https://billbreaker-33aea-default-rtdb.firebaseio.com</string>
 </dict>

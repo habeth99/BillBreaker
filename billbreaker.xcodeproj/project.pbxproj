@@ -17,6 +17,7 @@
 		E21466D52BAE72B7000A61DB /* billbreakerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21466D42BAE72B7000A61DB /* billbreakerTests.swift */; };
 		E21466DF2BAE72B7000A61DB /* billbreakerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21466DE2BAE72B7000A61DB /* billbreakerUITests.swift */; };
 		E21466E12BAE72B7000A61DB /* billbreakerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21466E02BAE72B7000A61DB /* billbreakerUITestsLaunchTests.swift */; };
+		E21CB6882C21EB6900290D00 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E21CB6872C21EB6900290D00 /* GoogleService-Info.plist */; };
 		E225080C2BBE58DF00FB97B8 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E225080B2BBE58DF00FB97B8 /* TestView.swift */; };
 		E2409E1E2BED348000A5940D /* EnterItemsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2409E1D2BED348000A5940D /* EnterItemsView.swift */; };
 		E2409E202BED3B0800A5940D /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2409E1F2BED3B0800A5940D /* ProfileView.swift */; };
@@ -31,9 +32,17 @@
 		E279660F2BC4D411000B0368 /* ReceiptViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E279660E2BC4D411000B0368 /* ReceiptViewModel.swift */; };
 		E27966112BC4DA5E000B0368 /* ItemVIewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27966102BC4DA5E000B0368 /* ItemVIewModel.swift */; };
 		E27966132BC4DADB000B0368 /* PersonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27966122BC4DADB000B0368 /* PersonViewModel.swift */; };
-		E2A47A232C17CE000023E29D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E2A47A222C17CE000023E29D /* GoogleService-Info.plist */; };
 		E2A47A252C1A2FBC0023E29D /* JoinReceiptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A47A242C1A2FBC0023E29D /* JoinReceiptView.swift */; };
 		E2A47A272C1CE8140023E29D /* GuestSignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A47A262C1CE8140023E29D /* GuestSignInView.swift */; };
+		E2A47A2A2C1E2D7D0023E29D /* LandingPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A47A292C1E2D7D0023E29D /* LandingPageView.swift */; };
+		E2B5D7F32C25185400403F9D /* billbreakerAppClipApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B5D7F22C25185400403F9D /* billbreakerAppClipApp.swift */; };
+		E2B5D7F72C25185700403F9D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2B5D7F62C25185700403F9D /* Assets.xcassets */; };
+		E2B5D7FA2C25185700403F9D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2B5D7F92C25185700403F9D /* Preview Assets.xcassets */; };
+		E2B5D8062C25185800403F9D /* billbreakerAppClipTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B5D8052C25185800403F9D /* billbreakerAppClipTests.swift */; };
+		E2B5D8102C25185800403F9D /* billbreakerAppClipUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B5D80F2C25185800403F9D /* billbreakerAppClipUITests.swift */; };
+		E2B5D8122C25185800403F9D /* billbreakerAppClipUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B5D8112C25185800403F9D /* billbreakerAppClipUITestsLaunchTests.swift */; };
+		E2B5D8152C25185800403F9D /* billbreakerAppClip.app in Embed App Clips */ = {isa = PBXBuildFile; fileRef = E2B5D7F02C25185400403F9D /* billbreakerAppClip.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		E2B5D8212C25290E00403F9D /* ClipBillDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B5D8202C25290E00403F9D /* ClipBillDetailView.swift */; };
 		E2B83BC72BEC11EF00A29D71 /* NewReceiptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B83BC62BEC11EF00A29D71 /* NewReceiptView.swift */; };
 		E2C759EF2BC34A6F00F8894C /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = E2C759EE2BC34A6F00F8894C /* FirebaseDatabase */; };
 		E2D1F29C2BC0595C00B27278 /* ClaimItemsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D1F29B2BC0595C00B27278 /* ClaimItemsView.swift */; };
@@ -82,7 +91,42 @@
 			remoteGlobalIDString = E21466BF2BAE72B2000A61DB;
 			remoteInfo = billbreaker;
 		};
+		E2B5D8022C25185800403F9D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E21466B82BAE72B2000A61DB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E2B5D7EF2C25185400403F9D;
+			remoteInfo = billbreakerAppClip;
+		};
+		E2B5D80C2C25185800403F9D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E21466B82BAE72B2000A61DB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E2B5D7EF2C25185400403F9D;
+			remoteInfo = billbreakerAppClip;
+		};
+		E2B5D8132C25185800403F9D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E21466B82BAE72B2000A61DB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E2B5D7EF2C25185400403F9D;
+			remoteInfo = billbreakerAppClip;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		E2B5D8162C25185800403F9D /* Embed App Clips */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/AppClips";
+			dstSubfolderSpec = 16;
+			files = (
+				E2B5D8152C25185800403F9D /* billbreakerAppClip.app in Embed App Clips */,
+			);
+			name = "Embed App Clips";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		E20EC6202BB60C5500223B19 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -95,6 +139,7 @@
 		E21466DA2BAE72B7000A61DB /* billbreakerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = billbreakerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E21466DE2BAE72B7000A61DB /* billbreakerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = billbreakerUITests.swift; sourceTree = "<group>"; };
 		E21466E02BAE72B7000A61DB /* billbreakerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = billbreakerUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		E21CB6872C21EB6900290D00 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E225080B2BBE58DF00FB97B8 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		E2409E1D2BED348000A5940D /* EnterItemsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterItemsView.swift; sourceTree = "<group>"; };
 		E2409E1F2BED3B0800A5940D /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
@@ -109,9 +154,22 @@
 		E279660E2BC4D411000B0368 /* ReceiptViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptViewModel.swift; sourceTree = "<group>"; };
 		E27966102BC4DA5E000B0368 /* ItemVIewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemVIewModel.swift; sourceTree = "<group>"; };
 		E27966122BC4DADB000B0368 /* PersonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonViewModel.swift; sourceTree = "<group>"; };
-		E2A47A222C17CE000023E29D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E2A47A242C1A2FBC0023E29D /* JoinReceiptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinReceiptView.swift; sourceTree = "<group>"; };
 		E2A47A262C1CE8140023E29D /* GuestSignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestSignInView.swift; sourceTree = "<group>"; };
+		E2A47A282C1CFA520023E29D /* billbreaker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = billbreaker.entitlements; sourceTree = "<group>"; };
+		E2A47A292C1E2D7D0023E29D /* LandingPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingPageView.swift; sourceTree = "<group>"; };
+		E2B5D7F02C25185400403F9D /* billbreakerAppClip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = billbreakerAppClip.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E2B5D7F22C25185400403F9D /* billbreakerAppClipApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = billbreakerAppClipApp.swift; sourceTree = "<group>"; };
+		E2B5D7F62C25185700403F9D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E2B5D7F92C25185700403F9D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		E2B5D7FB2C25185700403F9D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E2B5D7FC2C25185700403F9D /* billbreakerAppClip.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = billbreakerAppClip.entitlements; sourceTree = "<group>"; };
+		E2B5D8012C25185800403F9D /* billbreakerAppClipTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = billbreakerAppClipTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E2B5D8052C25185800403F9D /* billbreakerAppClipTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = billbreakerAppClipTests.swift; sourceTree = "<group>"; };
+		E2B5D80B2C25185800403F9D /* billbreakerAppClipUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = billbreakerAppClipUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E2B5D80F2C25185800403F9D /* billbreakerAppClipUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = billbreakerAppClipUITests.swift; sourceTree = "<group>"; };
+		E2B5D8112C25185800403F9D /* billbreakerAppClipUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = billbreakerAppClipUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		E2B5D8202C25290E00403F9D /* ClipBillDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipBillDetailView.swift; sourceTree = "<group>"; };
 		E2B83BC62BEC11EF00A29D71 /* NewReceiptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReceiptView.swift; sourceTree = "<group>"; };
 		E2D1F29B2BC0595C00B27278 /* ClaimItemsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaimItemsView.swift; sourceTree = "<group>"; };
 		E2D1F29D2BC05E3400B27278 /* PersonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonView.swift; sourceTree = "<group>"; };
@@ -170,6 +228,27 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E2B5D7ED2C25185400403F9D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E2B5D7FE2C25185800403F9D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E2B5D8082C25185800403F9D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -183,6 +262,7 @@
 		E21466B72BAE72B2000A61DB = {
 			isa = PBXGroup;
 			children = (
+				E2B5D8222C254B7300403F9D /* SharedViews */,
 				E20EC6142BB3CB9E00223B19 /* Firebase */,
 				E2DDFC1D2BB268E800BAD5AC /* CmpVision */,
 				E2DDFC162BB1FFA800BAD5AC /* ViewModel */,
@@ -191,6 +271,9 @@
 				E21466C22BAE72B2000A61DB /* billbreaker */,
 				E21466D32BAE72B7000A61DB /* billbreakerTests */,
 				E21466DD2BAE72B7000A61DB /* billbreakerUITests */,
+				E2B5D7F12C25185400403F9D /* billbreakerAppClip */,
+				E2B5D8042C25185800403F9D /* billbreakerAppClipTests */,
+				E2B5D80E2C25185800403F9D /* billbreakerAppClipUITests */,
 				E21466C12BAE72B2000A61DB /* Products */,
 			);
 			sourceTree = "<group>";
@@ -201,6 +284,9 @@
 				E21466C02BAE72B2000A61DB /* billbreaker.app */,
 				E21466D02BAE72B7000A61DB /* billbreakerTests.xctest */,
 				E21466DA2BAE72B7000A61DB /* billbreakerUITests.xctest */,
+				E2B5D7F02C25185400403F9D /* billbreakerAppClip.app */,
+				E2B5D8012C25185800403F9D /* billbreakerAppClipTests.xctest */,
+				E2B5D80B2C25185800403F9D /* billbreakerAppClipUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -208,6 +294,7 @@
 		E21466C22BAE72B2000A61DB /* billbreaker */ = {
 			isa = PBXGroup;
 			children = (
+				E2A47A282C1CFA520023E29D /* billbreaker.entitlements */,
 				E21466C32BAE72B2000A61DB /* billbreakerApp.swift */,
 				E2DDFBEA2BAF735E00BAD5AC /* BreakABillView.swift */,
 				E2DDFC122BB1FAE000BAD5AC /* TipTotalView.swift */,
@@ -216,7 +303,6 @@
 				E20EC6202BB60C5500223B19 /* HomeView.swift */,
 				E225080B2BBE58DF00FB97B8 /* TestView.swift */,
 				E2EE21B02C096D5500A5399C /* ItemView.swift */,
-				E24EEFFB2BBFF8A100E24B56 /* BillDetailsView.swift */,
 				E279660A2BC493CD000B0368 /* LoginView.swift */,
 				E2D1F29B2BC0595C00B27278 /* ClaimItemsView.swift */,
 				E2D1F29D2BC05E3400B27278 /* PersonView.swift */,
@@ -228,7 +314,8 @@
 				E2A47A242C1A2FBC0023E29D /* JoinReceiptView.swift */,
 				E2A47A262C1CE8140023E29D /* GuestSignInView.swift */,
 				E2409E212BED9B7B00A5940D /* AppDelegate.swift */,
-				E2A47A222C17CE000023E29D /* GoogleService-Info.plist */,
+				E2A47A292C1E2D7D0023E29D /* LandingPageView.swift */,
+				E21CB6872C21EB6900290D00 /* GoogleService-Info.plist */,
 				E21466C72BAE72B6000A61DB /* Assets.xcassets */,
 				E21466C92BAE72B6000A61DB /* Preview Content */,
 			);
@@ -258,6 +345,52 @@
 				E21466E02BAE72B7000A61DB /* billbreakerUITestsLaunchTests.swift */,
 			);
 			path = billbreakerUITests;
+			sourceTree = "<group>";
+		};
+		E2B5D7F12C25185400403F9D /* billbreakerAppClip */ = {
+			isa = PBXGroup;
+			children = (
+				E2B5D7F22C25185400403F9D /* billbreakerAppClipApp.swift */,
+				E2B5D8202C25290E00403F9D /* ClipBillDetailView.swift */,
+				E2B5D7F62C25185700403F9D /* Assets.xcassets */,
+				E2B5D7FB2C25185700403F9D /* Info.plist */,
+				E2B5D7FC2C25185700403F9D /* billbreakerAppClip.entitlements */,
+				E2B5D7F82C25185700403F9D /* Preview Content */,
+			);
+			path = billbreakerAppClip;
+			sourceTree = "<group>";
+		};
+		E2B5D7F82C25185700403F9D /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				E2B5D7F92C25185700403F9D /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		E2B5D8042C25185800403F9D /* billbreakerAppClipTests */ = {
+			isa = PBXGroup;
+			children = (
+				E2B5D8052C25185800403F9D /* billbreakerAppClipTests.swift */,
+			);
+			path = billbreakerAppClipTests;
+			sourceTree = "<group>";
+		};
+		E2B5D80E2C25185800403F9D /* billbreakerAppClipUITests */ = {
+			isa = PBXGroup;
+			children = (
+				E2B5D80F2C25185800403F9D /* billbreakerAppClipUITests.swift */,
+				E2B5D8112C25185800403F9D /* billbreakerAppClipUITestsLaunchTests.swift */,
+			);
+			path = billbreakerAppClipUITests;
+			sourceTree = "<group>";
+		};
+		E2B5D8222C254B7300403F9D /* SharedViews */ = {
+			isa = PBXGroup;
+			children = (
+				E24EEFFB2BBFF8A100E24B56 /* BillDetailsView.swift */,
+			);
+			path = SharedViews;
 			sourceTree = "<group>";
 		};
 		E2DDFBF02BB1E2F400BAD5AC /* Camera */ = {
@@ -326,10 +459,12 @@
 				E21466BC2BAE72B2000A61DB /* Sources */,
 				E21466BD2BAE72B2000A61DB /* Frameworks */,
 				E21466BE2BAE72B2000A61DB /* Resources */,
+				E2B5D8162C25185800403F9D /* Embed App Clips */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				E2B5D8142C25185800403F9D /* PBXTargetDependency */,
 			);
 			name = billbreaker;
 			packageProductDependencies = (
@@ -378,6 +513,59 @@
 			productReference = E21466DA2BAE72B7000A61DB /* billbreakerUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		E2B5D7EF2C25185400403F9D /* billbreakerAppClip */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E2B5D81D2C25185800403F9D /* Build configuration list for PBXNativeTarget "billbreakerAppClip" */;
+			buildPhases = (
+				E2B5D7EC2C25185400403F9D /* Sources */,
+				E2B5D7ED2C25185400403F9D /* Frameworks */,
+				E2B5D7EE2C25185400403F9D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = billbreakerAppClip;
+			productName = billbreakerAppClip;
+			productReference = E2B5D7F02C25185400403F9D /* billbreakerAppClip.app */;
+			productType = "com.apple.product-type.application.on-demand-install-capable";
+		};
+		E2B5D8002C25185800403F9D /* billbreakerAppClipTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E2B5D81E2C25185800403F9D /* Build configuration list for PBXNativeTarget "billbreakerAppClipTests" */;
+			buildPhases = (
+				E2B5D7FD2C25185800403F9D /* Sources */,
+				E2B5D7FE2C25185800403F9D /* Frameworks */,
+				E2B5D7FF2C25185800403F9D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E2B5D8032C25185800403F9D /* PBXTargetDependency */,
+			);
+			name = billbreakerAppClipTests;
+			productName = billbreakerAppClipTests;
+			productReference = E2B5D8012C25185800403F9D /* billbreakerAppClipTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		E2B5D80A2C25185800403F9D /* billbreakerAppClipUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E2B5D81F2C25185800403F9D /* Build configuration list for PBXNativeTarget "billbreakerAppClipUITests" */;
+			buildPhases = (
+				E2B5D8072C25185800403F9D /* Sources */,
+				E2B5D8082C25185800403F9D /* Frameworks */,
+				E2B5D8092C25185800403F9D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E2B5D80D2C25185800403F9D /* PBXTargetDependency */,
+			);
+			name = billbreakerAppClipUITests;
+			productName = billbreakerAppClipUITests;
+			productReference = E2B5D80B2C25185800403F9D /* billbreakerAppClipUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -385,7 +573,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1530;
+				LastSwiftUpdateCheck = 1540;
 				LastUpgradeCheck = 1530;
 				TargetAttributes = {
 					E21466BF2BAE72B2000A61DB = {
@@ -398,6 +586,17 @@
 					E21466D92BAE72B7000A61DB = {
 						CreatedOnToolsVersion = 15.3;
 						TestTargetID = E21466BF2BAE72B2000A61DB;
+					};
+					E2B5D7EF2C25185400403F9D = {
+						CreatedOnToolsVersion = 15.4;
+					};
+					E2B5D8002C25185800403F9D = {
+						CreatedOnToolsVersion = 15.4;
+						TestTargetID = E2B5D7EF2C25185400403F9D;
+					};
+					E2B5D80A2C25185800403F9D = {
+						CreatedOnToolsVersion = 15.4;
+						TestTargetID = E2B5D7EF2C25185400403F9D;
 					};
 				};
 			};
@@ -420,6 +619,9 @@
 				E21466BF2BAE72B2000A61DB /* billbreaker */,
 				E21466CF2BAE72B7000A61DB /* billbreakerTests */,
 				E21466D92BAE72B7000A61DB /* billbreakerUITests */,
+				E2B5D7EF2C25185400403F9D /* billbreakerAppClip */,
+				E2B5D8002C25185800403F9D /* billbreakerAppClipTests */,
+				E2B5D80A2C25185800403F9D /* billbreakerAppClipUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -431,7 +633,7 @@
 			files = (
 				E21466CB2BAE72B6000A61DB /* Preview Assets.xcassets in Resources */,
 				E21466C82BAE72B6000A61DB /* Assets.xcassets in Resources */,
-				E2A47A232C17CE000023E29D /* GoogleService-Info.plist in Resources */,
+				E21CB6882C21EB6900290D00 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -443,6 +645,29 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		E21466D82BAE72B7000A61DB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E2B5D7EE2C25185400403F9D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E2B5D7FA2C25185700403F9D /* Preview Assets.xcassets in Resources */,
+				E2B5D7F72C25185700403F9D /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E2B5D7FF2C25185800403F9D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E2B5D8092C25185800403F9D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -481,6 +706,7 @@
 				E24EEFFC2BBFF8A100E24B56 /* BillDetailsView.swift in Sources */,
 				E279660D2BC49D83000B0368 /* WhichView.swift in Sources */,
 				E2DDFBFE2BB1E7C900BAD5AC /* PhotoCollection.swift in Sources */,
+				E2A47A2A2C1E2D7D0023E29D /* LandingPageView.swift in Sources */,
 				E27966072BC476BD000B0368 /* LegitP.swift in Sources */,
 				E2DDFC062BB1E7ED00BAD5AC /* PhotoView.swift in Sources */,
 				E2DDFBF22BB1E74A00BAD5AC /* CachedImageManager.swift in Sources */,
@@ -524,6 +750,32 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E2B5D7EC2C25185400403F9D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E2B5D8212C25290E00403F9D /* ClipBillDetailView.swift in Sources */,
+				E2B5D7F32C25185400403F9D /* billbreakerAppClipApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E2B5D7FD2C25185800403F9D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E2B5D8062C25185800403F9D /* billbreakerAppClipTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E2B5D8072C25185800403F9D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E2B5D8122C25185800403F9D /* billbreakerAppClipUITestsLaunchTests.swift in Sources */,
+				E2B5D8102C25185800403F9D /* billbreakerAppClipUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -536,6 +788,21 @@
 			isa = PBXTargetDependency;
 			target = E21466BF2BAE72B2000A61DB /* billbreaker */;
 			targetProxy = E21466DB2BAE72B7000A61DB /* PBXContainerItemProxy */;
+		};
+		E2B5D8032C25185800403F9D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E2B5D7EF2C25185400403F9D /* billbreakerAppClip */;
+			targetProxy = E2B5D8022C25185800403F9D /* PBXContainerItemProxy */;
+		};
+		E2B5D80D2C25185800403F9D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E2B5D7EF2C25185400403F9D /* billbreakerAppClip */;
+			targetProxy = E2B5D80C2C25185800403F9D /* PBXContainerItemProxy */;
+		};
+		E2B5D8142C25185800403F9D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E2B5D7EF2C25185400403F9D /* billbreakerAppClip */;
+			targetProxy = E2B5D8132C25185800403F9D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -662,12 +929,14 @@
 		E21466E52BAE72B7000A61DB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = billbreaker/billbreaker.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"billbreaker/Preview Content\"";
-				DEVELOPMENT_TEAM = BM6RWHC29F;
+				DEVELOPMENT_TEAM = UWF486GBFD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "\"Bill Breaker needs Camera access to scan receipt\"";
@@ -682,8 +951,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.nicholashabeth.billbreaker;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vmgmsoftware.billbreaker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -694,12 +963,14 @@
 		E21466E62BAE72B7000A61DB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = billbreaker/billbreaker.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"billbreaker/Preview Content\"";
-				DEVELOPMENT_TEAM = BM6RWHC29F;
+				DEVELOPMENT_TEAM = UWF486GBFD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "\"Bill Breaker needs Camera access to scan receipt\"";
@@ -714,8 +985,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.nicholashabeth.billbreaker;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vmgmsoftware.billbreaker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -799,6 +1070,150 @@
 			};
 			name = Release;
 		};
+		E2B5D8172C25185800403F9D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = billbreakerAppClip/billbreakerAppClip.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"billbreakerAppClip/Preview Content\"";
+				DEVELOPMENT_TEAM = UWF486GBFD;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = billbreakerAppClip/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = billbreaker;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vmgmsoftware.billbreaker.Clip;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		E2B5D8182C25185800403F9D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = billbreakerAppClip/billbreakerAppClip.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"billbreakerAppClip/Preview Content\"";
+				DEVELOPMENT_TEAM = UWF486GBFD;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = billbreakerAppClip/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = billbreaker;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vmgmsoftware.billbreaker.Clip;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		E2B5D8192C25185800403F9D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = BM6RWHC29F;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vmgmsoftware.billbreaker.billbreakerAppClipTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/billbreakerAppClip.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/billbreakerAppClip";
+			};
+			name = Debug;
+		};
+		E2B5D81A2C25185800403F9D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = BM6RWHC29F;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vmgmsoftware.billbreaker.billbreakerAppClipTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/billbreakerAppClip.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/billbreakerAppClip";
+			};
+			name = Release;
+		};
+		E2B5D81B2C25185800403F9D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = BM6RWHC29F;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vmgmsoftware.billbreaker.billbreakerAppClipUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = billbreakerAppClip;
+			};
+			name = Debug;
+		};
+		E2B5D81C2C25185800403F9D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = BM6RWHC29F;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vmgmsoftware.billbreaker.billbreakerAppClipUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = billbreakerAppClip;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -834,6 +1249,33 @@
 			buildConfigurations = (
 				E21466EB2BAE72B7000A61DB /* Debug */,
 				E21466EC2BAE72B7000A61DB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E2B5D81D2C25185800403F9D /* Build configuration list for PBXNativeTarget "billbreakerAppClip" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E2B5D8172C25185800403F9D /* Debug */,
+				E2B5D8182C25185800403F9D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E2B5D81E2C25185800403F9D /* Build configuration list for PBXNativeTarget "billbreakerAppClipTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E2B5D8192C25185800403F9D /* Debug */,
+				E2B5D81A2C25185800403F9D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E2B5D81F2C25185800403F9D /* Build configuration list for PBXNativeTarget "billbreakerAppClipUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E2B5D81B2C25185800403F9D /* Debug */,
+				E2B5D81C2C25185800403F9D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

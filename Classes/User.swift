@@ -51,13 +51,6 @@ class User: Identifiable, Codable, ObservableObject {
         print("Decoding receipts")
         receipts = try container.decodeIfPresent([String].self, forKey: .receipts) ?? []
         
-//        let container = try decoder.container(keyedBy: CodingKeys.self)
-//        id = try container.decode(String.self, forKey: .id)
-//        name = try container.decode(String.self, forKey: .name)
-//        email = try container.decode(String.self, forKey: .email)
-//        venmoHandle = try container.decode(String.self, forKey: .venmoHandle)
-//        cashAppHandle = try container.decode(String.self, forKey: .cashAppHandle)
-//        receipts = try container.decodeIfPresent([String].self, forKey: .receipts)
     }
     
     func encode(to encoder: Encoder) throws {
