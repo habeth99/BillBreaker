@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct billbreakerAppClipApp: App {
+    
+    
     var body: some Scene {
         WindowGroup {
-            BillDetailsView()
+            ClipBillDetailView()
         }
     }
 }

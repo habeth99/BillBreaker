@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct ClipBillDetailView: View {
-    //var receipt: Receipt
+    
     
     var body: some View {
         VStack{
