@@ -28,7 +28,6 @@
 import SwiftUI
 import FirebaseCore
 import Firebase
-import 
 
 class AppDelegate: NSObject, UIApplicationDelegate {
   func application(_ application: UIApplication,

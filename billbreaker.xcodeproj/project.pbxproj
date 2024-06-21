@@ -67,7 +67,6 @@
 		E2DDFC0A2BB1E80300BAD5AC /* ViewfinderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC092BB1E80300BAD5AC /* ViewfinderView.swift */; };
 		E2DDFC0F2BB1EA3200BAD5AC /* Bill.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC0E2BB1EA3200BAD5AC /* Bill.swift */; };
 		E2DDFC132BB1FAE100BAD5AC /* TipTotalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC122BB1FAE000BAD5AC /* TipTotalView.swift */; };
-		E2DDFC1A2BB2014600BAD5AC /* AddItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC192BB2014600BAD5AC /* AddItemView.swift */; };
 		E2DDFC1F2BB26AB800BAD5AC /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC1E2BB26AB800BAD5AC /* Helper.swift */; };
 		E2DDFC212BB26C1900BAD5AC /* Seeing.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC202BB26C1900BAD5AC /* Seeing.swift */; };
 		E2DDFC232BB292E200BAD5AC /* TextRecognitionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC222BB292E200BAD5AC /* TextRecognitionService.swift */; };
@@ -185,7 +184,6 @@
 		E2DDFC092BB1E80300BAD5AC /* ViewfinderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewfinderView.swift; sourceTree = "<group>"; };
 		E2DDFC0E2BB1EA3200BAD5AC /* Bill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bill.swift; sourceTree = "<group>"; };
 		E2DDFC122BB1FAE000BAD5AC /* TipTotalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipTotalView.swift; sourceTree = "<group>"; };
-		E2DDFC192BB2014600BAD5AC /* AddItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItemView.swift; sourceTree = "<group>"; };
 		E2DDFC1E2BB26AB800BAD5AC /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		E2DDFC202BB26C1900BAD5AC /* Seeing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Seeing.swift; sourceTree = "<group>"; };
 		E2DDFC222BB292E200BAD5AC /* TextRecognitionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextRecognitionService.swift; sourceTree = "<group>"; };
@@ -287,7 +285,6 @@
 				E2A47A282C1CFA520023E29D /* billbreaker.entitlements */,
 				E21466C32BAE72B2000A61DB /* billbreakerApp.swift */,
 				E2DDFC122BB1FAE000BAD5AC /* TipTotalView.swift */,
-				E2DDFC192BB2014600BAD5AC /* AddItemView.swift */,
 				E24EEFFB2BBFF8A100E24B56 /* BillDetailsView.swift */,
 				E20EC6202BB60C5500223B19 /* HomeView.swift */,
 				E279660A2BC493CD000B0368 /* LoginView.swift */,
@@ -698,7 +695,6 @@
 				E2DDFC0A2BB1E80300BAD5AC /* ViewfinderView.swift in Sources */,
 				E2DDFC002BB1E7D500BAD5AC /* PhotoCollectionView.swift in Sources */,
 				E2DDFC0F2BB1EA3200BAD5AC /* Bill.swift in Sources */,
-				E2DDFC1A2BB2014600BAD5AC /* AddItemView.swift in Sources */,
 				E2D1F2A22BC0CD3400B27278 /* User.swift in Sources */,
 				E2A47A272C1CE8140023E29D /* GuestSignInView.swift in Sources */,
 				E2DDFC1F2BB26AB800BAD5AC /* Helper.swift in Sources */,
