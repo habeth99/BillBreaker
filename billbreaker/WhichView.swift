@@ -19,14 +19,10 @@ struct WhichView: View {
                 HomeView(viewModel: viewModel)
                     .environmentObject(viewModel)
             } else {
-                // User is not authenticated, show the login view
-                //LoginView()
+                // User is not authenticated, show the landing page so user can signin, login, or signin with Apple
                 LandingPageView()
             }
         //}
     }
 }
 
-//#Preview {
-//    WhichView()
-//}
