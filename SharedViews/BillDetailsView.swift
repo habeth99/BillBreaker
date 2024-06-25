@@ -24,10 +24,6 @@ struct BillDetailsView: View {
                         .fontWeight(.bold)
                     itemsSection
                     peopleSection
-
-                    if let selectedPerson = rviewModel.selectedPerson {
-                        claimedItemsSection(for: selectedPerson)
-                    }
                 }
                 .padding(EdgeInsets(top: 30, leading: 19, bottom: 0, trailing: 24))
             }
@@ -76,24 +72,6 @@ struct BillDetailsView: View {
         .frame(width: 361)
         .shadow(radius: 1)
     }
-
-    // People section
-//    private var peopleSection: some View {
-//        VStack(alignment: .leading, spacing: 15) {
-//            Text("People")
-//                .padding(EdgeInsets(top: 25, leading: 0, bottom: -1, trailing: 0))
-//                .fontWeight(.bold)
-//                .font(.title)
-//
-//            ForEach(rviewModel.receipt.people ?? [], id: \.id) { person in
-//                PeopleView(rviewModel: rviewModel, person: person, isSelected: rviewModel.selectedPerson?.id == person.id)
-//                    .onTapGesture {
-//                        rviewModel.selectPerson(person)
-//                        
-//                    }
-//            }
-//        }
-//    }
     
     private var peopleSection: some View {
         VStack(alignment: .leading, spacing: 15) {
@@ -116,94 +94,12 @@ struct BillDetailsView: View {
             return rviewModel.colorForPerson(rviewModel.selectedPerson ?? LegitP(id: "", name: "", claims: []))
         } else if rviewModel.isItemClaimedByAnotherPerson(item) {
             if let claimingPerson = rviewModel.receipt.people?.first(where: { $0.claims.contains(where: { $0.id == item.id }) && $0.id != rviewModel.selectedPerson?.id }) {
-                return rviewModel.colorForPerson(claimingPerson).opacity(0.3)
+                return rviewModel.colorForPerson(claimingPerson)
             }
         }
         return Color.clear
     }
-
-    // Claimed items section
-//    private func claimedItemsSection(for person: LegitP) -> some View {
-//        VStack(alignment: .leading, spacing: 10) {
-//            Text("\(person.name)'s Claimed Items")
-//                .font(.title2)
-//                .fontWeight(.bold)
-//
-//            ForEach(person.claims, id: \.id) { item in
-//                HStack {
-//                    Text(item.name)
-//                        .padding()
-//                    Spacer()
-//                    Text(String(format: "$%.2f", item.price))
-//                        .padding()
-//                }
-//                .background(Color.green.opacity(0.3))
-//                .cornerRadius(8)
-//                .shadow(radius: 1)
-//            }
-//        }
-//        .padding(.top, 20)
-//    }
-    
-    private func claimedItemsSection(for person: LegitP) -> some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Text("\(person.name)'s Claimed Items")
-                .font(.title2)
-                .fontWeight(.bold)
-
-            ForEach(person.claims, id: \.id) { item in
-                HStack {
-                    Text(item.name)
-                        .padding()
-                    Spacer()
-                    Text(String(format: "$%.2f", item.price))
-                        .padding()
-                }
-                .background(rviewModel.colorForPerson(person).opacity(0.3))
-                .cornerRadius(8)
-                .shadow(radius: 1)
-            }
-        }
-        .padding(.top, 20)
-    }
-    
 }
-
-// Helper view to display each person
-//struct PeopleView: View {
-//    @ObservedObject var rviewModel: ReceiptViewModel
-//    @ObservedObject var person: LegitP
-//    var isSelected: Bool
-//    
-//    var body: some View {
-//        VStack(alignment: .leading) {
-//            HStack {
-//                Text(person.name)
-//                    .padding([.top, .leading])
-//                    .fontWeight(.bold)
-//                Spacer()
-//            }
-//            Spacer()
-//        Text("Claims:")
-//                .padding([.leading])
-//            ForEach(person.claims, id: \.id) { item in
-//                HStack {
-//                    Text(item.name)
-//                    Text(String(format: "$%.2f", item.price))
-//                }
-//                .padding([.leading, .trailing])
-//            }
-//            Text("Total: \(rviewModel.personTotal(for: person))")
-//                .padding([.leading])
-//            Spacer()
-//        }
-//        .frame(maxWidth: .infinity, minHeight: 150)
-//        //.background(isSelected ? Color.blue.opacity(0.3) : Color.white)
-//        .background(isSelected ? Color.blue.opacity(0.3) : (rviewModel.personHasClaims(person) ? Color.red.opacity(0.3) : Color.white))
-//        .cornerRadius(8)
-//        .shadow(radius: 1)
-//    }
-//}
 
 struct PeopleView: View {
     @ObservedObject var rviewModel: ReceiptViewModel
@@ -233,7 +129,8 @@ struct PeopleView: View {
             Spacer()
         }
         .frame(maxWidth: .infinity, minHeight: 150)
-        .background(isSelected ? Color.blue.opacity(0.3) : rviewModel.colorForPerson(person).opacity(0.1))
+        //right here the color was changed
+        .background(isSelected ? rviewModel.colorForPerson(person) : rviewModel.colorForPerson(person).opacity(0.2))
         .cornerRadius(8)
         .shadow(radius: 1)
     }

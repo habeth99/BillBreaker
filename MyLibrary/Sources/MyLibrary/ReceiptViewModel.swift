@@ -52,48 +52,6 @@ class ReceiptViewModel: ObservableObject {
             print("Error fetching user data: \(error.localizedDescription)")
         }
     }
-
-//    private func fetchReceipts(receiptIDs: [String]) {
-//        let group = DispatchGroup()
-//        var fetchedReceipts: [Receipt] = []
-//
-//        for receiptID in receiptIDs {
-//            group.enter()
-//            dbRef.child("receipts").child(receiptID).observeSingleEvent(of: .value, with: { snapshot in
-//                defer { group.leave() }
-//                guard let receiptData = snapshot.value as? [String: Any] else {
-//                    print("Receipt data not found for ID: \(receiptID)")
-//                    return
-//                }
-//                
-//                print("Receipt data snapshot value for \(receiptID): \(receiptData)")
-//
-//                do {
-//                    let data = try JSONSerialization.data(withJSONObject: receiptData, options: [])
-//                    let receipt = try JSONDecoder().decode(Receipt.self, from: data)
-//                    if !fetchedReceipts.contains(where: { $0.id == receipt.id }) {
-//                        fetchedReceipts.append(receipt)
-//                    }
-//                } catch let DecodingError.keyNotFound(key, context) {
-//                    print("Missing key: \(key) in context: \(context)")
-//                } catch let DecodingError.valueNotFound(value, context) {
-//                    print("Missing value: \(value) in context: \(context)")
-//                } catch let DecodingError.typeMismatch(type, context) {
-//                    print("Type mismatch for type: \(type) in context: \(context)")
-//                } catch let DecodingError.dataCorrupted(context) {
-//                    print("Data corrupted: \(context)")
-//                } catch {
-//                    print("Error decoding receipt: \(error.localizedDescription)")
-//                }
-//            })
-//        }
-//
-//        group.notify(queue: .main) {
-//            self.receiptList = fetchedReceipts
-//            print("All receipts fetched: \(self.receiptList)")
-//            self.setupReceiptListeners(receiptIDs: receiptIDs)
-//        }
-//    }
     
     private func fetchReceipts(receiptIDs: [String]) {
         let group = DispatchGroup()
