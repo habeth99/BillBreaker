@@ -26,7 +26,7 @@ struct JoinReceiptView: View {
                         if success {
                             print("Receipt saved successfully.")
                             let userId = rviewModel.userViewModel.currentUser?.id
-                            rviewModel.userViewModel.addReceiptToUser(userId: userId ?? "BAD-1", receiptId: receiptId) { success in
+                            rviewModel.addReceiptToUser2(receiptId: receiptId) { success in
                                 if success {
                                     print("Receipt added to user successfully!")
                                     isPresented = false // Dismiss the sheet

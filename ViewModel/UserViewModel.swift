@@ -173,46 +173,6 @@ class UserViewModel: ObservableObject {
             print("No current user is logged in.")
         }
     }
-    
-    // Function to add a receipt to a user
-    func addReceiptToUser(userId: String, receiptId: String, completion: @escaping (Bool) -> Void) {
-        let userReceiptsRef = dbRef.child("users").child(userId).child("receipts")
-        
-        // Retrieve current receipts to append the new one
-        userReceiptsRef.observeSingleEvent(of: .value, with: { snapshot in
-            var receipts: [String]
-            if let existingReceipts = snapshot.value as? [String] {
-                receipts = existingReceipts
-            } else {
-                receipts = []
-            }
-
-            // Check if the receipt ID already exists in the user's receipts
-            if receipts.contains(receiptId) {
-                print("Receipt ID \(receiptId) already exists for user \(userId)")
-                completion(true)
-                return
-            }
-
-            // Append the new receipt ID
-            receipts.append(receiptId)
-            print("Appending receipt ID: \(receiptId) to user ID: \(userId)")
-
-            // Update the user's receipts in Firebase
-            userReceiptsRef.setValue(receipts) { error, _ in
-                if let error = error {
-                    print("Error updating user receipts: \(error.localizedDescription)")
-                    completion(false)
-                } else {
-                    print("User receipts updated successfully.")
-                    completion(true)
-                }
-            }
-        }) { error in
-            print("Error retrieving user receipts: \(error.localizedDescription)")
-            completion(false)
-        }
-    }
 
     private func setupUserListener() {
          guard let userID = userID else { return }

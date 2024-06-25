@@ -13,7 +13,9 @@ struct ClipBillDetailView: View {
     
     var body: some View {
         VStack{
-            BillDetailsView()
+            //BillDetailsView()
+            Text("Almost")
+            
         }
     }
 }

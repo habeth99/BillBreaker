@@ -11,6 +11,7 @@ import Firebase
 import FirebaseDatabase
 import FirebaseAuth
 import Combine
+import SwiftUI
 
 class ReceiptViewModel: ObservableObject {
     @Published var receiptList: [Receipt] = []
@@ -24,6 +25,8 @@ class ReceiptViewModel: ObservableObject {
     var userViewModel: UserViewModel
     
     private var dbRef = Database.database().reference()
+    private var personColorMap: [String: Color] = [:]
+    private let colors: [Color] = [.red, .blue, .green, .orange, .purple, .yellow, .pink, .gray]
     
     init(user: UserViewModel) {
         self.userViewModel = user
@@ -50,6 +53,48 @@ class ReceiptViewModel: ObservableObject {
         }
     }
 
+//    private func fetchReceipts(receiptIDs: [String]) {
+//        let group = DispatchGroup()
+//        var fetchedReceipts: [Receipt] = []
+//
+//        for receiptID in receiptIDs {
+//            group.enter()
+//            dbRef.child("receipts").child(receiptID).observeSingleEvent(of: .value, with: { snapshot in
+//                defer { group.leave() }
+//                guard let receiptData = snapshot.value as? [String: Any] else {
+//                    print("Receipt data not found for ID: \(receiptID)")
+//                    return
+//                }
+//                
+//                print("Receipt data snapshot value for \(receiptID): \(receiptData)")
+//
+//                do {
+//                    let data = try JSONSerialization.data(withJSONObject: receiptData, options: [])
+//                    let receipt = try JSONDecoder().decode(Receipt.self, from: data)
+//                    if !fetchedReceipts.contains(where: { $0.id == receipt.id }) {
+//                        fetchedReceipts.append(receipt)
+//                    }
+//                } catch let DecodingError.keyNotFound(key, context) {
+//                    print("Missing key: \(key) in context: \(context)")
+//                } catch let DecodingError.valueNotFound(value, context) {
+//                    print("Missing value: \(value) in context: \(context)")
+//                } catch let DecodingError.typeMismatch(type, context) {
+//                    print("Type mismatch for type: \(type) in context: \(context)")
+//                } catch let DecodingError.dataCorrupted(context) {
+//                    print("Data corrupted: \(context)")
+//                } catch {
+//                    print("Error decoding receipt: \(error.localizedDescription)")
+//                }
+//            })
+//        }
+//
+//        group.notify(queue: .main) {
+//            self.receiptList = fetchedReceipts
+//            print("All receipts fetched: \(self.receiptList)")
+//            self.setupReceiptListeners(receiptIDs: receiptIDs)
+//        }
+//    }
+    
     private func fetchReceipts(receiptIDs: [String]) {
         let group = DispatchGroup()
         var fetchedReceipts: [Receipt] = []
@@ -67,18 +112,11 @@ class ReceiptViewModel: ObservableObject {
 
                 do {
                     let data = try JSONSerialization.data(withJSONObject: receiptData, options: [])
-                    let receipt = try JSONDecoder().decode(Receipt.self, from: data)
+                    var receipt = try JSONDecoder().decode(Receipt.self, from: data)
                     if !fetchedReceipts.contains(where: { $0.id == receipt.id }) {
+                        self.assignColorsToPeople(in: &receipt)
                         fetchedReceipts.append(receipt)
                     }
-                } catch let DecodingError.keyNotFound(key, context) {
-                    print("Missing key: \(key) in context: \(context)")
-                } catch let DecodingError.valueNotFound(value, context) {
-                    print("Missing value: \(value) in context: \(context)")
-                } catch let DecodingError.typeMismatch(type, context) {
-                    print("Type mismatch for type: \(type) in context: \(context)")
-                } catch let DecodingError.dataCorrupted(context) {
-                    print("Data corrupted: \(context)")
                 } catch {
                     print("Error decoding receipt: \(error.localizedDescription)")
                 }
@@ -119,6 +157,48 @@ class ReceiptViewModel: ObservableObject {
             }) { error in
                 print("Error fetching receipt data: \(error.localizedDescription)")
             }
+        }
+    }
+    
+    //Function for adding a receipt to a users list of receipts based on the receipt value "userid"
+    //should probably make this PRIVATE
+    
+    func addReceiptToUser2(receiptId: String, completion: @escaping (Bool) -> Void){
+        let userReceiptsRef = dbRef.child("users").child(receipt.userId).child("receipts")
+        
+        // Retrieve current receipts to append the new one
+        userReceiptsRef.observeSingleEvent(of: .value, with: { snapshot in
+            var receipts: [String]
+            if let existingReceipts = snapshot.value as? [String] {
+                receipts = existingReceipts
+            } else {
+                receipts = []
+            }
+        
+            // Check if the receipt ID already exists in the user's receipts
+            if receipts.contains(receiptId) {
+                print("Receipt ID \(receiptId) already exists for user \(self.receipt.userId)")
+                completion(true)
+                return
+            }
+        
+            // Append the new receipt ID
+            receipts.append(receiptId)
+            print("Appending receipt ID: \(receiptId) to user ID: \(self.receipt.userId)")
+        
+            // Update the user's receipts in Firebase
+            userReceiptsRef.setValue(receipts) { error, _ in
+                if let error = error {
+                    print("Error updating user receipts: \(error.localizedDescription)")
+                    completion(false)
+                } else {
+                    print("User receipts updated successfully.")
+                    completion(true)
+                }
+            }
+        }) { error in
+            print("Error retrieving user receipts: \(error.localizedDescription)")
+            completion(false)
         }
     }
     
@@ -170,7 +250,7 @@ class ReceiptViewModel: ObservableObject {
                 completion(false)
             } else {
                 print("Receipt saved successfully. Adding receipt ID to user.")
-                self.userViewModel.addReceiptToUser(userId: self.receipt.userId, receiptId: self.receipt.id) { success in
+                self.addReceiptToUser2(receiptId: self.receipt.id) { success in
                     if success {
                         print("Receipt ID added to user successfully.")
                         completion(true)
@@ -235,6 +315,18 @@ class ReceiptViewModel: ObservableObject {
     
     func setReceipt(receipt: Receipt) {
         self.receipt = receipt
+    }
+    
+    private func assignColorsToPeople(in receipt: inout Receipt) {
+        for (index, person) in receipt.people?.enumerated() ?? [].enumerated() {
+            if personColorMap[person.id] == nil {
+                personColorMap[person.id] = colors[index % colors.count]
+            }
+        }
+    }
+    
+    func colorForPerson(_ person: LegitP) -> Color {
+        return personColorMap[person.id] ?? .green
     }
     
     func setPeople() {
