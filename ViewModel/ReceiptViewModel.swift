@@ -373,10 +373,6 @@ class ReceiptViewModel: ObservableObject {
         }
     }
     
-    func colorForPerson(_ person: LegitP) -> Color {
-        return personColorMap[person.id] ?? .green
-    }
-    
     func setPeople() {
         print("Setting people from receipt...")
         guard let receiptPeople = self.receipt.people else {
@@ -477,7 +473,7 @@ class ReceiptViewModel: ObservableObject {
             person.id != selectedPerson.id && person.claims.contains(where: { $0 == item.id })
         } ?? false
     }
-    
+
     // Function to check if a person has any claims
     func personHasClaims(_ person: LegitP) -> Bool {
         return !person.claims.isEmpty
@@ -513,11 +509,6 @@ class ReceiptViewModel: ObservableObject {
             print("Error fetching receipt data: \(error.localizedDescription)")
             completion(false)
         }
-    }
-    
-    // Check if the item is selected
-    func isSelectedItem(_ itemId: String) -> Bool {
-        selectedItemsIds.contains(itemId)
     }
 
     // Check if the item is claimed by another person

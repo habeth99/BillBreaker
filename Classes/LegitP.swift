@@ -6,40 +6,39 @@
 //
 
 import Foundation
+import SwiftUI
 
 class LegitP: Identifiable, ObservableObject, Codable {
     @Published var id: String
     @Published var name: String
     @Published var userId: String
-    //@Published var claims: [Item]
     @Published var claims: [String]
     @Published var paid: Bool
+    @Published var color: Color
     
     enum CodingKeys: CodingKey {
-        case id, name, userId, claims, paid
+        case id, name, userId, claims, paid, color
     }
-
+    
     // Custom initializer
-    init(id: String = "", name: String = "", userId: String = "", claims: [String] = [], paid: Bool = false) {
-        self.id = id  // Assign a UUID by default or use a specific id if provided
+    init(id: String = "", name: String = "", userId: String = "", claims: [String] = [], paid: Bool = false, color: Color = .red) {
+        self.id = id
         self.name = name
         self.userId = userId
         self.claims = claims
         self.paid = paid
+        self.color = color
     }
-
+    
     // Required for Codable conformance
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = try container.decode(String.self, forKey: .id)
         name = try container.decode(String.self, forKey: .name)
         userId = try container.decodeIfPresent(String.self, forKey: .userId) ?? "BAD9"
-        
-        //try to decode these but not might be present initially thats why we decodeIfPresent
-        //claims = try container.decode([String].self, forKey: .claims)
         claims = try container.decodeIfPresent([String].self, forKey: .claims) ?? []
-        //paid = try container.decode(Bool.self, forKey: .paid)
         paid = try container.decodeIfPresent(Bool.self, forKey: .paid) ?? false
+        color = self.strToColor[try container.decodeIfPresent(String.self, forKey: .color) ?? "red"] ?? .red
     }
     
     func encode(to encoder: Encoder) throws {
@@ -49,9 +48,32 @@ class LegitP: Identifiable, ObservableObject, Codable {
         try container.encode(userId, forKey: .userId)
         try container.encode(claims, forKey: .claims)
         try container.encode(paid, forKey: .paid)
+        try container.encode(self.colorToStr[color], forKey: .color)
     }
     
     var description: String {
         return "LegitP(id: \(id), name: \(name), userId: \(userId), claims: \(claims), paid: \(paid))"
     }
+    
+    var colorToStr: [Color: String] = [
+        .red: "red",
+        .blue: "blue",
+        .green: "green",
+        .orange: "orange",
+        .yellow: "yellow",
+        .gray: "gray",
+        .purple: "purple",
+        .pink: "pink"
+    ]
+    
+    var strToColor: [String: Color] = [
+        "red": .red,
+        "blue": .blue,
+        "green": .green,
+        "orange": .orange,
+        "yellow": .yellow,
+        "gray": .gray,
+        "purple": .purple,
+        "pink": .pink
+    ]
 }

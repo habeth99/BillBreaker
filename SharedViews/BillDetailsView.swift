@@ -49,6 +49,8 @@ struct BillDetailsView: View {
     private var itemsSection: some View {
         VStack(alignment: .leading) {
             ForEach(receipt.items ?? [], id: \.id) { item in
+                let users = self.getUsersForItem(item: item)
+                
                 HStack {
                     Text(item.name)
                         .padding()
@@ -56,8 +58,7 @@ struct BillDetailsView: View {
                     Text(String(format: "$%.2f", item.price))
                         .padding()
                 }
-                //fhfhf
-                .background(itemBackground(for: item))
+                .background(users.count > 0 ? users[0].color : .clear)
                 .onTapGesture {
                     if rviewModel.selectedPerson != nil {
                         rviewModel.toggleItemSelection(item)
@@ -91,25 +92,8 @@ struct BillDetailsView: View {
         }
     }
     
-    //    private func itemBackground(for item: Item) -> Color {
-    //        if $rviewModel.selectedItemsIds.contains(where: { $0 == item.id }) {
-    //            return rviewModel.colorForPerson(rviewModel.selectedPerson ?? LegitP(id: "", name: "", claims: []))
-    //        } else if rviewModel.isItemClaimedByAnotherPerson(item) {
-    //            if let claimingPerson = rviewModel.receiptList[index].people?.first(where: { $0.claims.contains(where: { $0 == item.id }) && $0 != rviewModel.selectedPerson?.id }) {
-    //                return rviewModel.colorForPerson(claimingPerson)
-    //            }
-    //        }
-    //        return Color.clear
-    //    }
-    //}
-    
-    private func itemBackground(for item: Item) -> Color {
-        if rviewModel.isSelectedItem(item.id) {
-            return rviewModel.colorForPerson(rviewModel.selectedPerson ?? LegitP(id: "", name: "", claims: []))
-        } else if let claimingPerson = rviewModel.isItemClaimedByOther(item) {
-            return rviewModel.colorForPerson(claimingPerson)
-        }
-        return .clear
+    private func getUsersForItem(item: Item) -> [LegitP] {
+        return receipt.people?.filter {$0.claims.contains { $0 == item.id}} ?? []
     }
 }
 
@@ -146,8 +130,7 @@ struct PeopleView: View {
             Spacer()
         }
         .frame(maxWidth: .infinity, minHeight: 150)
-        //right here the color was changed
-        .background(isSelected ? rviewModel.colorForPerson(person) : rviewModel.colorForPerson(person).opacity(0.2))
+        .background(isSelected ? person.color : person.color.opacity(0.2))
         .cornerRadius(8)
         .shadow(radius: 1)
     }
@@ -163,18 +146,18 @@ struct PeopleView: View {
 //            Item(id: "2", name: "Item 2", price: 15.0),
 //            Item(id: "3", name: "Item 3", price: 20.0)
 //        ]
-//        
+//
 //        let mockPeople = [
 //            LegitP(id: "1", name: "John", claims: [mockItems[0]]),
 //            LegitP(id: "2", name: "Jane", claims: [mockItems[1]]),
 //            LegitP(id: "3", name: "Joe", claims: [mockItems[2]])
 //        ]
-//        
+//
 //        let mockReceipt = Receipt(id: "1", userId: "user1", name: "Test Receipt", date: "2024-05-28", createdAt: "12:00 PM", tax: 2.0, price: 45.0, items: mockItems, people: mockPeople)
-//        
+//
 //        let mockViewModel = ReceiptViewModel(user: UserViewModel())
 //        mockViewModel.receipt = mockReceipt
-//        
+//
 //        return BillDetailsView(rviewModel: mockViewModel, receipt: mockReceipt)
 //            .environmentObject(UserViewModel())
 //    }
