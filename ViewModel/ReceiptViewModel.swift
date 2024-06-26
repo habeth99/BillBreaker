@@ -210,7 +210,8 @@ class ReceiptViewModel: ObservableObject {
     //should probably make this PRIVATE
     
     func addReceiptToUser2(receiptId: String, completion: @escaping (Bool) -> Void){
-        let userReceiptsRef = dbRef.child("users").child(receipt.userId).child("receipts")
+//        let userReceiptsRef = dbRef.child("users").child(receipt.userId).child("receipts")
+        let userReceiptsRef = dbRef.child("users").child(userViewModel.currentUser!.id).child("receipts")
         
         // Retrieve current receipts to append the new one
         userReceiptsRef.observeSingleEvent(of: .value, with: { snapshot in
@@ -511,6 +512,22 @@ class ReceiptViewModel: ObservableObject {
         }) { error in
             print("Error fetching receipt data: \(error.localizedDescription)")
             completion(false)
+        }
+    }
+    
+    // Check if the item is selected
+    func isSelectedItem(_ itemId: String) -> Bool {
+        selectedItemsIds.contains(itemId)
+    }
+
+    // Check if the item is claimed by another person
+    func isItemClaimedByOther(_ item: Item) -> LegitP? {
+        guard let people = receipt.people, let selectedPersonId = selectedPerson?.id else {
+            return nil
+        }
+
+        return people.first { person in
+            person.id != selectedPersonId && person.claims.contains(item.id)
         }
     }
 }

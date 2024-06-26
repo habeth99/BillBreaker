@@ -11,7 +11,7 @@ import SwiftUI
 struct BillDetailsView: View {
     @ObservedObject var rviewModel: ReceiptViewModel
     var receipt: Receipt
-
+    
     var body: some View {
         ZStack {
             // Make background gray
@@ -44,7 +44,7 @@ struct BillDetailsView: View {
             rviewModel.setReceipt(receipt: receipt)
         }
     }
-
+    
     // Items section
     private var itemsSection: some View {
         VStack(alignment: .leading) {
@@ -56,11 +56,12 @@ struct BillDetailsView: View {
                     Text(String(format: "$%.2f", item.price))
                         .padding()
                 }
+                //fhfhf
                 .background(itemBackground(for: item))
                 .onTapGesture {
                     if rviewModel.selectedPerson != nil {
                         rviewModel.toggleItemSelection(item)
-
+                        
                     } else {
                         print("No person selected")
                     }
@@ -79,7 +80,7 @@ struct BillDetailsView: View {
                 .padding(EdgeInsets(top: 25, leading: 0, bottom: -1, trailing: 0))
                 .fontWeight(.bold)
                 .font(.title)
-
+            
             //changed from rviewModel.receipt.people
             ForEach(receipt.people ?? [], id: \.id) { person in
                 PeopleView(rviewModel: rviewModel, person: person, isSelected: rviewModel.selectedPerson?.id == person.id)
@@ -90,17 +91,28 @@ struct BillDetailsView: View {
         }
     }
     
+    //    private func itemBackground(for item: Item) -> Color {
+    //        if $rviewModel.selectedItemsIds.contains(where: { $0 == item.id }) {
+    //            return rviewModel.colorForPerson(rviewModel.selectedPerson ?? LegitP(id: "", name: "", claims: []))
+    //        } else if rviewModel.isItemClaimedByAnotherPerson(item) {
+    //            if let claimingPerson = rviewModel.receiptList[index].people?.first(where: { $0.claims.contains(where: { $0 == item.id }) && $0 != rviewModel.selectedPerson?.id }) {
+    //                return rviewModel.colorForPerson(claimingPerson)
+    //            }
+    //        }
+    //        return Color.clear
+    //    }
+    //}
+    
     private func itemBackground(for item: Item) -> Color {
-//        if $rviewModel.selectedItemsIds.contains(where: { $0 == item.id }) {
-//            return rviewModel.colorForPerson(rviewModel.selectedPerson ?? LegitP(id: "", name: "", claims: []))
-//        } else if rviewModel.isItemClaimedByAnotherPerson(item) {
-//            if let claimingPerson = rviewModel.receiptList[index].people?.first(where: { $0.claims.contains(where: { $0 == item.id }) && $0 != rviewModel.selectedPerson?.id }) {
-//                return rviewModel.colorForPerson(claimingPerson)
-//            }
-//        }
-        return Color.clear
+        if rviewModel.isSelectedItem(item.id) {
+            return rviewModel.colorForPerson(rviewModel.selectedPerson ?? LegitP(id: "", name: "", claims: []))
+        } else if let claimingPerson = rviewModel.isItemClaimedByOther(item) {
+            return rviewModel.colorForPerson(claimingPerson)
+        }
+        return .clear
     }
 }
+
 
 struct PeopleView: View {
     @ObservedObject var rviewModel: ReceiptViewModel
