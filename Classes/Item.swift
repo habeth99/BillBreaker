@@ -11,6 +11,7 @@ class Item: Identifiable, Codable, ObservableObject, Hashable {
     @Published var name: String
     @Published var quantity: Int?
     @Published var price: Double
+    //@Published var claimedBy: [String]?
     @Published var claimedBy: [String]?
 
     enum CodingKeys: CodingKey {

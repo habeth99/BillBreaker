@@ -11,7 +11,8 @@ class LegitP: Identifiable, ObservableObject, Codable {
     @Published var id: String
     @Published var name: String
     @Published var userId: String
-    @Published var claims: [Item]
+    //@Published var claims: [Item]
+    @Published var claims: [String]
     @Published var paid: Bool
     
     enum CodingKeys: CodingKey {
@@ -19,7 +20,7 @@ class LegitP: Identifiable, ObservableObject, Codable {
     }
 
     // Custom initializer
-    init(id: String = "", name: String = "", userId: String = "", claims: [Item] = [], paid: Bool = false) {
+    init(id: String = "", name: String = "", userId: String = "", claims: [String] = [], paid: Bool = false) {
         self.id = id  // Assign a UUID by default or use a specific id if provided
         self.name = name
         self.userId = userId
@@ -36,7 +37,7 @@ class LegitP: Identifiable, ObservableObject, Codable {
         
         //try to decode these but not might be present initially thats why we decodeIfPresent
         //claims = try container.decode([String].self, forKey: .claims)
-        claims = try container.decodeIfPresent([Item].self, forKey: .claims) ?? []
+        claims = try container.decodeIfPresent([String].self, forKey: .claims) ?? []
         //paid = try container.decode(Bool.self, forKey: .paid)
         paid = try container.decodeIfPresent(Bool.self, forKey: .paid) ?? false
     }

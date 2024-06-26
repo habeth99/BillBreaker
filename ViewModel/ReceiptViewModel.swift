@@ -18,9 +18,8 @@ class ReceiptViewModel: ObservableObject {
     @Published var receipt: Receipt
     @Published var items: [Item] = []
     @Published var people: [LegitP] = []
-    
     @Published var selectedPerson: LegitP?
-    @Published var selectedItems: [Item] = []
+    @Published var selectedItemsIds: [String] = []
 
     var userViewModel: UserViewModel
     
@@ -88,10 +87,14 @@ class ReceiptViewModel: ObservableObject {
         }
     }
     
+//================================================================================================
+        //Listeners Section
+//================================================================================================
+    
     private func setupReceiptListeners(receiptIDs: [String]) {
         for receiptID in receiptIDs {
             dbRef.child("receipts").child(receiptID).observe(.value, with: { [weak self] snapshot in
-                print("Receipt data snapshot: \(snapshot)")
+                //print("Receipt data snapshot: \(snapshot)")
 
                 guard snapshot.exists() else {
                     print("Snapshot does not exist.")
@@ -106,8 +109,13 @@ class ReceiptViewModel: ObservableObject {
                 print("Receipt data snapshot value: \(value)")
 
                 do {
+                    print("do block runs!")
                     let data = try JSONSerialization.data(withJSONObject: value, options: [])
                     let receipt = try JSONDecoder().decode(Receipt.self, from: data)
+                    //print("data is: \(data)")
+                    print("receipt variable is: \(receipt.name)")
+                    
+                    //self?.receipt = receipt
                     self?.updateReceiptInList(receipt)
                 } catch let error {
                     print("Error decoding receipt: \(error.localizedDescription)")
@@ -115,8 +123,88 @@ class ReceiptViewModel: ObservableObject {
             }) { error in
                 print("Error fetching receipt data: \(error.localizedDescription)")
             }
+
+            let receiptRef = dbRef.child("receipts").child(receiptID)
+            self.setupPeopleListeners(receiptRef, receiptID: receiptID)
+            self.setupItemListeners(receiptRef, receiptID: receiptID)
+            
         }
     }
+    
+    //People Listeners
+    private func setupPeopleListeners(_ receiptRef: DatabaseReference, receiptID: String) {
+        let peopleRef = receiptRef.child("people")
+        peopleRef.observe(.value, with: { [weak self] snapshot in
+            guard let strongSelf = self, snapshot.exists(),
+                  let peopleArray = snapshot.value as? [[String: Any]] else {
+                print("People data snapshot does not exist or is not a valid array.")
+                return
+            }
+
+            strongSelf.handlePeopleUpdate(peopleArray, forReceipt: receiptID)
+
+        }) { error in
+            print("Error fetching people data: \(error.localizedDescription)")
+        }
+    }
+    
+    private func handlePeopleUpdate(_ peopleData: [[String: Any]], forReceipt receiptID: String) {
+        do {
+            let data = try JSONSerialization.data(withJSONObject: peopleData, options: [])
+            let people = try JSONDecoder().decode([LegitP].self, from: data)
+            print("Updated people list for receipt \(receiptID): \(people)")
+            updatePeopleInReceipt(receiptID, with: people)
+        } catch let error {
+            print("Error decoding people: \(error)")
+        }
+    }
+
+    private func updatePeopleInReceipt(_ receiptID: String, with people: [LegitP]) {
+        if let index = receiptList.firstIndex(where: { $0.id == receiptID }) {
+            receiptList[index].people = people
+            objectWillChange.send()
+        }
+    }
+    
+    //Items Listeners
+    private func setupItemListeners(_ receiptRef: DatabaseReference, receiptID: String) {
+        let itemsRef = receiptRef.child("items")
+        itemsRef.observe(.value, with: { [weak self] snapshot in
+            guard let strongSelf = self, snapshot.exists(),
+                  let itemsArray = snapshot.value as? [[String: Any]] else {
+                print("Items data snapshot does not exist or is not a valid array.")
+                return
+            }
+
+            // Handle items data update
+            strongSelf.handleItemsUpdate(itemsArray, forReceipt: receiptID)
+        }) { error in
+            print("Error fetching items data: \(error.localizedDescription)")
+        }
+    }
+
+    private func handleItemsUpdate(_ itemsData: [[String: Any]], forReceipt receiptID: String) {
+        do {
+            let data = try JSONSerialization.data(withJSONObject: itemsData, options: [])
+            let items = try JSONDecoder().decode([Item].self, from: data)
+            print("Updated items list for receipt \(receiptID): \(items)")
+            updateItemsInReceipt(receiptID, with: items)
+        } catch let error {
+            print("Error decoding items: \(error)")
+        }
+    }
+
+    private func updateItemsInReceipt(_ receiptID: String, with items: [Item]) {
+        if let index = receiptList.firstIndex(where: { $0.id == receiptID }) {
+            receiptList[index].items = items
+            objectWillChange.send()
+        }
+    }
+
+    
+
+// need items listener eventually
+
     
     //Function for adding a receipt to a users list of receipts based on the receipt value "userid"
     //should probably make this PRIVATE
@@ -161,8 +249,10 @@ class ReceiptViewModel: ObservableObject {
     }
     
     private func updateReceiptInList(_ receipt: Receipt) {
+        print("updates receipt is: \(receipt)")
         if let index = self.receiptList.firstIndex(where: { $0.id == receipt.id }) {
             self.receiptList[index] = receipt
+            self.receipt = receipt
         } else {
             self.receiptList.append(receipt)
         }
@@ -193,9 +283,7 @@ class ReceiptViewModel: ObservableObject {
                 [
                     "id": person.id,
                     "name": person.name,
-                    "claims": person.claims.map { item in
-                        ["id": item.id, "name": item.name, "price": item.price]
-                    }
+                    "claims": person.claims
                 ]
             } ?? []
         ]
@@ -273,6 +361,7 @@ class ReceiptViewModel: ObservableObject {
     
     func setReceipt(receipt: Receipt) {
         self.receipt = receipt
+        //self.objectWillChange.send()
     }
     
     private func assignColorsToPeople(in receipt: inout Receipt) {
@@ -347,7 +436,7 @@ class ReceiptViewModel: ObservableObject {
     
     func selectPerson(_ person: LegitP) {
         selectedPerson = person
-        selectedItems = person.claims
+        selectedItemsIds = person.claims
     }
     
     func toggleItemSelection(_ item: Item) {
@@ -356,17 +445,17 @@ class ReceiptViewModel: ObservableObject {
         print("toggleItemSelection runs!")
         guard let selectedPerson = selectedPerson else { return }
 
-        if let index = selectedItems.firstIndex(of: item) {
-            selectedItems.remove(at: index)
+        if let index = selectedItemsIds.firstIndex(of: item.id) {
+            selectedItemsIds.remove(at: index)
             // need to add code to update items' claimedBy property
         } else {
             print("appending item: \(item)")
-            selectedItems.append(item)
+            selectedItemsIds.append(item.id)
             // need to add code to add person to items claimedBy
         }
 
         if let personIndex = receipt.people?.firstIndex(where: { $0.id == selectedPerson.id }) {
-            receipt.people?[personIndex].claims = selectedItems
+            receipt.people?[personIndex].claims = selectedItemsIds
             print("calling saveReceipt")
             saveReceipt { success in
                 if success {
@@ -380,15 +469,11 @@ class ReceiptViewModel: ObservableObject {
         objectWillChange.send()
     }
 
-    func personTotal(for person: LegitP) -> Double {
-        return person.claims.reduce(0) { $0 + $1.price }
-    }
-    
     // Function to check if an item is claimed by another person
     func isItemClaimedByAnotherPerson(_ item: Item) -> Bool {
         guard let selectedPerson = selectedPerson else { return false }
         return receipt.people?.contains { person in
-            person.id != selectedPerson.id && person.claims.contains(where: { $0.id == item.id })
+            person.id != selectedPerson.id && person.claims.contains(where: { $0 == item.id })
         } ?? false
     }
     

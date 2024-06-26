@@ -30,7 +30,7 @@ struct BillDetailsView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     VStack {
-                        Text(rviewModel.receipt.date) // Your date here
+                        Text(receipt.date) // Your date here
                             .font(.subheadline)
                             .foregroundColor(.primary)
                     }
@@ -38,7 +38,7 @@ struct BillDetailsView: View {
                 }
             }
         }
-        .navigationBarTitle(rviewModel.receipt.name, displayMode: .automatic)
+        .navigationBarTitle(receipt.name, displayMode: .automatic)
         .onAppear {
             // set receipt variable
             rviewModel.setReceipt(receipt: receipt)
@@ -48,7 +48,7 @@ struct BillDetailsView: View {
     // Items section
     private var itemsSection: some View {
         VStack(alignment: .leading) {
-            ForEach(rviewModel.receipt.items ?? [], id: \.id) { item in
+            ForEach(receipt.items ?? [], id: \.id) { item in
                 HStack {
                     Text(item.name)
                         .padding()
@@ -80,7 +80,8 @@ struct BillDetailsView: View {
                 .fontWeight(.bold)
                 .font(.title)
 
-            ForEach(rviewModel.receipt.people ?? [], id: \.id) { person in
+            //changed from rviewModel.receipt.people
+            ForEach(receipt.people ?? [], id: \.id) { person in
                 PeopleView(rviewModel: rviewModel, person: person, isSelected: rviewModel.selectedPerson?.id == person.id)
                     .onTapGesture {
                         rviewModel.selectPerson(person)
@@ -90,13 +91,13 @@ struct BillDetailsView: View {
     }
     
     private func itemBackground(for item: Item) -> Color {
-        if rviewModel.selectedItems.contains(where: { $0.id == item.id }) {
-            return rviewModel.colorForPerson(rviewModel.selectedPerson ?? LegitP(id: "", name: "", claims: []))
-        } else if rviewModel.isItemClaimedByAnotherPerson(item) {
-            if let claimingPerson = rviewModel.receipt.people?.first(where: { $0.claims.contains(where: { $0.id == item.id }) && $0.id != rviewModel.selectedPerson?.id }) {
-                return rviewModel.colorForPerson(claimingPerson)
-            }
-        }
+//        if $rviewModel.selectedItemsIds.contains(where: { $0 == item.id }) {
+//            return rviewModel.colorForPerson(rviewModel.selectedPerson ?? LegitP(id: "", name: "", claims: []))
+//        } else if rviewModel.isItemClaimedByAnotherPerson(item) {
+//            if let claimingPerson = rviewModel.receiptList[index].people?.first(where: { $0.claims.contains(where: { $0 == item.id }) && $0 != rviewModel.selectedPerson?.id }) {
+//                return rviewModel.colorForPerson(claimingPerson)
+//            }
+//        }
         return Color.clear
     }
 }
@@ -106,7 +107,11 @@ struct PeopleView: View {
     @ObservedObject var person: LegitP
     var isSelected: Bool
     
+    
     var body: some View {
+        let items: [Item] = person.claims.map {rviewModel.receipt.findItemById(id: $0) ?? Item()}
+        let total: Double = items.reduce(into: 0) { $0 += $1.price }
+        
         VStack(alignment: .leading) {
             HStack {
                 Text(person.name)
@@ -117,14 +122,14 @@ struct PeopleView: View {
             Spacer()
             Text("Claims:")
                 .padding([.leading])
-            ForEach(person.claims, id: \.id) { item in
+            ForEach(items, id: \.id) { item in
                 HStack {
                     Text(item.name)
                     Text(String(format: "$%.2f", item.price))
                 }
                 .padding([.leading, .trailing])
             }
-            Text("Total: \(rviewModel.personTotal(for: person))")
+            Text("Total: \(total))")
                 .padding([.leading])
             Spacer()
         }
@@ -134,32 +139,34 @@ struct PeopleView: View {
         .cornerRadius(8)
         .shadow(radius: 1)
     }
+    
+    
 }
 
 // Preview
-struct BillDetailsView_Previews: PreviewProvider {
-    static var previews: some View {
-        let mockItems = [
-            Item(id: "1", name: "Item 1", price: 10.0),
-            Item(id: "2", name: "Item 2", price: 15.0),
-            Item(id: "3", name: "Item 3", price: 20.0)
-        ]
-        
-        let mockPeople = [
-            LegitP(id: "1", name: "John", claims: [mockItems[0]]),
-            LegitP(id: "2", name: "Jane", claims: [mockItems[1]]),
-            LegitP(id: "3", name: "Joe", claims: [mockItems[2]])
-        ]
-        
-        let mockReceipt = Receipt(id: "1", userId: "user1", name: "Test Receipt", date: "2024-05-28", createdAt: "12:00 PM", tax: 2.0, price: 45.0, items: mockItems, people: mockPeople)
-        
-        let mockViewModel = ReceiptViewModel(user: UserViewModel())
-        mockViewModel.receipt = mockReceipt
-        
-        return BillDetailsView(rviewModel: mockViewModel, receipt: mockReceipt)
-            .environmentObject(UserViewModel())
-    }
-}
+//struct BillDetailsView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        let mockItems = [
+//            Item(id: "1", name: "Item 1", price: 10.0),
+//            Item(id: "2", name: "Item 2", price: 15.0),
+//            Item(id: "3", name: "Item 3", price: 20.0)
+//        ]
+//        
+//        let mockPeople = [
+//            LegitP(id: "1", name: "John", claims: [mockItems[0]]),
+//            LegitP(id: "2", name: "Jane", claims: [mockItems[1]]),
+//            LegitP(id: "3", name: "Joe", claims: [mockItems[2]])
+//        ]
+//        
+//        let mockReceipt = Receipt(id: "1", userId: "user1", name: "Test Receipt", date: "2024-05-28", createdAt: "12:00 PM", tax: 2.0, price: 45.0, items: mockItems, people: mockPeople)
+//        
+//        let mockViewModel = ReceiptViewModel(user: UserViewModel())
+//        mockViewModel.receipt = mockReceipt
+//        
+//        return BillDetailsView(rviewModel: mockViewModel, receipt: mockReceipt)
+//            .environmentObject(UserViewModel())
+//    }
+//}
 
 
 

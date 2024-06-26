@@ -25,8 +25,8 @@ struct HomeView: View {
         TabView {
             NavigationView {
                 VStack {
-                    List(rviewModel.receiptList) { receipt in
-                        NavigationLink(destination: BillDetailsView(rviewModel: rviewModel, receipt: receipt)) {
+                        List(Array(rviewModel.receiptList.enumerated()), id: \.element.id) { (index, receipt) in
+                            NavigationLink(destination: BillDetailsView(rviewModel: rviewModel, receipt: receipt)) {
                                 VStack(alignment: .leading) {
                                     Text(receipt.name)
                                         .font(.headline)

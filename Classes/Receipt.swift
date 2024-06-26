@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Receipt: Codable, Identifiable, ObservableObject {
+class Receipt: Codable, Identifiable, ObservableObject, CustomStringConvertible {
     @Published var id: String
     @Published var userId: String
     @Published var name: String
@@ -37,34 +37,38 @@ class Receipt: Codable, Identifiable, ObservableObject {
 
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        print("Decoding id")
+        //print("Decoding id")
         id = try container.decode(String.self, forKey: .id)
         
-        print("Decoding userId")
+        //print("Decoding userId")
         userId = try container.decode(String.self, forKey: .userId)
         
-        print("Decoding name")
+        //print("Decoding name")
         name = try container.decode(String.self, forKey: .name)
         
-        print("Decoding date")
+        //print("Decoding date")
         date = try container.decode(String.self, forKey: .date)
         
-        print("Decoding createdAt")
+        //print("Decoding createdAt")
         createdAt = try container.decode(String.self, forKey: .createdAt)
         
-        print("Decoding tax")
+        //print("Decoding tax")
         tax = try container.decode(Double.self, forKey: .tax)
         
-        print("Decoding price")
+        //print("Decoding price")
         price = try container.decode(Double.self, forKey: .price)
         
-        print("Decoding items")
+        //print("Decoding items")
         //items = try container.decode([Item].self, forKey: .items)
         items = try container.decodeIfPresent([Item].self, forKey: .items) ?? []
         
-        print("Decoding people")
+        //print("Decoding people")
         //people = try container.decode([LegitP].self, forKey: .people)
         people = try container.decodeIfPresent([LegitP].self, forKey: .people) ?? []
+    }
+    
+    func findItemById(id: String) -> Item? {
+        return self.items?.first { $0.id == id }
     }
     
     func encode(to encoder: Encoder) throws {
