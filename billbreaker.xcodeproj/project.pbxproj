@@ -154,7 +154,6 @@
 		E27966102BC4DA5E000B0368 /* ItemVIewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemVIewModel.swift; sourceTree = "<group>"; };
 		E27966122BC4DADB000B0368 /* PersonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonViewModel.swift; sourceTree = "<group>"; };
 		E27F2EB92C26937A0050E190 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		E29D0EC12C25CF6F00D8DFF0 /* ReceiptViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReceiptViewModel.swift; path = MyLibrary/Sources/MyLibrary/ReceiptViewModel.swift; sourceTree = SOURCE_ROOT; };
 		E2A47A242C1A2FBC0023E29D /* JoinReceiptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinReceiptView.swift; sourceTree = "<group>"; };
 		E2A47A262C1CE8140023E29D /* GuestSignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestSignInView.swift; sourceTree = "<group>"; };
 		E2A47A282C1CFA520023E29D /* billbreaker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = billbreaker.entitlements; sourceTree = "<group>"; };
@@ -410,7 +409,6 @@
 			isa = PBXGroup;
 			children = (
 				E27966042BC46D89000B0368 /* UserViewModel.swift */,
-				E29D0EC12C25CF6F00D8DFF0 /* ReceiptViewModel.swift */,
 				E27966102BC4DA5E000B0368 /* ItemVIewModel.swift */,
 				E27966122BC4DADB000B0368 /* PersonViewModel.swift */,
 				E2092B822C2C826100A6B4EF /* ReceiptViewModel.swift */,
