@@ -24,6 +24,7 @@ struct BillDetailsView: View {
                         .fontWeight(.bold)
                     itemsSection
                     peopleSection
+                    claimsUpdateTestSection
                 }
                 .padding(EdgeInsets(top: 30, leading: 19, bottom: 0, trailing: 24))
             }
@@ -89,6 +90,18 @@ struct BillDetailsView: View {
         }
     }
     
+    private var claimsUpdateTestSection: some View {
+        VStack(alignment: .leading, spacing: 15) {
+            Button(action: {
+                rviewModel.claimsTest()
+                print("Claims have been updated")
+            }, label: {
+                Text("Update Claims")
+            })
+            }
+        }
+    }
+    
     private func itemBackground(for item: Item) -> Color {
         if rviewModel.selectedItems.contains(where: { $0.id == item.id }) {
             return rviewModel.colorForPerson(rviewModel.selectedPerson ?? LegitP(id: "", name: "", claims: []))
@@ -99,7 +112,7 @@ struct BillDetailsView: View {
         }
         return Color.clear
     }
-}
+
 
 struct PeopleView: View {
     @ObservedObject var rviewModel: ReceiptViewModel
