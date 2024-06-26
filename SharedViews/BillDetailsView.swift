@@ -24,7 +24,7 @@ struct BillDetailsView: View {
                         .fontWeight(.bold)
                     itemsSection
                     peopleSection
-                    claimsUpdateTestSection
+                    //claimsUpdateTestSection
                 }
                 .padding(EdgeInsets(top: 30, leading: 19, bottom: 0, trailing: 24))
             }
