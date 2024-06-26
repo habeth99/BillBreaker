@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E2092B832C2C826200A6B4EF /* ReceiptViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2092B822C2C826100A6B4EF /* ReceiptViewModel.swift */; };
+		E2092B842C2C826200A6B4EF /* ReceiptViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2092B822C2C826100A6B4EF /* ReceiptViewModel.swift */; };
 		E20EC6192BB3D96500223B19 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = E20EC6182BB3D96500223B19 /* FirebaseAuth */; };
 		E20EC61B2BB3D96500223B19 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = E20EC61A2BB3D96500223B19 /* FirebaseFirestore */; };
 		E20EC61D2BB3D96500223B19 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E20EC61C2BB3D96500223B19 /* FirebaseFirestoreSwift */; };
@@ -38,8 +40,6 @@
 		E27F2EBB2C26943D0050E190 /* BillDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24EEFFB2BBFF8A100E24B56 /* BillDetailsView.swift */; };
 		E29D0EBA2C2555CA00D8DFF0 /* LegitP.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27966062BC476BD000B0368 /* LegitP.swift */; };
 		E29D0EBB2C2555DD00D8DFF0 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27966082BC48178000B0368 /* Item.swift */; };
-		E29D0EC22C25CF6F00D8DFF0 /* ReceiptViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29D0EC12C25CF6F00D8DFF0 /* ReceiptViewModel.swift */; };
-		E29D0EC32C25CF6F00D8DFF0 /* ReceiptViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29D0EC12C25CF6F00D8DFF0 /* ReceiptViewModel.swift */; };
 		E2A47A252C1A2FBC0023E29D /* JoinReceiptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A47A242C1A2FBC0023E29D /* JoinReceiptView.swift */; };
 		E2A47A272C1CE8140023E29D /* GuestSignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A47A262C1CE8140023E29D /* GuestSignInView.swift */; };
 		E2A47A2A2C1E2D7D0023E29D /* LandingPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A47A292C1E2D7D0023E29D /* LandingPageView.swift */; };
@@ -130,6 +130,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		E2092B822C2C826100A6B4EF /* ReceiptViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptViewModel.swift; sourceTree = "<group>"; };
 		E20EC6202BB60C5500223B19 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		E21466C02BAE72B2000A61DB /* billbreaker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = billbreaker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E21466C32BAE72B2000A61DB /* billbreakerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = billbreakerApp.swift; sourceTree = "<group>"; };
@@ -412,6 +413,7 @@
 				E29D0EC12C25CF6F00D8DFF0 /* ReceiptViewModel.swift */,
 				E27966102BC4DA5E000B0368 /* ItemVIewModel.swift */,
 				E27966122BC4DADB000B0368 /* PersonViewModel.swift */,
+				E2092B822C2C826100A6B4EF /* ReceiptViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -674,6 +676,7 @@
 				E2DDFBF62BB1E79900BAD5AC /* CameraView.swift in Sources */,
 				E27966112BC4DA5E000B0368 /* ItemVIewModel.swift in Sources */,
 				E27966052BC46D89000B0368 /* UserViewModel.swift in Sources */,
+				E2092B832C2C826200A6B4EF /* ReceiptViewModel.swift in Sources */,
 				E2DDFBFA2BB1E7B600BAD5AC /* PhotoAsset.swift in Sources */,
 				E27966032BC38F66000B0368 /* SignUpView.swift in Sources */,
 				E2B83BC72BEC11EF00A29D71 /* NewReceiptView.swift in Sources */,
@@ -700,7 +703,6 @@
 				E2D1F2A22BC0CD3400B27278 /* User.swift in Sources */,
 				E2A47A272C1CE8140023E29D /* GuestSignInView.swift in Sources */,
 				E2DDFC1F2BB26AB800BAD5AC /* Helper.swift in Sources */,
-				E29D0EC22C25CF6F00D8DFF0 /* ReceiptViewModel.swift in Sources */,
 				E21466C42BAE72B2000A61DB /* billbreakerApp.swift in Sources */,
 				E279660B2BC493CD000B0368 /* LoginView.swift in Sources */,
 			);
@@ -734,8 +736,8 @@
 				E27F2EBB2C26943D0050E190 /* BillDetailsView.swift in Sources */,
 				E2E2680C2C29DA83009AE6EB /* User.swift in Sources */,
 				E2B5D7F32C25185400403F9D /* billbreakerAppClipApp.swift in Sources */,
+				E2092B842C2C826200A6B4EF /* ReceiptViewModel.swift in Sources */,
 				E27F2EB42C268E920050E190 /* UserViewModel.swift in Sources */,
-				E29D0EC32C25CF6F00D8DFF0 /* ReceiptViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

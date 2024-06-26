@@ -379,6 +379,41 @@ class ReceiptViewModel: ObservableObject {
 
         objectWillChange.send()
     }
+    
+//    func claimsTest() {
+//        guard receipt.people?.count ?? 0 > 1 else {
+//            print("Not enough people to perform the test.")
+//            return
+//        }
+//
+//        // Generate a new ID from Firebase
+//        let newItemRef = dbRef.child("items").childByAutoId()
+//        let newItemID = newItemRef.key ?? "BAD-3"
+//
+//        // Create a new fake claim with the generated ID
+//        let newClaim = Item(id: newItemID, name: "Test Item", price: 9.99)
+//
+//        // Add the new claim to the second person in the people list
+//        receipt.people?[1].claims.append(newClaim)
+//
+//        // Save the new item to Firebase
+//        let itemData: [String: Any] = ["id": newClaim.id, "name": newClaim.name, "price": newClaim.price]
+//        newItemRef.setValue(itemData) { error, _ in
+//            if let error = error {
+//                print("Error saving new item: \(error.localizedDescription)")
+//                return
+//            }
+//
+//            // Update the receipt in Firebase to trigger real-time updates
+//            self.saveReceipt { success in
+//                if success {
+//                    print("Test claim added successfully and receipt updated.")
+//                } else {
+//                    print("Failed to update the receipt with the test claim.")
+//                }
+//            }
+//        }
+//    }
 
     func personTotal(for person: LegitP) -> Double {
         return person.claims.reduce(0) { $0 + $1.price }
