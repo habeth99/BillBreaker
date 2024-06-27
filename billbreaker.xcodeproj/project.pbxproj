@@ -131,6 +131,7 @@
 
 /* Begin PBXFileReference section */
 		E2092B822C2C826100A6B4EF /* ReceiptViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptViewModel.swift; sourceTree = "<group>"; };
+		E20B1AED2C2D279E0059F0D3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		E20EC6202BB60C5500223B19 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		E21466C02BAE72B2000A61DB /* billbreaker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = billbreaker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E21466C32BAE72B2000A61DB /* billbreakerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = billbreakerApp.swift; sourceTree = "<group>"; };
@@ -281,6 +282,7 @@
 		E21466C22BAE72B2000A61DB /* billbreaker */ = {
 			isa = PBXGroup;
 			children = (
+				E20B1AED2C2D279E0059F0D3 /* Info.plist */,
 				E2A47A282C1CFA520023E29D /* billbreaker.entitlements */,
 				E21466C32BAE72B2000A61DB /* billbreakerApp.swift */,
 				E24EEFFB2BBFF8A100E24B56 /* BillDetailsView.swift */,
@@ -919,8 +921,10 @@
 				DEVELOPMENT_TEAM = UWF486GBFD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSCameraUsageDescription = "\"Bill Breaker needs Camera access to scan receipt\"";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "\"Bill Breaker needs Photo Library access\"";
+				INFOPLIST_FILE = billbreaker/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Bill Breaker needs Camera access to scan receipt";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Bill Breaker needs Photo Library access";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -953,8 +957,10 @@
 				DEVELOPMENT_TEAM = UWF486GBFD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSCameraUsageDescription = "\"Bill Breaker needs Camera access to scan receipt\"";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "\"Bill Breaker needs Photo Library access\"";
+				INFOPLIST_FILE = billbreaker/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Bill Breaker needs Camera access to scan receipt";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Bill Breaker needs Photo Library access";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
