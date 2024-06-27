@@ -78,6 +78,7 @@ class UserViewModel: ObservableObject {
             }
             guard let user = authResult?.user else { return }
             print("User signed in: \(user.uid)")
+            self.userID = user.uid
             self.fetchUser()
         }
     }

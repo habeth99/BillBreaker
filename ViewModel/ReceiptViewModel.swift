@@ -38,7 +38,7 @@ class ReceiptViewModel: ObservableObject {
         
         self.receiptList = []
 
-        dbRef.child("users").child(userID).observeSingleEvent(of: .value, with: { snapshot in
+        dbRef.child("users").child(userID).observe(.value, with: { snapshot in
             guard let userData = snapshot.value as? [String: Any],
                   let receiptIDs = userData["receipts"] as? [String] else {
                 print("User data or receipts not found")
@@ -275,7 +275,7 @@ class ReceiptViewModel: ObservableObject {
             "items": receipt.items?.map { item in
                 ["id": item.id, "name": item.name, "price": item.price]
             } ?? [],
-            "people": receipt.people?.map { person in person.toDict() } ?? []
+            "people": receipt.people?.map { $0.toDict() } ?? []
         ]
 
         print("Receipt data to save: \(receiptData)")

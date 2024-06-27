@@ -125,7 +125,7 @@ struct PeopleView: View {
                 }
                 .padding([.leading, .trailing])
             }
-            Text("Total: \(total))")
+            Text("Total: \(String(format: "%.2f", total))")
                 .padding([.leading])
             Spacer()
         }
