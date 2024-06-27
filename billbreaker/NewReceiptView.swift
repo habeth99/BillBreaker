@@ -19,6 +19,8 @@ struct NewReceiptView: View {
     @State private var items: [Item] = [Item()] // Initialize with one empty item
     @ObservedObject var rviewModel: ReceiptViewModel
     
+    private let colors: [Color] = [.red, .blue, .green, .orange, .purple, .yellow, .pink, .gray]
+    
     var body: some View {
         NavigationView {
             List {
@@ -50,9 +52,9 @@ struct NewReceiptView: View {
 
     private func updatePeopleBasedOnText(_ newValue: String) {
         if let count = Int(newValue), count >= 0 {
-            people = (0..<count).map { _ in LegitP(id: "", name: "") }
+            people = (0..<count).map { i in LegitP(id: "", name: "", color: colors[i]) }
         } else {
-            people = [LegitP(id: "", name: "")]
+            people = [LegitP(id: "", name: "", color: .blue)]
         }
     }
 

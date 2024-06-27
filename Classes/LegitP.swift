@@ -38,7 +38,7 @@ class LegitP: Identifiable, ObservableObject, Codable {
         userId = try container.decodeIfPresent(String.self, forKey: .userId) ?? "BAD9"
         claims = try container.decodeIfPresent([String].self, forKey: .claims) ?? []
         paid = try container.decodeIfPresent(Bool.self, forKey: .paid) ?? false
-        color = self.strToColor[try container.decodeIfPresent(String.self, forKey: .color) ?? "red"] ?? .red
+        color = LegitP.strToColor[try container.decodeIfPresent(String.self, forKey: .color) ?? "red"] ?? .red
     }
     
     func encode(to encoder: Encoder) throws {
@@ -48,14 +48,23 @@ class LegitP: Identifiable, ObservableObject, Codable {
         try container.encode(userId, forKey: .userId)
         try container.encode(claims, forKey: .claims)
         try container.encode(paid, forKey: .paid)
-        try container.encode(self.colorToStr[color], forKey: .color)
+        try container.encode(LegitP.colorToStr[color], forKey: .color)
+    }
+    
+    func toDict() -> [String: Any] {
+        return [
+            "id": self.id,
+            "name": self.name,
+            "claims": self.claims,
+            "color": LegitP.colorToStr[self.color]!
+        ]
     }
     
     var description: String {
         return "LegitP(id: \(id), name: \(name), userId: \(userId), claims: \(claims), paid: \(paid))"
     }
     
-    var colorToStr: [Color: String] = [
+    static let colorToStr: [Color: String] = [
         .red: "red",
         .blue: "blue",
         .green: "green",
@@ -66,7 +75,7 @@ class LegitP: Identifiable, ObservableObject, Codable {
         .pink: "pink"
     ]
     
-    var strToColor: [String: Color] = [
+    static let strToColor: [String: Color] = [
         "red": .red,
         "blue": .blue,
         "green": .green,

@@ -24,8 +24,6 @@ class ReceiptViewModel: ObservableObject {
     var userViewModel: UserViewModel
     
     private var dbRef = Database.database().reference()
-    private var personColorMap: [String: Color] = [:]
-    private let colors: [Color] = [.red, .blue, .green, .orange, .purple, .yellow, .pink, .gray]
     
     init(user: UserViewModel) {
         self.userViewModel = user
@@ -71,7 +69,6 @@ class ReceiptViewModel: ObservableObject {
                     let data = try JSONSerialization.data(withJSONObject: receiptData, options: [])
                     var receipt = try JSONDecoder().decode(Receipt.self, from: data)
                     if !fetchedReceipts.contains(where: { $0.id == receipt.id }) {
-                        self.assignColorsToPeople(in: &receipt)
                         fetchedReceipts.append(receipt)
                     }
                 } catch {
@@ -201,16 +198,14 @@ class ReceiptViewModel: ObservableObject {
         }
     }
 
+//================================================================================================
+            // END Listeners Section
+//================================================================================================
     
-
-// need items listener eventually
-
     
-    //Function for adding a receipt to a users list of receipts based on the receipt value "userid"
-    //should probably make this PRIVATE
-    
+//Function for adding a receipt to a users list of receipts based on the receipt value "userid"
+//should probably make this PRIVATE
     func addReceiptToUser2(receiptId: String, completion: @escaping (Bool) -> Void){
-//        let userReceiptsRef = dbRef.child("users").child(receipt.userId).child("receipts")
         let userReceiptsRef = dbRef.child("users").child(userViewModel.currentUser!.id).child("receipts")
         
         // Retrieve current receipts to append the new one
@@ -280,13 +275,7 @@ class ReceiptViewModel: ObservableObject {
             "items": receipt.items?.map { item in
                 ["id": item.id, "name": item.name, "price": item.price]
             } ?? [],
-            "people": receipt.people?.map { person in
-                [
-                    "id": person.id,
-                    "name": person.name,
-                    "claims": person.claims
-                ]
-            } ?? []
+            "people": receipt.people?.map { person in person.toDict() } ?? []
         ]
 
         print("Receipt data to save: \(receiptData)")
@@ -362,15 +351,6 @@ class ReceiptViewModel: ObservableObject {
     
     func setReceipt(receipt: Receipt) {
         self.receipt = receipt
-        //self.objectWillChange.send()
-    }
-    
-    private func assignColorsToPeople(in receipt: inout Receipt) {
-        for (index, person) in receipt.people?.enumerated() ?? [].enumerated() {
-            if personColorMap[person.id] == nil {
-                personColorMap[person.id] = colors[index % colors.count]
-            }
-        }
     }
     
     func setPeople() {
