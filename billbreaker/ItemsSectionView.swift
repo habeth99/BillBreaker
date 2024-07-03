@@ -18,14 +18,12 @@ struct ItemsSectionView: View {
                 let users = self.getUsersForItem(item: item)
                 
                 ItemRowView(item: item, users: users, rviewModel: rviewModel)
-                    .background(users.count > 0 ? users[0].color : .clear)
             }
         }
         .background(Color.white)
         .cornerRadius(12)
         .frame(maxWidth: .infinity) // Adjust width dynamically
         .shadow(radius: 1)
-        .padding(.horizontal)
     }
     
     private func getUsersForItem(item: Item) -> [LegitP] {

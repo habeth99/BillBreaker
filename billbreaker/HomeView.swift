@@ -26,7 +26,7 @@ struct HomeView: View {
             NavigationView {
                 VStack {
                         List(Array(rviewModel.receiptList.enumerated()), id: \.element.id) { (index, receipt) in
-                            NavigationLink(destination: BillDetailsView(rviewModel: rviewModel, receipt: receipt)) {
+                            NavigationLink(destination: BillDetails2View(rviewModel: rviewModel, receipt: receipt)) {
                                 VStack(alignment: .leading) {
                                     Text(receipt.name)
                                         .font(.headline)

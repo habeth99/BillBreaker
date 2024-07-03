@@ -58,8 +58,8 @@ struct BillDetailsView_Previews: PreviewProvider {
         ]
 
         let mockPeople = [
-            LegitP(id: "1", name: "John", claims: ["1"], color: .green),
-            LegitP(id: "2", name: "Jane", claims: ["2"], color: .blue),
+            LegitP(id: "1", name: "John", claims: ["1", "2"], color: .green),
+            LegitP(id: "2", name: "Jane", claims: ["2", "3"], color: .blue),
             LegitP(id: "3", name: "Joe", claims: ["3"], color: .orange)
         ]
 
