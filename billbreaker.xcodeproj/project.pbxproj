@@ -11,6 +11,10 @@
 		22EFCAC02C2D326600E65601 /* BillDetailsPersonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EFCABE2C2D314F00E65601 /* BillDetailsPersonView.swift */; };
 		E2092B832C2C826200A6B4EF /* ReceiptViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2092B822C2C826100A6B4EF /* ReceiptViewModel.swift */; };
 		E2092B842C2C826200A6B4EF /* ReceiptViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2092B822C2C826100A6B4EF /* ReceiptViewModel.swift */; };
+		E209C6562C34F3C300D9E3A2 /* NewBillDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = E209C6552C34F3C300D9E3A2 /* NewBillDetails.swift */; };
+		E209C6582C35143300D9E3A2 /* ItemsSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E209C6572C35143300D9E3A2 /* ItemsSectionView.swift */; };
+		E209C65A2C35147D00D9E3A2 /* ItemRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E209C6592C35147D00D9E3A2 /* ItemRowView.swift */; };
+		E209C65C2C35150900D9E3A2 /* PeopleSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E209C65B2C35150900D9E3A2 /* PeopleSectionView.swift */; };
 		E20EC6192BB3D96500223B19 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = E20EC6182BB3D96500223B19 /* FirebaseAuth */; };
 		E20EC61B2BB3D96500223B19 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = E20EC61A2BB3D96500223B19 /* FirebaseFirestore */; };
 		E20EC61D2BB3D96500223B19 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E20EC61C2BB3D96500223B19 /* FirebaseFirestoreSwift */; };
@@ -55,7 +59,6 @@
 		E2B5D8212C25290E00403F9D /* ClipBillDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B5D8202C25290E00403F9D /* ClipBillDetailView.swift */; };
 		E2B83BC72BEC11EF00A29D71 /* NewReceiptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B83BC62BEC11EF00A29D71 /* NewReceiptView.swift */; };
 		E2C759EF2BC34A6F00F8894C /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = E2C759EE2BC34A6F00F8894C /* FirebaseDatabase */; };
-		E2D1F29E2BC05E3400B27278 /* PersonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D1F29D2BC05E3400B27278 /* PersonView.swift */; };
 		E2D1F2A02BC0B18200B27278 /* Receipt.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D1F29F2BC0B18200B27278 /* Receipt.swift */; };
 		E2D1F2A22BC0CD3400B27278 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D1F2A12BC0CD3400B27278 /* User.swift */; };
 		E2DDFBF22BB1E74A00BAD5AC /* CachedImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFBF12BB1E74A00BAD5AC /* CachedImageManager.swift */; };
@@ -134,6 +137,10 @@
 /* Begin PBXFileReference section */
 		22EFCABE2C2D314F00E65601 /* BillDetailsPersonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillDetailsPersonView.swift; sourceTree = "<group>"; };
 		E2092B822C2C826100A6B4EF /* ReceiptViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptViewModel.swift; sourceTree = "<group>"; };
+		E209C6552C34F3C300D9E3A2 /* NewBillDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewBillDetails.swift; sourceTree = "<group>"; };
+		E209C6572C35143300D9E3A2 /* ItemsSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsSectionView.swift; sourceTree = "<group>"; };
+		E209C6592C35147D00D9E3A2 /* ItemRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemRowView.swift; sourceTree = "<group>"; };
+		E209C65B2C35150900D9E3A2 /* PeopleSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleSectionView.swift; sourceTree = "<group>"; };
 		E20B1AED2C2D279E0059F0D3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		E20EC6202BB60C5500223B19 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		E21466C02BAE72B2000A61DB /* billbreaker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = billbreaker.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -175,7 +182,6 @@
 		E2B5D8112C25185800403F9D /* billbreakerAppClipUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = billbreakerAppClipUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		E2B5D8202C25290E00403F9D /* ClipBillDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipBillDetailView.swift; sourceTree = "<group>"; };
 		E2B83BC62BEC11EF00A29D71 /* NewReceiptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReceiptView.swift; sourceTree = "<group>"; };
-		E2D1F29D2BC05E3400B27278 /* PersonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonView.swift; sourceTree = "<group>"; };
 		E2D1F29F2BC0B18200B27278 /* Receipt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Receipt.swift; sourceTree = "<group>"; };
 		E2D1F2A12BC0CD3400B27278 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		E2DDFBF12BB1E74A00BAD5AC /* CachedImageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CachedImageManager.swift; sourceTree = "<group>"; };
@@ -256,6 +262,7 @@
 			children = (
 				E24EEFFB2BBFF8A100E24B56 /* BillDetailsView.swift */,
 				22EFCABE2C2D314F00E65601 /* BillDetailsPersonView.swift */,
+				E209C6552C34F3C300D9E3A2 /* NewBillDetails.swift */,
 			);
 			path = BillDetails;
 			sourceTree = "<group>";
@@ -300,7 +307,6 @@
 				E21466C32BAE72B2000A61DB /* billbreakerApp.swift */,
 				E20EC6202BB60C5500223B19 /* HomeView.swift */,
 				E279660A2BC493CD000B0368 /* LoginView.swift */,
-				E2D1F29D2BC05E3400B27278 /* PersonView.swift */,
 				E27966022BC38F65000B0368 /* SignUpView.swift */,
 				E279660C2BC49D83000B0368 /* WhichView.swift */,
 				E2B83BC62BEC11EF00A29D71 /* NewReceiptView.swift */,
@@ -309,6 +315,9 @@
 				E2A47A262C1CE8140023E29D /* GuestSignInView.swift */,
 				E2409E212BED9B7B00A5940D /* AppDelegate.swift */,
 				E2A47A292C1E2D7D0023E29D /* LandingPageView.swift */,
+				E209C6572C35143300D9E3A2 /* ItemsSectionView.swift */,
+				E209C6592C35147D00D9E3A2 /* ItemRowView.swift */,
+				E209C65B2C35150900D9E3A2 /* PeopleSectionView.swift */,
 				E21CB6872C21EB6900290D00 /* GoogleService-Info.plist */,
 				E21466C72BAE72B6000A61DB /* Assets.xcassets */,
 				E21466C92BAE72B6000A61DB /* Preview Content */,
@@ -681,6 +690,8 @@
 			files = (
 				E2DDFBF82BB1E7A500BAD5AC /* DataModel.swift in Sources */,
 				E20EC6212BB60C5500223B19 /* HomeView.swift in Sources */,
+				E209C6562C34F3C300D9E3A2 /* NewBillDetails.swift in Sources */,
+				E209C65C2C35150900D9E3A2 /* PeopleSectionView.swift in Sources */,
 				E2409E222BED9B7B00A5940D /* AppDelegate.swift in Sources */,
 				E2DDFC042BB1E7E600BAD5AC /* PhotoLibrary.swift in Sources */,
 				E2DDFC212BB26C1900BAD5AC /* Seeing.swift in Sources */,
@@ -692,6 +703,7 @@
 				E2DDFBFA2BB1E7B600BAD5AC /* PhotoAsset.swift in Sources */,
 				E27966032BC38F66000B0368 /* SignUpView.swift in Sources */,
 				E2B83BC72BEC11EF00A29D71 /* NewReceiptView.swift in Sources */,
+				E209C65A2C35147D00D9E3A2 /* ItemRowView.swift in Sources */,
 				E2DDFC022BB1E7DD00BAD5AC /* PhotoItemView.swift in Sources */,
 				E2DDFC232BB292E200BAD5AC /* TextRecognitionService.swift in Sources */,
 				E27966132BC4DADB000B0368 /* PersonViewModel.swift in Sources */,
@@ -707,7 +719,7 @@
 				E2DDFBF22BB1E74A00BAD5AC /* CachedImageManager.swift in Sources */,
 				E2DDFBFC2BB1E7C000BAD5AC /* PhotoAssetCollection.swift in Sources */,
 				E2A47A252C1A2FBC0023E29D /* JoinReceiptView.swift in Sources */,
-				E2D1F29E2BC05E3400B27278 /* PersonView.swift in Sources */,
+				E209C6582C35143300D9E3A2 /* ItemsSectionView.swift in Sources */,
 				E2D1F2A02BC0B18200B27278 /* Receipt.swift in Sources */,
 				E2DDFC082BB1E7F700BAD5AC /* ThumbnailView.swift in Sources */,
 				E2DDFC0A2BB1E80300BAD5AC /* ViewfinderView.swift in Sources */,
