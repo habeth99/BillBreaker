@@ -15,21 +15,25 @@ struct LandingPageView: View {
     
     var body: some View {
         VStack {
-            Text("Welcome to the App")
+            Text("Welcome to fatcheck!")
                 .font(.largeTitle)
                 .padding()
+            
+            Spacer()
             
             Button(action: {
                 viewModel.showLoginView = true
             }) {
                 Text("Login")
+                    .frame(maxWidth: .infinity)
+                    .frame(maxHeight: 30)
                     .font(.title)
                     .padding()
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
+                    .background(Color.green.opacity(0.5))
+                    .foregroundColor(.black)
+                    .cornerRadius(6)
             }
-            .padding()
+            .padding(.horizontal)
             .sheet(isPresented: $viewModel.showLoginView) {
                 LoginView()
                     .environmentObject(viewModel)
@@ -39,13 +43,15 @@ struct LandingPageView: View {
                 viewModel.showSignupView = true
             }) {
                 Text("Sign Up")
+                    .frame(maxWidth: .infinity)
+                    .frame(maxHeight: 30)
                     .font(.title)
                     .padding()
                     .background(Color.green)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
+                    .foregroundColor(.black)
+                    .cornerRadius(6)
             }
-            .padding()
+            .padding(.horizontal)
             .sheet(isPresented: $viewModel.showSignupView) {
                 SignUpView()
                     .environmentObject(viewModel)
@@ -64,8 +70,9 @@ struct LandingPageView: View {
                 }
             )
             .signInWithAppleButtonStyle(.black)
-            .frame(width: 280, height: 60)
-            .padding()
+            .frame(maxWidth: .infinity)
+            .frame(maxHeight: 60)
+            .padding(.horizontal)
         }
     }
 }

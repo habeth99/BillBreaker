@@ -84,6 +84,40 @@ class Receipt: Codable, Identifiable, ObservableObject, CustomStringConvertible 
         try container.encodeIfPresent(people, forKey: .people)
     }
     
+    func countClaims() -> [String: Int] {
+        var claimCounts: [String: Int] = [:]
+        if let unwrapPeople = people {
+            
+            for person in unwrapPeople {
+                for claim in person.claims {
+                    claimCounts[claim, default: 0] += 1
+                }
+            }
+        }
+        
+        return claimCounts
+    }
+    
+    func countPeopleClaiming(itemID: String) -> Int {
+        return people?.reduce(0) { (count, person) in
+            return count + (person.claims.contains(itemID) ? 1 : 0)
+        } ?? 0
+    }
+    
+    func calculateShareForItem(itemID: String) -> Double? {
+        let count = countPeopleClaiming(itemID: itemID)
+        guard count > 0 else {
+            return nil // Return nil if no one claimed the item
+        }
+        let item = findItemById(id: itemID)
+        
+        return (item?.price ?? 0.0) / Double(count)
+    }
+    
+    func findItemByID(itemID: String) -> Item? {
+        return items?.first { $0.id == itemID }
+    }
+    
     var description: String {
         return "Receipt(id: \(id), userId: \(userId), name: \(name), date: \(date), createdAt: \(createdAt), tax: \(tax), price: \(price), items: \(items ?? []), people: \(people ?? []))"
     }

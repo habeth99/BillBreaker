@@ -28,6 +28,7 @@
 		E21CB6882C21EB6900290D00 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E21CB6872C21EB6900290D00 /* GoogleService-Info.plist */; };
 		E2409E202BED3B0800A5940D /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2409E1F2BED3B0800A5940D /* ProfileView.swift */; };
 		E2409E222BED9B7B00A5940D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2409E212BED9B7B00A5940D /* AppDelegate.swift */; };
+		E24A2AF62C385E9700273673 /* CustomHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24A2AF52C385E9700273673 /* CustomHeaderView.swift */; };
 		E24EEFFC2BBFF8A100E24B56 /* BillDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24EEFFB2BBFF8A100E24B56 /* BillDetailsView.swift */; };
 		E27966032BC38F66000B0368 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27966022BC38F65000B0368 /* SignUpView.swift */; };
 		E27966052BC46D89000B0368 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27966042BC46D89000B0368 /* UserViewModel.swift */; };
@@ -155,6 +156,7 @@
 		E21CB6872C21EB6900290D00 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E2409E1F2BED3B0800A5940D /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		E2409E212BED9B7B00A5940D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		E24A2AF52C385E9700273673 /* CustomHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomHeaderView.swift; sourceTree = "<group>"; };
 		E24EEFFB2BBFF8A100E24B56 /* BillDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillDetailsView.swift; sourceTree = "<group>"; };
 		E27966022BC38F65000B0368 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		E27966042BC46D89000B0368 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
@@ -263,6 +265,7 @@
 				E24EEFFB2BBFF8A100E24B56 /* BillDetailsView.swift */,
 				22EFCABE2C2D314F00E65601 /* BillDetailsPersonView.swift */,
 				E209C6552C34F3C300D9E3A2 /* NewBillDetails.swift */,
+				E24A2AF52C385E9700273673 /* CustomHeaderView.swift */,
 			);
 			path = BillDetails;
 			sourceTree = "<group>";
@@ -719,6 +722,7 @@
 				E2DDFBF22BB1E74A00BAD5AC /* CachedImageManager.swift in Sources */,
 				E2DDFBFC2BB1E7C000BAD5AC /* PhotoAssetCollection.swift in Sources */,
 				E2A47A252C1A2FBC0023E29D /* JoinReceiptView.swift in Sources */,
+				E24A2AF62C385E9700273673 /* CustomHeaderView.swift in Sources */,
 				E209C6582C35143300D9E3A2 /* ItemsSectionView.swift in Sources */,
 				E2D1F2A02BC0B18200B27278 /* Receipt.swift in Sources */,
 				E2DDFC082BB1E7F700BAD5AC /* ThumbnailView.swift in Sources */,

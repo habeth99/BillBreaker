@@ -19,6 +19,7 @@ struct BillDetailsView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 10) {
                     // MARK: Header
+                    Text("date:")
                     Text("Items")
                         .font(.title)
                         .fontWeight(.bold)

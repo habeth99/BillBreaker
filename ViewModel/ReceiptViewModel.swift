@@ -384,6 +384,10 @@ class ReceiptViewModel: ObservableObject {
         self.receipt.people = self.people
         print("Final people in receipt: \(self.receipt.people ?? [])")
     }
+    
+    func addUserToItem() {
+        
+    }
 
     func setItems() {
         print("Setting items from receipt...")
@@ -461,6 +465,11 @@ class ReceiptViewModel: ObservableObject {
     
     // Function to fetch a receipt given a receiptId from the user in the join bill view
     func joinReceiptWith(receiptId: String, completion: @escaping (Bool) -> Void) {
+        if (receiptId.isEmpty) {
+            print("receiptId is Empty")
+            return
+        }
+        
         dbRef.child("receipts").child(receiptId).observeSingleEvent(of: .value, with: { snapshot in
             guard snapshot.exists() else {
                 print("Snapshot does not exist for receiptId: \(receiptId)")

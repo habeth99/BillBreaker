@@ -37,7 +37,7 @@ struct HomeView: View {
                                 }
                             }
                         }
-                        .navigationTitle("My Receipts")
+                        .navigationTitle("My Checks")
                         .toolbar {
                             ToolbarItemGroup(placement: .navigationBarLeading) {
                                 Button(action: {
@@ -90,6 +90,7 @@ struct HomeView: View {
                     Label("Profile", systemImage: "person")
                 }
         }
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
