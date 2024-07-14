@@ -13,6 +13,7 @@ struct NewReceiptView: View {
     @State private var name = ""
     @State private var itemsText = ""
     @State private var peopleText = ""
+    @State private var tipText = ""
     @State private var taxText = ""
     @State private var totalText = ""
     @State private var people: [LegitP] = [LegitP()]
@@ -29,7 +30,7 @@ struct NewReceiptView: View {
                 itemDetailsSection
                 numberOfPeopleSection
                 peopleDetailsSection
-                taxAndTotalSection
+                taxTipAndTotalSection
             }
             .navigationTitle("New Receipt")
             .navigationBarItems(leading: cancelButton, trailing: nextButton)
@@ -110,10 +111,11 @@ struct NewReceiptView: View {
         }
     }
 
-    private var taxAndTotalSection: some View {
+    private var taxTipAndTotalSection: some View {
         Section {
             TextField("Enter tax", text: $taxText)
             TextField("Enter total price", text: $totalText)
+            TextField("Enter tip", text: $tipText)
         }
     }
 

@@ -19,7 +19,6 @@ struct BillDetails2View: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 10) {
                     // MARK: Header
-                    Text(receipt.date)
                     Text("Items")
                         .font(.title)
                         .fontWeight(.bold)
@@ -28,26 +27,13 @@ struct BillDetails2View: View {
                 }
                 .padding(EdgeInsets(top: 30, leading: 19, bottom: 0, trailing: 24))
             }
-//            .toolbar {
-//                ToolbarItem(placement: .topBarLeading) {
-//                    VStack {
-//                        Text(receipt.date) // Your date here
-//                            .font(.subheadline)
-//                            .foregroundColor(.primary)
-//                    }
-//                    .frame(width: 100)
-//                }
-//            }
         }
         .navigationBarTitle(receipt.name, displayMode: .automatic)
         .onAppear {
-            // set receipt variable
             rviewModel.setReceipt(receipt: receipt)
         }
     }
 }
-
-
 
 // Preview
 struct BillDetailsView_Previews: PreviewProvider {

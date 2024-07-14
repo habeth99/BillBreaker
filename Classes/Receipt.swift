@@ -67,10 +67,6 @@ class Receipt: Codable, Identifiable, ObservableObject, CustomStringConvertible 
         people = try container.decodeIfPresent([LegitP].self, forKey: .people) ?? []
     }
     
-    func findItemById(id: String) -> Item? {
-        return self.items?.first { $0.id == id }
-    }
-    
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(id, forKey: .id)
@@ -84,18 +80,12 @@ class Receipt: Codable, Identifiable, ObservableObject, CustomStringConvertible 
         try container.encodeIfPresent(people, forKey: .people)
     }
     
-    func countClaims() -> [String: Int] {
-        var claimCounts: [String: Int] = [:]
-        if let unwrapPeople = people {
-            
-            for person in unwrapPeople {
-                for claim in person.claims {
-                    claimCounts[claim, default: 0] += 1
-                }
-            }
-        }
-        
-        return claimCounts
+    //====================================================================================//
+    //                               Receipt Class Functions                              //
+    //====================================================================================//
+    
+    func findItemById(id: String) -> Item? {
+        return self.items?.first { $0.id == id }
     }
     
     func countPeopleClaiming(itemID: String) -> Int {
@@ -104,18 +94,12 @@ class Receipt: Codable, Identifiable, ObservableObject, CustomStringConvertible 
         } ?? 0
     }
     
-    func calculateShareForItem(itemID: String) -> Double? {
-        let count = countPeopleClaiming(itemID: itemID)
-        guard count > 0 else {
-            return nil // Return nil if no one claimed the item
-        }
-        let item = findItemById(id: itemID)
-        
-        return (item?.price ?? 0.0) / Double(count)
+    func calcTipShare(){
+        //TODO
     }
     
-    func findItemByID(itemID: String) -> Item? {
-        return items?.first { $0.id == itemID }
+    func calcTaxShare(){
+        //TODO
     }
     
     var description: String {

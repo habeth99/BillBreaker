@@ -21,9 +21,9 @@ struct CustomHeaderView: View {
                 .font(.largeTitle)
                 .bold()
         }
-        .padding()
-        .background(Color.black)
-        .foregroundColor(.white)
+//        .padding()
+//        .background(Color.black)
+//        .foregroundColor(.white)
     }
 }
 

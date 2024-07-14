@@ -30,7 +30,9 @@ class ReceiptViewModel: ObservableObject {
         self.receipt = Receipt()
     }
     
-    func fetchUserReceipts() {
+    //main actor cuz updates can't be published from a background thread
+    @MainActor
+    func fetchUserReceipts() async {
         guard let userID = userViewModel.currentUser?.id else {
             print("fetchUserReceipts: User not authenticated or user ID not available")
             return
