@@ -273,7 +273,7 @@ class ReceiptViewModel: ObservableObject {
             "date": receipt.date,
             "createdAt": receipt.createdAt,
             "tax": receipt.tax,
-            "price": receipt.price,
+            "tip": receipt.tip,
             "items": receipt.items?.map { item in
                 ["id": item.id, "name": item.name, "price": item.price]
             } ?? [],
@@ -301,7 +301,7 @@ class ReceiptViewModel: ObservableObject {
         }
     }
 
-    func newReceipt(name: String, tax: Double, price: Double, items: [Item], people: [LegitP]) {
+    func newReceipt(name: String, tax: Double, tip: Double, price: Double, items: [Item], people: [LegitP]) {
         let currentDate = Date()
         print("Current date: \(currentDate)")
 
@@ -324,7 +324,7 @@ class ReceiptViewModel: ObservableObject {
             date: dateString,
             createdAt: timeString,
             tax: tax,
-            price: price,
+            tip: tip,
             items: items,
             people: people
         )

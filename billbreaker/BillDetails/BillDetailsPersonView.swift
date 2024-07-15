@@ -18,6 +18,7 @@ struct BillDetailsPersonView: View {
         }
         
         let total: Double = itemsWithPrice.reduce(into: 0) { $0 += $1.1 } // Sum up share prices
+        let tip: Double = rviewModel.receipt.calcTipShare(user: person, userTotal: total)
         HStack{
             VStack(alignment: .leading) {
                 HStack {
@@ -36,7 +37,7 @@ struct BillDetailsPersonView: View {
                     }
                     .padding([.leading, .trailing])
                 }
-                Text("Tip: ")
+                Text("Tip: \(String(format: "%.2f", tip))")
                     .padding(.leading)
                 Text("Total: \(String(format: "%.2f", total))")
                     .padding([.leading])

@@ -50,7 +50,7 @@ struct BillDetailsView_Previews: PreviewProvider {
             LegitP(id: "3", name: "Joe", claims: ["3"], color: .orange)
         ]
 
-        let mockReceipt = Receipt(id: "1", userId: "user1", name: "Test Receipt", date: "2024-05-28", createdAt: "12:00 PM", tax: 2.0, price: 45.0, items: mockItems, people: mockPeople)
+        let mockReceipt = Receipt(id: "1", userId: "user1", name: "Test Receipt", date: "2024-05-28", createdAt: "12:00 PM", tax: 2.0, items: mockItems, people: mockPeople)
 
         let mockViewModel = ReceiptViewModel(user: UserViewModel())
         mockViewModel.receipt = mockReceipt

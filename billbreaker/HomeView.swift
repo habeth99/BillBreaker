@@ -33,7 +33,7 @@ struct HomeView: View {
                                         .font(.headline)
                                     Text("Date: \(receipt.date)")
                                         .font(.subheadline)
-                                    Text("Total: $\(receipt.price, specifier: "%.2f")")
+                                    Text("Total: $\(receipt.getTotal(), specifier: "%.2f")")
                                         .font(.subheadline)
                                 }
                             }

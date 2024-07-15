@@ -135,7 +135,12 @@ struct NewReceiptView: View {
             
             print("Items before calling newReceipt: \(items)")
             
-            rviewModel.newReceipt(name: name, tax: tax, price: total, items: items, people: people)
+            guard let tip = Double(tipText) else{
+                print("Invalid input for tip")
+                return
+            }
+            
+            rviewModel.newReceipt(name: name, tax: tax, tip: tip, price: total, items: items, people: people)
             
             rviewModel.setItems()
             rviewModel.setPeople()

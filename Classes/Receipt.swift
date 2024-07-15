@@ -14,23 +14,24 @@ class Receipt: Codable, Identifiable, ObservableObject, CustomStringConvertible 
     @Published var date: String
     @Published var createdAt: String
     @Published var tax: Double
-    @Published var price: Double
+    @Published var tip: Double
+    //@Published var price: Double
     @Published var items: [Item]?
     @Published var people: [LegitP]?
     
     enum CodingKeys: CodingKey {
-        case id, userId, name, date, createdAt, tax, price, items, people
+        case id, userId, name, date, createdAt, tax, tip, items, people
     }
 
     // Custom initializer
-    init(id: String = "", userId: String = "", name: String = "", date: String = "", createdAt: String = "", tax: Double = 0.00, price: Double = 0.00, items: [Item] = [], people: [LegitP] = []) {
+    init(id: String = "", userId: String = "", name: String = "", date: String = "", createdAt: String = "", tax: Double = 0.00, tip: Double = 0.00, items: [Item] = [], people: [LegitP] = []) {
         self.id = id // Assign a UUID by default or use a specific id if provided
         self.userId = userId
         self.name = name
         self.date = date
         self.createdAt = createdAt
         self.tax = tax
-        self.price = price
+        self.tip = tip
         self.items = items
         self.people = people
     }
@@ -55,8 +56,7 @@ class Receipt: Codable, Identifiable, ObservableObject, CustomStringConvertible 
         //print("Decoding tax")
         tax = try container.decode(Double.self, forKey: .tax)
         
-        //print("Decoding price")
-        price = try container.decode(Double.self, forKey: .price)
+        tip = try container.decode(Double.self, forKey: .tip)
         
         //print("Decoding items")
         //items = try container.decode([Item].self, forKey: .items)
@@ -75,7 +75,7 @@ class Receipt: Codable, Identifiable, ObservableObject, CustomStringConvertible 
         try container.encode(date, forKey: .date)
         try container.encode(createdAt, forKey: .createdAt)
         try container.encode(tax, forKey: .tax)
-        try container.encode(price, forKey: .price)
+        try container.encode(tip, forKey: .tip)
         try container.encodeIfPresent(items, forKey: .items)
         try container.encodeIfPresent(people, forKey: .people)
     }
@@ -94,15 +94,38 @@ class Receipt: Codable, Identifiable, ObservableObject, CustomStringConvertible 
         } ?? 0
     }
     
-    func calcTipShare(){
-        //TODO
+    func calcTipShare(user: LegitP, userTotal: Double) -> Double {
+        var sharedTip = 0.0
+        var total = 0.0
+        
+//        for itemId in user.claims {
+//            if let item = findItemById(id: itemId) {
+//                sharedTip += item.price
+//            }
+//        }
+        total = getTotal()
+        
+        sharedTip = userTotal/total
+        sharedTip = sharedTip * self.tip
+        
+        return sharedTip
     }
     
     func calcTaxShare(){
         //TODO
     }
     
+    func getTotal() -> Double {
+        var total = 0.0
+        
+        for item in self.items ?? [] {
+            total += item.price
+        }
+        
+        return total
+    }
+    
     var description: String {
-        return "Receipt(id: \(id), userId: \(userId), name: \(name), date: \(date), createdAt: \(createdAt), tax: \(tax), price: \(price), items: \(items ?? []), people: \(people ?? []))"
+        return "Receipt(id: \(id), userId: \(userId), name: \(name), date: \(date), createdAt: \(createdAt), tax: \(tax), items: \(items ?? []), people: \(people ?? []))"
     }
 }
