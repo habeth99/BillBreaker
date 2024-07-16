@@ -90,6 +90,42 @@ class ReceiptViewModel: ObservableObject {
         setupReceiptListeners(receiptIDs: receiptIDs)
     }
     
+    func getReceipt(id: String) async -> Receipt? {
+        do {
+            let snapshot = try await dbRef.child("receipts").child(id).getData()
+            
+            guard let value = snapshot.value as? [String: Any] else {
+                print("Receipt data not found for ID: \(id)")
+                return nil
+            }
+            
+            print("Receipt data snapshot value: \(value)")
+            
+            let data = try JSONSerialization.data(withJSONObject: value)
+            let loadedReceipt = try JSONDecoder().decode(Receipt.self, from: data)
+            
+            self.receipt = loadedReceipt
+            print("Receipt loaded: \(loadedReceipt.name)")
+            
+            // Temp variables to match what the methods need
+            let tempReceiptList = [id]
+            let receiptRef = dbRef.child("receipts").child(id)
+            // Set up listeners for real-time updates
+            setupReceiptListeners(receiptIDs: tempReceiptList)
+            setupPeopleListeners(receiptRef, receiptID: id)
+            setupItemListeners(receiptRef, receiptID: id)
+            
+            return self.receipt
+        } catch {
+            print("Error loading receipt: \(error.localizedDescription)")
+            return nil
+        }
+    }
+    
+    func handleEdit() {
+        print("Edit button was tapped")
+    }
+    
 //================================================================================================
         //Listeners Section
 //================================================================================================

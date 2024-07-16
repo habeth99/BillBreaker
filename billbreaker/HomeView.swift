@@ -9,90 +9,73 @@ import Foundation
 import SwiftUI
 
 struct HomeView: View {
-    @State private var bills = ["Bill 1"]
     @State private var showActionSheet = false
     @State private var showingNewReceiptSheet = false
     @State private var showingJoinSheet = false
     @State private var newBillTitle = ""
+    
+    @Binding var deepLinkReceiptId: String?
+    @State private var navigateToReceipt: Receipt?
+    
     @StateObject private var rviewModel: ReceiptViewModel
     @EnvironmentObject var viewModel: UserViewModel
     
-    init(viewModel: UserViewModel) {
+    init(viewModel: UserViewModel, deepLinkReceiptId: Binding<String?>) {
+        self._deepLinkReceiptId = deepLinkReceiptId
         self._rviewModel = StateObject(wrappedValue: ReceiptViewModel(user: viewModel))
     }
     
     var body: some View {
-        TabView {
-            NavigationView {
-                VStack {
-                        List(Array(rviewModel.receiptList.enumerated()), id: \.element.id) { (index, receipt) in
-                            NavigationLink(destination: BillDetails2View(rviewModel: rviewModel, receipt: receipt)) {
-                                VStack(alignment: .leading) {
-                                    Text(receipt.name)
-                                        .font(.headline)
-                                    Text("Date: \(receipt.date)")
-                                        .font(.subheadline)
-                                    Text("Total: $\(receipt.getTotal(), specifier: "%.2f")")
-                                        .font(.subheadline)
-                                }
-                            }
-                        }
-                        .navigationTitle("My Checks")
-                        .toolbar {
-                            ToolbarItemGroup(placement: .navigationBarLeading) {
-                                Button(action: {
-                                    print("edit Button was tapped")
-                                }) {
-                                    Text("Edit")
-                                }
-                            }
-                            
-                            ToolbarItemGroup(placement: .navigationBarLeading) {
-                                Button(action: {
-
-                                    showingJoinSheet = true
-                                    
-                                }) {
-                                    Text("Join")
-                                }
-                            }
-                            
-                            ToolbarItemGroup(placement: .navigationBarTrailing) {
-                                Button(action: {
-                                    print("add Button was tapped")
-                                    showingNewReceiptSheet = true
-                                }) {
-                                    Image(systemName: "plus")
-                                }
-                            }
-                        }
-                        .sheet(isPresented: $showingNewReceiptSheet) {
-                            NewReceiptView(isPresented: $showingNewReceiptSheet, rviewModel: ReceiptViewModel(user: viewModel))
-                        }
-                        .sheet(isPresented: $showingJoinSheet) {
-                            //JoinReceiptView(isPresented: $showingJoinSheet, rviewModel: ReceiptViewModel(user: viewModel))
-                            JoinReceiptView(isPresented: $showingJoinSheet, rviewModel: rviewModel)
-                        }
-                    }
-                    .onAppear {
-                        print("HomeView appeared")
-                        Task{
-                            await rviewModel.fetchUserReceipts()
-                            print("User: \(String(describing: viewModel.currentUser))")
-                            //print("User Receipts: \(rviewModel.receiptList)")
-                        }
-                    }
-            }
-            .tabItem {
-                Label("Home", systemImage: "house")
-            }
-            
-            ProfileView()
-                .tabItem {
-                    Label("Profile", systemImage: "person")
+        NavigationView {
+            ReceiptListView(rviewModel: rviewModel)
+                .navigationTitle("My Checks")
+                .toolbar {
+                    HomeToolbar(
+                        onEdit: rviewModel.handleEdit,
+                        onJoin: { showingJoinSheet = true },
+                        onAdd: { showingNewReceiptSheet = true }
+                    )
                 }
         }
-        .navigationBarTitleDisplayMode(.inline)
+        .sheet(isPresented: $showingNewReceiptSheet) {
+            NewReceiptView(isPresented: $showingNewReceiptSheet, rviewModel: ReceiptViewModel(user: viewModel))
+        }
+        .sheet(isPresented: $showingJoinSheet) {
+            JoinReceiptView(isPresented: $showingJoinSheet, rviewModel: rviewModel)
+        }
+        .onAppear {
+            print("HomeView appeared")
+            Task{
+                await rviewModel.fetchUserReceipts()
+                print("User: \(String(describing: viewModel.currentUser))")
+            }
+//            if let deepLinkId = deepLinkReceiptId {
+//                navigateToReceiptId = deepLinkId
+//                deepLinkReceiptId = nil
+//            }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .openReceiptDetail)) { notification in
+            if let receiptId = notification.userInfo?["receiptId"] as? String {
+                handleDeepLink(receiptId)
+            }
+        }
+        .sheet(item: $navigateToReceipt) { receipt in
+            BillDetailsView(rviewModel: rviewModel, receipt: receipt)
+        }
     }
+    
+    private func handleDeepLink(_ receiptId: String) {
+        Task {
+            if let receipt = await rviewModel.getReceipt(id: receiptId) {
+                DispatchQueue.main.async {
+                    self.navigateToReceipt = receipt
+                    //self.selectedTab = 0 // Switch to Home tab
+                }
+            } else {
+                print("Receipt not found for ID: \(receiptId)")
+            }
+        }
+    }
+    
 }
 

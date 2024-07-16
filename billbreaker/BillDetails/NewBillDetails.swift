@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct BillDetails2View: View {
+struct BillDetailsView: View {
     @ObservedObject var rviewModel: ReceiptViewModel
     var receipt: Receipt
     
@@ -55,7 +55,7 @@ struct BillDetailsView_Previews: PreviewProvider {
         let mockViewModel = ReceiptViewModel(user: UserViewModel())
         mockViewModel.receipt = mockReceipt
 
-        return BillDetails2View(rviewModel: mockViewModel, receipt: mockReceipt)
+        return BillDetailsView(rviewModel: mockViewModel, receipt: mockReceipt)
             .environmentObject(UserViewModel())
     }
 }
