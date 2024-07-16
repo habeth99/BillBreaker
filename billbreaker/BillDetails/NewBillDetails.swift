@@ -21,7 +21,7 @@ struct BillDetails2View: View {
                     // MARK: Header
                     Text("Items")
                         .font(.title)
-                        .fontWeight(.bold)
+                        .fontWeight(.semibold)
                     ItemsSectionView(rviewModel: rviewModel, receipt: receipt)
                     PeopleSectionView(rviewModel: rviewModel, receipt: receipt)
                 }

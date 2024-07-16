@@ -19,6 +19,7 @@ class UserViewModel: ObservableObject {
     @Published var showLoginView: Bool = false
     @Published var showSignupView: Bool = false
     @Published var errorMessage: String?
+    @Published var isUserDataLoaded = false
     
     private var userID: String?
     private var currentNonce: String?
@@ -29,116 +30,84 @@ class UserViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
 
     init() {
+        Task {
+            await setupInitialState()
+        }
+    }
+    
+    private func setupInitialState() async {
         if let currentUser = Auth.auth().currentUser {
-            self.userID = currentUser.uid
-            
-            print("Authenticated user ID: \(self.userID ?? "No user ID")")
-            self.isUserAuthenticated = true
-            setupUserListener()
-            //fetchUser()
+            await updateAuthState(userId: currentUser.uid, isAuthenticated: true)
         } else {
-            print("No authenticated user found.")
+            await updateAuthState(userId: nil, isAuthenticated: false)
+        }
+    }
+    
+    private func updateAuthState(userId: String?, isAuthenticated: Bool) async {
+        await MainActor.run {
+            self.userID = userId
+            self.isUserAuthenticated = isAuthenticated
+            if isAuthenticated {
+                print("Authenticated user ID: \(self.userID ?? "No user ID")")
+                self.setupUserListener()
+                self.fetchUser()
+            } else {
+                print("No authenticated user found.")
+                self.currentUser = nil
+            }
         }
     }
     
     func checkUserSession() {
-        if Auth.auth().currentUser != nil {
-            self.isUserAuthenticated = true
-        } else {
-            self.isUserAuthenticated = false
+        Task {
+            await updateAuthState(userId: Auth.auth().currentUser?.uid, isAuthenticated: Auth.auth().currentUser != nil)
         }
     }
     
-    // Fetch user data from Firebase and decode into User
-    // Sign up a new user
-    func signUp(email: String, password: String, name: String, venmoHandle: String, cashAppHandle: String) {
-        Auth.auth().createUser(withEmail: email, password: password) { [weak self] authResult, error in
-            guard let self = self else { return }
-            if let error = error {
-                print("Error signing up: \(error.localizedDescription)")
-                return
-            }
-            guard let user = authResult?.user else { return }
+
+    func signUp(email: String, password: String, name: String, venmoHandle: String, cashAppHandle: String) async {
+        do {
+            let authResult = try await Auth.auth().createUser(withEmail: email, password: password)
+            let user = authResult.user
             let newUser = User(id: user.uid, name: name, email: email, venmoHandle: venmoHandle, cashAppHandle: cashAppHandle, receipts: [])
             print("New user created: \(newUser)")
-            self.writeUserToFirebase(newUser)
-            self.currentUser = newUser
-            //maybe change
-            self.isUserAuthenticated = true
-        }
-    }
-
-    // Sign in an existing user
-    func signIn(email: String, password: String) {
-        Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
-            guard let self = self else { return }
-            if let error = error {
-                print("Error signing in: \(error.localizedDescription)")
-                return
+            writeUserToFirebase(newUser)
+            await updateAuthState(userId: user.uid, isAuthenticated: true)
+            await MainActor.run {
+                self.currentUser = newUser
             }
-            guard let user = authResult?.user else { return }
-            print("User signed in: \(user.uid)")
-            self.userID = user.uid
-            self.fetchUser()
+        } catch {
+            print("Error signing up: \(error.localizedDescription)")
+            await updateAuthState(userId: nil, isAuthenticated: false)
         }
     }
 
-    func signOut() {
+    func signIn(email: String, password: String) async {
+        do {
+            let authResult = try await Auth.auth().signIn(withEmail: email, password: password)
+            let user = authResult.user
+            print("User signed in: \(user.uid)")
+            await updateAuthState(userId: user.uid, isAuthenticated: true)
+            fetchUser()
+        } catch {
+            print("Error signing in: \(error.localizedDescription)")
+            await updateAuthState(userId: nil, isAuthenticated: false)
+        }
+    }
+
+    func signOut() async {
         do {
             try Auth.auth().signOut()
-            self.isUserAuthenticated = false
-            self.currentUser = nil // Clear the local user data
-            self.userID = nil
-            
+            await updateAuthState(userId: nil, isAuthenticated: false)
             print("User signed out successfully.")
-        } catch let signOutError as NSError {
-            print("Error signing out: %@", signOutError)
-        }
-    }
-
-    func fetchUser() {
-        print("fetchUser called.")
-        guard let userID = userID else {
-            print("UserID is nil.")
-            return
-        }
-
-        print("Fetching user data for userID: \(userID)")
-
-        //dbRef.child("users").child(userID).observeSingleEvent(of: .value, with: { snapshot in
-        dbRef.child("users").child(userID).observeSingleEvent(of: .value, with: { [weak self] snapshot in
-            print("User data snapshot: \(snapshot)")
-
-            guard snapshot.exists() else {
-                print("Snapshot does not exist.")
-                return
-            }
-
-            guard let value = snapshot.value as? [String: Any] else {
-                print("Snapshot does not contain a valid dictionary. Snapshot value: \(snapshot.value ?? "nil")")
-                return
-            }
-
-            print("User data snapshot value: \(value)")
-
-            do {
-                let data = try JSONSerialization.data(withJSONObject: value, options: [])
-                let user = try JSONDecoder().decode(User.self, from: data)
-                print("Decoded user: \(user)")
-                self!.currentUser = user
-                self!.isUserAuthenticated = true
-                self?.setupUserListener()
-            } catch let error {
-                print("Error decoding user: \(error.localizedDescription)")
-            }
-        }) { error in
-            print("Error fetching user data: \(error.localizedDescription)")
+        } catch {
+            print("Error signing out: \(error.localizedDescription)")
         }
     }
 
     // Write User instance to Firebase
     func writeUserToFirebase(_ user: User) {
-        print("Writing user to Firebase: \(user)")
+        //print("Writing user to Firebase: \(user)")
         guard let userData = try? JSONEncoder().encode(user),
               let userDict = try? JSONSerialization.jsonObject(with: userData) as? [String: Any] else {
             print("Error encoding user data.")
@@ -174,36 +143,69 @@ class UserViewModel: ObservableObject {
             print("No current user is logged in.")
         }
     }
+    
+    func fetchUser() {
+        guard let userID = userID else {
+            print("UserID is nil.")
+            return
+        }
+
+        print("Fetching user data for userID: \(userID)")
+
+        dbRef.child("users").child(userID).observeSingleEvent(of: .value) { [weak self] snapshot in
+            guard let self = self else { return }
+            
+            print("User data snapshot: \(snapshot)")
+
+            guard snapshot.exists(), let value = snapshot.value as? [String: Any] else {
+                print("Snapshot does not exist or contain valid data.")
+                return
+            }
+
+//            do {
+//                let data = try JSONSerialization.data(withJSONObject: value)
+//                let user = try JSONDecoder().decode(User.self, from: data)
+//                print("Decoded user: \(user)")
+//                Task { @MainActor in
+//                    self.currentUser = user
+//                    self.isUserAuthenticated = true
+//                }
+//                self.setupUserListener()
+//            } catch {
+//                print("Error decoding user: \(error.localizedDescription)")
+//            }
+            do {
+                let data = try JSONSerialization.data(withJSONObject: value)
+                let user = try JSONDecoder().decode(User.self, from: data)
+                print("Decoded user: \(user)")
+                Task { @MainActor in
+                    self.currentUser = user
+                    self.isUserAuthenticated = true
+                    self.isUserDataLoaded = true  // Set this to true when user data is loaded
+                }
+                self.setupUserListener()
+            } catch {
+                print("Error decoding user: \(error.localizedDescription)")
+            }
+        }
+    }
 
     private func setupUserListener() {
-         guard let userID = userID else { return }
-         dbRef.child("users").child(userID).observe(.value, with: { [weak self] snapshot in
-             print("User data snapshot: \(snapshot)")
-
-             guard snapshot.exists() else {
-                 print("Snapshot does not exist.")
-                 return
-             }
-
-             guard let value = snapshot.value as? [String: Any] else {
-                 print("Snapshot does not contain a valid dictionary. Snapshot value: \(snapshot.value ?? "nil")")
-                 return
-             }
-
-             print("User data snapshot value: \(value)")
-
-             do {
-                 let data = try JSONSerialization.data(withJSONObject: value, options: [])
-                 let user = try JSONDecoder().decode(User.self, from: data)
-                 print("Decoded user: \(user)")
-                 self?.currentUser = user
-             } catch let error {
-                 print("Error decoding user: \(error.localizedDescription)")
-             }
-         }) { error in
-             print("Error fetching user data: \(error.localizedDescription)")
-         }
-     }
+        guard let userID = userID else { return }
+        dbRef.child("users").child(userID).observe(.value) { [weak self] snapshot in
+            guard let self = self, let value = snapshot.value as? [String: Any] else { return }
+            
+            do {
+                let data = try JSONSerialization.data(withJSONObject: value)
+                let user = try JSONDecoder().decode(User.self, from: data)
+                Task { @MainActor in
+                    self.currentUser = user
+                }
+            } catch {
+                print("Error decoding user: \(error.localizedDescription)")
+            }
+        }
+    }
     
 //================================================================================================
     //Login Credentials for Apple

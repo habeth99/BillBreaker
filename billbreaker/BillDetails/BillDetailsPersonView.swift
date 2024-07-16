@@ -22,26 +22,34 @@ struct BillDetailsPersonView: View {
         HStack{
             VStack(alignment: .leading) {
                 HStack {
-                    Text(person.name)
+                    Text("\(person.name)'s Check Summary")
                         .padding([.top, .leading])
-                        .fontWeight(.bold)
+                        .fontWeight(.semibold)
+                        .font(.title2)
                     Spacer()
                 }
                 Spacer()
-                Text("Claims:")
-                    .padding([.leading])
+//                Text("Claims:")
+//                    .padding([.leading])
+//                    .font(.title3)
                 ForEach(itemsWithPrice, id: \.0.id) { item, sharePrice in
                     HStack {
                         Text(item.name)
+                            .font(.subheadline)
                         Text(String(format: "$%.2f", sharePrice))
+                            .font(.subheadline)
                     }
                     .padding([.leading, .trailing])
                 }
-                Text("Tip: \(String(format: "%.2f", tip))")
+                Text("Tip: \(String(format: "$%.2f", tip))")
                     .padding(.leading)
-                Text("Total: \(String(format: "%.2f", total))")
+//                    .padding(.bottom)
+                    .padding(.top)
+                    .font(.subheadline)
+                Text("Total: \(String(format: "$%.2f", total))")
                     .padding([.leading])
                     .padding(.bottom)
+                    .font(.title3)
             }
                         if (isSelected) {
                             VStack{

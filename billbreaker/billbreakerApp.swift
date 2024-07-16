@@ -30,9 +30,6 @@ struct billbreakerApp: App {
         WindowGroup {
             WhichView()
                 .environmentObject(viewModel)
-                .onAppear {
-                    viewModel.checkUserSession()
-                }
     }
   }
 }

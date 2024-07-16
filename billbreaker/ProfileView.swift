@@ -91,23 +91,12 @@ struct ProfileView: View {
                     Section("Account") {
                         VStack{
                             Button(action: {
-                                viewModel.signOut()
+                                Task{
+                                    await viewModel.signOut()
+                                }
                             }) {
                                 SettingsRowView(imageName: "arrow.left.circle.fill", title: "Sign Out", tintColor: .red)
                             }
-                            
-//                            Button(action: {
-//                                Task {
-//                                    do {
-//                                        try await viewModel.deleteAccount()
-//                                    } catch {
-//                                        // Handle error (e.g., show an alert)
-//                                        print("Error deleting account: \(error)")
-//                                    }
-//                                }
-//                            }) {
-//                                SettingsRowView(imageName: "xmark.circle.fill", title: "Delete Account", tintColor: .red)
-//                            }
                         }
                     }
                 }
@@ -115,7 +104,9 @@ struct ProfileView: View {
                 VStack{
                     Text("No user info available")
                     Button(action: {
-                        viewModel.signOut()
+                        Task {
+                            await viewModel.signOut()
+                        }
                     }, label: {
                         Text("Dev SignOut")
                     })

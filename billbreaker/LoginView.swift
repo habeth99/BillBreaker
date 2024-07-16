@@ -20,7 +20,9 @@ struct LoginView: View {
                     TextField("Email", text: $email)
                     TextField("Password", text: $password)
                     Button("Log In") {
-                        viewModel.signIn(email: email, password: password)
+                        Task {
+                            await viewModel.signIn(email: email, password: password)
+                        }
                     }
                 }
                 NavigationLink {

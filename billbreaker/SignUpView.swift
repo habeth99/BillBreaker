@@ -28,7 +28,9 @@ struct SignUpView: View {
                 
                     
                 Button("Sign Up") {
-                    viewModel.signUp(email: email, password: password, name: name, venmoHandle: venmoHandle, cashAppHandle: cashAppHandle)
+                    Task{
+                        await viewModel.signUp(email: email, password: password, name: name, venmoHandle: venmoHandle, cashAppHandle: cashAppHandle)
+                    }
                 }
             }
             Button {

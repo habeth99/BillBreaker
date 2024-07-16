@@ -19,7 +19,6 @@ struct HomeView: View {
     
     init(viewModel: UserViewModel) {
         self._rviewModel = StateObject(wrappedValue: ReceiptViewModel(user: viewModel))
-        //self.rviewModel.fetchUserReceipts()
     }
     
     var body: some View {
@@ -75,16 +74,13 @@ struct HomeView: View {
                             JoinReceiptView(isPresented: $showingJoinSheet, rviewModel: rviewModel)
                         }
                     }
-//                    .onAppear {
-//                        print("HomeView appeared")
-//                        rviewModel.fetchUserReceipts()// Fetch user data when the view appears
-//                        print("User: \(String(describing: viewModel.currentUser))")
-//                        print("User Receipts: \(rviewModel.receiptList)")
-//                    }
-                    .task {
-                        await rviewModel.fetchUserReceipts()
-                        print("User: \(String(describing: viewModel.currentUser))")
-                        print("User Receipts: \(rviewModel.receiptList)")
+                    .onAppear {
+                        print("HomeView appeared")
+                        Task{
+                            await rviewModel.fetchUserReceipts()
+                            print("User: \(String(describing: viewModel.currentUser))")
+                            //print("User Receipts: \(rviewModel.receiptList)")
+                        }
                     }
             }
             .tabItem {

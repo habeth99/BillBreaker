@@ -33,22 +33,22 @@ class User: Identifiable, Codable, ObservableObject {
     // Required for Codable conformance remains unchanged
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        print("Decoding id")
+        //print("Decoding id")
         id = try container.decode(String.self, forKey: .id)
         
-        print("Decoding name")
+        //print("Decoding name")
         name = try container.decode(String.self, forKey: .name)
         
-        print("Decoding email")
+        //print("Decoding email")
         email = try container.decode(String.self, forKey: .email)
         
-        print("Decoding venmoHandle")
+        //print("Decoding venmoHandle")
         venmoHandle = try container.decode(String.self, forKey: .venmoHandle)
         
-        print("Decoding cashAppHandle")
+        //print("Decoding cashAppHandle")
         cashAppHandle = try container.decode(String.self, forKey: .cashAppHandle)
         
-        print("Decoding receipts")
+        //print("Decoding receipts")
         receipts = try container.decodeIfPresent([String].self, forKey: .receipts) ?? []
         
     }

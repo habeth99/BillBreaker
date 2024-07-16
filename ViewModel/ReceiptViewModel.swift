@@ -13,6 +13,7 @@ import FirebaseAuth
 import Combine
 import SwiftUI
 
+@MainActor
 class ReceiptViewModel: ObservableObject {
     @Published var receiptList: [Receipt] = []
     @Published var receipt: Receipt
@@ -24,66 +25,69 @@ class ReceiptViewModel: ObservableObject {
     var userViewModel: UserViewModel
     
     private var dbRef = Database.database().reference()
+    private var cancellables = Set<AnyCancellable>()
     
     init(user: UserViewModel) {
         self.userViewModel = user
         self.receipt = Receipt()
+        
+        // Observe the isUserDataLoaded property
+        userViewModel.$isUserDataLoaded
+            .filter { $0 }  // Only trigger when it becomes true
+            .first()  // We only need to trigger this once
+            .sink { [weak self] _ in
+                Task {
+                    await self?.fetchUserReceipts()
+                }
+            }
+            .store(in: &cancellables)
     }
     
-    //main actor cuz updates can't be published from a background thread
-    @MainActor
     func fetchUserReceipts() async {
         guard let userID = userViewModel.currentUser?.id else {
             print("fetchUserReceipts: User not authenticated or user ID not available")
             return
         }
         
-        self.receiptList = []
-
-        dbRef.child("users").child(userID).observe(.value, with: { snapshot in
+        do {
+            let snapshot = try await dbRef.child("users").child(userID).getData()
             guard let userData = snapshot.value as? [String: Any],
                   let receiptIDs = userData["receipts"] as? [String] else {
                 print("User data or receipts not found")
                 return
             }
-            self.fetchReceipts(receiptIDs: receiptIDs)
-        }) { error in
+            await fetchReceipts(receiptIDs: receiptIDs)
+        } catch {
             print("Error fetching user data: \(error.localizedDescription)")
         }
     }
     
-    private func fetchReceipts(receiptIDs: [String]) {
-        let group = DispatchGroup()
+    private func fetchReceipts(receiptIDs: [String]) async {
         var fetchedReceipts: [Receipt] = []
 
         for receiptID in receiptIDs {
-            group.enter()
-            dbRef.child("receipts").child(receiptID).observeSingleEvent(of: .value, with: { snapshot in
-                defer { group.leave() }
+            do {
+                let snapshot = try await dbRef.child("receipts").child(receiptID).getData()
                 guard let receiptData = snapshot.value as? [String: Any] else {
                     print("Receipt data not found for ID: \(receiptID)")
-                    return
+                    continue
                 }
                 
                 print("Receipt data snapshot value for \(receiptID): \(receiptData)")
 
-                do {
-                    let data = try JSONSerialization.data(withJSONObject: receiptData, options: [])
-                    var receipt = try JSONDecoder().decode(Receipt.self, from: data)
-                    if !fetchedReceipts.contains(where: { $0.id == receipt.id }) {
-                        fetchedReceipts.append(receipt)
-                    }
-                } catch {
-                    print("Error decoding receipt: \(error.localizedDescription)")
+                let data = try JSONSerialization.data(withJSONObject: receiptData, options: [])
+                let receipt = try JSONDecoder().decode(Receipt.self, from: data)
+                if !fetchedReceipts.contains(where: { $0.id == receipt.id }) {
+                    fetchedReceipts.append(receipt)
                 }
-            })
+            } catch {
+                print("Error decoding receipt: \(error.localizedDescription)")
+            }
         }
 
-        group.notify(queue: .main) {
-            self.receiptList = fetchedReceipts
-            print("All receipts fetched: \(self.receiptList)")
-            self.setupReceiptListeners(receiptIDs: receiptIDs)
-        }
+        self.receiptList = fetchedReceipts
+        print("All receipts fetched: \(self.receiptList)")
+        setupReceiptListeners(receiptIDs: receiptIDs)
     }
     
 //================================================================================================
