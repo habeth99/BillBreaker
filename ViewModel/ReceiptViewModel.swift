@@ -91,7 +91,6 @@ class ReceiptViewModel: ObservableObject {
     }
     
     func getReceipt(id: String) async -> Receipt? {
-        
         reset()
         do {
             let snapshot = try await dbRef.child("receipts").child(id).getData()
@@ -130,6 +129,23 @@ class ReceiptViewModel: ObservableObject {
     
     func reset() {
         self.receipt = Receipt()
+    }
+    
+    func shareCheck(receiptId: String) {
+        // Create a web URL for your app
+        let webURLString = "https://www.fatcheck.app/receipt/\(receiptId)"
+        guard let url = URL(string: webURLString) else { return }
+        
+        let activityViewController = UIActivityViewController(
+            activityItems: [url],
+            applicationActivities: nil
+        )
+        
+        // Present the view controller
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let rootViewController = windowScene.windows.first?.rootViewController {
+            rootViewController.present(activityViewController, animated: true, completion: nil)
+        }
     }
     
 //================================================================================================

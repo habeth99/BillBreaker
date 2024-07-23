@@ -24,14 +24,17 @@ struct billbreakerApp: App {
                     .environmentObject(router)
                     .onOpenURL { url in
                         print("Received URL: \(url)")
-                        guard let scheme = url.scheme, scheme == "fatcheck" else { return }
-                        guard let receiptId = url.host else { return }
+                        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
+                              components.host == "www.fatcheck.app",
+                              components.path.hasPrefix("/receipt/") else { return }
+                        
+                        let receiptId = components.path.replacingOccurrences(of: "/receipt/", with: "")
                         
                         print("id is: \(receiptId)")
                         router.reset()
                         router.selectedTab = .home
                         router.selectedReceiptId = receiptId
-                
+
                         router.path.append("BillDetails")
                     }
             }

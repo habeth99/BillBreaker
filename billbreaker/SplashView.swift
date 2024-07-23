@@ -11,7 +11,6 @@ import SwiftUI
 struct SplashView: View {
     var body: some View {
         ZStack {
-            Color.white // Or any background color you prefer
             if let iconImage = UIImage(named: "AppIcon60x60") {
                 Image(uiImage: iconImage)
                     .resizable()
@@ -22,6 +21,9 @@ struct SplashView: View {
                 Text("Logo not found")
             }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity) // Ensure ZStack fills the entire screen
+        .background(Color(hex: "#30cd31")) // Background color
+        .ignoresSafeArea()
     }
 }
 

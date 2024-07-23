@@ -29,6 +29,11 @@ struct BillDetailsView: View {
             }
         }
         .navigationBarTitle(rviewModel.receipt.name, displayMode: .automatic)
+        .toolbar{
+            ToolbarItem(placement: .topBarTrailing) {
+                ShareButtonView(rviewModel: rviewModel)
+            }
+        }
         .onAppear {
              rviewModel.setReceipt(receiptId: receiptId)
         }
