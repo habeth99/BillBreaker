@@ -91,6 +91,8 @@ class ReceiptViewModel: ObservableObject {
     }
     
     func getReceipt(id: String) async -> Receipt? {
+        
+        reset()
         do {
             let snapshot = try await dbRef.child("receipts").child(id).getData()
             
@@ -124,6 +126,10 @@ class ReceiptViewModel: ObservableObject {
     
     func handleEdit() {
         print("Edit button was tapped")
+    }
+    
+    func reset() {
+        self.receipt = Receipt()
     }
     
 //================================================================================================
