@@ -15,7 +15,6 @@ class Receipt: Codable, Identifiable, ObservableObject, CustomStringConvertible 
     @Published var createdAt: String
     @Published var tax: Double
     @Published var tip: Double
-    //@Published var price: Double
     @Published var items: [Item]?
     @Published var people: [LegitP]?
     
@@ -98,11 +97,6 @@ class Receipt: Codable, Identifiable, ObservableObject, CustomStringConvertible 
         var sharedTip = 0.0
         var total = 0.0
         
-//        for itemId in user.claims {
-//            if let item = findItemById(id: itemId) {
-//                sharedTip += item.price
-//            }
-//        }
         total = getTotal()
         
         sharedTip = userTotal/total

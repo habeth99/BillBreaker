@@ -9,9 +9,12 @@
 /* Begin PBXBuildFile section */
 		22EFCABF2C2D314F00E65601 /* BillDetailsPersonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EFCABE2C2D314F00E65601 /* BillDetailsPersonView.swift */; };
 		22EFCAC02C2D326600E65601 /* BillDetailsPersonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EFCABE2C2D314F00E65601 /* BillDetailsPersonView.swift */; };
+		E203B13D2C4F752D00D16732 /* TabEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = E203B13C2C4F752D00D16732 /* TabEnum.swift */; };
+		E206BCAD2C471B9F003E6C84 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E206BCAC2C471B9F003E6C84 /* GoogleService-Info.plist */; };
+		E206BCAF2C479382003E6C84 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = E206BCAE2C479382003E6C84 /* Router.swift */; };
 		E2092B832C2C826200A6B4EF /* ReceiptViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2092B822C2C826100A6B4EF /* ReceiptViewModel.swift */; };
 		E2092B842C2C826200A6B4EF /* ReceiptViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2092B822C2C826100A6B4EF /* ReceiptViewModel.swift */; };
-		E209C6562C34F3C300D9E3A2 /* NewBillDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = E209C6552C34F3C300D9E3A2 /* NewBillDetails.swift */; };
+		E209C6562C34F3C300D9E3A2 /* BillDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = E209C6552C34F3C300D9E3A2 /* BillDetails.swift */; };
 		E209C6582C35143300D9E3A2 /* ItemsSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E209C6572C35143300D9E3A2 /* ItemsSectionView.swift */; };
 		E209C65A2C35147D00D9E3A2 /* ItemRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E209C6592C35147D00D9E3A2 /* ItemRowView.swift */; };
 		E209C65C2C35150900D9E3A2 /* PeopleSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E209C65B2C35150900D9E3A2 /* PeopleSectionView.swift */; };
@@ -27,14 +30,12 @@
 		E21466E12BAE72B7000A61DB /* billbreakerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21466E02BAE72B7000A61DB /* billbreakerUITestsLaunchTests.swift */; };
 		E21C90642C46210D008AD256 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21C90632C46210D008AD256 /* SplashView.swift */; };
 		E21C90662C464CAF008AD256 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21C90652C464CAF008AD256 /* MainTabView.swift */; };
-		E21CB6882C21EB6900290D00 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E21CB6872C21EB6900290D00 /* GoogleService-Info.plist */; };
 		E2409E202BED3B0800A5940D /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2409E1F2BED3B0800A5940D /* ProfileView.swift */; };
 		E2409E222BED9B7B00A5940D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2409E212BED9B7B00A5940D /* AppDelegate.swift */; };
 		E2482FD42C465494008B18BF /* HomeToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2482FD32C465494008B18BF /* HomeToolBar.swift */; };
 		E2482FD62C4654B7008B18BF /* ReceiptListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2482FD52C4654B7008B18BF /* ReceiptListView.swift */; };
 		E2482FD82C46553A008B18BF /* ReceiptRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2482FD72C46553A008B18BF /* ReceiptRowView.swift */; };
 		E24A2AF62C385E9700273673 /* CustomHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24A2AF52C385E9700273673 /* CustomHeaderView.swift */; };
-		E24A2AF82C4199B900273673 /* TestHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24A2AF72C4199B900273673 /* TestHeaderView.swift */; };
 		E27966032BC38F66000B0368 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27966022BC38F65000B0368 /* SignUpView.swift */; };
 		E27966052BC46D89000B0368 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27966042BC46D89000B0368 /* UserViewModel.swift */; };
 		E27966072BC476BD000B0368 /* LegitP.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27966062BC476BD000B0368 /* LegitP.swift */; };
@@ -141,8 +142,11 @@
 
 /* Begin PBXFileReference section */
 		22EFCABE2C2D314F00E65601 /* BillDetailsPersonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillDetailsPersonView.swift; sourceTree = "<group>"; };
+		E203B13C2C4F752D00D16732 /* TabEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabEnum.swift; sourceTree = "<group>"; };
+		E206BCAC2C471B9F003E6C84 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../GoogleService-Info.plist"; sourceTree = "<group>"; };
+		E206BCAE2C479382003E6C84 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		E2092B822C2C826100A6B4EF /* ReceiptViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptViewModel.swift; sourceTree = "<group>"; };
-		E209C6552C34F3C300D9E3A2 /* NewBillDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewBillDetails.swift; sourceTree = "<group>"; };
+		E209C6552C34F3C300D9E3A2 /* BillDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillDetails.swift; sourceTree = "<group>"; };
 		E209C6572C35143300D9E3A2 /* ItemsSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsSectionView.swift; sourceTree = "<group>"; };
 		E209C6592C35147D00D9E3A2 /* ItemRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemRowView.swift; sourceTree = "<group>"; };
 		E209C65B2C35150900D9E3A2 /* PeopleSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleSectionView.swift; sourceTree = "<group>"; };
@@ -159,14 +163,12 @@
 		E21466E02BAE72B7000A61DB /* billbreakerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = billbreakerUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		E21C90632C46210D008AD256 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		E21C90652C464CAF008AD256 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
-		E21CB6872C21EB6900290D00 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E2409E1F2BED3B0800A5940D /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		E2409E212BED9B7B00A5940D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E2482FD32C465494008B18BF /* HomeToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeToolBar.swift; sourceTree = "<group>"; };
 		E2482FD52C4654B7008B18BF /* ReceiptListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptListView.swift; sourceTree = "<group>"; };
 		E2482FD72C46553A008B18BF /* ReceiptRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptRowView.swift; sourceTree = "<group>"; };
 		E24A2AF52C385E9700273673 /* CustomHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomHeaderView.swift; sourceTree = "<group>"; };
-		E24A2AF72C4199B900273673 /* TestHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHeaderView.swift; sourceTree = "<group>"; };
 		E27966022BC38F65000B0368 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		E27966042BC46D89000B0368 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		E27966062BC476BD000B0368 /* LegitP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegitP.swift; sourceTree = "<group>"; };
@@ -272,9 +274,8 @@
 			isa = PBXGroup;
 			children = (
 				22EFCABE2C2D314F00E65601 /* BillDetailsPersonView.swift */,
-				E209C6552C34F3C300D9E3A2 /* NewBillDetails.swift */,
+				E209C6552C34F3C300D9E3A2 /* BillDetails.swift */,
 				E24A2AF52C385E9700273673 /* CustomHeaderView.swift */,
-				E24A2AF72C4199B900273673 /* TestHeaderView.swift */,
 			);
 			path = BillDetails;
 			sourceTree = "<group>";
@@ -329,9 +330,10 @@
 				E2482FD32C465494008B18BF /* HomeToolBar.swift */,
 				E2482FD52C4654B7008B18BF /* ReceiptListView.swift */,
 				E2482FD72C46553A008B18BF /* ReceiptRowView.swift */,
+				E206BCAE2C479382003E6C84 /* Router.swift */,
 				E20B1AED2C2D279E0059F0D3 /* Info.plist */,
+				E206BCAC2C471B9F003E6C84 /* GoogleService-Info.plist */,
 				E2A47A282C1CFA520023E29D /* billbreaker.entitlements */,
-				E21CB6872C21EB6900290D00 /* GoogleService-Info.plist */,
 				E21466C72BAE72B6000A61DB /* Assets.xcassets */,
 				E21466C92BAE72B6000A61DB /* Preview Content */,
 			);
@@ -449,6 +451,7 @@
 				E2D1F29F2BC0B18200B27278 /* Receipt.swift */,
 				E27966082BC48178000B0368 /* Item.swift */,
 				E2DDFC0E2BB1EA3200BAD5AC /* Bill.swift */,
+				E203B13C2C4F752D00D16732 /* TabEnum.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -664,7 +667,7 @@
 			files = (
 				E21466CB2BAE72B6000A61DB /* Preview Assets.xcassets in Resources */,
 				E21466C82BAE72B6000A61DB /* Assets.xcassets in Resources */,
-				E21CB6882C21EB6900290D00 /* GoogleService-Info.plist in Resources */,
+				E206BCAD2C471B9F003E6C84 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -715,12 +718,13 @@
 			files = (
 				E2DDFBF82BB1E7A500BAD5AC /* DataModel.swift in Sources */,
 				E20EC6212BB60C5500223B19 /* HomeView.swift in Sources */,
-				E209C6562C34F3C300D9E3A2 /* NewBillDetails.swift in Sources */,
+				E209C6562C34F3C300D9E3A2 /* BillDetails.swift in Sources */,
 				E209C65C2C35150900D9E3A2 /* PeopleSectionView.swift in Sources */,
 				E2409E222BED9B7B00A5940D /* AppDelegate.swift in Sources */,
 				E2DDFC042BB1E7E600BAD5AC /* PhotoLibrary.swift in Sources */,
 				E2DDFC212BB26C1900BAD5AC /* Seeing.swift in Sources */,
 				E2DDFBF42BB1E77300BAD5AC /* Camera.swift in Sources */,
+				E206BCAF2C479382003E6C84 /* Router.swift in Sources */,
 				E2DDFBF62BB1E79900BAD5AC /* CameraView.swift in Sources */,
 				E27966112BC4DA5E000B0368 /* ItemVIewModel.swift in Sources */,
 				E27966052BC46D89000B0368 /* UserViewModel.swift in Sources */,
@@ -743,6 +747,7 @@
 				E2A47A2A2C1E2D7D0023E29D /* LandingPageView.swift in Sources */,
 				E27966072BC476BD000B0368 /* LegitP.swift in Sources */,
 				E2DDFC062BB1E7ED00BAD5AC /* PhotoView.swift in Sources */,
+				E203B13D2C4F752D00D16732 /* TabEnum.swift in Sources */,
 				E2DDFBF22BB1E74A00BAD5AC /* CachedImageManager.swift in Sources */,
 				E2DDFBFC2BB1E7C000BAD5AC /* PhotoAssetCollection.swift in Sources */,
 				E2A47A252C1A2FBC0023E29D /* JoinReceiptView.swift in Sources */,
@@ -751,7 +756,6 @@
 				E209C6582C35143300D9E3A2 /* ItemsSectionView.swift in Sources */,
 				E2D1F2A02BC0B18200B27278 /* Receipt.swift in Sources */,
 				E2DDFC082BB1E7F700BAD5AC /* ThumbnailView.swift in Sources */,
-				E24A2AF82C4199B900273673 /* TestHeaderView.swift in Sources */,
 				E2DDFC0A2BB1E80300BAD5AC /* ViewfinderView.swift in Sources */,
 				E2DDFC002BB1E7D500BAD5AC /* PhotoCollectionView.swift in Sources */,
 				E2DDFC0F2BB1EA3200BAD5AC /* Bill.swift in Sources */,

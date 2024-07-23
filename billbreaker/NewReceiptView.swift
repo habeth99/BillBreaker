@@ -23,7 +23,7 @@ struct NewReceiptView: View {
     private let colors: [Color] = [.red, .blue, .green, .orange, .purple, .yellow, .pink, .gray]
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             List {
                 restaurantNameSection
                 numberOfItemsSection

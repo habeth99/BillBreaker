@@ -10,10 +10,14 @@ import SwiftUI
 
 struct ReceiptListView: View {
     @ObservedObject var rviewModel: ReceiptViewModel
+    @EnvironmentObject var router: Router
     
     var body: some View {
-        List(rviewModel.receiptList) { receipt in
-            NavigationLink(destination: BillDetailsView(rviewModel: rviewModel, receipt: receipt)) {
+        List(rviewModel.receiptList, id: \.id) { receipt in
+            Button(action: {
+                router.selectedReceiptId = receipt.id
+                router.path.append("BillDetails")
+            }) {
                 ReceiptRow(receipt: receipt)
             }
         }

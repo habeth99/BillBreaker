@@ -10,11 +10,11 @@ import SwiftUI
 
 struct ItemsSectionView: View {
     @ObservedObject var rviewModel: ReceiptViewModel
-    var receipt: Receipt
+    //var receipt: Receipt
     
     var body: some View {
         VStack(alignment: .leading) {
-            ForEach(receipt.items ?? [], id: \.id) { item in
+            ForEach(rviewModel.receipt.items ?? [], id: \.id) { item in
                 let users = self.getUsersForItem(item: item)
                 
                 ItemRowView(item: item, users: users, rviewModel: rviewModel)
@@ -27,7 +27,7 @@ struct ItemsSectionView: View {
     }
     
     private func getUsersForItem(item: Item) -> [LegitP] {
-        return receipt.people?.filter { $0.claims.contains { $0 == item.id } } ?? []
+        return rviewModel.receipt.people?.filter { $0.claims.contains { $0 == item.id } } ?? []
     }
 }
 

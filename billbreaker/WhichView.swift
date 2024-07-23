@@ -11,6 +11,7 @@ import FirebaseAuth
 
 struct WhichView: View {
     @EnvironmentObject var viewModel: UserViewModel
+    @EnvironmentObject var router: Router
     @State private var isLoading = true
     @State private var deepLinkReceiptId: String?
     
@@ -19,21 +20,14 @@ struct WhichView: View {
             if isLoading {
                 SplashView()
             } else if viewModel.isUserAuthenticated {
-                MainTabView(deepLinkReceiptId: $deepLinkReceiptId)
+                MainTabView()
             } else {
                 LandingPageView()
             }
         }
         .onAppear {
+            
             checkAuthStatus()
-        }
-        .onReceive(NotificationCenter.default.publisher(for: .openReceiptDetail)) { notification in
-            if let receiptId = notification.userInfo?["receiptId"] as? String {
-                deepLinkReceiptId = receiptId
-                // Ensure the user is authenticated when deep linking
-                viewModel.checkUserSession()
-                isLoading = false
-            }
         }
     }
     

@@ -15,7 +15,7 @@ struct JoinReceiptView: View {
     @ObservedObject var rviewModel: ReceiptViewModel
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
                 TextField("Enter Receipt ID", text: $receiptId)
                     .padding()

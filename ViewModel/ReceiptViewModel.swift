@@ -73,7 +73,7 @@ class ReceiptViewModel: ObservableObject {
                     continue
                 }
                 
-                print("Receipt data snapshot value for \(receiptID): \(receiptData)")
+                //print("Receipt data snapshot value for \(receiptID): \(receiptData)")
 
                 let data = try JSONSerialization.data(withJSONObject: receiptData, options: [])
                 let receipt = try JSONDecoder().decode(Receipt.self, from: data)
@@ -86,7 +86,7 @@ class ReceiptViewModel: ObservableObject {
         }
 
         self.receiptList = fetchedReceipts
-        print("All receipts fetched: \(self.receiptList)")
+        //print("All receipts fetched: \(self.receiptList)")
         setupReceiptListeners(receiptIDs: receiptIDs)
     }
     
@@ -99,13 +99,13 @@ class ReceiptViewModel: ObservableObject {
                 return nil
             }
             
-            print("Receipt data snapshot value: \(value)")
+            //print("Receipt data snapshot value: \(value)")
             
             let data = try JSONSerialization.data(withJSONObject: value)
             let loadedReceipt = try JSONDecoder().decode(Receipt.self, from: data)
             
             self.receipt = loadedReceipt
-            print("Receipt loaded: \(loadedReceipt.name)")
+            //print("Receipt loaded: \(loadedReceipt.name)")
             
             // Temp variables to match what the methods need
             let tempReceiptList = [id]
@@ -145,14 +145,14 @@ class ReceiptViewModel: ObservableObject {
                     return
                 }
 
-                print("Receipt data snapshot value: \(value)")
+                //print("Receipt data snapshot value: \(value)")
 
                 do {
-                    print("do block runs!")
+                    //print("do block runs!")
                     let data = try JSONSerialization.data(withJSONObject: value, options: [])
                     let receipt = try JSONDecoder().decode(Receipt.self, from: data)
                     //print("data is: \(data)")
-                    print("receipt variable is: \(receipt.name)")
+                    //print("receipt variable is: \(receipt.name)")
                     
                     //self?.receipt = receipt
                     self?.updateReceiptInList(receipt)
@@ -191,7 +191,7 @@ class ReceiptViewModel: ObservableObject {
         do {
             let data = try JSONSerialization.data(withJSONObject: peopleData, options: [])
             let people = try JSONDecoder().decode([LegitP].self, from: data)
-            print("Updated people list for receipt \(receiptID): \(people)")
+            //print("Updated people list for receipt \(receiptID): \(people)")
             updatePeopleInReceipt(receiptID, with: people)
         } catch let error {
             print("Error decoding people: \(error)")
@@ -226,7 +226,7 @@ class ReceiptViewModel: ObservableObject {
         do {
             let data = try JSONSerialization.data(withJSONObject: itemsData, options: [])
             let items = try JSONDecoder().decode([Item].self, from: data)
-            print("Updated items list for receipt \(receiptID): \(items)")
+            //print("Updated items list for receipt \(receiptID): \(items)")
             updateItemsInReceipt(receiptID, with: items)
         } catch let error {
             print("Error decoding items: \(error)")
@@ -287,7 +287,7 @@ class ReceiptViewModel: ObservableObject {
     }
     
     private func updateReceiptInList(_ receipt: Receipt) {
-        print("updates receipt is: \(receipt)")
+        //print("updates receipt is: \(receipt)")
         if let index = self.receiptList.firstIndex(where: { $0.id == receipt.id }) {
             self.receiptList[index] = receipt
             self.receipt = receipt
@@ -304,7 +304,7 @@ class ReceiptViewModel: ObservableObject {
             print("Generated new receipt ID: \(receipt.id)")
         }
 
-        print("Saving receipt with ID: \(receipt.id)")
+        //print("Saving receipt with ID: \(receipt.id)")
         
         let receiptData: [String: Any] = [
             "id": receipt.id,
@@ -320,14 +320,14 @@ class ReceiptViewModel: ObservableObject {
             "people": receipt.people?.map { $0.toDict() } ?? []
         ]
 
-        print("Receipt data to save: \(receiptData)")
+        //print("Receipt data to save: \(receiptData)")
 
         dbRef.child("receipts").child(receipt.id).setValue(receiptData) { error, _ in
             if let error = error {
                 print("Error saving receipt: \(error.localizedDescription)")
                 completion(false)
             } else {
-                print("Receipt saved successfully. Adding receipt ID to user.")
+                print("Receipt saved successfully")
                 self.addReceiptToUser2(receiptId: self.receipt.id) { success in
                     if success {
                         print("Receipt ID added to user successfully.")
@@ -391,8 +391,14 @@ class ReceiptViewModel: ObservableObject {
         print("New receipt created with ID: \(self.receipt.id)")
     }
     
-    func setReceipt(receipt: Receipt) {
-        self.receipt = receipt
+    func setReceipt(receiptId: String) {
+        Task {
+            if let fetchedReceipt = await self.getReceipt(id: receiptId) {
+                self.receipt = fetchedReceipt
+            } else {
+                self.receipt = Receipt() // Or handle the error appropriately
+            }
+        }
     }
     
     func setPeople() {
@@ -465,26 +471,25 @@ class ReceiptViewModel: ObservableObject {
     func toggleItemSelection(_ item: Item) {
         //if index
         
-        print("toggleItemSelection runs!")
+        print("items have been toggled")
         guard let selectedPerson = selectedPerson else { return }
 
         if let index = selectedItemsIds.firstIndex(of: item.id) {
+            print("removing item: \(item)")
             selectedItemsIds.remove(at: index)
-            // need to add code to update items' claimedBy property
         } else {
             print("appending item: \(item)")
             selectedItemsIds.append(item.id)
-            // need to add code to add person to items claimedBy
         }
 
         if let personIndex = receipt.people?.firstIndex(where: { $0.id == selectedPerson.id }) {
             receipt.people?[personIndex].claims = selectedItemsIds
-            print("calling saveReceipt")
+            //print("calling saveReceipt")
             saveReceipt { success in
                 if success {
-                    print("Receipt saved successfully.")
+                    print("toggleItems: Receipt saved successfully.")
                 } else {
-                    print("Failed to save the receipt.")
+                    print("toggleItems: Failed to save the receipt.")
                 }
             }
         }

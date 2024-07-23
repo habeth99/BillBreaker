@@ -14,7 +14,7 @@ struct LoginView: View {
     @EnvironmentObject var viewModel: UserViewModel
     
     var body: some View {
-        NavigationView{
+        NavigationStack {
             VStack{
                 Form{
                     TextField("Email", text: $email)

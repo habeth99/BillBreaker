@@ -161,19 +161,6 @@ class UserViewModel: ObservableObject {
                 print("Snapshot does not exist or contain valid data.")
                 return
             }
-
-//            do {
-//                let data = try JSONSerialization.data(withJSONObject: value)
-//                let user = try JSONDecoder().decode(User.self, from: data)
-//                print("Decoded user: \(user)")
-//                Task { @MainActor in
-//                    self.currentUser = user
-//                    self.isUserAuthenticated = true
-//                }
-//                self.setupUserListener()
-//            } catch {
-//                print("Error decoding user: \(error.localizedDescription)")
-//            }
             do {
                 let data = try JSONSerialization.data(withJSONObject: value)
                 let user = try JSONDecoder().decode(User.self, from: data)
@@ -181,7 +168,7 @@ class UserViewModel: ObservableObject {
                 Task { @MainActor in
                     self.currentUser = user
                     self.isUserAuthenticated = true
-                    self.isUserDataLoaded = true  // Set this to true when user data is loaded
+                    self.isUserDataLoaded = true
                 }
                 self.setupUserListener()
             } catch {

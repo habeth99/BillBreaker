@@ -10,7 +10,7 @@ import SwiftUI
 
 struct PeopleSectionView: View {
     @ObservedObject var rviewModel: ReceiptViewModel
-    var receipt: Receipt
+    //var receipt: Receipt
     
     var body: some View {
         VStack(alignment: .leading, spacing: 15) {
@@ -19,7 +19,7 @@ struct PeopleSectionView: View {
                 .fontWeight(.bold)
                 .font(.title)
             
-            ForEach(receipt.people ?? [], id: \.id) { person in
+            ForEach(rviewModel.receipt.people ?? [], id: \.id) { person in
                 BillDetailsPersonView(rviewModel: rviewModel, person: person, isSelected: rviewModel.selectedPerson?.id == person.id)
                     .onTapGesture {
                         rviewModel.selectPerson(person)
