@@ -18,6 +18,7 @@ struct HomeView: View {
     @EnvironmentObject var router: Router
     
     @State private var selectedReceiptId: String?
+    let customLinkColor = Color(hex: "#30cd31")
     
     init(viewModel: UserViewModel) {
         self._rviewModel = StateObject(wrappedValue: ReceiptViewModel(user: viewModel))
@@ -25,6 +26,7 @@ struct HomeView: View {
     
     var body: some View {
             ReceiptListView(rviewModel: rviewModel)
+                .foregroundColor(customLinkColor)
                 .navigationTitle("My Checks")
                 .toolbar {
                     HomeToolbar(

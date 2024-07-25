@@ -102,3 +102,22 @@ struct CameraView: View {
     }
     
 }
+
+struct VisionView: View {
+    @ObservedObject var model : DataModel
+    
+    
+    var body: some View {
+        VStack{
+            Text(model.recognizedText)
+                .foregroundColor(.white)
+            List(model.prices, id: \.self) { price in
+                Text("$\(price)")
+            }
+            Button("Update Text") {
+                model.recognizedText = "Manually Updated Text"
+            }
+
+        }
+    }
+}

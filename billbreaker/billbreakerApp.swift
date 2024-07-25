@@ -15,6 +15,10 @@ struct billbreakerApp: App {
 
     @StateObject var viewModel = UserViewModel()
     @StateObject var router = Router()
+    
+    init() {
+        setupTabBarAppearance()
+    }
 
     var body: some Scene {
         WindowGroup {
@@ -38,6 +42,16 @@ struct billbreakerApp: App {
                         router.path.append("BillDetails")
                     }
             }
+        }
+    }
+    
+    func setupTabBarAppearance() {
+        let appearance = UITabBarAppearance()
+        appearance.stackedLayoutAppearance.selected.iconColor = UIColor(Color(hex: "#30cd31"))
+        appearance.stackedLayoutAppearance.selected.titleTextAttributes = [.foregroundColor: UIColor(Color(hex: "#30cd31"))]
+        UITabBar.appearance().standardAppearance = appearance
+        if #available(iOS 15.0, *) {
+            UITabBar.appearance().scrollEdgeAppearance = appearance
         }
     }
 }

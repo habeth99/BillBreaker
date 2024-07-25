@@ -11,4 +11,5 @@ import SwiftUI
 enum Tab {
     case home
     case profile
+    case scan
 }
