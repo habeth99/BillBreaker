@@ -43,6 +43,9 @@ struct billbreakerApp: App {
                     }
             }
         }
+//        WindowGroup{
+//            ScanCheckView2()
+//        }
     }
     
     func setupTabBarAppearance() {

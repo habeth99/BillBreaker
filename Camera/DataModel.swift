@@ -57,9 +57,9 @@ final class DataModel: ObservableObject {
                 DispatchQueue.main.async {
                     self.recognizedText = recognizedText
                     logger.debug("Recognized text: \(recognizedText)")
-                    // Here, update the UI or handle the recognized text as needed
+                    
+                    self.sendExtractedTextToAPI(extractedText: recognizedText)
                 }
-                self.prices = self.textRecognitionService.extractPrices(from: recognizedText)
             }
         }
     }
@@ -121,6 +121,47 @@ final class DataModel: ObservableObject {
                 }
             }
         }
+    }
+    
+    func sendExtractedTextToAPI(extractedText: String) {
+        // 1. Set up the URL
+        guard let url = URL(string: "YOUR_API_ENDPOINT_HERE") else {
+            print("Invalid URL")
+            return
+        }
+        
+        // 2. Create the request
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        
+        // 3. Set the headers (as needed)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        // Add any other headers you've set in Postman
+        
+        // 4. Prepare the body
+        let body: [String: Any] = ["text": extractedText]
+        request.httpBody = try? JSONSerialization.data(withJSONObject: body)
+        
+        // 5. Create and start the task
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print("Error: \(error.localizedDescription)")
+                return
+            }
+            
+            guard let data = data else {
+                print("No data received")
+                return
+            }
+            
+            // 6. Handle the response
+            if let responseString = String(data: data, encoding: .utf8) {
+                print("Response: \(responseString)")
+                // Parse the response and update your UI or data model as needed
+            }
+        }
+        
+        task.resume()
     }
 }
 
@@ -194,24 +235,6 @@ struct TextRecognitionService {
                     completion("Failed to perform recognition: \(error.localizedDescription)")
                 }
             }
-        }
-    }
-    
-    func extractPrices(from text: String) -> [String] {
-        // Define the regex pattern for prices
-        let pattern = "\\b\\d+\\.\\d{2}\\b"
-        do {
-            // Create a regular expression
-            let regex = try NSRegularExpression(pattern: pattern)
-            let results = regex.matches(in: text, range: NSRange(text.startIndex..., in: text))
-            
-            // Extract the matching strings
-            return results.compactMap {
-                Range($0.range, in: text).map { String(text[$0]) }
-            }
-        } catch {
-            print("Invalid regex: \(error.localizedDescription)")
-            return []
         }
     }
 }

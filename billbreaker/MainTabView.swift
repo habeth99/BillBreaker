@@ -15,14 +15,18 @@ struct MainTabView: View {
     
     var body: some View {
         TabView(selection: $router.selectedTab) {
-            ScanCheckView2()
-                .tabItem {
-                    Label("Scan", systemImage: "camera")
-                }
-                .tag(Tab.scan)
-                .onAppear{
-                    NotificationCenter.default.post(name: NSNotification.Name("RefreshScanCheck"), object: nil)
-                }
+            GeometryReader{ geometry in
+                
+                CameraView()
+                    .frame(height: geometry.size.height - geometry.safeAreaInsets.bottom )
+            }
+            .tabItem {
+                Label("Scan", systemImage: "camera")
+            }
+            .tag(Tab.scan)
+            .onAppear{
+                NotificationCenter.default.post(name: NSNotification.Name("RefreshScanCheck"), object: nil)
+            }
             NavigationStack(path: $router.path) {
                 HomeView(viewModel: viewModel)
                     .navigationDestination(for: String.self) { route in

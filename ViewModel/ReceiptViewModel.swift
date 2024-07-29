@@ -100,7 +100,7 @@ class ReceiptViewModel: ObservableObject {
                 return nil
             }
             
-            //print("Receipt data snapshot value: \(value)")
+            print("Receipt data snapshot value: \(value)")
             
             let data = try JSONSerialization.data(withJSONObject: value)
             let loadedReceipt = try JSONDecoder().decode(Receipt.self, from: data)
