@@ -16,10 +16,11 @@ final class DataModel: ObservableObject {
     
     @Published var viewfinderImage: Image?
     @Published var thumbnailImage: Image?
-    @Published var recognizedText: String = "stupid"
+    @Published var recognizedText: String = ""
     @Published var prices: [String] = []
-    @Published var processedReceipt: APIReceipt?
+    @Published var processedReceipt = APIReceipt()
     @Published var isProcessing: Bool = false
+    @Published var isProcessingComplete: Bool = false
 
     
     init() {
@@ -53,10 +54,36 @@ final class DataModel: ObservableObject {
         }
     }
 
+//    @MainActor
+//    func processPhoto(imageData: Data) async {
+//        isProcessing = true
+//        defer { isProcessing = false }
+//        
+//        do {
+//            let recognizedText = try await withCheckedThrowingContinuation { continuation in
+//                TextRecognitionService.shared.performTextRecognition(imageData: imageData) { result in
+//                    continuation.resume(returning: result)
+//                }
+//            }
+//            self.recognizedText = recognizedText
+//            logger.debug("Recognized text: \(recognizedText)")
+//            
+//            let processedReceipt = try await apiService.sendExtractedTextToAPI(extractedText: recognizedText)
+//            self.processedReceipt = processedReceipt
+//            print("Processed Receipt: \(processedReceipt)")
+//        } catch {
+//            logger.error("Error processing photo: \(error.localizedDescription)")
+//        }
+//    }
     @MainActor
     func processPhoto(imageData: Data) async {
         isProcessing = true
-        defer { isProcessing = false }
+        isProcessingComplete = false // Reset at the start of processing
+        
+        defer {
+            isProcessing = false
+            isProcessingComplete = true // Set to true when processing is complete, even if there's an error
+        }
         
         do {
             let recognizedText = try await withCheckedThrowingContinuation { continuation in
@@ -72,6 +99,7 @@ final class DataModel: ObservableObject {
             print("Processed Receipt: \(processedReceipt)")
         } catch {
             logger.error("Error processing photo: \(error.localizedDescription)")
+            self.processedReceipt = APIReceipt() // Clear any previous receipt in case of error
         }
     }
     

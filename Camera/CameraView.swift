@@ -3,9 +3,11 @@ See the License.txt file for this sample’s licensing information.
 */
 
 import SwiftUI
+import Foundation
 
 struct CameraView: View {
-    @StateObject private var model = DataModel()
+//    @StateObject private var model = DataModel()
+    @ObservedObject var model: DataModel
     var proReceipt = APIReceipt()
     private static let barHeightFactor = 0.15
     
