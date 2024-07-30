@@ -13,17 +13,19 @@ class Item: Identifiable, Codable, ObservableObject, Hashable {
     @Published var price: Double
     //@Published var claimedBy: [String]?
     @Published var claimedBy: [String]?
+    @Published var details: String
 
     enum CodingKeys: CodingKey {
-        case id, name, quantity, price, claimedBy
+        case id, name, quantity, price, claimedBy, details
     }
 
-    init(id: String = "", name: String = "", quantity: Int = 0, price: Double = 0.00, claimedBy: [String] = []) {
+    init(id: String = "", name: String = "", quantity: Int = 0, price: Double = 0.00, claimedBy: [String] = [], details: String = "") {
         self.id = id
         self.name = name
         self.quantity = quantity
         self.price = price
         self.claimedBy = claimedBy
+        self.details = details
     }
 
     required init(from decoder: Decoder) throws {
@@ -33,6 +35,7 @@ class Item: Identifiable, Codable, ObservableObject, Hashable {
         quantity = try container.decodeIfPresent(Int.self, forKey: .quantity) ?? 0
         price = try container.decode(Double.self, forKey: .price)
         claimedBy = try container.decodeIfPresent([String].self, forKey: .claimedBy) ?? []
+        details = try container.decodeIfPresent(String.self, forKey: .details) ?? ""
     }
 
     func hash(into hasher: inout Hasher) {

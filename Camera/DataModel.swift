@@ -20,6 +20,7 @@ final class DataModel: ObservableObject {
     private let textRecognitionService = TextRecognitionService()
     @Published var recognizedText: String = "stupid"
     @Published var prices: [String] = []
+    @Published var receipt: APIReceipt?
     
     init() {
         Task {
@@ -124,45 +125,48 @@ final class DataModel: ObservableObject {
     }
     
     func sendExtractedTextToAPI(extractedText: String) {
-        // 1. Set up the URL
-        guard let url = URL(string: "YOUR_API_ENDPOINT_HERE") else {
+        // Your API endpoint URL
+        guard let url = URL(string: "https://fatcheck.vmgm.xyz/process-receipt") else {
             print("Invalid URL")
             return
         }
-        
-        // 2. Create the request
+
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        
-        // 3. Set the headers (as needed)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        // Add any other headers you've set in Postman
-        
-        // 4. Prepare the body
+
+        // Prepare the body of the request
         let body: [String: Any] = ["text": extractedText]
         request.httpBody = try? JSONSerialization.data(withJSONObject: body)
-        
-        // 5. Create and start the task
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+
+        URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
+            guard let self = self else { return }
+
             if let error = error {
                 print("Error: \(error.localizedDescription)")
                 return
             }
-            
+
             guard let data = data else {
                 print("No data received")
                 return
             }
-            
-            // 6. Handle the response
-            if let responseString = String(data: data, encoding: .utf8) {
-                print("Response: \(responseString)")
-                // Parse the response and update your UI or data model as needed
+
+            do {
+                let jsonData = data// Your JSON data here
+                if let jsonString = String(data: jsonData, encoding: .utf8) {
+                    print("JSON being decoded:")
+                    print(jsonString)
+                }
+                let decodedReceipt = try JSONDecoder().decode(APIReceipt.self, from: jsonData)
+                // Use the decoded receipt
+                print("Done Decoding, receipt is: \(decodedReceipt)")
+            } catch {
+                print("Error decoding JSON: \(error)")
             }
-        }
-        
-        task.resume()
+        }.resume()
     }
+
 }
 
 fileprivate struct PhotoData {
