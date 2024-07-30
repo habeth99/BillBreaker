@@ -6,9 +6,8 @@ import SwiftUI
 
 struct CameraView: View {
     @StateObject private var model = DataModel()
- 
+    var proReceipt = APIReceipt()
     private static let barHeightFactor = 0.15
-    
     
     var body: some View {
         
@@ -40,8 +39,6 @@ struct CameraView: View {
             }
             .navigationTitle("Camera")
             .navigationBarTitleDisplayMode(.inline)
-            .navigationBarItems(trailing: NavigationLink("Text", destination: VisionView(model: model)))
-            //.navigationBarHidden(true)
             .ignoresSafeArea()
             .statusBar(hidden: true)
         
@@ -101,23 +98,4 @@ struct CameraView: View {
         .padding()
     }
     
-}
-
-struct VisionView: View {
-    @ObservedObject var model : DataModel
-    
-    
-    var body: some View {
-        VStack{
-            Text(model.recognizedText)
-                .foregroundColor(.white)
-            List(model.prices, id: \.self) { price in
-                Text("$\(price)")
-            }
-            Button("Update Text") {
-                model.recognizedText = "Manually Updated Text"
-            }
-
-        }
-    }
 }

@@ -10,17 +10,17 @@ import Vision
 final class DataModel: ObservableObject {
     let camera = Camera()
     let photoCollection = PhotoCollection(smartAlbum: .smartAlbumUserLibrary)
+    var isPhotosLoaded = false
+    private let apiService = APIService.shared
+    private let textRecognitionService = TextRecognitionService.shared
     
     @Published var viewfinderImage: Image?
     @Published var thumbnailImage: Image?
-    
-    var isPhotosLoaded = false
-    
-    // intialize visionview object
-    private let textRecognitionService = TextRecognitionService()
     @Published var recognizedText: String = "stupid"
     @Published var prices: [String] = []
-    @Published var receipt: APIReceipt?
+    @Published var processedReceipt: APIReceipt?
+    @Published var isProcessing: Bool = false
+
     
     init() {
         Task {
@@ -43,25 +43,45 @@ final class DataModel: ObservableObject {
         }
     }
     
+    @MainActor
     func handleCameraPhotos() async {
         let unpackedPhotoStream = camera.photoStream
             .compactMap { self.unpackPhoto($0) }
         
         for await photoData in unpackedPhotoStream {
-            Task { @MainActor in
-                thumbnailImage = photoData.thumbnailImage
-            }
-            savePhoto(imageData: photoData.imageData)
-            
-            // Recognize text in the photo
-            textRecognitionService.performTextRecognition(imageData: photoData.imageData) { recognizedText in
-                DispatchQueue.main.async {
-                    self.recognizedText = recognizedText
-                    logger.debug("Recognized text: \(recognizedText)")
-                    
-                    self.sendExtractedTextToAPI(extractedText: recognizedText)
+            await processPhoto(imageData: photoData.imageData)
+        }
+    }
+
+    @MainActor
+    func processPhoto(imageData: Data) async {
+        isProcessing = true
+        defer { isProcessing = false }
+        
+        do {
+            let recognizedText = try await withCheckedThrowingContinuation { continuation in
+                TextRecognitionService.shared.performTextRecognition(imageData: imageData) { result in
+                    continuation.resume(returning: result)
                 }
             }
+            self.recognizedText = recognizedText
+            logger.debug("Recognized text: \(recognizedText)")
+            
+            let processedReceipt = try await apiService.sendExtractedTextToAPI(extractedText: recognizedText)
+            self.processedReceipt = processedReceipt
+            print("Processed Receipt: \(processedReceipt)")
+        } catch {
+            logger.error("Error processing photo: \(error.localizedDescription)")
+        }
+    }
+    
+    func importPhoto(image: UIImage) {
+        guard let imageData = image.jpegData(compressionQuality: 0.8) else {
+            logger.error("Failed to convert image to data")
+            return
+        }
+        Task {
+            await processPhoto(imageData: imageData)
         }
     }
     
@@ -124,48 +144,6 @@ final class DataModel: ObservableObject {
         }
     }
     
-    func sendExtractedTextToAPI(extractedText: String) {
-        // Your API endpoint URL
-        guard let url = URL(string: "https://fatcheck.vmgm.xyz/process-receipt") else {
-            print("Invalid URL")
-            return
-        }
-
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-
-        // Prepare the body of the request
-        let body: [String: Any] = ["text": extractedText]
-        request.httpBody = try? JSONSerialization.data(withJSONObject: body)
-
-        URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
-            guard let self = self else { return }
-
-            if let error = error {
-                print("Error: \(error.localizedDescription)")
-                return
-            }
-
-            guard let data = data else {
-                print("No data received")
-                return
-            }
-
-            do {
-                let jsonData = data// Your JSON data here
-                if let jsonString = String(data: jsonData, encoding: .utf8) {
-                    print("JSON being decoded:")
-                    print(jsonString)
-                }
-                let decodedReceipt = try JSONDecoder().decode(APIReceipt.self, from: jsonData)
-                // Use the decoded receipt
-                print("Done Decoding, receipt is: \(decodedReceipt)")
-            } catch {
-                print("Error decoding JSON: \(error)")
-            }
-        }.resume()
-    }
 
 }
 
@@ -202,43 +180,3 @@ fileprivate extension Image.Orientation {
 
 fileprivate let logger = Logger(subsystem: "com.apple.swiftplaygroundscontent.capturingphotos", category: "DataModel")
 
-struct TextRecognitionService {
-    
-    func performTextRecognition(imageData: Data, completion: @escaping (String) -> Void) {
-        guard let uiImage = UIImage(data: imageData), let cgImage = uiImage.cgImage else {
-            completion("Failed to convert imageData to CGImage.")
-            return
-        }
-        
-        let request = VNRecognizeTextRequest { request, error in
-            guard let observations = request.results as? [VNRecognizedTextObservation], error == nil else {
-                DispatchQueue.main.async {
-                    completion("Recognition error: \(error?.localizedDescription ?? "Unknown error")")
-                }
-                return
-            }
-            
-            let recognizedStrings = observations.compactMap { observation in
-                observation.topCandidates(1).first?.string
-            }.joined(separator: ", ")
-            
-            
-            DispatchQueue.main.async {
-                //this was recognizedStrings.isEmpty
-                completion(recognizedStrings.isEmpty ? "No text recognized." : recognizedStrings)
-            }
-        }
-        request.recognitionLevel = .accurate
-        
-        let handler = VNImageRequestHandler(cgImage: cgImage, options: [:])
-        DispatchQueue.global(qos: .userInitiated).async {
-            do {
-                try handler.perform([request])
-            } catch {
-                DispatchQueue.main.async {
-                    completion("Failed to perform recognition: \(error.localizedDescription)")
-                }
-            }
-        }
-    }
-}
