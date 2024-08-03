@@ -23,31 +23,35 @@ struct billbreakerApp: App {
     }
 
     var body: some Scene {
-//        WindowGroup {
-//            NavigationView{
-//                WhichView()
-//                    .environmentObject(viewModel)
-//                    .environmentObject(router)
-//                    .onOpenURL { url in
-//                        print("Received URL: \(url)")
-//                        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
-//                              components.host == "www.fatcheck.app",
-//                              components.path.hasPrefix("/receipt/") else { return }
-//                        
-//                        let receiptId = components.path.replacingOccurrences(of: "/receipt/", with: "")
-//                        
-//                        print("id is: \(receiptId)")
-//                        router.reset()
-//                        router.selectedTab = .home
-//                        router.selectedReceiptId = receiptId
-//
-//                        router.path.append("BillDetails")
-//                    }
-//            }
-//        }
-        WindowGroup{
-            CamProgRsltView()
+        WindowGroup {
+            NavigationView{
+                WhichView()
+                    .environmentObject(viewModel)
+                    .environmentObject(router)
+                    .environmentObject(model)
+                    .onOpenURL { url in
+                        print("Received URL: \(url)")
+                        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
+                              components.host == "www.fatcheck.app",
+                              components.path.hasPrefix("/receipt/") else { return }
+                        
+                        let receiptId = components.path.replacingOccurrences(of: "/receipt/", with: "")
+                        
+                        print("id is: \(receiptId)")
+                        router.reset()
+                        router.selectedTab = .home
+                        router.selectedReceiptId = receiptId
+
+                        router.path.append("BillDetails")
+                    }
+            }
         }
+//        WindowGroup{
+//            //CamProgRsltView()
+//            HomeCameraView()
+//                .environmentObject(viewModel)
+//                .environmentObject(router)
+//        }
     }
     
     func setupTabBarAppearance() {

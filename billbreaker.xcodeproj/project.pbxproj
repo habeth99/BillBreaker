@@ -31,8 +31,9 @@
 		E21466D52BAE72B7000A61DB /* billbreakerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21466D42BAE72B7000A61DB /* billbreakerTests.swift */; };
 		E21466DF2BAE72B7000A61DB /* billbreakerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21466DE2BAE72B7000A61DB /* billbreakerUITests.swift */; };
 		E21466E12BAE72B7000A61DB /* billbreakerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21466E02BAE72B7000A61DB /* billbreakerUITestsLaunchTests.swift */; };
+		E219A3892C5D6D36003254D9 /* HomeCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E219A3882C5D6D36003254D9 /* HomeCameraView.swift */; };
 		E21C90642C46210D008AD256 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21C90632C46210D008AD256 /* SplashView.swift */; };
-		E21C90662C464CAF008AD256 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21C90652C464CAF008AD256 /* MainTabView.swift */; };
+		E21C90662C464CAF008AD256 /* MainTabToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21C90652C464CAF008AD256 /* MainTabToolbar.swift */; };
 		E2409E202BED3B0800A5940D /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2409E1F2BED3B0800A5940D /* ProfileView.swift */; };
 		E2409E222BED9B7B00A5940D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2409E212BED9B7B00A5940D /* AppDelegate.swift */; };
 		E2482FD42C465494008B18BF /* HomeToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2482FD32C465494008B18BF /* HomeToolBar.swift */; };
@@ -190,8 +191,9 @@
 		E21466DA2BAE72B7000A61DB /* billbreakerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = billbreakerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E21466DE2BAE72B7000A61DB /* billbreakerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = billbreakerUITests.swift; sourceTree = "<group>"; };
 		E21466E02BAE72B7000A61DB /* billbreakerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = billbreakerUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		E219A3882C5D6D36003254D9 /* HomeCameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCameraView.swift; sourceTree = "<group>"; };
 		E21C90632C46210D008AD256 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
-		E21C90652C464CAF008AD256 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
+		E21C90652C464CAF008AD256 /* MainTabToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabToolbar.swift; sourceTree = "<group>"; };
 		E2409E1F2BED3B0800A5940D /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		E2409E212BED9B7B00A5940D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E2482FD32C465494008B18BF /* HomeToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeToolBar.swift; sourceTree = "<group>"; };
@@ -360,7 +362,7 @@
 				E209C6592C35147D00D9E3A2 /* ItemRowView.swift */,
 				E209C65B2C35150900D9E3A2 /* PeopleSectionView.swift */,
 				E21C90632C46210D008AD256 /* SplashView.swift */,
-				E21C90652C464CAF008AD256 /* MainTabView.swift */,
+				E21C90652C464CAF008AD256 /* MainTabToolbar.swift */,
 				E2482FD32C465494008B18BF /* HomeToolBar.swift */,
 				E2482FD52C4654B7008B18BF /* ReceiptListView.swift */,
 				E2482FD72C46553A008B18BF /* ReceiptRowView.swift */,
@@ -370,6 +372,7 @@
 				E2A47A282C1CFA520023E29D /* billbreaker.entitlements */,
 				E21466C72BAE72B6000A61DB /* Assets.xcassets */,
 				E21466C92BAE72B6000A61DB /* Preview Content */,
+				E219A3882C5D6D36003254D9 /* HomeCameraView.swift */,
 			);
 			path = billbreaker;
 			sourceTree = "<group>";
@@ -781,6 +784,7 @@
 				E203B1412C500F9300D16732 /* ColorSchemes.swift in Sources */,
 				E2DDFBFA2BB1E7B600BAD5AC /* PhotoAsset.swift in Sources */,
 				E26472232C584B2300B2DF11 /* ReceiptJSONDecoder.swift in Sources */,
+				E219A3892C5D6D36003254D9 /* HomeCameraView.swift in Sources */,
 				E27966032BC38F66000B0368 /* SignUpView.swift in Sources */,
 				E2B83BC72BEC11EF00A29D71 /* NewReceiptView.swift in Sources */,
 				E209C65A2C35147D00D9E3A2 /* ItemRowView.swift in Sources */,
@@ -788,7 +792,7 @@
 				E21C90642C46210D008AD256 /* SplashView.swift in Sources */,
 				E2482FD62C4654B7008B18BF /* ReceiptListView.swift in Sources */,
 				E27966132BC4DADB000B0368 /* PersonViewModel.swift in Sources */,
-				E21C90662C464CAF008AD256 /* MainTabView.swift in Sources */,
+				E21C90662C464CAF008AD256 /* MainTabToolbar.swift in Sources */,
 				E27966092BC48178000B0368 /* Item.swift in Sources */,
 				E2409E202BED3B0800A5940D /* ProfileView.swift in Sources */,
 				E279660D2BC49D83000B0368 /* WhichView.swift in Sources */,

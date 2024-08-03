@@ -20,7 +20,8 @@ struct WhichView: View {
             if isLoading {
                 SplashView()
             } else if viewModel.isUserAuthenticated {
-                MainTabView()
+                //MainTabToolbar()
+                HomeCameraView() //possibly need router and model?
             } else {
                 LandingPageView()
             }
