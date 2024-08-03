@@ -54,27 +54,6 @@ final class DataModel: ObservableObject {
         }
     }
 
-//    @MainActor
-//    func processPhoto(imageData: Data) async {
-//        isProcessing = true
-//        defer { isProcessing = false }
-//        
-//        do {
-//            let recognizedText = try await withCheckedThrowingContinuation { continuation in
-//                TextRecognitionService.shared.performTextRecognition(imageData: imageData) { result in
-//                    continuation.resume(returning: result)
-//                }
-//            }
-//            self.recognizedText = recognizedText
-//            logger.debug("Recognized text: \(recognizedText)")
-//            
-//            let processedReceipt = try await apiService.sendExtractedTextToAPI(extractedText: recognizedText)
-//            self.processedReceipt = processedReceipt
-//            print("Processed Receipt: \(processedReceipt)")
-//        } catch {
-//            logger.error("Error processing photo: \(error.localizedDescription)")
-//        }
-//    }
     @MainActor
     func processPhoto(imageData: Data) async {
         isProcessing = true
