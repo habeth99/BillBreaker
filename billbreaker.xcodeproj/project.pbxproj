@@ -32,6 +32,8 @@
 		E21466DF2BAE72B7000A61DB /* billbreakerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21466DE2BAE72B7000A61DB /* billbreakerUITests.swift */; };
 		E21466E12BAE72B7000A61DB /* billbreakerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21466E02BAE72B7000A61DB /* billbreakerUITestsLaunchTests.swift */; };
 		E219A3892C5D6D36003254D9 /* HomeCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E219A3882C5D6D36003254D9 /* HomeCameraView.swift */; };
+		E219A38C2C5ECCBC003254D9 /* ArchiveButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E219A38B2C5ECCBC003254D9 /* ArchiveButton.swift */; };
+		E219A38E2C5ECCE3003254D9 /* ProfileButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E219A38D2C5ECCE3003254D9 /* ProfileButton.swift */; };
 		E21C90642C46210D008AD256 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21C90632C46210D008AD256 /* SplashView.swift */; };
 		E21C90662C464CAF008AD256 /* MainTabToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21C90652C464CAF008AD256 /* MainTabToolbar.swift */; };
 		E2409E202BED3B0800A5940D /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2409E1F2BED3B0800A5940D /* ProfileView.swift */; };
@@ -192,6 +194,8 @@
 		E21466DE2BAE72B7000A61DB /* billbreakerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = billbreakerUITests.swift; sourceTree = "<group>"; };
 		E21466E02BAE72B7000A61DB /* billbreakerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = billbreakerUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		E219A3882C5D6D36003254D9 /* HomeCameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCameraView.swift; sourceTree = "<group>"; };
+		E219A38B2C5ECCBC003254D9 /* ArchiveButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveButton.swift; sourceTree = "<group>"; };
+		E219A38D2C5ECCE3003254D9 /* ProfileButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileButton.swift; sourceTree = "<group>"; };
 		E21C90632C46210D008AD256 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		E21C90652C464CAF008AD256 /* MainTabToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabToolbar.swift; sourceTree = "<group>"; };
 		E2409E1F2BED3B0800A5940D /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
@@ -349,6 +353,7 @@
 		E21466C22BAE72B2000A61DB /* billbreaker */ = {
 			isa = PBXGroup;
 			children = (
+				E219A38A2C5ECC99003254D9 /* Buttons */,
 				E264722B2C58A2EF00B2DF11 /* DeepLink */,
 				E2DBA9C42C580B86000F3559 /* ProcessingCheck */,
 				E2482FD92C46BE53008B18BF /* LoginSignUp */,
@@ -400,6 +405,15 @@
 				E21466E02BAE72B7000A61DB /* billbreakerUITestsLaunchTests.swift */,
 			);
 			path = billbreakerUITests;
+			sourceTree = "<group>";
+		};
+		E219A38A2C5ECC99003254D9 /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				E219A38B2C5ECCBC003254D9 /* ArchiveButton.swift */,
+				E219A38D2C5ECCE3003254D9 /* ProfileButton.swift */,
+			);
+			path = Buttons;
 			sourceTree = "<group>";
 		};
 		E2482FD92C46BE53008B18BF /* LoginSignUp */ = {
@@ -773,6 +787,7 @@
 				E209C6562C34F3C300D9E3A2 /* BillDetails.swift in Sources */,
 				E209C65C2C35150900D9E3A2 /* PeopleSectionView.swift in Sources */,
 				E2409E222BED9B7B00A5940D /* AppDelegate.swift in Sources */,
+				E219A38E2C5ECCE3003254D9 /* ProfileButton.swift in Sources */,
 				E2DDFC042BB1E7E600BAD5AC /* PhotoLibrary.swift in Sources */,
 				E26472332C58A58D00B2DF11 /* CamProgRsltView.swift in Sources */,
 				E2DDFBF42BB1E77300BAD5AC /* Camera.swift in Sources */,
@@ -812,6 +827,7 @@
 				E24A2AF62C385E9700273673 /* CustomHeaderView.swift in Sources */,
 				E209C6582C35143300D9E3A2 /* ItemsSectionView.swift in Sources */,
 				E2D1F2A02BC0B18200B27278 /* Receipt.swift in Sources */,
+				E219A38C2C5ECCBC003254D9 /* ArchiveButton.swift in Sources */,
 				E26472292C58985B00B2DF11 /* TextRecognitionService.swift in Sources */,
 				E2DDFC082BB1E7F700BAD5AC /* ThumbnailView.swift in Sources */,
 				E2DDFC0A2BB1E80300BAD5AC /* ViewfinderView.swift in Sources */,
