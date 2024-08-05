@@ -38,20 +38,16 @@ struct billbreakerApp: App {
                         let receiptId = components.path.replacingOccurrences(of: "/receipt/", with: "")
                         
                         print("id is: \(receiptId)")
-                        router.reset()
-                        router.selectedTab = .home
-                        router.selectedReceiptId = receiptId
+                        
+                        router.navigate(to: .billDetails(receiptId: receiptId))
+                        //router.reset()
+                        //router.selectedTab = .home
+                        router.linkReceiptId = receiptId
 
-                        router.path.append("BillDetails")
+                        //router.path.append("BillDetails")
                     }
             }
         }
-//        WindowGroup{
-//            //CamProgRsltView()
-//            HomeCameraView()
-//                .environmentObject(viewModel)
-//                .environmentObject(router)
-//        }
     }
     
     func setupTabBarAppearance() {

@@ -34,6 +34,7 @@
 		E219A3892C5D6D36003254D9 /* HomeCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E219A3882C5D6D36003254D9 /* HomeCameraView.swift */; };
 		E219A38C2C5ECCBC003254D9 /* ArchiveButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E219A38B2C5ECCBC003254D9 /* ArchiveButton.swift */; };
 		E219A38E2C5ECCE3003254D9 /* ProfileButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E219A38D2C5ECCE3003254D9 /* ProfileButton.swift */; };
+		E219A3902C608DA2003254D9 /* ImportPhotosButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E219A38F2C608DA2003254D9 /* ImportPhotosButton.swift */; };
 		E21C90642C46210D008AD256 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21C90632C46210D008AD256 /* SplashView.swift */; };
 		E21C90662C464CAF008AD256 /* MainTabToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21C90652C464CAF008AD256 /* MainTabToolbar.swift */; };
 		E2409E202BED3B0800A5940D /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2409E1F2BED3B0800A5940D /* ProfileView.swift */; };
@@ -196,6 +197,7 @@
 		E219A3882C5D6D36003254D9 /* HomeCameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCameraView.swift; sourceTree = "<group>"; };
 		E219A38B2C5ECCBC003254D9 /* ArchiveButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveButton.swift; sourceTree = "<group>"; };
 		E219A38D2C5ECCE3003254D9 /* ProfileButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileButton.swift; sourceTree = "<group>"; };
+		E219A38F2C608DA2003254D9 /* ImportPhotosButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportPhotosButton.swift; sourceTree = "<group>"; };
 		E21C90632C46210D008AD256 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		E21C90652C464CAF008AD256 /* MainTabToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabToolbar.swift; sourceTree = "<group>"; };
 		E2409E1F2BED3B0800A5940D /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
@@ -412,6 +414,7 @@
 			children = (
 				E219A38B2C5ECCBC003254D9 /* ArchiveButton.swift */,
 				E219A38D2C5ECCE3003254D9 /* ProfileButton.swift */,
+				E219A38F2C608DA2003254D9 /* ImportPhotosButton.swift */,
 			);
 			path = Buttons;
 			sourceTree = "<group>";
@@ -804,6 +807,7 @@
 				E2B83BC72BEC11EF00A29D71 /* NewReceiptView.swift in Sources */,
 				E209C65A2C35147D00D9E3A2 /* ItemRowView.swift in Sources */,
 				E2DDFC022BB1E7DD00BAD5AC /* PhotoItemView.swift in Sources */,
+				E219A3902C608DA2003254D9 /* ImportPhotosButton.swift in Sources */,
 				E21C90642C46210D008AD256 /* SplashView.swift in Sources */,
 				E2482FD62C4654B7008B18BF /* ReceiptListView.swift in Sources */,
 				E27966132BC4DADB000B0368 /* PersonViewModel.swift in Sources */,

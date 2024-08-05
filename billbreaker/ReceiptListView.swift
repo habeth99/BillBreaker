@@ -15,8 +15,9 @@ struct ReceiptListView: View {
     var body: some View {
         List(rviewModel.receiptList, id: \.id) { receipt in
             Button(action: {
-                router.selectedReceiptId = receipt.id
-                router.path.append("BillDetails")
+                router.linkReceiptId = receipt.id
+//                router.path.append("BillDetails")
+                router.navigate(to: .billDetails(receiptId: router.linkReceiptId))
             }) {
                 ReceiptRow(receipt: receipt)
             }

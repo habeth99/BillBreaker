@@ -11,24 +11,40 @@ import FirebaseAuth
 
 struct WhichView: View {
     @EnvironmentObject var viewModel: UserViewModel
+    @EnvironmentObject var model: DataModel
     @EnvironmentObject var router: Router
     @State private var isLoading = true
-    @State private var deepLinkReceiptId: String?
+    //@State private var deepLinkReceiptId: String?
     
     var body: some View {
-        ZStack {
-            if isLoading {
-                SplashView()
-            } else if viewModel.isUserAuthenticated {
-                //MainTabToolbar()
-                HomeCameraView() //possibly need router and model?
-            } else {
-                LandingPageView()
+        NavigationStack(path: $router.path){
+            ZStack {
+                if isLoading {
+                    SplashView()
+                } else if viewModel.isUserAuthenticated {
+                    //MainTabToolbar()
+                    HomeCameraView() //possibly need router and model?
+                } else {
+                    LandingPageView()
+                }
+            }
+            .onAppear {
+                
+                checkAuthStatus()
             }
         }
-        .onAppear {
-            
-            checkAuthStatus()
+        .navigationDestination(for: Route.self) { route in
+            switch route {
+            case .home:
+                HomeView(viewModel: viewModel)
+            case .camera:
+                CameraView(model: model)
+            case .settings:
+                ProfileView()
+            case .billDetails(let receiptId):
+                BillDetailsView(rviewModel: ReceiptViewModel(user: viewModel), receiptId: receiptId)
+            default: EmptyView()
+            }
         }
     }
     

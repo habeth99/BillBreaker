@@ -47,16 +47,16 @@ struct HomeView: View {
                         await rviewModel.fetchUserReceipts()
                     }
                 }
-                .navigationDestination(for: String.self) { route in
-                    switch route {
-                    case "BillDetails":
-                        if let receiptId = router.selectedReceiptId {
-                            BillDetailsView(rviewModel: rviewModel, receiptId: receiptId)
-                        }
-                    default:
-                        EmptyView()
-                    }
-                }
+//                .navigationDestination(for: String.self) { route in
+//                    switch route {
+//                    case "BillDetails":
+//                        if let receiptId = router.selectedReceiptId {
+//                            BillDetailsView(rviewModel: rviewModel, receiptId: receiptId)
+//                        }
+//                    default:
+//                        EmptyView()
+//                    }
+//                }
     }
 }
 
