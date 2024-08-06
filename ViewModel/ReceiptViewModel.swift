@@ -21,6 +21,8 @@ class ReceiptViewModel: ObservableObject {
     @Published var people: [LegitP] = []
     @Published var selectedPerson: LegitP?
     @Published var selectedItemsIds: [String] = []
+    //@Published var selectedReceiptId: String?
+    @Published private(set) var listenersSetUp = false
 
     var userViewModel: UserViewModel
     
@@ -30,6 +32,7 @@ class ReceiptViewModel: ObservableObject {
     init(user: UserViewModel) {
         self.userViewModel = user
         self.receipt = Receipt()
+        print("RVM initialized with user id: \(userViewModel.currentUser?.id)\n")
         
         // Observe the isUserDataLoaded property
         userViewModel.$isUserDataLoaded
@@ -86,8 +89,13 @@ class ReceiptViewModel: ObservableObject {
         }
 
         self.receiptList = fetchedReceipts
-        //print("All receipts fetched: \(self.receiptList)")
-        setupReceiptListeners(receiptIDs: receiptIDs)
+        print("All receipts fetched: \(self.receiptList)")
+        
+        if !listenersSetUp {
+            setupReceiptListeners(receiptIDs: receiptIDs)
+        } else {
+            print("Listeners already set up, skipping setup")
+        }
     }
     
     func getReceipt(id: String) async -> Receipt? {
@@ -153,9 +161,14 @@ class ReceiptViewModel: ObservableObject {
 //================================================================================================
     
     private func setupReceiptListeners(receiptIDs: [String]) {
+        guard !listenersSetUp else { return }
+        
+        print("setting up listeners for receipts: \(receiptIDs)\n")
+        
         for receiptID in receiptIDs {
+            print("setting up listener for id: \(receiptID)\n")
             dbRef.child("receipts").child(receiptID).observe(.value, with: { [weak self] snapshot in
-                //print("Receipt data snapshot: \(snapshot)")
+                print("Receipt data snapshot: \(snapshot)")
 
                 guard snapshot.exists() else {
                     print("Snapshot does not exist.")
@@ -188,12 +201,15 @@ class ReceiptViewModel: ObservableObject {
             let receiptRef = dbRef.child("receipts").child(receiptID)
             self.setupPeopleListeners(receiptRef, receiptID: receiptID)
             self.setupItemListeners(receiptRef, receiptID: receiptID)
-            
         }
+        
+        listenersSetUp = true
+        print("Finished setting up all listeners")
     }
     
     //People Listeners
     private func setupPeopleListeners(_ receiptRef: DatabaseReference, receiptID: String) {
+        print("setting up people listners for id: \(receiptID)")
         let peopleRef = receiptRef.child("people")
         peopleRef.observe(.value, with: { [weak self] snapshot in
             guard let strongSelf = self, snapshot.exists(),
@@ -203,7 +219,7 @@ class ReceiptViewModel: ObservableObject {
             }
 
             strongSelf.handlePeopleUpdate(peopleArray, forReceipt: receiptID)
-
+            
         }) { error in
             print("Error fetching people data: \(error.localizedDescription)")
         }
@@ -221,6 +237,7 @@ class ReceiptViewModel: ObservableObject {
     }
 
     private func updatePeopleInReceipt(_ receiptID: String, with people: [LegitP]) {
+        print("people updating...")
         if let index = receiptList.firstIndex(where: { $0.id == receiptID }) {
             receiptList[index].people = people
             objectWillChange.send()
@@ -229,6 +246,7 @@ class ReceiptViewModel: ObservableObject {
     
     //Items Listeners
     private func setupItemListeners(_ receiptRef: DatabaseReference, receiptID: String) {
+        print("setting up item listeners for id: \(receiptID)")
         let itemsRef = receiptRef.child("items")
         itemsRef.observe(.value, with: { [weak self] snapshot in
             guard let strongSelf = self, snapshot.exists(),
@@ -256,6 +274,7 @@ class ReceiptViewModel: ObservableObject {
     }
 
     private func updateItemsInReceipt(_ receiptID: String, with items: [Item]) {
+        print("items updating...")
         if let index = receiptList.firstIndex(where: { $0.id == receiptID }) {
             receiptList[index].items = items
             objectWillChange.send()

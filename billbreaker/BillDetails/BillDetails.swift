@@ -22,6 +22,7 @@ struct BillDetailsView: View {
                     Text("Items")
                         .font(.title)
                         .fontWeight(.semibold)
+                        .foregroundColor(Color(.black))
                     ItemsSectionView(rviewModel: rviewModel)
                     PeopleSectionView(rviewModel: rviewModel)
                 }

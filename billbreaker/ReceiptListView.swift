@@ -15,11 +15,12 @@ struct ReceiptListView: View {
     var body: some View {
         List(rviewModel.receiptList, id: \.id) { receipt in
             Button(action: {
-                router.linkReceiptId = receipt.id
-//                router.path.append("BillDetails")
-                router.navigate(to: .billDetails(receiptId: router.linkReceiptId))
+                print("receipt tapped: \(receipt.id)")
+                router.selectedId = receipt.id
+                router.navigateToReceipt(id: receipt.id)
             }) {
                 ReceiptRow(receipt: receipt)
+                    .background(Color.blue.opacity(0.1))
             }
         }
     }

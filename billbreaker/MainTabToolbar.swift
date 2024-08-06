@@ -26,11 +26,11 @@ struct MainTabToolbar: View {
             }
 
             ArchiveButton(imageName: "archivebox", text: "Archive") {
-                router.navigate(to: .billDetails(receiptId: router.linkReceiptId))
+                router.navigateToMainTab(MainTabRoute.home)
             }
             
             ProfileButton(imageName: "gear", text: "Settings") {
-                router.navigate(to: .settings)
+                router.navigateToMainTab(MainTabRoute.settings)
             }
             
         }

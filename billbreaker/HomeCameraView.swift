@@ -10,30 +10,53 @@ import SwiftUI
 import PhotosUI
 
 struct HomeCameraView: View {
-    //should this state object be an environmentObject var
     @StateObject private var model = DataModel()
     @EnvironmentObject var router: Router
     @EnvironmentObject var viewModel: UserViewModel
     @State private var showingReceiptDetail = false
     @State private var selectedPhotoData: PhotosPickerItem?
+    @StateObject var rviewModel: ReceiptViewModel
+    
+    init(viewModel: UserViewModel) {
+        self._rviewModel = StateObject(wrappedValue: ReceiptViewModel(user: viewModel))
+    }
     
     var body: some View {
-        ZStack {
-            CameraView(model: model)
-            
-            VStack {
-                Spacer()
-                // Camera button
-                Button(action: {
-                    model.camera.takePhoto()
-                }) {
-                    Circle()
-                        .stroke(Color.white, lineWidth: 3)
-                        .frame(width: 70, height: 70)
+        NavigationStack(path: $router.path){
+            ZStack {
+                CameraView(model: model)
+                
+                VStack {
+                    Spacer()
+                    Button(action: {
+                        model.camera.takePhoto()
+                    }) {
+                        Circle()
+                            .stroke(Color.white, lineWidth: 3)
+                            .frame(width: 70, height: 70)
+                    }
+                    MainTabToolbar(model: model, selectedPhotoData: $selectedPhotoData)
                 }
-                MainTabToolbar(model: model, selectedPhotoData: $selectedPhotoData)
+                .padding()
             }
-            .padding()
+            .navigationDestination(for: AppRoute.self) { route in
+                switch route {
+                case .mainTab(let tabRoute):
+                    switch tabRoute {
+                    case .home:
+                        HomeView(rviewModel: rviewModel)
+                    case .settings:
+                        SettingsView()
+                    default: EmptyView()
+                    }
+                case .receipt(let receiptRoute):
+                    switch receiptRoute {
+                    case .details(let receiptId):
+                        BillDetailsView(rviewModel: rviewModel, receiptId: receiptId)
+                    }
+                    
+                }
+            }
         }
         .edgesIgnoringSafeArea(.all)
         .task {

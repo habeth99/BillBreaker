@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 import FirebaseAuth
 
-struct ProfileView: View {
+struct SettingsView: View {
     @EnvironmentObject var viewModel: UserViewModel
     //let test2 = Auth.auth().currentUser?.uid
     

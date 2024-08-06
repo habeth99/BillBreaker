@@ -39,10 +39,10 @@ struct billbreakerApp: App {
                         
                         print("id is: \(receiptId)")
                         
-                        router.navigate(to: .billDetails(receiptId: receiptId))
+                        router.navigateToReceipt(id: receiptId)
                         //router.reset()
                         //router.selectedTab = .home
-                        router.linkReceiptId = receiptId
+                        router.selectedId = receiptId
 
                         //router.path.append("BillDetails")
                     }

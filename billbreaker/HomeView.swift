@@ -12,19 +12,18 @@ struct HomeView: View {
     @State private var showingNewReceiptSheet = false
     @State private var showingJoinSheet = false
     
-    @StateObject private var rviewModel: ReceiptViewModel
-    
+    @ObservedObject var rviewModel: ReceiptViewModel
     @EnvironmentObject var viewModel: UserViewModel
     @EnvironmentObject var router: Router
     
-    @State private var selectedReceiptId: String?
     let customLinkColor = Color(hex: "#30cd31")
     
-    init(viewModel: UserViewModel) {
-        self._rviewModel = StateObject(wrappedValue: ReceiptViewModel(user: viewModel))
+    init(rviewModel: ReceiptViewModel) {
+        self.rviewModel = rviewModel
     }
     
     var body: some View {
+        //NavigationStack(path: $router.receiptPath) {
             ReceiptListView(rviewModel: rviewModel)
                 .foregroundColor(customLinkColor)
                 .navigationTitle("My Checks")
@@ -35,28 +34,25 @@ struct HomeView: View {
                         onAdd: { showingNewReceiptSheet = true }
                     )
                 }
-                .sheet(isPresented: $showingNewReceiptSheet) {
-                    NewReceiptView(isPresented: $showingNewReceiptSheet, rviewModel: ReceiptViewModel(user: viewModel))
-                }
-                .sheet(isPresented: $showingJoinSheet) {
-                    JoinReceiptView(isPresented: $showingJoinSheet, rviewModel: rviewModel)
-                }
-                .onAppear {
-                    print("Homeview appears")
-                    Task {
-                        await rviewModel.fetchUserReceipts()
-                    }
-                }
-//                .navigationDestination(for: String.self) { route in
+//                .navigationDestination(for: ReceiptRoute.self) { route in
 //                    switch route {
-//                    case "BillDetails":
-//                        if let receiptId = router.selectedReceiptId {
-//                            BillDetailsView(rviewModel: rviewModel, receiptId: receiptId)
-//                        }
-//                    default:
-//                        EmptyView()
+//                    case .details(let receiptId):
+//                        BillDetailsView(rviewModel: rviewModel, receiptId: receiptId)
 //                    }
 //                }
+        //}
+        .sheet(isPresented: $showingNewReceiptSheet) {
+            NewReceiptView(isPresented: $showingNewReceiptSheet, rviewModel: ReceiptViewModel(user: viewModel))
+        }
+        .sheet(isPresented: $showingJoinSheet) {
+            JoinReceiptView(isPresented: $showingJoinSheet, rviewModel: rviewModel)
+        }
+        .onAppear {
+            print("Homeview appears")
+            Task {
+                await rviewModel.fetchUserReceipts()
+            }
+        }
     }
 }
 

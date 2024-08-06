@@ -17,13 +17,11 @@ struct WhichView: View {
     //@State private var deepLinkReceiptId: String?
     
     var body: some View {
-        NavigationStack(path: $router.path){
             ZStack {
                 if isLoading {
                     SplashView()
                 } else if viewModel.isUserAuthenticated {
-                    //MainTabToolbar()
-                    HomeCameraView() //possibly need router and model?
+                    HomeCameraView(viewModel: viewModel)
                 } else {
                     LandingPageView()
                 }
@@ -32,20 +30,6 @@ struct WhichView: View {
                 
                 checkAuthStatus()
             }
-        }
-        .navigationDestination(for: Route.self) { route in
-            switch route {
-            case .home:
-                HomeView(viewModel: viewModel)
-            case .camera:
-                CameraView(model: model)
-            case .settings:
-                ProfileView()
-            case .billDetails(let receiptId):
-                BillDetailsView(rviewModel: ReceiptViewModel(user: viewModel), receiptId: receiptId)
-            default: EmptyView()
-            }
-        }
     }
     
     private func checkAuthStatus() {
