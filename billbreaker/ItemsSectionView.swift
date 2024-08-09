@@ -10,7 +10,6 @@ import SwiftUI
 
 struct ItemsSectionView: View {
     @ObservedObject var rviewModel: ReceiptViewModel
-    //var receipt: Receipt
     
     var body: some View {
         VStack(alignment: .leading) {

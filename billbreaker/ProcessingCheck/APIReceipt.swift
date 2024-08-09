@@ -6,8 +6,13 @@
 //
 
 import Foundation
+import SwiftUI
+import Firebase
+import FirebaseDatabase
+import FirebaseAuth
+import Combine
 
-struct APIReceipt: Codable {
+class APIReceipt: Codable {
     
     let name: String
     let address: String
@@ -50,4 +55,7 @@ struct APIReceipt: Codable {
         self.method = method
         self.cardLastFour = cardLastFour
     }
+
+    
+    
 }

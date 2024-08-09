@@ -144,6 +144,14 @@ class UserViewModel: ObservableObject {
         }
     }
     
+//    func getUser() -> String {
+//        guard let currUserId = self.currentUser?.id else {
+//            print("No current user is logged in.")
+//            return ""
+//        }
+//        return currUserId
+//    }
+    
     func fetchUser() {
         guard let userID = userID else {
             print("UserID is nil.")

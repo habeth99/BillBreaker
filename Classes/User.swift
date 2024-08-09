@@ -7,6 +7,7 @@
 
 import Foundation
 import FirebaseDatabase
+import Firebase
 
 class User: Identifiable, Codable, ObservableObject {
     @Published var id: String
@@ -61,6 +62,14 @@ class User: Identifiable, Codable, ObservableObject {
         try container.encode(venmoHandle, forKey: .venmoHandle)
         try container.encode(cashAppHandle, forKey: .cashAppHandle)
         try container.encode(receipts, forKey: .receipts)
+    }
+    
+    func getUserdId() -> String? {
+        if let user = Auth.auth().currentUser {
+            return user.uid
+        } else {
+            return nil
+        }
     }
     
     var description: String {

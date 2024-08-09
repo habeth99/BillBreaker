@@ -23,7 +23,6 @@ struct HomeView: View {
     }
     
     var body: some View {
-        //NavigationStack(path: $router.receiptPath) {
             ReceiptListView(rviewModel: rviewModel)
                 .foregroundColor(customLinkColor)
                 .navigationTitle("My Checks")
@@ -34,13 +33,6 @@ struct HomeView: View {
                         onAdd: { showingNewReceiptSheet = true }
                     )
                 }
-//                .navigationDestination(for: ReceiptRoute.self) { route in
-//                    switch route {
-//                    case .details(let receiptId):
-//                        BillDetailsView(rviewModel: rviewModel, receiptId: receiptId)
-//                    }
-//                }
-        //}
         .sheet(isPresented: $showingNewReceiptSheet) {
             NewReceiptView(isPresented: $showingNewReceiptSheet, rviewModel: ReceiptViewModel(user: viewModel))
         }

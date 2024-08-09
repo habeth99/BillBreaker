@@ -21,8 +21,8 @@ struct SplashView: View {
                 Text("Logo not found")
             }
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity) // Ensure ZStack fills the entire screen
-        .background(Color(hex: "#30cd31")) // Background color
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color(hex: "#30cd31"))
         .ignoresSafeArea()
     }
 }

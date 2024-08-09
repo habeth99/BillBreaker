@@ -29,9 +29,6 @@ struct BillDetailsPersonView: View {
                     Spacer()
                 }
                 Spacer()
-//                Text("Claims:")
-//                    .padding([.leading])
-//                    .font(.title3)
                 ForEach(itemsWithPrice, id: \.0.id) { item, sharePrice in
                     HStack {
                         Text(item.name)
@@ -43,7 +40,6 @@ struct BillDetailsPersonView: View {
                 }
                 Text("Tip: \(String(format: "$%.2f", tip))")
                     .padding(.leading)
-//                    .padding(.bottom)
                     .padding(.top)
                     .font(.subheadline)
                 Text("Total: \(String(format: "$%.2f", total))")
@@ -67,7 +63,7 @@ struct BillDetailsPersonView: View {
                                             .overlay(
                                                 RoundedRectangle(cornerRadius: 8)
                                                     .stroke(Color.black, lineWidth: 1)
-                                            )  // Optional: Add a black border
+                                            ) 
                                     }
                                 }
                                 .padding()

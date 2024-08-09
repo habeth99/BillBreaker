@@ -11,10 +11,10 @@ import FirebaseAuth
 
 struct SettingsView: View {
     @EnvironmentObject var viewModel: UserViewModel
-    //let test2 = Auth.auth().currentUser?.uid
+
     
     var body: some View {
-        Group {  // Wrap your conditional in a Group or another view
+        Group { 
             if let user = viewModel.currentUser {
                 List {
                     Section {

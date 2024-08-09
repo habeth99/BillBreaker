@@ -14,7 +14,6 @@ struct WhichView: View {
     @EnvironmentObject var model: DataModel
     @EnvironmentObject var router: Router
     @State private var isLoading = true
-    //@State private var deepLinkReceiptId: String?
     
     var body: some View {
             ZStack {

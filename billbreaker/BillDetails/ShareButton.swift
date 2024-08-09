@@ -13,9 +13,6 @@ struct ShareButtonView: View {
     
     var body: some View {
         VStack{
-//            Button("Share", action: {
-//                rviewModel.shareCheck()
-//            })
             Button(action: {
                 rviewModel.shareCheck(receiptId: rviewModel.receipt.id)
             }) {

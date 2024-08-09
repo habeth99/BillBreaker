@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Firebase
 
 class Receipt: Codable, Identifiable, ObservableObject, CustomStringConvertible {
     @Published var id: String
@@ -164,6 +165,110 @@ class Receipt: Codable, Identifiable, ObservableObject, CustomStringConvertible 
     var description: String {
         return "Receipt(id: \(id), userId: \(userId), name: \(name), date: \(date), createdAt: \(createdAt), tax: \(tax), items: \(items ?? []), people: \(people ?? []))"
     }
+    
+    
+    //++++++++++++++++//    //++++++++++++++++//    //++++++++++++++++//
+    //    DATABASE    //    //    DATABASE    //    //    DATABASE    //
+    //++++++++++++++++//    //++++++++++++++++//    //++++++++++++++++//
+    
+    
+//    func fetchUserReceipts() async {
+//        guard let userID = userViewModel.currentUser?.id else {
+//            print("fetchUserReceipts: User not authenticated or user ID not available")
+//            return
+//        }
+//        
+//        do {
+//            let snapshot = try await dbRef.child("users").child(userID).getData()
+//            guard let userData = snapshot.value as? [String: Any],
+//                  let receiptIDs = userData["receipts"] as? [String] else {
+//                print("User data or receipts not found")
+//                return
+//            }
+//            await fetchReceipts(receiptIDs: receiptIDs)
+//        } catch {
+//            print("Error fetching user data: \(error.localizedDescription)")
+//        }
+//    }
+//    
+//    private func fetchReceipts(receiptIDs: [String]) async {
+//        var fetchedReceipts: [Receipt] = []
+//
+//        for receiptID in receiptIDs {
+//            do {
+//                let snapshot = try await dbRef.child("receipts").child(receiptID).getData()
+//                guard let receiptData = snapshot.value as? [String: Any] else {
+//                    print("Receipt data not found for ID: \(receiptID)")
+//                    continue
+//                }
+//                
+//                //print("Receipt data snapshot value for \(receiptID): \(receiptData)")
+//
+//                let data = try JSONSerialization.data(withJSONObject: receiptData, options: [])
+//                let receipt = try JSONDecoder().decode(Receipt.self, from: data)
+//                if !fetchedReceipts.contains(where: { $0.id == receipt.id }) {
+//                    fetchedReceipts.append(receipt)
+//                }
+//            } catch {
+//                print("Error decoding receipt: \(error.localizedDescription)")
+//            }
+//        }
+//
+//        self.receiptList = fetchedReceipts
+//        print("All receipts fetched: \(self.receiptList)")
+//        
+//        if !listenersSetUp {
+//            setupReceiptListeners(receiptIDs: receiptIDs)
+//        } else {
+//            print("Listeners already set up, skipping setup")
+//        }
+//    }
+//    
+//    func getReceipt(id: String) async -> Receipt? {
+//        reset()
+//        do {
+//            let snapshot = try await dbRef.child("receipts").child(id).getData()
+//            
+//            guard let value = snapshot.value as? [String: Any] else {
+//                print("Receipt data not found for ID: \(id)")
+//                return nil
+//            }
+//            
+//            print("Receipt data snapshot value: \(value)")
+//            
+//            let data = try JSONSerialization.data(withJSONObject: value)
+//            let loadedReceipt = try JSONDecoder().decode(Receipt.self, from: data)
+//            
+//            self.receipt = loadedReceipt
+//            //print("Receipt loaded: \(loadedReceipt.name)")
+//            
+//            // Temp variables to match what the methods need
+//            let tempReceiptList = [id]
+//            let receiptRef = dbRef.child("receipts").child(id)
+//            // Set up listeners for real-time updates
+//            setupReceiptListeners(receiptIDs: tempReceiptList)
+//            setupPeopleListeners(receiptRef, receiptID: id)
+//            setupItemListeners(receiptRef, receiptID: id)
+//            
+//            return self.receipt
+//        } catch {
+//            print("Error loading receipt: \(error.localizedDescription)")
+//            return nil
+//        }
+//    }
+    
+    static func getUserdId() -> String? {
+        if let user = Auth.auth().currentUser {
+            return user.uid
+        } else {
+            return nil
+        }
+    }
+    
+    
+    //++++++++++++++++//    //++++++++++++++++//    //++++++++++++++++//
+    //    DATABASE    //    //    DATABASE    //    //    DATABASE    //
+    //++++++++++++++++//    //++++++++++++++++//    //++++++++++++++++//
 }
 
 extension Receipt {

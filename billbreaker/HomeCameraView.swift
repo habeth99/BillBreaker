@@ -16,6 +16,7 @@ struct HomeCameraView: View {
     @State private var showingReceiptDetail = false
     @State private var selectedPhotoData: PhotosPickerItem?
     @StateObject var rviewModel: ReceiptViewModel
+    @StateObject var transformer = ReceiptProcessor()
     
     init(viewModel: UserViewModel) {
         self._rviewModel = StateObject(wrappedValue: ReceiptViewModel(user: viewModel))
@@ -65,12 +66,16 @@ struct HomeCameraView: View {
             await model.loadThumbnail()
         }
         .sheet(isPresented: $showingReceiptDetail) {
-            ProcessedView(proReceipt: model.processedReceipt)
+            ReviewView(receipt: transformer.receipt, transformer: transformer)
         }
         .onChange(of: model.isProcessingComplete) { completed in
             if completed {
                 showingReceiptDetail = true
-                model.isProcessingComplete = false // Reset for next use
+                Task{ @MainActor in
+//                    await transformReceipt()
+                    await transformer.transformReceipt(apiReceipt: model.processedReceipt)
+                    model.isProcessingComplete = false // Reset for next use
+                }
             }
         }
         .onChange(of: selectedPhotoData) { newValue in
@@ -82,5 +87,10 @@ struct HomeCameraView: View {
                 }
             }
         }
+    }
+    
+    func transformReceipt() async {
+        let transformedReceipt = await transformer.transformReceipt(apiReceipt: model.processedReceipt)
+        // Use the transformedReceipt here or update some state
     }
 }

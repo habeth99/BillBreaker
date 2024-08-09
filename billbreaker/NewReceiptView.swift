@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct NewReceiptView: View {
-    @Binding var isPresented: Bool // Use this to dismiss the sheet
+    @Binding var isPresented: Bool
     @State private var name = ""
     @State private var itemsText = ""
     @State private var peopleText = ""
@@ -17,7 +17,7 @@ struct NewReceiptView: View {
     @State private var taxText = ""
     @State private var totalText = ""
     @State private var people: [LegitP] = [LegitP()]
-    @State private var items: [Item] = [Item()] // Initialize with one empty item
+    @State private var items: [Item] = [Item()]
     @ObservedObject var rviewModel: ReceiptViewModel
     
     private let colors: [Color] = [.red, .blue, .green, .orange, .purple, .yellow, .pink, .gray]

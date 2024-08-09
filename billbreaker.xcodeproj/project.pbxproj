@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		22EFCABF2C2D314F00E65601 /* BillDetailsPersonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EFCABE2C2D314F00E65601 /* BillDetailsPersonView.swift */; };
 		22EFCAC02C2D326600E65601 /* BillDetailsPersonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EFCABE2C2D314F00E65601 /* BillDetailsPersonView.swift */; };
-		E203B13D2C4F752D00D16732 /* TabEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = E203B13C2C4F752D00D16732 /* TabEnum.swift */; };
 		E203B13F2C5000CA00D16732 /* ShareButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E203B13E2C5000CA00D16732 /* ShareButton.swift */; };
 		E203B1412C500F9300D16732 /* ColorSchemes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E203B1402C500F9300D16732 /* ColorSchemes.swift */; };
 		E203B1422C500F9300D16732 /* ColorSchemes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E203B1402C500F9300D16732 /* ColorSchemes.swift */; };
@@ -35,6 +34,9 @@
 		E219A38C2C5ECCBC003254D9 /* ArchiveButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E219A38B2C5ECCBC003254D9 /* ArchiveButton.swift */; };
 		E219A38E2C5ECCE3003254D9 /* ProfileButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E219A38D2C5ECCE3003254D9 /* ProfileButton.swift */; };
 		E219A3902C608DA2003254D9 /* ImportPhotosButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E219A38F2C608DA2003254D9 /* ImportPhotosButton.swift */; };
+		E21A559C2C6298A800A230AA /* ReceiptProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21A559B2C6298A800A230AA /* ReceiptProcessor.swift */; };
+		E21AA1762C6409B500EF87C8 /* ReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21AA1752C6409B500EF87C8 /* ReviewView.swift */; };
+		E21AA1782C64FEAE00EF87C8 /* AddPeopleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21AA1772C64FEAE00EF87C8 /* AddPeopleView.swift */; };
 		E21C90642C46210D008AD256 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21C90632C46210D008AD256 /* SplashView.swift */; };
 		E21C90662C464CAF008AD256 /* MainTabToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21C90652C464CAF008AD256 /* MainTabToolbar.swift */; };
 		E2409E202BED3B0800A5940D /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2409E1F2BED3B0800A5940D /* ProfileView.swift */; };
@@ -43,13 +45,11 @@
 		E2482FD62C4654B7008B18BF /* ReceiptListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2482FD52C4654B7008B18BF /* ReceiptListView.swift */; };
 		E2482FD82C46553A008B18BF /* ReceiptRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2482FD72C46553A008B18BF /* ReceiptRowView.swift */; };
 		E24A2AF62C385E9700273673 /* CustomHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24A2AF52C385E9700273673 /* CustomHeaderView.swift */; };
-		E26472202C5849E600B2DF11 /* ProReceipt.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DBA9C52C58478B000F3559 /* ProReceipt.swift */; };
+		E26472202C5849E600B2DF11 /* APIReceipt.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DBA9C52C58478B000F3559 /* APIReceipt.swift */; };
 		E26472232C584B2300B2DF11 /* ReceiptJSONDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26472222C584B2300B2DF11 /* ReceiptJSONDecoder.swift */; };
 		E26472262C58983D00B2DF11 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26472252C58983D00B2DF11 /* APIService.swift */; };
 		E26472292C58985B00B2DF11 /* TextRecognitionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26472282C58985B00B2DF11 /* TextRecognitionService.swift */; };
 		E264722D2C58A35800B2DF11 /* ProcessedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E264722C2C58A35800B2DF11 /* ProcessedView.swift */; };
-		E26472302C58A55200B2DF11 /* ProTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E264722F2C58A55200B2DF11 /* ProTestView.swift */; };
-		E26472312C58A55200B2DF11 /* ProTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E264722F2C58A55200B2DF11 /* ProTestView.swift */; };
 		E26472332C58A58D00B2DF11 /* CamProgRsltView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26472322C58A58D00B2DF11 /* CamProgRsltView.swift */; };
 		E26472372C58AA0C00B2DF11 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFBF32BB1E77200BAD5AC /* Camera.swift */; };
 		E26472382C58AA1000B2DF11 /* ReceiptJSONDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26472222C584B2300B2DF11 /* ReceiptJSONDecoder.swift */; };
@@ -59,7 +59,7 @@
 		E264723C2C58AA2B00B2DF11 /* CamProgRsltView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26472322C58A58D00B2DF11 /* CamProgRsltView.swift */; };
 		E264723D2C58AA3300B2DF11 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFBF72BB1E7A500BAD5AC /* DataModel.swift */; };
 		E264723E2C58AA3600B2DF11 /* ProcessedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E264722C2C58A35800B2DF11 /* ProcessedView.swift */; };
-		E264723F2C58AA3900B2DF11 /* ProReceipt.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DBA9C52C58478B000F3559 /* ProReceipt.swift */; };
+		E264723F2C58AA3900B2DF11 /* APIReceipt.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DBA9C52C58478B000F3559 /* APIReceipt.swift */; };
 		E26472402C58AAFC00B2DF11 /* PhotoAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFBF92BB1E7B600BAD5AC /* PhotoAsset.swift */; };
 		E26472412C58AB0000B2DF11 /* PhotoAssetCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFBFB2BB1E7C000BAD5AC /* PhotoAssetCollection.swift */; };
 		E26472422C58AB0400B2DF11 /* PhotoCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFBFD2BB1E7C900BAD5AC /* PhotoCollection.swift */; };
@@ -115,7 +115,6 @@
 		E2DDFC062BB1E7ED00BAD5AC /* PhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC052BB1E7ED00BAD5AC /* PhotoView.swift */; };
 		E2DDFC082BB1E7F700BAD5AC /* ThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC072BB1E7F700BAD5AC /* ThumbnailView.swift */; };
 		E2DDFC0A2BB1E80300BAD5AC /* ViewfinderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC092BB1E80300BAD5AC /* ViewfinderView.swift */; };
-		E2DDFC0F2BB1EA3200BAD5AC /* Bill.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC0E2BB1EA3200BAD5AC /* Bill.swift */; };
 		E2E2680C2C29DA83009AE6EB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D1F2A12BC0CD3400B27278 /* User.swift */; };
 /* End PBXBuildFile section */
 
@@ -173,7 +172,6 @@
 
 /* Begin PBXFileReference section */
 		22EFCABE2C2D314F00E65601 /* BillDetailsPersonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillDetailsPersonView.swift; sourceTree = "<group>"; };
-		E203B13C2C4F752D00D16732 /* TabEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabEnum.swift; sourceTree = "<group>"; };
 		E203B13E2C5000CA00D16732 /* ShareButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareButton.swift; sourceTree = "<group>"; };
 		E203B1402C500F9300D16732 /* ColorSchemes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSchemes.swift; sourceTree = "<group>"; };
 		E206BCAC2C471B9F003E6C84 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -198,6 +196,9 @@
 		E219A38B2C5ECCBC003254D9 /* ArchiveButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveButton.swift; sourceTree = "<group>"; };
 		E219A38D2C5ECCE3003254D9 /* ProfileButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileButton.swift; sourceTree = "<group>"; };
 		E219A38F2C608DA2003254D9 /* ImportPhotosButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportPhotosButton.swift; sourceTree = "<group>"; };
+		E21A559B2C6298A800A230AA /* ReceiptProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptProcessor.swift; sourceTree = "<group>"; };
+		E21AA1752C6409B500EF87C8 /* ReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewView.swift; sourceTree = "<group>"; };
+		E21AA1772C64FEAE00EF87C8 /* AddPeopleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPeopleView.swift; sourceTree = "<group>"; };
 		E21C90632C46210D008AD256 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		E21C90652C464CAF008AD256 /* MainTabToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabToolbar.swift; sourceTree = "<group>"; };
 		E2409E1F2BED3B0800A5940D /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
@@ -210,7 +211,6 @@
 		E26472252C58983D00B2DF11 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		E26472282C58985B00B2DF11 /* TextRecognitionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextRecognitionService.swift; sourceTree = "<group>"; };
 		E264722C2C58A35800B2DF11 /* ProcessedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessedView.swift; sourceTree = "<group>"; };
-		E264722F2C58A55200B2DF11 /* ProTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProTestView.swift; sourceTree = "<group>"; };
 		E26472322C58A58D00B2DF11 /* CamProgRsltView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CamProgRsltView.swift; sourceTree = "<group>"; };
 		E27966022BC38F65000B0368 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		E27966042BC46D89000B0368 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
@@ -240,7 +240,7 @@
 		E2B83BC62BEC11EF00A29D71 /* NewReceiptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReceiptView.swift; sourceTree = "<group>"; };
 		E2D1F29F2BC0B18200B27278 /* Receipt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Receipt.swift; sourceTree = "<group>"; };
 		E2D1F2A12BC0CD3400B27278 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		E2DBA9C52C58478B000F3559 /* ProReceipt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProReceipt.swift; sourceTree = "<group>"; };
+		E2DBA9C52C58478B000F3559 /* APIReceipt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIReceipt.swift; sourceTree = "<group>"; };
 		E2DDFBF12BB1E74A00BAD5AC /* CachedImageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CachedImageManager.swift; sourceTree = "<group>"; };
 		E2DDFBF32BB1E77200BAD5AC /* Camera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		E2DDFBF52BB1E79900BAD5AC /* CameraView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
@@ -254,7 +254,6 @@
 		E2DDFC052BB1E7ED00BAD5AC /* PhotoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoView.swift; sourceTree = "<group>"; };
 		E2DDFC072BB1E7F700BAD5AC /* ThumbnailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThumbnailView.swift; sourceTree = "<group>"; };
 		E2DDFC092BB1E80300BAD5AC /* ViewfinderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewfinderView.swift; sourceTree = "<group>"; };
-		E2DDFC0E2BB1EA3200BAD5AC /* Bill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bill.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -371,15 +370,16 @@
 				E21C90632C46210D008AD256 /* SplashView.swift */,
 				E21C90652C464CAF008AD256 /* MainTabToolbar.swift */,
 				E2482FD32C465494008B18BF /* HomeToolBar.swift */,
+				E21AA1752C6409B500EF87C8 /* ReviewView.swift */,
 				E2482FD52C4654B7008B18BF /* ReceiptListView.swift */,
 				E2482FD72C46553A008B18BF /* ReceiptRowView.swift */,
 				E203B1402C500F9300D16732 /* ColorSchemes.swift */,
+				E219A3882C5D6D36003254D9 /* HomeCameraView.swift */,
 				E20B1AED2C2D279E0059F0D3 /* Info.plist */,
 				E206BCAC2C471B9F003E6C84 /* GoogleService-Info.plist */,
 				E2A47A282C1CFA520023E29D /* billbreaker.entitlements */,
 				E21466C72BAE72B6000A61DB /* Assets.xcassets */,
 				E21466C92BAE72B6000A61DB /* Preview Content */,
-				E219A3882C5D6D36003254D9 /* HomeCameraView.swift */,
 			);
 			path = billbreaker;
 			sourceTree = "<group>";
@@ -492,10 +492,11 @@
 				E26472282C58985B00B2DF11 /* TextRecognitionService.swift */,
 				E26472222C584B2300B2DF11 /* ReceiptJSONDecoder.swift */,
 				E26472252C58983D00B2DF11 /* APIService.swift */,
-				E2DBA9C52C58478B000F3559 /* ProReceipt.swift */,
+				E2DBA9C52C58478B000F3559 /* APIReceipt.swift */,
 				E264722C2C58A35800B2DF11 /* ProcessedView.swift */,
-				E264722F2C58A55200B2DF11 /* ProTestView.swift */,
 				E26472322C58A58D00B2DF11 /* CamProgRsltView.swift */,
+				E21A559B2C6298A800A230AA /* ReceiptProcessor.swift */,
+				E21AA1772C64FEAE00EF87C8 /* AddPeopleView.swift */,
 			);
 			path = ProcessingCheck;
 			sourceTree = "<group>";
@@ -527,8 +528,6 @@
 				E27966062BC476BD000B0368 /* LegitP.swift */,
 				E2D1F29F2BC0B18200B27278 /* Receipt.swift */,
 				E27966082BC48178000B0368 /* Item.swift */,
-				E2DDFC0E2BB1EA3200BAD5AC /* Bill.swift */,
-				E203B13C2C4F752D00D16732 /* TabEnum.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -784,7 +783,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E264722D2C58A35800B2DF11 /* ProcessedView.swift in Sources */,
-				E26472202C5849E600B2DF11 /* ProReceipt.swift in Sources */,
+				E26472202C5849E600B2DF11 /* APIReceipt.swift in Sources */,
 				E2DDFBF82BB1E7A500BAD5AC /* DataModel.swift in Sources */,
 				E20EC6212BB60C5500223B19 /* HomeView.swift in Sources */,
 				E209C6562C34F3C300D9E3A2 /* BillDetails.swift in Sources */,
@@ -796,18 +795,21 @@
 				E2DDFBF42BB1E77300BAD5AC /* Camera.swift in Sources */,
 				E206BCAF2C479382003E6C84 /* Router.swift in Sources */,
 				E2DDFBF62BB1E79900BAD5AC /* CameraView.swift in Sources */,
+				E21A559C2C6298A800A230AA /* ReceiptProcessor.swift in Sources */,
 				E27966112BC4DA5E000B0368 /* ItemVIewModel.swift in Sources */,
 				E27966052BC46D89000B0368 /* UserViewModel.swift in Sources */,
 				E2092B832C2C826200A6B4EF /* ReceiptViewModel.swift in Sources */,
 				E203B1412C500F9300D16732 /* ColorSchemes.swift in Sources */,
 				E2DDFBFA2BB1E7B600BAD5AC /* PhotoAsset.swift in Sources */,
 				E26472232C584B2300B2DF11 /* ReceiptJSONDecoder.swift in Sources */,
+				E21AA1782C64FEAE00EF87C8 /* AddPeopleView.swift in Sources */,
 				E219A3892C5D6D36003254D9 /* HomeCameraView.swift in Sources */,
 				E27966032BC38F66000B0368 /* SignUpView.swift in Sources */,
 				E2B83BC72BEC11EF00A29D71 /* NewReceiptView.swift in Sources */,
 				E209C65A2C35147D00D9E3A2 /* ItemRowView.swift in Sources */,
 				E2DDFC022BB1E7DD00BAD5AC /* PhotoItemView.swift in Sources */,
 				E219A3902C608DA2003254D9 /* ImportPhotosButton.swift in Sources */,
+				E21AA1762C6409B500EF87C8 /* ReviewView.swift in Sources */,
 				E21C90642C46210D008AD256 /* SplashView.swift in Sources */,
 				E2482FD62C4654B7008B18BF /* ReceiptListView.swift in Sources */,
 				E27966132BC4DADB000B0368 /* PersonViewModel.swift in Sources */,
@@ -821,9 +823,7 @@
 				E203B13F2C5000CA00D16732 /* ShareButton.swift in Sources */,
 				E27966072BC476BD000B0368 /* LegitP.swift in Sources */,
 				E2DDFC062BB1E7ED00BAD5AC /* PhotoView.swift in Sources */,
-				E203B13D2C4F752D00D16732 /* TabEnum.swift in Sources */,
 				E26472262C58983D00B2DF11 /* APIService.swift in Sources */,
-				E26472302C58A55200B2DF11 /* ProTestView.swift in Sources */,
 				E2DDFBF22BB1E74A00BAD5AC /* CachedImageManager.swift in Sources */,
 				E2DDFBFC2BB1E7C000BAD5AC /* PhotoAssetCollection.swift in Sources */,
 				E2A47A252C1A2FBC0023E29D /* JoinReceiptView.swift in Sources */,
@@ -836,7 +836,6 @@
 				E2DDFC082BB1E7F700BAD5AC /* ThumbnailView.swift in Sources */,
 				E2DDFC0A2BB1E80300BAD5AC /* ViewfinderView.swift in Sources */,
 				E2DDFC002BB1E7D500BAD5AC /* PhotoCollectionView.swift in Sources */,
-				E2DDFC0F2BB1EA3200BAD5AC /* Bill.swift in Sources */,
 				E2D1F2A22BC0CD3400B27278 /* User.swift in Sources */,
 				E2A47A272C1CE8140023E29D /* GuestSignInView.swift in Sources */,
 				E21466C42BAE72B2000A61DB /* billbreakerApp.swift in Sources */,
@@ -885,7 +884,6 @@
 				E264723A2C58AA2500B2DF11 /* APIService.swift in Sources */,
 				E26472382C58AA1000B2DF11 /* ReceiptJSONDecoder.swift in Sources */,
 				E26472402C58AAFC00B2DF11 /* PhotoAsset.swift in Sources */,
-				E26472312C58A55200B2DF11 /* ProTestView.swift in Sources */,
 				E2092B842C2C826200A6B4EF /* ReceiptViewModel.swift in Sources */,
 				E26472442C58AB0B00B2DF11 /* PhotoItemView.swift in Sources */,
 				E264723D2C58AA3300B2DF11 /* DataModel.swift in Sources */,
@@ -894,7 +892,7 @@
 				E27F2EB42C268E920050E190 /* UserViewModel.swift in Sources */,
 				E26472452C58AB0E00B2DF11 /* PhotoLibrary.swift in Sources */,
 				E26472492C58AB2F00B2DF11 /* CachedImageManager.swift in Sources */,
-				E264723F2C58AA3900B2DF11 /* ProReceipt.swift in Sources */,
+				E264723F2C58AA3900B2DF11 /* APIReceipt.swift in Sources */,
 				22EFCAC02C2D326600E65601 /* BillDetailsPersonView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

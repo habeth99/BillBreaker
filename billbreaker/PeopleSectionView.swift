@@ -10,7 +10,6 @@ import SwiftUI
 
 struct PeopleSectionView: View {
     @ObservedObject var rviewModel: ReceiptViewModel
-    //var receipt: Receipt
     
     var body: some View {
         VStack(alignment: .leading, spacing: 15) {
