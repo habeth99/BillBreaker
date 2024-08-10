@@ -23,7 +23,9 @@ class ReceiptProcessor: ObservableObject {
 //    }
     @MainActor
     func transformReceipt(apiReceipt: APIReceipt) async {
+        print("APIReceipt is: \(apiReceipt)")
         let transformedReceipt = Receipt.from(apiReceipt: apiReceipt)
+        print("transformedReceipt is: \(transformedReceipt)")
         DispatchQueue.main.async {
             self.receipt = transformedReceipt
         }

@@ -6,7 +6,7 @@
 
 import Foundation
 
-class Item: Identifiable, Codable, ObservableObject, Hashable {
+class Item: Identifiable, Codable, ObservableObject, Hashable, CustomStringConvertible {
     @Published var id: String
     @Published var name: String
     @Published var quantity: Int?

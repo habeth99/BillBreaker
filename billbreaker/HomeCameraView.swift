@@ -17,6 +17,7 @@ struct HomeCameraView: View {
     @State private var selectedPhotoData: PhotosPickerItem?
     @StateObject var rviewModel: ReceiptViewModel
     @StateObject var transformer = ReceiptProcessor()
+    @State private var isFlashing = false
     
     init(viewModel: UserViewModel) {
         self._rviewModel = StateObject(wrappedValue: ReceiptViewModel(user: viewModel))
@@ -27,10 +28,16 @@ struct HomeCameraView: View {
             ZStack {
                 CameraView(model: model)
                 
+                Color.white
+                    .opacity(isFlashing ? 0.6 : 0)
+                    .animation(.easeInOut(duration: 0.2), value: isFlashing)
+                    .ignoresSafeArea()
+                
                 VStack {
                     Spacer()
                     Button(action: {
-                        model.camera.takePhoto()
+//                        model.camera.takePhoto()
+                        takePhotoWithFlash()
                     }) {
                         Circle()
                             .stroke(Color.white, lineWidth: 3)
@@ -92,5 +99,17 @@ struct HomeCameraView: View {
     func transformReceipt() async {
         let transformedReceipt = await transformer.transformReceipt(apiReceipt: model.processedReceipt)
         // Use the transformedReceipt here or update some state
+    }
+    
+    func takePhotoWithFlash() {
+        isFlashing = true
+        
+        // Take the photo
+        model.camera.takePhoto()
+        
+        // Turn off the flash effect after a short delay
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            isFlashing = false
+        }
     }
 }

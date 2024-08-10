@@ -11,6 +11,9 @@ import SwiftUI
 struct ReviewView: View {
     var receipt: Receipt
     @ObservedObject var transformer: ReceiptProcessor
+    @State private var isSaving = false
+    @State private var showAlert = false
+    @State private var alertMessage = ""
     
     var body: some View {
         ScrollView {
@@ -23,8 +26,18 @@ struct ReviewView: View {
                 Text("Items")
                     .font(.title3)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    
-                ForEach(receipt.items!) { item in
+                
+                //                ForEach(receipt.items!) { item in
+                //                    HStack {
+                //                        Text(item.name)
+                //                        Spacer()
+                //                        Text("$\(item.price, specifier: "%.2f")")
+                //                    }
+                //                    .padding()
+                //                    .background(Color.white)
+                //                    .cornerRadius(8)
+                //                }
+                ForEach(Array(receipt.items!.enumerated()), id: \.offset) { index, item in
                     HStack {
                         Text(item.name)
                         Spacer()
@@ -40,8 +53,8 @@ struct ReviewView: View {
                 AddPeopleView()
             }
             .padding()
-            Button(action: saveGuests) {
-                Text("Save")
+            Button(action: saveReceipt) {
+                Text(isSaving ? "Saving..." : "Save")
                     .font(.headline)
                     .foregroundColor(.white)
                     .padding()
@@ -49,13 +62,26 @@ struct ReviewView: View {
                     .background(Color.blue)
                     .cornerRadius(10)
             }
+            .alert(isPresented: $showAlert) {
+                Alert(title: Text("Save Result"), message: Text("Success"), dismissButton: .default(Text("OK")))
+            }
         }
         .background(Color.gray.opacity(0.3))
     }
     
-    private func saveGuests() {
-        // Implement your save functionality here
-        
+    private func saveReceipt() {
+        isSaving = true
+        transformer.saveReceipt2 { success in
+            DispatchQueue.main.async {
+                isSaving = false
+                if success {
+                    alertMessage = "Receipt saved successfully!"
+                } else {
+                    alertMessage = "Failed to save receipt. Please try again."
+                }
+                showAlert = true
+            }
+        }
     }
 }
 
