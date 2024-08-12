@@ -20,7 +20,7 @@ struct WhichView: View {
                 if isLoading {
                     SplashView()
                 } else if viewModel.isUserAuthenticated {
-                    HomeCameraView(viewModel: viewModel)
+                    HomeCameraView()
                 } else {
                     LandingPageView()
                 }

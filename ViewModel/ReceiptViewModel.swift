@@ -23,31 +23,39 @@ class ReceiptViewModel: ObservableObject {
     @Published var selectedItemsIds: [String] = []
     //@Published var selectedReceiptId: String?
     @Published private(set) var listenersSetUp = false
-
-    var userViewModel: UserViewModel
+    var userID: String?
+    //var userViewModel: UserViewModel
+    @Published private(set) var isLoaded = false
     
     private var dbRef = Database.database().reference()
     private var cancellables = Set<AnyCancellable>()
     
-    init(user: UserViewModel) {
-        self.userViewModel = user
+    init() {
+        //self.userViewModel = user
         self.receipt = Receipt()
-        print("RVM initialized with user id: \(userViewModel.currentUser?.id)\n")
+        self.userID = User.getUserdId() ?? "VERY BAD"
+        print("RVM initialized with user id: \(userID)\n")
         
         // Observe the isUserDataLoaded property
-        userViewModel.$isUserDataLoaded
-            .filter { $0 }  // Only trigger when it becomes true
-            .first()  // We only need to trigger this once
-            .sink { [weak self] _ in
-                Task {
-                    await self?.fetchUserReceipts()
-                }
+        //        userViewModel.$isUserDataLoaded
+        //            .filter { $0 }  // Only trigger when it becomes true
+        //            .first()  // We only need to trigger this once
+        //            .sink { [weak self] _ in
+        //                Task {
+        //                    await self?.fetchUserReceipts()
+        //                }
+        //            }
+        //            .store(in: &cancellables)
+        Task {
+            await fetchUserReceipts()
+            DispatchQueue.main.async {
+                self.isLoaded = true
             }
-            .store(in: &cancellables)
+        }
     }
     
     func fetchUserReceipts() async {
-        guard let userID = userViewModel.currentUser?.id else {
+        guard let userID = userID else {
             print("fetchUserReceipts: User not authenticated or user ID not available")
             return
         }
@@ -65,7 +73,7 @@ class ReceiptViewModel: ObservableObject {
         }
     }
     
-    private func fetchReceipts(receiptIDs: [String]) async {
+    func fetchReceipts(receiptIDs: [String]) async {
         var fetchedReceipts: [Receipt] = []
 
         for receiptID in receiptIDs {
@@ -160,7 +168,7 @@ class ReceiptViewModel: ObservableObject {
         //Listeners Section
 //================================================================================================
     
-    private func setupReceiptListeners(receiptIDs: [String]) {
+    func setupReceiptListeners(receiptIDs: [String]) {
         guard !listenersSetUp else { return }
         
         print("setting up listeners for receipts: \(receiptIDs)\n")
@@ -208,7 +216,7 @@ class ReceiptViewModel: ObservableObject {
     }
     
     //People Listeners
-    private func setupPeopleListeners(_ receiptRef: DatabaseReference, receiptID: String) {
+    func setupPeopleListeners(_ receiptRef: DatabaseReference, receiptID: String) {
         print("setting up people listners for id: \(receiptID)")
         let peopleRef = receiptRef.child("people")
         peopleRef.observe(.value, with: { [weak self] snapshot in
@@ -225,7 +233,7 @@ class ReceiptViewModel: ObservableObject {
         }
     }
     
-    private func handlePeopleUpdate(_ peopleData: [[String: Any]], forReceipt receiptID: String) {
+    func handlePeopleUpdate(_ peopleData: [[String: Any]], forReceipt receiptID: String) {
         do {
             let data = try JSONSerialization.data(withJSONObject: peopleData, options: [])
             let people = try JSONDecoder().decode([LegitP].self, from: data)
@@ -236,7 +244,7 @@ class ReceiptViewModel: ObservableObject {
         }
     }
 
-    private func updatePeopleInReceipt(_ receiptID: String, with people: [LegitP]) {
+    func updatePeopleInReceipt(_ receiptID: String, with people: [LegitP]) {
         print("people updating...")
         if let index = receiptList.firstIndex(where: { $0.id == receiptID }) {
             receiptList[index].people = people
@@ -245,7 +253,7 @@ class ReceiptViewModel: ObservableObject {
     }
     
     //Items Listeners
-    private func setupItemListeners(_ receiptRef: DatabaseReference, receiptID: String) {
+    func setupItemListeners(_ receiptRef: DatabaseReference, receiptID: String) {
         print("setting up item listeners for id: \(receiptID)")
         let itemsRef = receiptRef.child("items")
         itemsRef.observe(.value, with: { [weak self] snapshot in
@@ -262,7 +270,7 @@ class ReceiptViewModel: ObservableObject {
         }
     }
 
-    private func handleItemsUpdate(_ itemsData: [[String: Any]], forReceipt receiptID: String) {
+    func handleItemsUpdate(_ itemsData: [[String: Any]], forReceipt receiptID: String) {
         do {
             let data = try JSONSerialization.data(withJSONObject: itemsData, options: [])
             let items = try JSONDecoder().decode([Item].self, from: data)
@@ -273,7 +281,7 @@ class ReceiptViewModel: ObservableObject {
         }
     }
 
-    private func updateItemsInReceipt(_ receiptID: String, with items: [Item]) {
+    func updateItemsInReceipt(_ receiptID: String, with items: [Item]) {
         print("items updating...")
         if let index = receiptList.firstIndex(where: { $0.id == receiptID }) {
             receiptList[index].items = items
@@ -289,7 +297,7 @@ class ReceiptViewModel: ObservableObject {
 //Function for adding a receipt to a users list of receipts based on the receipt value "userid"
 //should probably make this PRIVATE
     func addReceiptToUser2(receiptId: String, completion: @escaping (Bool) -> Void){
-        let userReceiptsRef = dbRef.child("users").child(userViewModel.currentUser!.id).child("receipts")
+        let userReceiptsRef = dbRef.child("users").child(userID ?? "").child("receipts")
         
         // Retrieve current receipts to append the new one
         userReceiptsRef.observeSingleEvent(of: .value, with: { snapshot in
@@ -327,7 +335,7 @@ class ReceiptViewModel: ObservableObject {
         }
     }
     
-    private func updateReceiptInList(_ receipt: Receipt) {
+    func updateReceiptInList(_ receipt: Receipt) {
         //print("updates receipt is: \(receipt)")
         if let index = self.receiptList.firstIndex(where: { $0.id == receipt.id }) {
             self.receiptList[index] = receipt
@@ -452,15 +460,15 @@ class ReceiptViewModel: ObservableObject {
         self.people = receiptPeople
         print("Initial people set from receipt: \(self.people)")
 
-        if let currentUser = userViewModel.currentUser {
-            let currentUserPerson = LegitP(id: dbRef.child("people").childByAutoId().key ?? "BAD5", name: currentUser.name)
-            print("Current user person: \(currentUserPerson)")
-
-            if !people.contains(where: { $0.name == currentUserPerson.name }) {
-                people.append(currentUserPerson)
-                print("Added current user to people: \(currentUserPerson)")
-            }
-        }
+//        if let currentUser = userViewModel.currentUser {
+//            let currentUserPerson = LegitP(id: dbRef.child("people").childByAutoId().key ?? "BAD5", name: currentUser.name)
+//            print("Current user person: \(currentUserPerson)")
+//
+//            if !people.contains(where: { $0.name == currentUserPerson.name }) {
+//                people.append(currentUserPerson)
+//                print("Added current user to people: \(currentUserPerson)")
+//            }
+//        }
 
         for index in people.indices {
             if people[index].id.isEmpty {
@@ -501,7 +509,7 @@ class ReceiptViewModel: ObservableObject {
     }
 
     func getUser() -> String? {
-        return userViewModel.currentUser?.id
+        return userID
     }
     
     func selectPerson(_ person: LegitP) {

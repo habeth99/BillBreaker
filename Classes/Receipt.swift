@@ -27,9 +27,8 @@ class Receipt: Codable, Identifiable, ObservableObject, CustomStringConvertible 
     @Published var paymentMethod: String
     @Published var cardLastFour: String
     
-//    enum CodingKeys: CodingKey {
-//        case id, userId, name, date, createdAt, tax, tip, items, people
-//    }
+    private let dbRef = Database.database().reference()
+    
     enum CodingKeys: String, CodingKey {
         case restaurant, items, summary, payment
         case id, userId, name, date, createdAt, tax, tip, people
@@ -67,7 +66,6 @@ class Receipt: Codable, Identifiable, ObservableObject, CustomStringConvertible 
         self.total = total
         self.paymentMethod = paymentMethod
         self.cardLastFour = cardLastFour
-        
     }
 
     required init(from decoder: Decoder) throws {
@@ -170,28 +168,26 @@ class Receipt: Codable, Identifiable, ObservableObject, CustomStringConvertible 
     //++++++++++++++++//    //++++++++++++++++//    //++++++++++++++++//
     //    DATABASE    //    //    DATABASE    //    //    DATABASE    //
     //++++++++++++++++//    //++++++++++++++++//    //++++++++++++++++//
-    
-    
-//    func fetchUserReceipts() async {
-//        guard let userID = userViewModel.currentUser?.id else {
-//            print("fetchUserReceipts: User not authenticated or user ID not available")
-//            return
-//        }
-//        
+
+//    func fetchUserReceipts() async throws -> [Receipt] {
 //        do {
-//            let snapshot = try await dbRef.child("users").child(userID).getData()
+//            let snapshot = try await dbRef.child("users").child(self.userId).getData()
 //            guard let userData = snapshot.value as? [String: Any],
 //                  let receiptIDs = userData["receipts"] as? [String] else {
 //                print("User data or receipts not found")
-//                return
+//                return []
 //            }
-//            await fetchReceipts(receiptIDs: receiptIDs)
+//            
+//            // Assuming fetchReceipts is modified to return [Receipt]
+//            let receipts: [Receipt] = try await fetchReceipts(receiptIDs: receiptIDs)
+//            return receipts
 //        } catch {
 //            print("Error fetching user data: \(error.localizedDescription)")
+//            throw error  // Re-throw the error to be handled by the caller
 //        }
 //    }
-//    
-//    private func fetchReceipts(receiptIDs: [String]) async {
+    
+//    private func fetchReceipts(receiptIDs: [String]) async -> [Receipt] {
 //        var fetchedReceipts: [Receipt] = []
 //
 //        for receiptID in receiptIDs {
@@ -202,8 +198,6 @@ class Receipt: Codable, Identifiable, ObservableObject, CustomStringConvertible 
 //                    continue
 //                }
 //                
-//                //print("Receipt data snapshot value for \(receiptID): \(receiptData)")
-//
 //                let data = try JSONSerialization.data(withJSONObject: receiptData, options: [])
 //                let receipt = try JSONDecoder().decode(Receipt.self, from: data)
 //                if !fetchedReceipts.contains(where: { $0.id == receipt.id }) {
@@ -214,16 +208,18 @@ class Receipt: Codable, Identifiable, ObservableObject, CustomStringConvertible 
 //            }
 //        }
 //
-//        self.receiptList = fetchedReceipts
-//        print("All receipts fetched: \(self.receiptList)")
+//        print("All receipts fetched: \(fetchedReceipts)")
 //        
 //        if !listenersSetUp {
 //            setupReceiptListeners(receiptIDs: receiptIDs)
 //        } else {
 //            print("Listeners already set up, skipping setup")
 //        }
+//        
+//        return fetchedReceipts
 //    }
-//    
+    
+//
 //    func getReceipt(id: String) async -> Receipt? {
 //        reset()
 //        do {

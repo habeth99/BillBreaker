@@ -25,7 +25,7 @@ struct JoinReceiptView: View {
                     rviewModel.joinReceiptWith(receiptId: receiptId) { success in
                         if success {
                             print("Receipt saved successfully.")
-                            let userId = rviewModel.userViewModel.currentUser?.id
+                            let userId = User.getUserdId()
                             rviewModel.addReceiptToUser2(receiptId: receiptId) { success in
                                 if success {
                                     print("Receipt added to user successfully!")

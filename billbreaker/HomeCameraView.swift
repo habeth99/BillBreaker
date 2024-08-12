@@ -15,13 +15,14 @@ struct HomeCameraView: View {
     @EnvironmentObject var viewModel: UserViewModel
     @State private var showingReceiptDetail = false
     @State private var selectedPhotoData: PhotosPickerItem?
-    @StateObject var rviewModel: ReceiptViewModel
+    @StateObject var rviewModel = ReceiptViewModel()
     @StateObject var transformer = ReceiptProcessor()
     @State private var isFlashing = false
     
-    init(viewModel: UserViewModel) {
-        self._rviewModel = StateObject(wrappedValue: ReceiptViewModel(user: viewModel))
-    }
+//    init() {
+//        self._rviewModel = StateObject(wrappedValue: ReceiptViewModel())
+//        self.rviewModel = ReceiptViewModel()
+//    }
     
     var body: some View {
         NavigationStack(path: $router.path){
@@ -66,6 +67,8 @@ struct HomeCameraView: View {
                 }
             }
         }
+//        .background(FatCheckTheme.Colors.accentColor)
+//        .tint(FatCheckTheme.Colors.accentColor)
         .edgesIgnoringSafeArea(.all)
         .task {
             await model.camera.start()
@@ -73,7 +76,7 @@ struct HomeCameraView: View {
             await model.loadThumbnail()
         }
         .sheet(isPresented: $showingReceiptDetail) {
-            ReviewView(receipt: transformer.receipt, transformer: transformer)
+            ReviewView(receipt: transformer.receipt, transformer: transformer, isPresented: $showingReceiptDetail)
         }
         .onChange(of: model.isProcessingComplete) { completed in
             if completed {

@@ -8,126 +8,134 @@
 import Foundation
 import SwiftUI
 
-import SwiftUI
-
-//struct AddPeopleView: View {
-//    @State private var guests: [String] = [""]
-//
-//    var body: some View {
-//        VStack {
-//            
-//                ForEach(0..<guests.count, id: \.self) { index in
-//                    TextField("Guest \(index + 1)", text: $guests[index])
-//                }
-//                
-//                if guests.count < 10 {
-//                    Button(action: addGuest) {
-//                        Text("Add Guest")
-//                    }
-//                }
-//
-//        }
-//    }
-//
-//    private func addGuest() {
-//        if guests.count < 10 {
-//            guests.append("")
-//        } else {
-//            print("Max reached no more guests can be added")
-//        }
-//    }
-//}
-//struct AddPeopleView: View {
-//    @State private var guests: [String] = [""]
-//    
-//    var body: some View {
-//        VStack {
-//            ForEach(0..<guests.count, id: \.self) { index in
-//                TextField("Guest \(index + 1)", text: $guests[index])
-//                    .font(.system(size: 18))
-//                    .padding()
-//                    .overlay(
-//                        RoundedRectangle(cornerRadius: 10)
-//                            .stroke(Color.gray, lineWidth: 1)
-//                    )
-//                    .background(Color.white)
-//            }
-//            
-//            if guests.count < 10 {
-//                Button(action: addGuest) {
-//                    Text("Add Guest")
-//                        .foregroundColor(.white)
-//                        .padding()
-//                        .background(Color.blue)
-//                        .cornerRadius(10)
-//                }
-//            }
-//        }
-//        .cornerRadius(15)
-//    }
-//    
-//    private func addGuest() {
-//        if guests.count < 10 {
-//            guests.append("")
-//        } else {
-//            print("Max reached no more guests can be added")
-//        }
-//    }
-//}
 struct AddPeopleView: View {
     @State private var guests: [String] = [""]
-    
+    @Environment(\.presentationMode) var presentationMode
+    private let maxGuests = 10
+    @Binding var isPresented: Bool
+    @State private var showingSaveCheckView = false
+    let onDismiss: () -> Void
+    var transformer: ReceiptProcessor
+
     var body: some View {
-        VStack(spacing: 10) {  // Add some spacing between elements
-            ForEach(0..<guests.count, id: \.self) { index in
-                TextField("Guest \(index + 1)", text: $guests[index])
-                    .font(.system(size: 18))
-                    .padding()
-                    .background(
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(Color.white)
-                    )
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color.gray, lineWidth: 1)
-                    )
-            }
-            
-            if guests.count < 10 {
-                Button(action: addGuest) {
-                    Text("Add Guest")
-                        .foregroundColor(.white)
-//                        .frame(width: 395, height: 55)
-                        .padding()
-                        .padding(.horizontal)
-                        .padding(.horizontal)
-                        .padding(.horizontal)
-                        .padding(.horizontal)
-                        .padding(.horizontal)
-                        .padding(.horizontal)
-                        .padding(.horizontal)
-                        .background(Color.blue)
-                        .cornerRadius(10)
+        ZStack {
+            FatCheckTheme.Colors.accentColor
+                .ignoresSafeArea()
+            VStack {
+                topButtons
+                ScrollView {
+                    VStack(spacing: 16) {
+                        Text("Add guests")
+                        .font(.title3)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        ForEach(guests.indices, id: \.self) { index in
+                            guestTextField(index: index)
+                        }
+                        addGuestButton
+                        cancelButton
+                    }
+                    .padding(.horizontal)
                 }
-                .padding(.vertical)
             }
         }
-//        .padding()  // Add padding around the VStack
-//        .background(Color.gray.opacity(0.1))  // Light gray background
-        .cornerRadius(15)
+        .sheet(isPresented: $showingSaveCheckView) {
+            SaveCheckView(isPresented: $isPresented, onDismiss: { showingSaveCheckView = false }, transformer: transformer)
+        }
+    }
+    
+    private var topButtons: some View {
+        HStack {
+            Button(action: onDismiss) {
+                Text("Back")
+                    .foregroundColor(.black)
+                    .padding()
+            }
+            
+            Spacer()
+            
+            Button(action: next) {
+                Text("Next")
+                    .foregroundColor(.black)
+                    .padding()
+            }
+        }
+    }
+    
+    private func guestTextField(index: Int) -> some View {
+        TextField("Guest \(index + 1)", text: $guests[index])
+            .font(.system(size: 18))
+            .padding()
+            .background(Color.white)
+            .cornerRadius(10)
+            .overlay(
+                RoundedRectangle(cornerRadius: 10)
+                    .stroke(Color.gray, lineWidth: 1)
+            )
+    }
+    
+    private var addGuestButton: some View {
+        Button(action: addGuest) {
+            Text("Add Guest")
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity)
+                .padding()
+                .background(FatCheckTheme.Colors.primaryColor)
+                .cornerRadius(10)
+        }
+        .opacity(guests.count < maxGuests ? 1 : 0)
+        .animation(.default, value: guests.count)
     }
     
     private func addGuest() {
-        if guests.count < 10 {
-            guests.append("")
-        } else {
-            print("Max reached no more guests can be added")
+        guard guests.count < maxGuests else {
+            print("Maximum number of guests reached")
+            return
         }
+        guests.append("")
+    }
+    
+    private var cancelButton: some View {
+        Button(action: cancel) {
+            Text("Cancel")
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity)
+                .padding()
+                .background(FatCheckTheme.Colors.primaryColor)
+                .cornerRadius(10)
+        }
+    }
+    
+    private func cancel() {
+        isPresented = false
+    }
+    
+    private func next() {
+        //function to create LegitPs based off of the names of the guests list
+        transformer.createLegitPs(guests: guests)
+
+        showingSaveCheckView = true
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
+// Mock data
+extension ReceiptProcessor {
+    static var mockProcessor2: ReceiptProcessor {
+        let mockItems = [
+            Item(name: "Burger", price: 10.99),
+            Item(name: "Fries", price: 3.99),
+            Item(name: "Milkshake", price: 4.50)
+        ]
+        let mockReceipt = Receipt(items: mockItems)
+        return ReceiptProcessor()
+    }
+}
+
+struct AddPeopleView_Previews: PreviewProvider {
     static var previews: some View {
-        AddPeopleView()
+        AddPeopleView(
+            isPresented: .constant(true),
+            onDismiss: {},
+            transformer: ReceiptProcessor.mockProcessor2
+        )
     }
 }

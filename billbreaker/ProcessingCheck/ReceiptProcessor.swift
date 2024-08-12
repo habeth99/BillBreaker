@@ -37,6 +37,22 @@ class ReceiptProcessor: ObservableObject {
             receipt.id = dbRef.child("receipts").childByAutoId().key ?? ""
             print("Generated new receipt ID: \(receipt.id)")
         }
+        
+        receipt.items = receipt.items?.map { item in
+            var updatedItem = item
+            if updatedItem.id.isEmpty {
+                updatedItem.id = dbRef.child("receipts").child(receipt.id).child("items").childByAutoId().key ?? ""
+            }
+            return updatedItem
+        }
+        
+        receipt.people = receipt.people?.map { person in
+            var updatedPerson = person
+            if updatedPerson.id.isEmpty {
+                updatedPerson.id = dbRef.child("receipts").child(receipt.id).child("people").childByAutoId().key ?? ""
+            }
+            return updatedPerson
+        }
 
         //print("Saving receipt with ID: \(receipt.id)")
         
@@ -80,6 +96,21 @@ class ReceiptProcessor: ObservableObject {
             return user.uid
         } else {
             return nil
+        }
+    }
+    
+    func createLegitPs(guests: [String]) {
+        let colors: [Color] = [.red, .blue, .green, .orange, .yellow, .gray, .purple, .pink]
+        
+        self.receipt.people = guests.map { guestName in
+            LegitP(
+                id: "",
+                name: guestName,
+                userId: "",
+                claims: [],
+                paid: false,
+                color: colors.randomElement() ?? .red
+            )
         }
     }
     

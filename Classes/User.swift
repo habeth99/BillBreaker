@@ -64,7 +64,7 @@ class User: Identifiable, Codable, ObservableObject {
         try container.encode(receipts, forKey: .receipts)
     }
     
-    func getUserdId() -> String? {
+     static func getUserdId() -> String? {
         if let user = Auth.auth().currentUser {
             return user.uid
         } else {

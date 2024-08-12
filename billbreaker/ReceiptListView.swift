@@ -20,7 +20,6 @@ struct ReceiptListView: View {
                 router.navigateToReceipt(id: receipt.id)
             }) {
                 ReceiptRow(receipt: receipt)
-                    .background(Color.blue.opacity(0.1))
             }
         }
     }

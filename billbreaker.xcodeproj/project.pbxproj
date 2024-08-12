@@ -10,8 +10,8 @@
 		22EFCABF2C2D314F00E65601 /* BillDetailsPersonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EFCABE2C2D314F00E65601 /* BillDetailsPersonView.swift */; };
 		22EFCAC02C2D326600E65601 /* BillDetailsPersonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EFCABE2C2D314F00E65601 /* BillDetailsPersonView.swift */; };
 		E203B13F2C5000CA00D16732 /* ShareButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E203B13E2C5000CA00D16732 /* ShareButton.swift */; };
-		E203B1412C500F9300D16732 /* ColorSchemes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E203B1402C500F9300D16732 /* ColorSchemes.swift */; };
-		E203B1422C500F9300D16732 /* ColorSchemes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E203B1402C500F9300D16732 /* ColorSchemes.swift */; };
+		E203B1412C500F9300D16732 /* FatCheckThemes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E203B1402C500F9300D16732 /* FatCheckThemes.swift */; };
+		E203B1422C500F9300D16732 /* FatCheckThemes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E203B1402C500F9300D16732 /* FatCheckThemes.swift */; };
 		E206BCAD2C471B9F003E6C84 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E206BCAC2C471B9F003E6C84 /* GoogleService-Info.plist */; };
 		E206BCAF2C479382003E6C84 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = E206BCAE2C479382003E6C84 /* Router.swift */; };
 		E2092B832C2C826200A6B4EF /* ReceiptViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2092B822C2C826100A6B4EF /* ReceiptViewModel.swift */; };
@@ -20,6 +20,8 @@
 		E209C6582C35143300D9E3A2 /* ItemsSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E209C6572C35143300D9E3A2 /* ItemsSectionView.swift */; };
 		E209C65A2C35147D00D9E3A2 /* ItemRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E209C6592C35147D00D9E3A2 /* ItemRowView.swift */; };
 		E209C65C2C35150900D9E3A2 /* PeopleSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E209C65B2C35150900D9E3A2 /* PeopleSectionView.swift */; };
+		E20B0CD22C67CE0100624B44 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20B0CD12C67CE0100624B44 /* HomeViewModel.swift */; };
+		E20B0CD42C697B0200624B44 /* SaveCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20B0CD32C697B0200624B44 /* SaveCheckView.swift */; };
 		E20EC6192BB3D96500223B19 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = E20EC6182BB3D96500223B19 /* FirebaseAuth */; };
 		E20EC61B2BB3D96500223B19 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = E20EC61A2BB3D96500223B19 /* FirebaseFirestore */; };
 		E20EC61D2BB3D96500223B19 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E20EC61C2BB3D96500223B19 /* FirebaseFirestoreSwift */; };
@@ -49,16 +51,12 @@
 		E26472232C584B2300B2DF11 /* ReceiptJSONDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26472222C584B2300B2DF11 /* ReceiptJSONDecoder.swift */; };
 		E26472262C58983D00B2DF11 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26472252C58983D00B2DF11 /* APIService.swift */; };
 		E26472292C58985B00B2DF11 /* TextRecognitionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26472282C58985B00B2DF11 /* TextRecognitionService.swift */; };
-		E264722D2C58A35800B2DF11 /* ProcessedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E264722C2C58A35800B2DF11 /* ProcessedView.swift */; };
-		E26472332C58A58D00B2DF11 /* CamProgRsltView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26472322C58A58D00B2DF11 /* CamProgRsltView.swift */; };
 		E26472372C58AA0C00B2DF11 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFBF32BB1E77200BAD5AC /* Camera.swift */; };
 		E26472382C58AA1000B2DF11 /* ReceiptJSONDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26472222C584B2300B2DF11 /* ReceiptJSONDecoder.swift */; };
 		E26472392C58AA2000B2DF11 /* Receipt.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D1F29F2BC0B18200B27278 /* Receipt.swift */; };
 		E264723A2C58AA2500B2DF11 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26472252C58983D00B2DF11 /* APIService.swift */; };
 		E264723B2C58AA2800B2DF11 /* TextRecognitionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26472282C58985B00B2DF11 /* TextRecognitionService.swift */; };
-		E264723C2C58AA2B00B2DF11 /* CamProgRsltView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26472322C58A58D00B2DF11 /* CamProgRsltView.swift */; };
 		E264723D2C58AA3300B2DF11 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFBF72BB1E7A500BAD5AC /* DataModel.swift */; };
-		E264723E2C58AA3600B2DF11 /* ProcessedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E264722C2C58A35800B2DF11 /* ProcessedView.swift */; };
 		E264723F2C58AA3900B2DF11 /* APIReceipt.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DBA9C52C58478B000F3559 /* APIReceipt.swift */; };
 		E26472402C58AAFC00B2DF11 /* PhotoAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFBF92BB1E7B600BAD5AC /* PhotoAsset.swift */; };
 		E26472412C58AB0000B2DF11 /* PhotoAssetCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFBFB2BB1E7C000BAD5AC /* PhotoAssetCollection.swift */; };
@@ -173,7 +171,7 @@
 /* Begin PBXFileReference section */
 		22EFCABE2C2D314F00E65601 /* BillDetailsPersonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillDetailsPersonView.swift; sourceTree = "<group>"; };
 		E203B13E2C5000CA00D16732 /* ShareButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareButton.swift; sourceTree = "<group>"; };
-		E203B1402C500F9300D16732 /* ColorSchemes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSchemes.swift; sourceTree = "<group>"; };
+		E203B1402C500F9300D16732 /* FatCheckThemes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FatCheckThemes.swift; sourceTree = "<group>"; };
 		E206BCAC2C471B9F003E6C84 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E206BCAE2C479382003E6C84 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		E2092B822C2C826100A6B4EF /* ReceiptViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptViewModel.swift; sourceTree = "<group>"; };
@@ -181,6 +179,8 @@
 		E209C6572C35143300D9E3A2 /* ItemsSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsSectionView.swift; sourceTree = "<group>"; };
 		E209C6592C35147D00D9E3A2 /* ItemRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemRowView.swift; sourceTree = "<group>"; };
 		E209C65B2C35150900D9E3A2 /* PeopleSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleSectionView.swift; sourceTree = "<group>"; };
+		E20B0CD12C67CE0100624B44 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		E20B0CD32C697B0200624B44 /* SaveCheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveCheckView.swift; sourceTree = "<group>"; };
 		E20B1AED2C2D279E0059F0D3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E20EC6202BB60C5500223B19 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		E21466C02BAE72B2000A61DB /* billbreaker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = billbreaker.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -210,8 +210,6 @@
 		E26472222C584B2300B2DF11 /* ReceiptJSONDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptJSONDecoder.swift; sourceTree = "<group>"; };
 		E26472252C58983D00B2DF11 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		E26472282C58985B00B2DF11 /* TextRecognitionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextRecognitionService.swift; sourceTree = "<group>"; };
-		E264722C2C58A35800B2DF11 /* ProcessedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessedView.swift; sourceTree = "<group>"; };
-		E26472322C58A58D00B2DF11 /* CamProgRsltView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CamProgRsltView.swift; sourceTree = "<group>"; };
 		E27966022BC38F65000B0368 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		E27966042BC46D89000B0368 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		E27966062BC476BD000B0368 /* LegitP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegitP.swift; sourceTree = "<group>"; };
@@ -360,21 +358,19 @@
 				E2482FD92C46BE53008B18BF /* LoginSignUp */,
 				22EFCABD2C2D30E500E65601 /* BillDetails */,
 				E21466C32BAE72B2000A61DB /* billbreakerApp.swift */,
-				E20EC6202BB60C5500223B19 /* HomeView.swift */,
 				E279660C2BC49D83000B0368 /* WhichView.swift */,
+				E21C90652C464CAF008AD256 /* MainTabToolbar.swift */,
+				E219A3882C5D6D36003254D9 /* HomeCameraView.swift */,
+				E20EC6202BB60C5500223B19 /* HomeView.swift */,
 				E2B83BC62BEC11EF00A29D71 /* NewReceiptView.swift */,
 				E2A47A242C1A2FBC0023E29D /* JoinReceiptView.swift */,
 				E209C6572C35143300D9E3A2 /* ItemsSectionView.swift */,
 				E209C6592C35147D00D9E3A2 /* ItemRowView.swift */,
 				E209C65B2C35150900D9E3A2 /* PeopleSectionView.swift */,
-				E21C90632C46210D008AD256 /* SplashView.swift */,
-				E21C90652C464CAF008AD256 /* MainTabToolbar.swift */,
 				E2482FD32C465494008B18BF /* HomeToolBar.swift */,
-				E21AA1752C6409B500EF87C8 /* ReviewView.swift */,
 				E2482FD52C4654B7008B18BF /* ReceiptListView.swift */,
 				E2482FD72C46553A008B18BF /* ReceiptRowView.swift */,
-				E203B1402C500F9300D16732 /* ColorSchemes.swift */,
-				E219A3882C5D6D36003254D9 /* HomeCameraView.swift */,
+				E203B1402C500F9300D16732 /* FatCheckThemes.swift */,
 				E20B1AED2C2D279E0059F0D3 /* Info.plist */,
 				E206BCAC2C471B9F003E6C84 /* GoogleService-Info.plist */,
 				E2A47A282C1CFA520023E29D /* billbreaker.entitlements */,
@@ -427,6 +423,7 @@
 				E2A47A292C1E2D7D0023E29D /* LandingPageView.swift */,
 				E279660A2BC493CD000B0368 /* LoginView.swift */,
 				E27966022BC38F65000B0368 /* SignUpView.swift */,
+				E21C90632C46210D008AD256 /* SplashView.swift */,
 			);
 			path = LoginSignUp;
 			sourceTree = "<group>";
@@ -493,10 +490,10 @@
 				E26472222C584B2300B2DF11 /* ReceiptJSONDecoder.swift */,
 				E26472252C58983D00B2DF11 /* APIService.swift */,
 				E2DBA9C52C58478B000F3559 /* APIReceipt.swift */,
-				E264722C2C58A35800B2DF11 /* ProcessedView.swift */,
-				E26472322C58A58D00B2DF11 /* CamProgRsltView.swift */,
 				E21A559B2C6298A800A230AA /* ReceiptProcessor.swift */,
+				E21AA1752C6409B500EF87C8 /* ReviewView.swift */,
 				E21AA1772C64FEAE00EF87C8 /* AddPeopleView.swift */,
+				E20B0CD32C697B0200624B44 /* SaveCheckView.swift */,
 			);
 			path = ProcessingCheck;
 			sourceTree = "<group>";
@@ -539,6 +536,7 @@
 				E27966102BC4DA5E000B0368 /* ItemVIewModel.swift */,
 				E27966122BC4DADB000B0368 /* PersonViewModel.swift */,
 				E2092B822C2C826100A6B4EF /* ReceiptViewModel.swift */,
+				E20B0CD12C67CE0100624B44 /* HomeViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -782,7 +780,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E264722D2C58A35800B2DF11 /* ProcessedView.swift in Sources */,
 				E26472202C5849E600B2DF11 /* APIReceipt.swift in Sources */,
 				E2DDFBF82BB1E7A500BAD5AC /* DataModel.swift in Sources */,
 				E20EC6212BB60C5500223B19 /* HomeView.swift in Sources */,
@@ -791,7 +788,6 @@
 				E2409E222BED9B7B00A5940D /* AppDelegate.swift in Sources */,
 				E219A38E2C5ECCE3003254D9 /* ProfileButton.swift in Sources */,
 				E2DDFC042BB1E7E600BAD5AC /* PhotoLibrary.swift in Sources */,
-				E26472332C58A58D00B2DF11 /* CamProgRsltView.swift in Sources */,
 				E2DDFBF42BB1E77300BAD5AC /* Camera.swift in Sources */,
 				E206BCAF2C479382003E6C84 /* Router.swift in Sources */,
 				E2DDFBF62BB1E79900BAD5AC /* CameraView.swift in Sources */,
@@ -799,7 +795,7 @@
 				E27966112BC4DA5E000B0368 /* ItemVIewModel.swift in Sources */,
 				E27966052BC46D89000B0368 /* UserViewModel.swift in Sources */,
 				E2092B832C2C826200A6B4EF /* ReceiptViewModel.swift in Sources */,
-				E203B1412C500F9300D16732 /* ColorSchemes.swift in Sources */,
+				E203B1412C500F9300D16732 /* FatCheckThemes.swift in Sources */,
 				E2DDFBFA2BB1E7B600BAD5AC /* PhotoAsset.swift in Sources */,
 				E26472232C584B2300B2DF11 /* ReceiptJSONDecoder.swift in Sources */,
 				E21AA1782C64FEAE00EF87C8 /* AddPeopleView.swift in Sources */,
@@ -823,8 +819,10 @@
 				E203B13F2C5000CA00D16732 /* ShareButton.swift in Sources */,
 				E27966072BC476BD000B0368 /* LegitP.swift in Sources */,
 				E2DDFC062BB1E7ED00BAD5AC /* PhotoView.swift in Sources */,
+				E20B0CD42C697B0200624B44 /* SaveCheckView.swift in Sources */,
 				E26472262C58983D00B2DF11 /* APIService.swift in Sources */,
 				E2DDFBF22BB1E74A00BAD5AC /* CachedImageManager.swift in Sources */,
+				E20B0CD22C67CE0100624B44 /* HomeViewModel.swift in Sources */,
 				E2DDFBFC2BB1E7C000BAD5AC /* PhotoAssetCollection.swift in Sources */,
 				E2A47A252C1A2FBC0023E29D /* JoinReceiptView.swift in Sources */,
 				E2482FD42C465494008B18BF /* HomeToolBar.swift in Sources */,
@@ -866,7 +864,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E26472372C58AA0C00B2DF11 /* Camera.swift in Sources */,
-				E264723E2C58AA3600B2DF11 /* ProcessedView.swift in Sources */,
 				E29D0EBA2C2555CA00D8DFF0 /* LegitP.swift in Sources */,
 				E264724A2C58AB3300B2DF11 /* CameraView.swift in Sources */,
 				E2B5D8212C25290E00403F9D /* ClipBillDetailView.swift in Sources */,
@@ -875,12 +872,11 @@
 				E26472392C58AA2000B2DF11 /* Receipt.swift in Sources */,
 				E26472432C58AB0800B2DF11 /* PhotoCollectionView.swift in Sources */,
 				E264723B2C58AA2800B2DF11 /* TextRecognitionService.swift in Sources */,
-				E203B1422C500F9300D16732 /* ColorSchemes.swift in Sources */,
+				E203B1422C500F9300D16732 /* FatCheckThemes.swift in Sources */,
 				E29D0EBB2C2555DD00D8DFF0 /* Item.swift in Sources */,
 				E2E2680C2C29DA83009AE6EB /* User.swift in Sources */,
 				E2B5D7F32C25185400403F9D /* billbreakerAppClipApp.swift in Sources */,
 				E26472482C58AB1900B2DF11 /* ViewfinderView.swift in Sources */,
-				E264723C2C58AA2B00B2DF11 /* CamProgRsltView.swift in Sources */,
 				E264723A2C58AA2500B2DF11 /* APIService.swift in Sources */,
 				E26472382C58AA1000B2DF11 /* ReceiptJSONDecoder.swift in Sources */,
 				E26472402C58AAFC00B2DF11 /* PhotoAsset.swift in Sources */,
