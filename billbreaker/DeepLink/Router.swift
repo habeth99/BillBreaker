@@ -19,17 +19,32 @@ class Router: ObservableObject {
     func navigateToMainTab(_ tab: MainTabRoute) {
         path.append(AppRoute.mainTab(tab))
     }
+    
+    func navigateToItemsScanView(_ tab: ScanRoute) {
+        path.append(AppRoute.scan(tab))
+    }
+    
+    func reset() {
+        path.removeLast(path.count)
+    }
 }
 
 enum AppRoute: Hashable {
     case mainTab(MainTabRoute)
     case receipt(ReceiptRoute)
+    case scan(ScanRoute)
 }
 
 enum MainTabRoute: Hashable {
     case home
     case importPhoto
     case settings
+}
+
+enum ScanRoute: Hashable {
+    case items
+    case people
+    case review
 }
 
 enum ReceiptRoute: Hashable {

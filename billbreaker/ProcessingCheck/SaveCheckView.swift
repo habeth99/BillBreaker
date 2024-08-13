@@ -9,8 +9,9 @@ import Foundation
 import SwiftUI
 
 struct SaveCheckView: View {
-    @Binding var isPresented: Bool
-    let onDismiss: () -> Void
+    //@Binding var isPresented: Bool
+    //let onDismiss: () -> Void
+    @EnvironmentObject var router: Router
     var transformer: ReceiptProcessor
     @State private var isSaving = false
     @State private var showAlert = false
@@ -21,7 +22,7 @@ struct SaveCheckView: View {
             FatCheckTheme.Colors.accentColor
                 .ignoresSafeArea()
             VStack {
-                topButtons
+                //topButtons
                 ScrollView {
                     VStack(spacing: 10) {
                         // ForEach to show items
@@ -41,14 +42,6 @@ struct SaveCheckView: View {
                         Text("Dinner Guests")
                             .frame(maxWidth: .infinity, alignment: .leading)
                         ForEach(Array(transformer.receipt.people!.enumerated()), id: \.offset) { index, person in
-//                            HStack {
-//                                Text(item.name)
-//                                Spacer()
-//                                Text("$\(item.price, specifier: "%.2f")")
-//                            }
-//                            .padding()
-//                            .background(Color.white)
-//                            .cornerRadius(8)
                             Text(person.name)
                                 .padding()
                                 .frame(maxWidth: .infinity)
@@ -57,6 +50,8 @@ struct SaveCheckView: View {
                         }
                     }
                 }
+                .navigationBarTitle("Review", displayMode: .inline)
+                
                 Spacer()
                 // Button to save
                 saveButton
@@ -78,23 +73,6 @@ struct SaveCheckView: View {
                 }
             }
         )
-    }
-    
-    private var topButtons: some View {
-        HStack {
-            Button(action: onDismiss) {
-                Text("Back")
-                    .foregroundColor(.black)
-            }
-            Spacer()
-            Text(transformer.receipt.name)
-            Spacer()
-            Button(action: save) {
-                Text("Save")
-                    .foregroundColor(.black)
-            }
-        }
-        .padding(.vertical)
     }
     
     private var cancelButton: some View {
@@ -121,7 +99,7 @@ struct SaveCheckView: View {
     }
     
     private func cancel() {
-        isPresented = false
+        router.reset()
     }
     
     private func save() {
@@ -133,7 +111,7 @@ struct SaveCheckView: View {
                 if success {
                     alertMessage = "Receipt saved successfully!"
                     showAlert = true
-                    isPresented = false
+                    //change this to go to the receipt details view
                 } else {
                     alertMessage = "Failed to save receipt. Please try again."
                     showAlert = true

@@ -21,6 +21,12 @@ final class DataModel: ObservableObject {
     @Published var processedReceipt = APIReceipt()
     @Published var isProcessing: Bool = false
     @Published var isProcessingComplete: Bool = false
+    
+    //possible percent based progress bar solution
+ //   @Published var percent: Double = 0.00
+    @Published var processingTime: TimeInterval = 0
+    private var processingStartTime: Date?
+    private var processingTimer: Timer?
 
     
     init() {
@@ -54,14 +60,94 @@ final class DataModel: ObservableObject {
         }
     }
 
-    @MainActor
+//    @MainActor
+//    func processPhoto(imageData: Data) async {
+//        isProcessing = true
+//        isProcessingComplete = false // Reset at the start of processing
+//        
+//        defer {
+//            isProcessing = false
+//            isProcessingComplete = true // Set to true when processing is complete, even if there's an error
+//        }
+//        
+//        do {
+//            let recognizedText = try await withCheckedThrowingContinuation { continuation in
+//                TextRecognitionService.shared.performTextRecognition(imageData: imageData) { result in
+//                    continuation.resume(returning: result)
+//                }
+//            }
+//            self.recognizedText = recognizedText
+//            logger.debug("Recognized text: \(recognizedText)")
+//            
+//            let processedReceipt = try await apiService.sendExtractedTextToAPI(extractedText: recognizedText)
+//            self.processedReceipt = processedReceipt
+//            print("Processed Receipt: \(processedReceipt)")
+//        } catch {
+//            logger.error("Error processing photo: \(error.localizedDescription)")
+//            self.processedReceipt = APIReceipt() // Clear any previous receipt in case of error
+//        }
+//    }
+//    func processPhoto(imageData: Data) async {
+//        isProcessing = true
+//        isProcessingComplete = false
+//        processingStartTime = Date()
+//        
+//        // Start a timer to update processing time
+//        DispatchQueue.main.async {
+//            self.processingTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
+//                guard let self = self, let startTime = self.processingStartTime else { return }
+//                self.processingTime = Date().timeIntervalSince(startTime)
+//            }
+//        }
+//        
+//        defer {
+//            DispatchQueue.main.async {
+//                self.isProcessing = false
+//                self.isProcessingComplete = true
+//                self.processingTimer?.invalidate()
+//                self.processingTimer = nil
+//            }
+//        }
+//        
+//        do {
+//            let recognizedText = try await withCheckedThrowingContinuation { continuation in
+//                TextRecognitionService.shared.performTextRecognition(imageData: imageData) { result in
+//                    continuation.resume(returning: result)
+//                }
+//            }
+//            self.recognizedText = recognizedText
+//            logger.debug("Recognized text: \(recognizedText)")
+//            
+//            let processedReceipt = try await apiService.sendExtractedTextToAPI(extractedText: recognizedText)
+//            self.processedReceipt = processedReceipt
+//            print("Processed Receipt: \(processedReceipt)")
+//        } catch {
+//            logger.error("Error processing photo: \(error.localizedDescription)")
+//            self.processedReceipt = APIReceipt() // Clear any previous receipt in case of error
+//        }
+//    }
     func processPhoto(imageData: Data) async {
-        isProcessing = true
-        isProcessingComplete = false // Reset at the start of processing
+        await MainActor.run {
+            isProcessing = true
+            isProcessingComplete = false
+            processingStartTime = Date()
+        }
+        
+        // Start a timer to update processing time
+        await MainActor.run {
+            self.processingTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
+                guard let self = self, let startTime = self.processingStartTime else { return }
+                self.processingTime = Date().timeIntervalSince(startTime)
+            }
+        }
         
         defer {
-            isProcessing = false
-            isProcessingComplete = true // Set to true when processing is complete, even if there's an error
+            Task { @MainActor in
+                self.isProcessing = false
+                self.isProcessingComplete = true
+                self.processingTimer?.invalidate()
+                self.processingTimer = nil
+            }
         }
         
         do {
@@ -77,10 +163,13 @@ final class DataModel: ObservableObject {
             self.processedReceipt = processedReceipt
             print("Processed Receipt: \(processedReceipt)")
         } catch {
-            logger.error("Error processing photo: \(error.localizedDescription)")
-            self.processedReceipt = APIReceipt() // Clear any previous receipt in case of error
+            await MainActor.run {
+                logger.error("Error processing photo: \(error.localizedDescription)")
+                self.processedReceipt = APIReceipt() // Clear any previous receipt in case of error
+            }
         }
     }
+    
     
     func importPhoto(image: UIImage) {
         guard let imageData = image.jpegData(compressionQuality: 0.8) else {

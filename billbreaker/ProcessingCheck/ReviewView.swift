@@ -11,26 +11,25 @@ import SwiftUI
 struct ReviewView: View {
     var receipt: Receipt
     @ObservedObject var transformer: ReceiptProcessor
+    @EnvironmentObject var router: Router
     @State private var showingAddPeopleView = false
     @State private var isSaving = false
     @State private var showAlert = false
     @State private var alertMessage = ""
     @Environment(\.presentationMode) var presentationMode
-    @Binding var isPresented: Bool
+    @State private var showingAddItem = false
     
     var body: some View {
-        NavigationView {
+        ZStack{
             ScrollView {
                 VStack {
-                    Text(receipt.name)
+                    Text(transformer.receipt.name)
                         .font(.title)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.vertical)
                     Text("Items")
                         .font(.title3)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.vertical)
-                    ForEach(Array(receipt.items!.enumerated()), id: \.offset) { index, item in
+                    ForEach(Array(transformer.receipt.items!.enumerated()), id: \.offset) { index, item in
                         HStack {
                             Text(item.name)
                             Spacer()
@@ -42,36 +41,34 @@ struct ReviewView: View {
                     }
                 }
                 .padding(.horizontal)
-                            Button(action: addItem) {
-                                Text("Add Item")
-                                    .frame(maxWidth: .infinity)
-                                    .font(.headline)
-                                    .foregroundColor(Color.white)
-                                    .padding()
-                                    .background(FatCheckTheme.Colors.primaryColor)
-                                    .cornerRadius(10)
-                            }
-                            .padding(.horizontal)
+                Button(action: addItem) {
+                    Text("Add Item")
+                        .frame(maxWidth: .infinity)
+                        .font(.headline)
+                        .foregroundColor(Color.white)
+                        .padding()
+                        .background(FatCheckTheme.Colors.primaryColor)
+                        .cornerRadius(10)
+                }
+                .padding(.horizontal)
             }
             .background(FatCheckTheme.Colors.accentColor)
             .navigationBarItems(
-                leading: Button("Cancel") {
-                    presentationMode.wrappedValue.dismiss()
-                },
                 trailing: Button("Next") {
-                    showingAddPeopleView = true
+                    router.navigateToItemsScanView(ScanRoute.people)
                 }
             )
-            .navigationBarTitle("Review Your Check", displayMode: .inline)
-            .accentColor(FatCheckTheme.Colors.secondaryColor)
+            .navigationBarTitle("Menu Items", displayMode: .inline)
+            .accentColor(.blue)
         }
-        .sheet(isPresented: $showingAddPeopleView) {
-            AddPeopleView(isPresented: $isPresented, onDismiss: { showingAddPeopleView = false }, transformer: transformer)
+        .sheet(isPresented: $showingAddItem) {
+            AddItemView(transformer: transformer, isPresented: $showingAddItem)
         }
     }
     
     private func addItem() {
         //TODO
+        showingAddItem = true
     }
 }
 

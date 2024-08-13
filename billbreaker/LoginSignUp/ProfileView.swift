@@ -14,10 +14,11 @@ struct SettingsView: View {
 
     
     var body: some View {
-        Group { 
+        Group {
+            
             if let user = viewModel.currentUser {
                 List {
-                    Section {
+                    Section("Profile") {
                         HStack {
                             VStack(alignment: .leading, spacing: 4) {
                                 Text(user.name)
@@ -30,15 +31,26 @@ struct SettingsView: View {
                             }
                         }
                     }
+                    Section {
+                        VStack{
+                            SettingsRowView(imageName: "dollarsign.circle.fill", title: "Venmo: ", tintColor: .blue, descr: viewModel.currentUser?.venmoHandle ?? "")
+                        }
+                    }
                     
-                    Section("Account") {
+                    Section {
+                        VStack{
+                            SettingsRowView(imageName: "dollarsign.circle.fill", title: "CashApp: ", tintColor: .green, descr: viewModel.currentUser?.cashAppHandle ?? "")
+                        }
+                    }
+                    
+                    Section{
                         VStack{
                             Button(action: {
                                 Task{
                                     await viewModel.signOut()
                                 }
                             }) {
-                                SettingsRowView(imageName: "arrow.left.circle.fill", title: "Sign Out", tintColor: .red)
+                                SettingsRowView(imageName: "arrow.left.circle.fill", title: "Sign Out", tintColor: .red, descr: "")
                             }
                         }
                     }
@@ -64,14 +76,18 @@ struct SettingsRowView: View {
     let imageName: String
     let title: String
     let tintColor: Color
+    let descr: String
     
     var body: some View {
-        HStack(spacing: 12){
+        HStack {
             Image(systemName: imageName)
                 .imageScale(.small)
                 .font(.title)
                 .foregroundColor(tintColor)
             Text(title)
+                .font(.subheadline)
+                .foregroundColor(.black)
+            Text(descr)
                 .font(.subheadline)
                 .foregroundColor(.black)
         }

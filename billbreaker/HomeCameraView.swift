@@ -18,6 +18,7 @@ struct HomeCameraView: View {
     @StateObject var rviewModel = ReceiptViewModel()
     @StateObject var transformer = ReceiptProcessor()
     @State private var isFlashing = false
+    @State private var showingProgress = false
     
 //    init() {
 //        self._rviewModel = StateObject(wrappedValue: ReceiptViewModel())
@@ -37,7 +38,6 @@ struct HomeCameraView: View {
                 VStack {
                     Spacer()
                     Button(action: {
-//                        model.camera.takePhoto()
                         takePhotoWithFlash()
                     }) {
                         Circle()
@@ -47,6 +47,10 @@ struct HomeCameraView: View {
                     MainTabToolbar(model: model, selectedPhotoData: $selectedPhotoData)
                 }
                 .padding()
+                
+                if showingProgress {
+                    ProgressBarView()
+                }
             }
             .navigationDestination(for: AppRoute.self) { route in
                 switch route {
@@ -63,24 +67,31 @@ struct HomeCameraView: View {
                     case .details(let receiptId):
                         BillDetailsView(rviewModel: rviewModel, receiptId: receiptId)
                     }
+                // new code
+                case .scan(let scanRoute):
+                    switch scanRoute {
+                    case .items:
+                        ReviewView(receipt: transformer.receipt, transformer: transformer)
+                    case .people:
+                        AddPeopleView(transformer: transformer)
+                    case .review:
+                        SaveCheckView(transformer: transformer)
+                    }
                     
                 }
             }
         }
-//        .background(FatCheckTheme.Colors.accentColor)
-//        .tint(FatCheckTheme.Colors.accentColor)
         .edgesIgnoringSafeArea(.all)
         .task {
             await model.camera.start()
             await model.loadPhotos()
             await model.loadThumbnail()
         }
-        .sheet(isPresented: $showingReceiptDetail) {
-            ReviewView(receipt: transformer.receipt, transformer: transformer, isPresented: $showingReceiptDetail)
-        }
         .onChange(of: model.isProcessingComplete) { completed in
             if completed {
-                showingReceiptDetail = true
+                //showingReceiptDetail = true
+                router.navigateToItemsScanView(ScanRoute.items)
+                //showingProcessingTime = true
                 Task{ @MainActor in
 //                    await transformReceipt()
                     await transformer.transformReceipt(apiReceipt: model.processedReceipt)
@@ -97,6 +108,11 @@ struct HomeCameraView: View {
                 }
             }
         }
+        .onChange(of: model.isProcessing) { newValue in
+            showingProgress = newValue
+        }
+
+        
     }
     
     func transformReceipt() async {

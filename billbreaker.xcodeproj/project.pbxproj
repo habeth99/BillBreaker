@@ -22,6 +22,9 @@
 		E209C65C2C35150900D9E3A2 /* PeopleSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E209C65B2C35150900D9E3A2 /* PeopleSectionView.swift */; };
 		E20B0CD22C67CE0100624B44 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20B0CD12C67CE0100624B44 /* HomeViewModel.swift */; };
 		E20B0CD42C697B0200624B44 /* SaveCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20B0CD32C697B0200624B44 /* SaveCheckView.swift */; };
+		E20B0CD62C6A78F000624B44 /* ProgressBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20B0CD52C6A78F000624B44 /* ProgressBarView.swift */; };
+		E20B0CD82C6A978400624B44 /* AddItemBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20B0CD72C6A978400624B44 /* AddItemBox.swift */; };
+		E20B0CDA2C6C117800624B44 /* AddItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20B0CD92C6C117800624B44 /* AddItemView.swift */; };
 		E20EC6192BB3D96500223B19 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = E20EC6182BB3D96500223B19 /* FirebaseAuth */; };
 		E20EC61B2BB3D96500223B19 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = E20EC61A2BB3D96500223B19 /* FirebaseFirestore */; };
 		E20EC61D2BB3D96500223B19 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E20EC61C2BB3D96500223B19 /* FirebaseFirestoreSwift */; };
@@ -181,6 +184,9 @@
 		E209C65B2C35150900D9E3A2 /* PeopleSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleSectionView.swift; sourceTree = "<group>"; };
 		E20B0CD12C67CE0100624B44 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		E20B0CD32C697B0200624B44 /* SaveCheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveCheckView.swift; sourceTree = "<group>"; };
+		E20B0CD52C6A78F000624B44 /* ProgressBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBarView.swift; sourceTree = "<group>"; };
+		E20B0CD72C6A978400624B44 /* AddItemBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItemBox.swift; sourceTree = "<group>"; };
+		E20B0CD92C6C117800624B44 /* AddItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItemView.swift; sourceTree = "<group>"; };
 		E20B1AED2C2D279E0059F0D3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E20EC6202BB60C5500223B19 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		E21466C02BAE72B2000A61DB /* billbreaker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = billbreaker.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -315,6 +321,7 @@
 				E209C6552C34F3C300D9E3A2 /* BillDetails.swift */,
 				E24A2AF52C385E9700273673 /* CustomHeaderView.swift */,
 				E203B13E2C5000CA00D16732 /* ShareButton.swift */,
+				E20B0CD72C6A978400624B44 /* AddItemBox.swift */,
 			);
 			path = BillDetails;
 			sourceTree = "<group>";
@@ -494,6 +501,8 @@
 				E21AA1752C6409B500EF87C8 /* ReviewView.swift */,
 				E21AA1772C64FEAE00EF87C8 /* AddPeopleView.swift */,
 				E20B0CD32C697B0200624B44 /* SaveCheckView.swift */,
+				E20B0CD52C6A78F000624B44 /* ProgressBarView.swift */,
+				E20B0CD92C6C117800624B44 /* AddItemView.swift */,
 			);
 			path = ProcessingCheck;
 			sourceTree = "<group>";
@@ -790,6 +799,7 @@
 				E2DDFC042BB1E7E600BAD5AC /* PhotoLibrary.swift in Sources */,
 				E2DDFBF42BB1E77300BAD5AC /* Camera.swift in Sources */,
 				E206BCAF2C479382003E6C84 /* Router.swift in Sources */,
+				E20B0CD82C6A978400624B44 /* AddItemBox.swift in Sources */,
 				E2DDFBF62BB1E79900BAD5AC /* CameraView.swift in Sources */,
 				E21A559C2C6298A800A230AA /* ReceiptProcessor.swift in Sources */,
 				E27966112BC4DA5E000B0368 /* ItemVIewModel.swift in Sources */,
@@ -822,6 +832,7 @@
 				E20B0CD42C697B0200624B44 /* SaveCheckView.swift in Sources */,
 				E26472262C58983D00B2DF11 /* APIService.swift in Sources */,
 				E2DDFBF22BB1E74A00BAD5AC /* CachedImageManager.swift in Sources */,
+				E20B0CDA2C6C117800624B44 /* AddItemView.swift in Sources */,
 				E20B0CD22C67CE0100624B44 /* HomeViewModel.swift in Sources */,
 				E2DDFBFC2BB1E7C000BAD5AC /* PhotoAssetCollection.swift in Sources */,
 				E2A47A252C1A2FBC0023E29D /* JoinReceiptView.swift in Sources */,
@@ -829,6 +840,7 @@
 				E24A2AF62C385E9700273673 /* CustomHeaderView.swift in Sources */,
 				E209C6582C35143300D9E3A2 /* ItemsSectionView.swift in Sources */,
 				E2D1F2A02BC0B18200B27278 /* Receipt.swift in Sources */,
+				E20B0CD62C6A78F000624B44 /* ProgressBarView.swift in Sources */,
 				E219A38C2C5ECCBC003254D9 /* ArchiveButton.swift in Sources */,
 				E26472292C58985B00B2DF11 /* TextRecognitionService.swift in Sources */,
 				E2DDFC082BB1E7F700BAD5AC /* ThumbnailView.swift in Sources */,
@@ -1224,6 +1236,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = billbreakerAppClip/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = billbreaker;
+				INFOPLIST_KEY_NSCameraUsageDescription = "allow camera access to scan check";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1257,6 +1270,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = billbreakerAppClip/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = billbreaker;
+				INFOPLIST_KEY_NSCameraUsageDescription = "allow camera access to scan check";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

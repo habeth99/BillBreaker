@@ -99,19 +99,50 @@ class ReceiptProcessor: ObservableObject {
         }
     }
     
+//    func createLegitPs(guests: [String]) {
+//        let colors: [Color] = [.red, .blue, .green, .orange, .yellow, .mint, .indigo, .purple, .pink]
+//
+//        self.receipt.people = guests.map { guestName in
+//            LegitP(
+//                id: "",
+//                name: guestName,
+//                userId: "",
+//                claims: [],
+//                paid: false,
+//                color: colors.randomElement() ?? .red
+//            )
+//        }
+//    }
     func createLegitPs(guests: [String]) {
-        let colors: [Color] = [.red, .blue, .green, .orange, .yellow, .gray, .purple, .pink]
+        var availableColors: [Color] = [.red, .blue, .green, .orange, .yellow, .gray, .purple, .pink]
         
-        self.receipt.people = guests.map { guestName in
-            LegitP(
+        self.receipt.people = guests.enumerated().map { index, guestName in
+            let color: Color
+            if index < availableColors.count {
+                // If we still have unique colors, choose one randomly
+                let randomIndex = Int.random(in: 0..<availableColors.count)
+                color = availableColors.remove(at: randomIndex)
+            } else {
+                // If we've used all colors, start over with the full list
+                availableColors = [.red, .blue, .green, .orange, .yellow, .gray, .purple, .pink]
+                let randomIndex = Int.random(in: 0..<availableColors.count)
+                color = availableColors.remove(at: randomIndex)
+            }
+            
+            return LegitP(
                 id: "",
                 name: guestName,
                 userId: "",
                 claims: [],
                 paid: false,
-                color: colors.randomElement() ?? .red
+                color: color
             )
         }
+    }
+    
+    func addItem(newItem: Item) {
+        self.receipt.items?.append(newItem)
+        objectWillChange.send()
     }
     
     func saveReceiptToUser(receiptId: String, completion: @escaping (Bool) -> Void) {
