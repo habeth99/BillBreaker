@@ -18,9 +18,9 @@ struct ProfileButton: View {
         Button(action: action) {
             VStack {
                 Image(systemName: imageName)
-                    .foregroundColor(.white)
+                    .foregroundColor(.black)
                 Text(text)
-                    .foregroundColor(.white)
+                    .foregroundColor(.black)
             }
         }
     }

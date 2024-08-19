@@ -26,6 +26,7 @@ class ReceiptViewModel: ObservableObject {
     var userID: String?
     //var userViewModel: UserViewModel
     @Published private(set) var isLoaded = false
+    @Published var hasAttemptedFetch: Bool = false
     
     private var dbRef = Database.database().reference()
     private var cancellables = Set<AnyCancellable>()
@@ -96,6 +97,10 @@ class ReceiptViewModel: ObservableObject {
             }
         }
 
+        await MainActor.run {
+            self.receiptList = fetchedReceipts
+            self.hasAttemptedFetch = true
+        }
         self.receiptList = fetchedReceipts
         print("All receipts fetched: \(self.receiptList)")
         

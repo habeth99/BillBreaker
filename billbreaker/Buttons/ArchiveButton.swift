@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct ArchiveButton: View {
+struct HomeButton: View {
     let imageName: String
     let text: String
     let isSelected = false
@@ -18,9 +18,9 @@ struct ArchiveButton: View {
         Button(action: action) {
             VStack {
                 Image(systemName: imageName)
-                    .foregroundColor(.white)
+                    .foregroundColor(.black)
                 Text(text)
-                    .foregroundColor(.white)
+                    .foregroundColor(.black)
             }
             .padding(.trailing)
         }

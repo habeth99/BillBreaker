@@ -10,6 +10,8 @@
 		22EFCABF2C2D314F00E65601 /* BillDetailsPersonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EFCABE2C2D314F00E65601 /* BillDetailsPersonView.swift */; };
 		22EFCAC02C2D326600E65601 /* BillDetailsPersonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EFCABE2C2D314F00E65601 /* BillDetailsPersonView.swift */; };
 		E2019F062C714BE100094448 /* AddButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2019F052C714BE100094448 /* AddButton.swift */; };
+		E2019F082C73ACF200094448 /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2019F072C73ACF200094448 /* EmptyStateView.swift */; };
+		E2019F0A2C73BFF900094448 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2019F092C73BFF900094448 /* MainTabView.swift */; };
 		E203B13F2C5000CA00D16732 /* ShareButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E203B13E2C5000CA00D16732 /* ShareButton.swift */; };
 		E203B1412C500F9300D16732 /* FatCheckThemes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E203B1402C500F9300D16732 /* FatCheckThemes.swift */; };
 		E203B1422C500F9300D16732 /* FatCheckThemes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E203B1402C500F9300D16732 /* FatCheckThemes.swift */; };
@@ -172,6 +174,8 @@
 /* Begin PBXFileReference section */
 		22EFCABE2C2D314F00E65601 /* BillDetailsPersonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillDetailsPersonView.swift; sourceTree = "<group>"; };
 		E2019F052C714BE100094448 /* AddButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddButton.swift; sourceTree = "<group>"; };
+		E2019F072C73ACF200094448 /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
+		E2019F092C73BFF900094448 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		E203B13E2C5000CA00D16732 /* ShareButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareButton.swift; sourceTree = "<group>"; };
 		E203B1402C500F9300D16732 /* FatCheckThemes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FatCheckThemes.swift; sourceTree = "<group>"; };
 		E206BCAC2C471B9F003E6C84 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -371,12 +375,14 @@
 				E20EC6202BB60C5500223B19 /* HomeView.swift */,
 				E2B83BC62BEC11EF00A29D71 /* NewReceiptView.swift */,
 				E209C65B2C35150900D9E3A2 /* PeopleSectionView.swift */,
+				E2019F072C73ACF200094448 /* EmptyStateView.swift */,
 				E203B1402C500F9300D16732 /* FatCheckThemes.swift */,
 				E20B1AED2C2D279E0059F0D3 /* Info.plist */,
 				E206BCAC2C471B9F003E6C84 /* GoogleService-Info.plist */,
 				E2A47A282C1CFA520023E29D /* billbreaker.entitlements */,
 				E21466C72BAE72B6000A61DB /* Assets.xcassets */,
 				E21466C92BAE72B6000A61DB /* Preview Content */,
+				E2019F092C73BFF900094448 /* MainTabView.swift */,
 			);
 			path = billbreaker;
 			sourceTree = "<group>";
@@ -786,8 +792,10 @@
 				E26472202C5849E600B2DF11 /* APIReceipt.swift in Sources */,
 				E2DDFBF82BB1E7A500BAD5AC /* DataModel.swift in Sources */,
 				E20EC6212BB60C5500223B19 /* HomeView.swift in Sources */,
+				E2019F0A2C73BFF900094448 /* MainTabView.swift in Sources */,
 				E209C6562C34F3C300D9E3A2 /* BillDetails.swift in Sources */,
 				E209C65C2C35150900D9E3A2 /* PeopleSectionView.swift in Sources */,
+				E2019F082C73ACF200094448 /* EmptyStateView.swift in Sources */,
 				E2409E222BED9B7B00A5940D /* AppDelegate.swift in Sources */,
 				E219A38E2C5ECCE3003254D9 /* ProfileButton.swift in Sources */,
 				E20B0CDC2C6D19EF00624B44 /* CheckCardView.swift in Sources */,

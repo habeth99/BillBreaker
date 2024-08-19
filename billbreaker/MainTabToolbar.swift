@@ -12,20 +12,20 @@ import PhotosUI
 struct MainTabToolbar: View {
     @EnvironmentObject var router: Router
     @EnvironmentObject var viewModel: UserViewModel
-    @ObservedObject var model: DataModel
+//    @ObservedObject var model: DataModel
     @Binding var selectedPhotoData: PhotosPickerItem?
 
     var body: some View {
         HStack {
-            ImportButton(
-                imageName: "plus",
-                text: "Import",
-                selectedPhotoData: $selectedPhotoData
-            ){
-                //router.navigate(to: .importPhoto)
-            }
+//            ImportButton(
+//                imageName: "plus",
+//                text: "Import",
+//                selectedPhotoData: $selectedPhotoData
+//            ){
+//                //router.navigate(to: .importPhoto)
+//            }
 
-            ArchiveButton(imageName: "archivebox", text: "Archive") {
+            HomeButton(imageName: "house", text: "Home") {
                 router.navigateToMainTab(MainTabRoute.home)
             }
             
