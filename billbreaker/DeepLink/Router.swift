@@ -24,6 +24,10 @@ class Router: ObservableObject {
         path.append(AppRoute.scan(tab))
     }
     
+    func navBackToCamera() {
+        path.removeLast()
+    }
+    
     func reset() {
         path.removeLast(path.count)
     }

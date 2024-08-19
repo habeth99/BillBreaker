@@ -10,31 +10,31 @@ import SwiftUI
 
 struct AddButton: View {
     let action: () -> Void
-    var label: String = "Add Item"
+    //var label: String = "Add Item"
     
     var body: some View {
-        HStack {
-            Spacer() // This pushes the content to the trailing edge
+        VStack {
+            Spacer()
             
-            VStack {
-                Button(action: action) {
-                    Image(systemName: "plus")
-                        .font(.system(size: 24))
-                        .foregroundColor(.blue)
-                        .frame(width: 64, height: 64)
-                        .background(Color.white)
-                        .clipShape(Circle())
-                        .shadow(radius: 4)
-                }
-                .buttonStyle(PlainButtonStyle())
+            HStack {
+                Spacer() // This pushes the content to the trailing edge
                 
-                Text(label)
-                    .font(.caption)
-                    .foregroundColor(.blue)
-                    .padding(.top, 8)
+                VStack {
+                    Button(action: action) {
+                        Image(systemName: "plus")
+                            .font(.system(size: 24))
+                            .foregroundColor(.blue)
+                            .frame(width: 64, height: 64)
+                            .background(Color.white)
+                            .clipShape(Circle())
+                            .shadow(radius: 4)
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                    
+                }
             }
+            .padding() // Add padding to the HStack to prevent the button from touching the edge
         }
-        .padding() // Add padding to the HStack to prevent the button from touching the edge
     }
 }
 

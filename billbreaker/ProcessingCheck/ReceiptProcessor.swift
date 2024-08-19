@@ -136,20 +136,6 @@ class ReceiptProcessor: ObservableObject {
         }
     }
     
-//    func createLegitPs(guests: [String]) {
-//        let colors: [Color] = [.red, .blue, .green, .orange, .yellow, .mint, .indigo, .purple, .pink]
-//
-//        self.receipt.people = guests.map { guestName in
-//            LegitP(
-//                id: "",
-//                name: guestName,
-//                userId: "",
-//                claims: [],
-//                paid: false,
-//                color: colors.randomElement() ?? .red
-//            )
-//        }
-//    }
     func createLegitPs(guests: [String]) {
         var availableColors: [Color] = [.red, .blue, .green, .orange, .yellow, .gray, .purple, .pink]
         
@@ -184,20 +170,6 @@ class ReceiptProcessor: ObservableObject {
         objectWillChange.send()
     }
     
-//    func updateItem(_ updatedItem: Item) {
-//        if var items = receipt.items {
-//            if let index = items.firstIndex(where: { $0.id == updatedItem.id }) {
-//                items[index] = updatedItem
-//                receipt.items = items
-//                
-//                // If you need to perform any additional logic or updates, do it here
-//                // For example, recalculating totals, updating database, etc.
-//                
-//                // Notify observers of the change
-//                objectWillChange.send()
-//            }
-//        }
-//    }
     func updateItem(_ updatedItem: Item) {
         // Update the item in the receipt
         if let index = receipt.items?.firstIndex(where: { $0.id == updatedItem.id }) {

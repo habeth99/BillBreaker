@@ -12,8 +12,6 @@ struct ReviewView: View {
     @ObservedObject var transformer: ReceiptProcessor
     @EnvironmentObject var router: Router
     @State private var editingItemId: String? = nil
-    
-/*    private let backgroundColor = Color.blue.opacity(0.2)*/ // Adjust opacity as needed for desired shade
 
     var body: some View {
         ZStack {
@@ -36,14 +34,13 @@ struct ReviewView: View {
                 }
                 .listStyle(PlainListStyle())
                 .padding(FatCheckTheme.Spacing.sm)
-                //.cornerRadius(FatCheckTheme.Spacing.md)
-                
-                AddButton(action: {
-                    // add new item to receipt.items and leave it blank
-                    transformer.addItem(newItem: Item())
-                }, label: "Add Item")
             }
             .background(FatCheckTheme.Colors.accentColor)
+            
+            AddButton(action: {
+                transformer.addItem(newItem: Item())
+            })
+            
         }
         .navigationBarItems(
             trailing: Button("Next") {

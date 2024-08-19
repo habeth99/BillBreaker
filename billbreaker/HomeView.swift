@@ -15,7 +15,6 @@ struct HomeView: View {
     @State private var editing = false
     
     @ObservedObject var rviewModel: ReceiptViewModel
-    //@ObservedObject var hviewModel: HomeViewModel
     @EnvironmentObject var viewModel: UserViewModel
     @EnvironmentObject var router: Router
     @State private var cancellables = Set<AnyCancellable>()
@@ -27,29 +26,47 @@ struct HomeView: View {
     }
     
     var body: some View {
-        ReceiptListView(rviewModel: rviewModel)
-//            .background(FatCheckTheme.Colors.accentColor)
-            .foregroundColor(customLinkColor)
-            .navigationTitle("My Checks")
-            .toolbar {
-                HomeToolbar(
-                    onEdit: { editing = true },
-                    onJoin: { showingJoinSheet = true },
-                    onAdd: { showingNewReceiptSheet = true }
-                )
+        ZStack {
+            if rviewModel.receiptList.isEmpty {
+                EmptyStateView()
+            } else {
+                ReceiptListView(rviewModel: rviewModel)
+                    .foregroundColor(customLinkColor)
             }
-            .sheet(isPresented: $showingNewReceiptSheet) {
-                NewReceiptView(isPresented: $showingNewReceiptSheet, rviewModel: ReceiptViewModel())
+            
+            AddButton(action: {
+                router.navBackToCamera()
+            })
+        }
+        .navigationTitle("My Checks")
+        .sheet(isPresented: $showingNewReceiptSheet) {
+            NewReceiptView(isPresented: $showingNewReceiptSheet, rviewModel: ReceiptViewModel())
+        }
+        .onAppear {
+            print("Homeview appears")
+            Task {
+                await rviewModel.fetchUserReceipts()
             }
-            .sheet(isPresented: $showingJoinSheet) {
-                JoinReceiptView(isPresented: $showingJoinSheet, rviewModel: rviewModel)
-            }
-            .onAppear {
-                print("Homeview appears")
-                Task {
-                    await rviewModel.fetchUserReceipts()
-                }
-            }
+        }
+    }
+}
+
+struct EmptyStateView: View {
+    var body: some View {
+        VStack(spacing: 20) {
+            Image(systemName: "fork.knife.circle.fill")
+                .font(.system(size: 60))
+            
+            Text("No Checks")
+                .font(.title)
+                .fontWeight(.bold)
+            
+            Text("Your history of fatchecks will be shown here.")
+                .font(.subheadline)
+                .foregroundColor(.gray)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal)
+        }
     }
 }
 
