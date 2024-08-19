@@ -71,7 +71,7 @@ struct HomeCameraView: View {
                 case .scan(let scanRoute):
                     switch scanRoute {
                     case .items:
-                        ReviewView(receipt: transformer.receipt, transformer: transformer)
+                        ReviewView(transformer: transformer)
                     case .people:
                         AddPeopleView(transformer: transformer)
                     case .review:
@@ -97,6 +97,7 @@ struct HomeCameraView: View {
                     await transformer.transformReceipt(apiReceipt: model.processedReceipt)
                     model.isProcessingComplete = false // Reset for next use
                 }
+                
             }
         }
         .onChange(of: selectedPhotoData) { newValue in

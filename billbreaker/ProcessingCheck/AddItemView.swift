@@ -9,30 +9,30 @@ import Foundation
 import SwiftUI
 
 struct AddItemView: View {
-    @ObservedObject var transformer: ReceiptProcessor
-    @Binding var isPresented: Bool
-    @State private var itemName = ""
-    @State private var itemPrice = ""
+    @State var name = "jew"
+    @State var price = "1.00"
+    @State var isEditing = false
     
     var body: some View {
-        NavigationStack {
-            Form {
-                TextField("Item Name", text: $itemName)
-                TextField("Price", text: $itemPrice)
-                    .keyboardType(.decimalPad)
-                
-                Button("Add Item") {
-                    if let price = Double(itemPrice) {
-                        let newItem = Item(name: itemName, price: price)
-                        transformer.addItem(newItem: newItem)
-                        isPresented = false
-                    }
+        Button(action: {
+            isEditing.toggle()
+        }, label: {
+            if isEditing {
+                HStack{
+                    TextField("Name", text: $name)
+                    TextField("Price", text: $price)
                 }
             }
-            .navigationBarTitle("Add New Item", displayMode: .inline)
-            .navigationBarItems(trailing: Button("Cancel") {
-                isPresented = false
-            })
-        }
+            else {
+                HStack{
+                    Text(name)
+                    Text(price)
+                }
+            }
+        })
     }
+}
+
+#Preview {
+    AddItemView()
 }

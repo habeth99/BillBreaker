@@ -21,14 +21,51 @@ class ReceiptProcessor: ObservableObject {
 //        self.receipt = Receipt.from(apiReceipt: apiReceipt)
 //        receipt.userId = Receipt.getUserdId() ?? ""
 //    }
+//    @MainActor
+//    func transformReceipt(apiReceipt: APIReceipt) async {
+//        print("APIReceipt is: \(apiReceipt)")
+//        let transformedReceipt = Receipt.from(apiReceipt: apiReceipt)
+//        print("transformedReceipt is: \(transformedReceipt)")
+//        DispatchQueue.main.async {
+//            self.receipt = transformedReceipt
+//        }
+//    }
     @MainActor
     func transformReceipt(apiReceipt: APIReceipt) async {
         print("APIReceipt is: \(apiReceipt)")
-        let transformedReceipt = Receipt.from(apiReceipt: apiReceipt)
+        var transformedReceipt = Receipt.from(apiReceipt: apiReceipt)
+        
+        // Generate and assign receipt ID
+        let recId = createRecId()
+        transformedReceipt.id = recId
+        
+        // Generate and assign item IDs
+        for i in 0..<transformedReceipt.items!.count {
+            transformedReceipt.items![i].id = createItemId(receiptId: recId)
+        }
+        
+        // Generate and assign person IDs (if needed)
+//        for i in 0..<transformedReceipt.people!.count {
+//            transformedReceipt.people![i].id = createPersonId(receiptId: recId)
+//        }
+        
         print("transformedReceipt is: \(transformedReceipt)")
+        
         DispatchQueue.main.async {
             self.receipt = transformedReceipt
         }
+    }
+    
+    func createRecId() -> String {
+        return dbRef.child("receipts").childByAutoId().key ?? ""
+    }
+
+    func createItemId(receiptId: String) -> String {
+        return dbRef.child("receipts").child(receiptId).child("items").childByAutoId().key ?? ""
+    }
+
+    func createPersonId(receiptId: String) -> String {
+        return dbRef.child("receipts").child(receiptId).child("persons").childByAutoId().key ?? ""
     }
     
     func saveReceipt2(completion: @escaping (Bool) -> Void) {
@@ -141,7 +178,31 @@ class ReceiptProcessor: ObservableObject {
     }
     
     func addItem(newItem: Item) {
+
+        newItem.id = self.createItemId(receiptId: receipt.id)
         self.receipt.items?.append(newItem)
+        objectWillChange.send()
+    }
+    
+//    func updateItem(_ updatedItem: Item) {
+//        if var items = receipt.items {
+//            if let index = items.firstIndex(where: { $0.id == updatedItem.id }) {
+//                items[index] = updatedItem
+//                receipt.items = items
+//                
+//                // If you need to perform any additional logic or updates, do it here
+//                // For example, recalculating totals, updating database, etc.
+//                
+//                // Notify observers of the change
+//                objectWillChange.send()
+//            }
+//        }
+//    }
+    func updateItem(_ updatedItem: Item) {
+        // Update the item in the receipt
+        if let index = receipt.items?.firstIndex(where: { $0.id == updatedItem.id }) {
+            receipt.items?[index] = updatedItem
+        }
         objectWillChange.send()
     }
     

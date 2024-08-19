@@ -13,14 +13,17 @@ struct ReceiptListView: View {
     @EnvironmentObject var router: Router
     
     var body: some View {
+//        List(rviewModel.receiptList, id: \.id) { receipt in
+//            Button(action: {
+//                print("receipt tapped: \(receipt.id)")
+//                router.selectedId = receipt.id
+//                router.navigateToReceipt(id: receipt.id)
+//            }) {
+//                ReceiptRow(receipt: receipt)
+//            }
+//        }
         List(rviewModel.receiptList, id: \.id) { receipt in
-            Button(action: {
-                print("receipt tapped: \(receipt.id)")
-                router.selectedId = receipt.id
-                router.navigateToReceipt(id: receipt.id)
-            }) {
-                ReceiptRow(receipt: receipt)
-            }
+            CheckCard(receipt: receipt)
         }
     }
 }

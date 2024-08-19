@@ -7,6 +7,7 @@
 
 import Foundation
 import Firebase
+import SwiftUI
 
 class Receipt: Codable, Identifiable, ObservableObject, CustomStringConvertible {
     @Published var id: String
@@ -158,6 +159,27 @@ class Receipt: Codable, Identifiable, ObservableObject, CustomStringConvertible 
         }
         
         return total
+    }
+    
+//    func countClaimedItems() -> Double {
+//        let claimedItemsCount = items!.filter { !$0.claimedBy!.isEmpty }.count
+//        return Double(claimedItemsCount)
+//    }
+    func countClaimedItems() -> Double {
+        let allClaims = people!.compactMap { $0.claims }
+        let uniqueClaimedItems = Set(allClaims.flatMap { $0 })
+        return Double(uniqueClaimedItems.count)
+    }
+    
+    func countPaidFrnds() -> Double {
+        return Double(people?.filter { $0.paid }.count ?? 0)
+    }
+    
+    func formatDate() -> Date {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd" // Adjust this format to match your date string format
+        
+        return dateFormatter.date(from: self.date) ?? Date()
     }
     
     var description: String {

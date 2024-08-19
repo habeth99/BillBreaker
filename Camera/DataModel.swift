@@ -6,6 +6,8 @@ import AVFoundation
 import SwiftUI
 import os.log
 import Vision
+import Combine
+import CoreImage
 
 final class DataModel: ObservableObject {
     let camera = Camera()
@@ -14,20 +16,22 @@ final class DataModel: ObservableObject {
     private let apiService = APIService.shared
     private let textRecognitionService = TextRecognitionService.shared
     
-    @Published var viewfinderImage: Image?
+    //@Published var viewfinderImage: Image?
     @Published var thumbnailImage: Image?
     @Published var recognizedText: String = ""
     @Published var prices: [String] = []
     @Published var processedReceipt = APIReceipt()
     @Published var isProcessing: Bool = false
     @Published var isProcessingComplete: Bool = false
+    @Published var viewfinderImage: Image?
+    private var viewfinderCancellable: AnyCancellable?
+    private let context = CIContext()
     
     //possible percent based progress bar solution
  //   @Published var percent: Double = 0.00
     @Published var processingTime: TimeInterval = 0
     private var processingStartTime: Date?
     private var processingTimer: Timer?
-
     
     init() {
         Task {
@@ -38,13 +42,32 @@ final class DataModel: ObservableObject {
             await handleCameraPhotos()
         }
     }
+//    
+//    private func setupCameraPreviews() {
+//        viewfinderCancellable = camera.previewStream
+//            .map { $0.image }
+//            .receive(on: DispatchQueue.main)
+//            .sink { [weak self] image in
+//                self?.viewfinderImage = image
+//            }
+//    }
     
+//    func handleCameraPreviews() async {
+//        let imageStream = camera.previewStream
+//            .map { $0.image }
+//
+//        for await image in imageStream {
+//            Task { @MainActor in
+//                viewfinderImage = image
+//            }
+//        }
+//    }
     func handleCameraPreviews() async {
         let imageStream = camera.previewStream
             .map { $0.image }
 
         for await image in imageStream {
-            Task { @MainActor in
+            await MainActor.run {
                 viewfinderImage = image
             }
         }

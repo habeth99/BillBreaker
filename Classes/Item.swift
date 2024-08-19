@@ -62,4 +62,6 @@ class Item: Identifiable, Codable, ObservableObject, Hashable, CustomStringConve
     var description: String {
         return "Item(id: \(id), name: \(name), price: \(price), quantity: \(quantity ?? 0), claimedBy: \(claimedBy ?? []))"
     }
+    
+
 }

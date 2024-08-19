@@ -9,102 +9,119 @@ import Foundation
 import SwiftUI
 
 struct ReviewView: View {
-    var receipt: Receipt
     @ObservedObject var transformer: ReceiptProcessor
     @EnvironmentObject var router: Router
-    @State private var showingAddPeopleView = false
-    @State private var isSaving = false
-    @State private var showAlert = false
-    @State private var alertMessage = ""
-    @Environment(\.presentationMode) var presentationMode
-    @State private var showingAddItem = false
+    @State private var editingItemId: String? = nil
     
+/*    private let backgroundColor = Color.blue.opacity(0.2)*/ // Adjust opacity as needed for desired shade
+
     var body: some View {
-        ZStack{
-            ScrollView {
-                VStack {
-                    Text(transformer.receipt.name)
-                        .font(.title)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    Text("Items")
-                        .font(.title3)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    ForEach(Array(transformer.receipt.items!.enumerated()), id: \.offset) { index, item in
-                        HStack {
-                            Text(item.name)
-                            Spacer()
-                            Text("$\(item.price, specifier: "%.2f")")
-                        }
-                        .padding()
-                        .background(Color.white)
-                        .cornerRadius(8)
+        ZStack {
+            FatCheckTheme.Colors.accentColor.edgesIgnoringSafeArea(.all)
+            
+            VStack(spacing: 0) {
+                List {
+                    ForEach(transformer.receipt.items ?? [], id: \.id) { item in
+                        EditableItemView(
+                            item: item,
+                            isEditing: editingItemId == item.id,
+                            onEdit: { editingItemId = item.id },
+                            onEndEdit: { updatedItem in
+                                editingItemId = nil
+                                updateItem(updatedItem)
+                            }
+                        )
                     }
+                    .onDelete(perform: deleteItems)
                 }
-                .padding(.horizontal)
-                Button(action: addItem) {
-                    Text("Add Item")
-                        .frame(maxWidth: .infinity)
-                        .font(.headline)
-                        .foregroundColor(Color.white)
-                        .padding()
-                        .background(FatCheckTheme.Colors.primaryColor)
-                        .cornerRadius(10)
-                }
-                .padding(.horizontal)
+                .listStyle(PlainListStyle())
+                .padding(FatCheckTheme.Spacing.sm)
+                //.cornerRadius(FatCheckTheme.Spacing.md)
+                
+                AddButton(action: {
+                    // add new item to receipt.items and leave it blank
+                    transformer.addItem(newItem: Item())
+                }, label: "Add Item")
             }
             .background(FatCheckTheme.Colors.accentColor)
-            .navigationBarItems(
-                trailing: Button("Next") {
-                    router.navigateToItemsScanView(ScanRoute.people)
-                }
-            )
-            .navigationBarTitle("Menu Items", displayMode: .inline)
-            .accentColor(.blue)
         }
-        .sheet(isPresented: $showingAddItem) {
-            AddItemView(transformer: transformer, isPresented: $showingAddItem)
-        }
+        .navigationBarItems(
+            trailing: Button("Next") {
+                router.navigateToItemsScanView(ScanRoute.people)
+            }
+        )
+        .navigationBarTitle("Menu Items", displayMode: .inline)
+        .accentColor(.blue)
     }
-    
-    private func addItem() {
-        //TODO
-        showingAddItem = true
+
+    private func deleteItems(at offsets: IndexSet) {
+        transformer.receipt.items?.remove(atOffsets: offsets)
+    }
+
+    private func updateItem(_ updatedItem: Item) {
+        if let index = transformer.receipt.items?.firstIndex(where: { $0.id == updatedItem.id }) {
+            transformer.receipt.items?[index] = updatedItem
+        }
     }
 }
 
-//struct ReviewView_Previews: PreviewProvider {
-//    static var mockReceipt: Receipt {
-//        let items = [
-//            Item(id: "1", name: "Cappuccino", quantity: 1, price: 3.99),
-//            Item(id: "2", name: "Almond Croissant", quantity: 1, price: 2.50),
-//            Item(id: "3", name: "Avocado Toast", quantity: 1, price: 7.99),
-//            Item(id: "4", name: "Fresh Orange Juice", quantity: 1, price: 4.50)
-//        ]
-//        
-//        return Receipt(
-//            id: "preview123",
-//            userId: "user123",
-//            name: "Cafe Receipt",
-//            date: "2024-08-07",
-//            createdAt: "2024-08-07T10:30:00Z",
-//            tax: 1.50,
-//            tip: 3.00,
-//            items: items,
-//            people: [],
-//            restaurantName: "Sunny Side Cafe",
-//            restaurantAddress: "123 Main St, Anytown, USA",
-//            dateTime: "2024-08-07T10:30:00Z",
-//            subTotal: 18.98,
-//            total: 23.48,
-//            paymentMethod: "Credit Card",
-//            cardLastFour: "1234"
-//        )
-//
-//    }
-//    
-//    static var previews: some View {
-//        ReviewView(receipt: mockReceipt, transformer: ReceiptProcessor())
-//    }
-//}
 
+struct EditableItemView: View {
+    let item: Item
+    let isEditing: Bool
+    let onEdit: () -> Void
+    let onEndEdit: (Item) -> Void
+
+    var body: some View {
+        if isEditing {
+            EditingItemView(item: item, onEndEdit: onEndEdit)
+        } else {
+            DisplayItemView(item: item, onEdit: onEdit)
+        }
+    }
+}
+
+struct DisplayItemView: View {
+    let item: Item
+    let onEdit: () -> Void
+
+    var body: some View {
+        HStack {
+            Text(item.name)
+            Spacer()
+            Text(String(format: "%.2f", item.price))
+        }
+        .contentShape(Rectangle())
+        .onTapGesture(perform: onEdit)
+        .padding(.vertical, 8)
+    }
+}
+
+struct EditingItemView: View {
+    @State private var editedName: String
+    @State private var editedPrice: Double
+    let item: Item
+    let onEndEdit: (Item) -> Void
+
+    init(item: Item, onEndEdit: @escaping (Item) -> Void) {
+        self.item = item
+        self.onEndEdit = onEndEdit
+        _editedName = State(initialValue: item.name)
+        _editedPrice = State(initialValue: item.price)
+    }
+
+    var body: some View {
+        HStack {
+            TextField("Name", text: $editedName)
+            TextField("Price", value: $editedPrice, formatter: NumberFormatter())
+                .keyboardType(.decimalPad)
+        }
+        .textFieldStyle(RoundedBorderTextFieldStyle())
+        .padding(.vertical, 8)
+        .onDisappear {
+            let updatedItem = Item(id: item.id, name: editedName, price: editedPrice)
+            onEndEdit(updatedItem)
+        }
+    }
+}
 

@@ -101,13 +101,31 @@ import Foundation
 //    }
 //    
 //}
+//struct CameraView: View {
+//    @ObservedObject var model: DataModel
+//    
+//    var body: some View {
+//        ViewfinderView(image: $model.viewfinderImage)
+//            .background(.black)
+//            .ignoresSafeArea()
+//    }
+//}
 struct CameraView: View {
     @ObservedObject var model: DataModel
     
     var body: some View {
-        ViewfinderView(image: $model.viewfinderImage)
-            .background(.black)
-            .ignoresSafeArea()
+        GeometryReader { geometry in
+            if let image = model.viewfinderImage {
+                image
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: geometry.size.width, height: geometry.size.height)
+                    .clipped()
+            } else {
+                Color.black
+            }
+        }
+        .ignoresSafeArea()
     }
 }
 

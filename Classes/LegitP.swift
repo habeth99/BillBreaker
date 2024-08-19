@@ -85,4 +85,11 @@ class LegitP: Identifiable, ObservableObject, Codable {
         "purple": .purple,
         "pink": .pink
     ]
+    
+    func getFirstInitial() -> String {
+        guard let firstChar = name.first else {
+            return ""
+        }
+        return String(firstChar).uppercased()
+    }
 }
