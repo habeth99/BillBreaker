@@ -33,6 +33,15 @@
 		E20EC61B2BB3D96500223B19 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = E20EC61A2BB3D96500223B19 /* FirebaseFirestore */; };
 		E20EC61D2BB3D96500223B19 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E20EC61C2BB3D96500223B19 /* FirebaseFirestoreSwift */; };
 		E20EC6212BB60C5500223B19 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20EC6202BB60C5500223B19 /* HomeView.swift */; };
+		E21056DD2C75BA9800813084 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21056DC2C75BA9800813084 /* WelcomeView.swift */; };
+		E21056DF2C75BAC200813084 /* ProfileSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21056DE2C75BAC200813084 /* ProfileSetup.swift */; };
+		E21056E12C75BAEA00813084 /* DiningFrequency.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21056E02C75BAEA00813084 /* DiningFrequency.swift */; };
+		E21056E32C75BBE300813084 /* SplitMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21056E22C75BBE300813084 /* SplitMethod.swift */; };
+		E21056E52C75BBF700813084 /* HowMany.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21056E42C75BBF700813084 /* HowMany.swift */; };
+		E21056E72C75BC1600813084 /* SplittingFor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21056E62C75BC1600813084 /* SplittingFor.swift */; };
+		E21056E92C75BC3000813084 /* BigFrustration.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21056E82C75BC3000813084 /* BigFrustration.swift */; };
+		E21056EB2C75BC5D00813084 /* DefaultTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21056EA2C75BC5D00813084 /* DefaultTip.swift */; };
+		E21056ED2C75D41100813084 /* CongratsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21056EC2C75D41100813084 /* CongratsView.swift */; };
 		E21466C42BAE72B2000A61DB /* billbreakerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21466C32BAE72B2000A61DB /* billbreakerApp.swift */; };
 		E21466C82BAE72B6000A61DB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E21466C72BAE72B6000A61DB /* Assets.xcassets */; };
 		E21466CB2BAE72B6000A61DB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E21466CA2BAE72B6000A61DB /* Preview Assets.xcassets */; };
@@ -190,6 +199,15 @@
 		E20B0CDB2C6D19EF00624B44 /* CheckCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckCardView.swift; sourceTree = "<group>"; };
 		E20B1AED2C2D279E0059F0D3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E20EC6202BB60C5500223B19 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		E21056DC2C75BA9800813084 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
+		E21056DE2C75BAC200813084 /* ProfileSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSetup.swift; sourceTree = "<group>"; };
+		E21056E02C75BAEA00813084 /* DiningFrequency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningFrequency.swift; sourceTree = "<group>"; };
+		E21056E22C75BBE300813084 /* SplitMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitMethod.swift; sourceTree = "<group>"; };
+		E21056E42C75BBF700813084 /* HowMany.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowMany.swift; sourceTree = "<group>"; };
+		E21056E62C75BC1600813084 /* SplittingFor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplittingFor.swift; sourceTree = "<group>"; };
+		E21056E82C75BC3000813084 /* BigFrustration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigFrustration.swift; sourceTree = "<group>"; };
+		E21056EA2C75BC5D00813084 /* DefaultTip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTip.swift; sourceTree = "<group>"; };
+		E21056EC2C75D41100813084 /* CongratsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongratsView.swift; sourceTree = "<group>"; };
 		E21466C02BAE72B2000A61DB /* billbreaker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = billbreaker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E21466C32BAE72B2000A61DB /* billbreakerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = billbreakerApp.swift; sourceTree = "<group>"; };
 		E21466C72BAE72B6000A61DB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -323,6 +341,22 @@
 			path = BillDetails;
 			sourceTree = "<group>";
 		};
+		E21056DB2C75BA7900813084 /* OnBoarding */ = {
+			isa = PBXGroup;
+			children = (
+				E21056DC2C75BA9800813084 /* WelcomeView.swift */,
+				E21056DE2C75BAC200813084 /* ProfileSetup.swift */,
+				E21056E02C75BAEA00813084 /* DiningFrequency.swift */,
+				E21056E22C75BBE300813084 /* SplitMethod.swift */,
+				E21056E42C75BBF700813084 /* HowMany.swift */,
+				E21056E62C75BC1600813084 /* SplittingFor.swift */,
+				E21056E82C75BC3000813084 /* BigFrustration.swift */,
+				E21056EA2C75BC5D00813084 /* DefaultTip.swift */,
+				E21056EC2C75D41100813084 /* CongratsView.swift */,
+			);
+			path = OnBoarding;
+			sourceTree = "<group>";
+		};
 		E21466B72BAE72B2000A61DB = {
 			isa = PBXGroup;
 			children = (
@@ -356,6 +390,7 @@
 		E21466C22BAE72B2000A61DB /* billbreaker */ = {
 			isa = PBXGroup;
 			children = (
+				E21056DB2C75BA7900813084 /* OnBoarding */,
 				E219A38A2C5ECC99003254D9 /* Buttons */,
 				E264722B2C58A2EF00B2DF11 /* DeepLink */,
 				E2DBA9C42C580B86000F3559 /* ProcessingCheck */,
@@ -788,10 +823,12 @@
 				E209C65C2C35150900D9E3A2 /* PeopleSectionView.swift in Sources */,
 				E2019F082C73ACF200094448 /* EmptyStateView.swift in Sources */,
 				E2409E222BED9B7B00A5940D /* AppDelegate.swift in Sources */,
+				E21056E72C75BC1600813084 /* SplittingFor.swift in Sources */,
 				E20B0CDC2C6D19EF00624B44 /* CheckCardView.swift in Sources */,
 				E2DDFC042BB1E7E600BAD5AC /* PhotoLibrary.swift in Sources */,
 				E2DDFBF42BB1E77300BAD5AC /* Camera.swift in Sources */,
 				E206BCAF2C479382003E6C84 /* Router.swift in Sources */,
+				E21056DF2C75BAC200813084 /* ProfileSetup.swift in Sources */,
 				E20B0CD82C6A978400624B44 /* AddItemBox.swift in Sources */,
 				E2DDFBF62BB1E79900BAD5AC /* CameraView.swift in Sources */,
 				E21A559C2C6298A800A230AA /* ReceiptProcessor.swift in Sources */,
@@ -800,6 +837,7 @@
 				E2092B832C2C826200A6B4EF /* ReceiptViewModel.swift in Sources */,
 				E203B1412C500F9300D16732 /* FatCheckThemes.swift in Sources */,
 				E2DDFBFA2BB1E7B600BAD5AC /* PhotoAsset.swift in Sources */,
+				E21056E12C75BAEA00813084 /* DiningFrequency.swift in Sources */,
 				E26472232C584B2300B2DF11 /* ReceiptJSONDecoder.swift in Sources */,
 				E21AA1782C64FEAE00EF87C8 /* AddPeopleView.swift in Sources */,
 				E219A3892C5D6D36003254D9 /* HomeCameraView.swift in Sources */,
@@ -821,6 +859,8 @@
 				E203B13F2C5000CA00D16732 /* ShareButton.swift in Sources */,
 				E27966072BC476BD000B0368 /* LegitP.swift in Sources */,
 				E2DDFC062BB1E7ED00BAD5AC /* PhotoView.swift in Sources */,
+				E21056E52C75BBF700813084 /* HowMany.swift in Sources */,
+				E21056ED2C75D41100813084 /* CongratsView.swift in Sources */,
 				E20B0CD42C697B0200624B44 /* SaveCheckView.swift in Sources */,
 				E26472262C58983D00B2DF11 /* APIService.swift in Sources */,
 				E2DDFBF22BB1E74A00BAD5AC /* CachedImageManager.swift in Sources */,
@@ -835,9 +875,13 @@
 				E2DDFC082BB1E7F700BAD5AC /* ThumbnailView.swift in Sources */,
 				E2DDFC0A2BB1E80300BAD5AC /* ViewfinderView.swift in Sources */,
 				E2DDFC002BB1E7D500BAD5AC /* PhotoCollectionView.swift in Sources */,
+				E21056DD2C75BA9800813084 /* WelcomeView.swift in Sources */,
 				E2D1F2A22BC0CD3400B27278 /* User.swift in Sources */,
 				E2A47A272C1CE8140023E29D /* GuestSignInView.swift in Sources */,
+				E21056E92C75BC3000813084 /* BigFrustration.swift in Sources */,
 				E21466C42BAE72B2000A61DB /* billbreakerApp.swift in Sources */,
+				E21056E32C75BBE300813084 /* SplitMethod.swift in Sources */,
+				E21056EB2C75BC5D00813084 /* DefaultTip.swift in Sources */,
 				E279660B2BC493CD000B0368 /* LoginView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

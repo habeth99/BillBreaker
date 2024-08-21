@@ -15,8 +15,7 @@ struct FatCheckTheme {
         static let secondaryColor = Color(hex: "#000000")
         static let accentColor = Color(hex: "#B8D8D8")
         static let white = Color.white
-//        static let backgroundColor = Color(hex: "#F2F2F7")
-//        static let textColor = Color(hex: "#000000")
+        static let black = Color.black
     }
     
     // MARK: - Spacing
