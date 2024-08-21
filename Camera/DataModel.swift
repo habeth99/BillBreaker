@@ -63,7 +63,7 @@ final class DataModel: ObservableObject {
             await processPhoto(imageData: photoData.imageData)
         }
     }
-    
+
     func processPhoto(imageData: Data) async {
         await MainActor.run {
             isProcessing = true
@@ -94,11 +94,15 @@ final class DataModel: ObservableObject {
                     continuation.resume(returning: result)
                 }
             }
-            self.recognizedText = recognizedText
+            await MainActor.run {
+                self.recognizedText = recognizedText
+            }
             logger.debug("Recognized text: \(recognizedText)")
             
             let processedReceipt = try await apiService.sendExtractedTextToAPI(extractedText: recognizedText)
-            self.processedReceipt = processedReceipt
+            await MainActor.run {
+                self.processedReceipt = processedReceipt
+            }
             print("Processed Receipt: \(processedReceipt)")
         } catch {
             await MainActor.run {
