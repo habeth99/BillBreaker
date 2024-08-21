@@ -13,17 +13,23 @@ struct ReceiptListView: View {
     @EnvironmentObject var router: Router
     
     var body: some View {
-//        List(rviewModel.receiptList, id: \.id) { receipt in
-//            Button(action: {
-//                print("receipt tapped: \(receipt.id)")
-//                router.selectedId = receipt.id
-//                router.navigateToReceipt(id: receipt.id)
-//            }) {
-//                ReceiptRow(receipt: receipt)
-//            }
-//        }
-        List(rviewModel.receiptList, id: \.id) { receipt in
-            CheckCard(receipt: receipt)
+        ScrollView {
+            VStack (spacing: 0) {
+                StatboardView()
+                HStack (spacing: 0) {
+                    Text("Recent Checks")
+                        .padding(.horizontal, FatCheckTheme.Spacing.sm)
+                        //.padding(FatCheckTheme.Spacing.sm)
+                    Spacer()
+                }
+            }
+            
+            VStack (spacing: 0) {
+                ForEach(rviewModel.receiptList, id: \.id) { receipt in
+                    CheckCard(receipt: receipt)
+                }
+            }
         }
+        .background(Color.gray.opacity(0.2))
     }
 }

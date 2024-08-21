@@ -19,11 +19,20 @@ struct HomeView: View {
             if rviewModel.hasAttemptedFetch && rviewModel.receiptList.isEmpty {
                 EmptyStateView()
             } else {
-                //dash stats
                 ReceiptListView(rviewModel: rviewModel)
             }
         }
-        .navigationTitle("My Checks")
+        //.navigationTitle("Fat Check")
+        //.navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Text("Fat Check")
+                    .font(.largeTitle.weight(.bold))
+                    //.kerning(-1)  // Adjust character spacing
+                    .padding(.top, -2)  // Adjust top padding
+                    .padding(.bottom, -2)  // Adjust bottom padding
+            }
+        }
         .onAppear {
             if !rviewModel.hasAttemptedFetch {
                 Task {

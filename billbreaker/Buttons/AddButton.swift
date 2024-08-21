@@ -23,11 +23,11 @@ struct AddButton: View {
                     Button(action: action) {
                         Image(systemName: "plus")
                             .font(.system(size: 24))
-                            .foregroundColor(.blue)
+                            .foregroundColor(.white)
                             .frame(width: 64, height: 64)
-                            .background(Color.white)
+                            .background(.black)
                             .clipShape(Circle())
-                            .shadow(radius: 4)
+                            //.shadow(radius: 4)
                     }
                     .buttonStyle(PlainButtonStyle())
                     

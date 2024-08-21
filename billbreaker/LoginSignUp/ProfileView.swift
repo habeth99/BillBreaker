@@ -54,6 +54,15 @@ struct SettingsView: View {
                             }
                         }
                     }
+                    
+                    Section{
+                        Button(action: {
+                            // some delete account action
+                            print("dis button works")
+                        }) {
+                            Text("Delete Account")
+                        }
+                    }
                 }
             } else {
                 VStack{

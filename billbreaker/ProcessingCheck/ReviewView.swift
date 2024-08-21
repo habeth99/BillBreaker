@@ -44,7 +44,8 @@ struct ReviewView: View {
         }
         .navigationBarItems(
             trailing: Button("Next") {
-                router.navigateToItemsScanView(ScanRoute.people)
+                //router.navigateToItemsScanView(ScanRoute.people)
+                router.navigateInScanFlow(to: .people)
             }
         )
         .navigationBarTitle("Menu Items", displayMode: .inline)

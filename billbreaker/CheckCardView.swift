@@ -21,7 +21,7 @@ struct CheckCard: View {
     
     var body: some View {
         Button(action: navTo) {
-            RoundedRectangle(cornerRadius: 10)
+            RoundedRectangle(cornerRadius: FatCheckTheme.Spacing.md)
                 .fill(FatCheckTheme.Colors.white)
                 .frame(width: width, height: height)
                 .overlay(
@@ -50,9 +50,9 @@ struct CheckCard: View {
                             label: "Members Paid"
                         )
                         
-                        ExpandableMemberInitials(friends: receipt.people ?? [])
+                        MemberInitialsView(friends: receipt.people ?? [])
                     }
-                    .padding()
+                    .padding(FatCheckTheme.Spacing.sm)
                 )
         }
         .buttonStyle(PlainButtonStyle())
@@ -63,44 +63,25 @@ struct CheckCard: View {
     }
 }
 
-struct ExpandableMemberInitials: View {
+struct MemberInitialsView: View {
     let friends: [LegitP]
-    @State private var isExpanded = false
-    
     private let circleSize: CGFloat = 30
-    private let stackOffset: CGFloat = 8
     
     var body: some View {
-        VStack(alignment: .leading) {
-            Text("Friends")
-                .font(.caption)
-                .foregroundColor(FatCheckTheme.Colors.primaryColor)
-            
-            ZStack {
-                ForEach(Array(friends.enumerated()), id: \.element.id) { index, friend in
-                    if #available(iOS 17.0, *) {
+        HStack(spacing: 5) {
+            ForEach(friends, id: \.id) { friend in
+                Circle()
+                    .fill(FatCheckTheme.Colors.white)
+                    .frame(width: circleSize, height: circleSize)
+                    .overlay(
                         Circle()
-                            .strokeBorder(Color.black, lineWidth: 20)
-                            .fill(Color.white)
-                            .frame(width: circleSize, height: circleSize)
-                            .overlay(
-                                Text(friend.getFirstInitial())
-                                    .foregroundColor(FatCheckTheme.Colors.primaryColor)
-                                    .font(.system(size: 14, weight: .bold))
-                            )
-                            .offset(x: isExpanded ? CGFloat(index) * (circleSize + 5) : CGFloat(index) * stackOffset)
-                    } else {
-                        // Fallback on earlier versions
-                    }
-                }
-            }
-            .frame(height: circleSize)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .contentShape(Rectangle())
-            .onTapGesture {
-                withAnimation(.spring()) {
-                    isExpanded.toggle()
-                }
+                            .strokeBorder(FatCheckTheme.Colors.primaryColor, lineWidth: 2)
+                    )
+                    .overlay(
+                        Text(friend.getFirstInitial())
+                            .foregroundColor(FatCheckTheme.Colors.primaryColor)
+                            .font(.system(size: 14, weight: .bold))
+                    )
             }
         }
     }

@@ -31,7 +31,8 @@ struct AddPeopleView: View {
                 .navigationBarItems(
                     trailing: Button("Next") {
                         transformer.createLegitPs(guests: guests)
-                        router.navigateToItemsScanView(ScanRoute.review)
+                        //router.navigateToItemsScanView(ScanRoute.review)
+                        router.navigateInScanFlow(to: .review)
                     }
                 )
                 .navigationBarTitle("Add Friends", displayMode: .inline)
@@ -73,7 +74,7 @@ struct AddPeopleView: View {
     }
     
     private func cancel() {
-        router.reset()
+        router.endScanFlow()
     }
 
 }

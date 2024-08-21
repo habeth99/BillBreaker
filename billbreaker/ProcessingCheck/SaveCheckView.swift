@@ -99,7 +99,7 @@ struct SaveCheckView: View {
     }
     
     private func cancel() {
-        router.reset()
+        router.endScanFlow()
     }
     
     private func save() {

@@ -31,6 +31,12 @@ struct FatCheckTheme {
         static let xxl: CGFloat = 48
         static let xxxl: CGFloat = 64
     }
+    
+    struct Size {
+        static let sm: CGFloat = 100
+        static let md: CGFloat = 200
+        static let lg: CGFloat = 300
+    }
 }
 
 // Your existing Color extension

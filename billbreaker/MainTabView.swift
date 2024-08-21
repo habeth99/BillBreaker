@@ -11,58 +11,85 @@ import SwiftUI
 struct MainTabView: View {
     @EnvironmentObject var router: Router
     @EnvironmentObject var viewModel: UserViewModel
+    @StateObject var transformer = ReceiptProcessor()
+    @State private var isReceiptFlowActive = false
     
     var body: some View {
-        TabView(selection: $router.selectedTab) {
-            NavigationStack(path: $router.path) {
-                HomeView(rviewModel: ReceiptViewModel())
-                    .navigationDestination(for: AppRoute.self) { route in
-                        switch route {
-                        case .photo(.camera):
-                            HomeCameraView()
-                        case .receipt(let receiptRoute):
-                            switch receiptRoute {
-                            case .details(let receiptId):
-                                BillDetailsView(rviewModel: ReceiptViewModel(), receiptId: receiptId)
+        ZStack {
+            TabView(selection: $router.selectedTab) {
+                
+                NavigationStack {
+                    SettingsView()
+                }
+                .tabItem {
+                    Label("Profile", systemImage: "person.fill")
+                }
+                .tag(Router.Tab.settings)
+                
+                NavigationStack(path: $router.path) {
+                    HomeView(rviewModel: ReceiptViewModel())
+                        .navigationDestination(for: AppRoute.self) { route in
+                            switch route {
+                            case .receipt(let receiptRoute):
+                                switch receiptRoute {
+                                case .details(let receiptId):
+                                    BillDetailsView(rviewModel: ReceiptViewModel(), receiptId: receiptId)
+                                }
+                            default:
+                                EmptyView()
                             }
-                        case .scan(let scanRoute):
-                            switch scanRoute {
-                            case .items:
-                                ReviewView(transformer: ReceiptProcessor())
-                            case .people:
-                                AddPeopleView(transformer: ReceiptProcessor())
-                            case .review:
-                                SaveCheckView(transformer: ReceiptProcessor())
-                            }
-                        default:
-                            EmptyView()
                         }
-                    }
+                }
+                .tabItem {
+                    Label("Checks", systemImage: "scroll")
+                }
+                .tag(Router.Tab.home)
+                
+                Spacer()
             }
-            .tabItem {
-                Label("Home", systemImage: "house")
-            }
-            .tag(Router.Tab.home)
+            .overlay(
+                AddButton(action: {
+                    router.navToCamera()
+                })
+                //.padding(),
+                //alignment: .bottom
+                .padding(.trailing, 22)
+                .padding(.bottom, -12)
+            )
             
-            NavigationStack {
-                SettingsView()
+            if router.isScanFlowActive {
+                ScanFlowView(transformer: transformer)
+                    .environmentObject(router)
+                    .transition(.opacity)
+                    .zIndex(1)
             }
-            .tabItem {
-                Label("Settings", systemImage: "gear")
-            }
-            .tag(Router.Tab.settings)
-            
-            Spacer()
         }
-        .overlay(
-            AddButton(action: {
-                router.navToCamera()
-            })
-            .padding(),
-            alignment: .bottom
-        )
         .fullScreenCover(isPresented: $router.isCameraPresented) {
-            HomeCameraView()
+            HomeCameraView(transformer: transformer)
         }
     }
 }
+
+struct ScanFlowView: View {
+    @EnvironmentObject var router: Router
+    @ObservedObject var transformer: ReceiptProcessor
+    
+    var body: some View {
+        NavigationStack(path: $router.scanPath) {
+            ReviewView(transformer: transformer)
+                .navigationDestination(for: ScanRoute.self) { route in
+                    switch route {
+                    case .items:
+                        ReviewView(transformer: transformer)
+                    case .people:
+                        AddPeopleView(transformer: transformer)
+                    case .review:
+                        SaveCheckView(transformer: transformer)
+                    }
+                }
+        }
+        .transition(.opacity)
+    }
+}
+
+
