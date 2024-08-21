@@ -17,19 +17,6 @@ class ReceiptProcessor: ObservableObject {
     @Published var receipt = Receipt()
     let dbRef = Database.database().reference()
     
-//    func transformReceipt(apiReceipt: APIReceipt) async {
-//        self.receipt = Receipt.from(apiReceipt: apiReceipt)
-//        receipt.userId = Receipt.getUserdId() ?? ""
-//    }
-//    @MainActor
-//    func transformReceipt(apiReceipt: APIReceipt) async {
-//        print("APIReceipt is: \(apiReceipt)")
-//        let transformedReceipt = Receipt.from(apiReceipt: apiReceipt)
-//        print("transformedReceipt is: \(transformedReceipt)")
-//        DispatchQueue.main.async {
-//            self.receipt = transformedReceipt
-//        }
-//    }
     @MainActor
     func transformReceipt(apiReceipt: APIReceipt) async {
         print("APIReceipt is: \(apiReceipt)")

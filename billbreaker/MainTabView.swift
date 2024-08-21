@@ -59,7 +59,7 @@ struct MainTabView: View {
             
             if router.isScanFlowActive {
                 ScanFlowView(transformer: transformer)
-                    .environmentObject(router)
+                    //.environmentObject(router)
                     .transition(.opacity)
                     .zIndex(1)
             }
@@ -70,6 +70,27 @@ struct MainTabView: View {
     }
 }
 
+//struct ScanFlowView: View {
+//    @EnvironmentObject var router: Router
+//    @ObservedObject var transformer: ReceiptProcessor
+//    
+//    var body: some View {
+//        NavigationStack(path: $router.scanPath) {
+//            ReviewView(transformer: transformer)
+//                .navigationDestination(for: ScanRoute.self) { route in
+//                    switch route {
+//                    case .items:
+//                        ReviewView(transformer: transformer)
+//                    case .people:
+//                        AddPeopleView(transformer: transformer)
+//                    case .review:
+//                        SaveCheckView(transformer: transformer)
+//                    }
+//                }
+//        }
+//        .transition(.opacity)
+//    }
+//}
 struct ScanFlowView: View {
     @EnvironmentObject var router: Router
     @ObservedObject var transformer: ReceiptProcessor
@@ -79,12 +100,12 @@ struct ScanFlowView: View {
             ReviewView(transformer: transformer)
                 .navigationDestination(for: ScanRoute.self) { route in
                     switch route {
-                    case .items:
-                        ReviewView(transformer: transformer)
                     case .people:
                         AddPeopleView(transformer: transformer)
                     case .review:
                         SaveCheckView(transformer: transformer)
+                    case .items:
+                        EmptyView() // We don't need this case anymore
                     }
                 }
         }

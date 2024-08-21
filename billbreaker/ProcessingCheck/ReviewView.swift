@@ -15,8 +15,7 @@ struct ReviewView: View {
 
     var body: some View {
         ZStack {
-            FatCheckTheme.Colors.accentColor.edgesIgnoringSafeArea(.all)
-            
+            //FatCheckTheme.Colors.accentColor.edgesIgnoringSafeArea(.all)
             VStack(spacing: 0) {
                 List {
                     ForEach(transformer.receipt.items ?? [], id: \.id) { item in
@@ -31,11 +30,12 @@ struct ReviewView: View {
                         )
                     }
                     .onDelete(perform: deleteItems)
+                    
                 }
-                .listStyle(PlainListStyle())
-                .padding(FatCheckTheme.Spacing.sm)
+                //.listStyle(PlainListStyle())
+                //.padding(FatCheckTheme.Spacing.sm)
             }
-            .background(FatCheckTheme.Colors.accentColor)
+            //.background(FatCheckTheme.Colors.accentColor)
             
             AddButton(action: {
                 transformer.addItem(newItem: Item())
@@ -44,7 +44,6 @@ struct ReviewView: View {
         }
         .navigationBarItems(
             trailing: Button("Next") {
-                //router.navigateToItemsScanView(ScanRoute.people)
                 router.navigateInScanFlow(to: .people)
             }
         )
@@ -119,6 +118,26 @@ struct EditingItemView: View {
         .onDisappear {
             let updatedItem = Item(id: item.id, name: editedName, price: editedPrice)
             onEndEdit(updatedItem)
+        }
+    }
+}
+
+
+//previewwwwww
+struct ReviewView_Previews: PreviewProvider {
+    static var previews: some View {
+        let mockTransformer = ReceiptProcessor()
+        mockTransformer.receipt.items = [
+            Item(id: "1", name: "Pizza", price: 10.99),
+            Item(id: "2", name: "Salad", price: 7.99),
+            Item(id: "3", name: "Soda", price: 2.50)
+        ]
+        
+        let mockRouter = Router()
+        
+        return NavigationView {
+            ReviewView(transformer: mockTransformer)
+                .environmentObject(mockRouter)
         }
     }
 }

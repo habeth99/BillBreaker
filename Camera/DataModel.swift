@@ -42,26 +42,7 @@ final class DataModel: ObservableObject {
             await handleCameraPhotos()
         }
     }
-//    
-//    private func setupCameraPreviews() {
-//        viewfinderCancellable = camera.previewStream
-//            .map { $0.image }
-//            .receive(on: DispatchQueue.main)
-//            .sink { [weak self] image in
-//                self?.viewfinderImage = image
-//            }
-//    }
-    
-//    func handleCameraPreviews() async {
-//        let imageStream = camera.previewStream
-//            .map { $0.image }
-//
-//        for await image in imageStream {
-//            Task { @MainActor in
-//                viewfinderImage = image
-//            }
-//        }
-//    }
+
     func handleCameraPreviews() async {
         let imageStream = camera.previewStream
             .map { $0.image }
@@ -82,73 +63,7 @@ final class DataModel: ObservableObject {
             await processPhoto(imageData: photoData.imageData)
         }
     }
-
-//    @MainActor
-//    func processPhoto(imageData: Data) async {
-//        isProcessing = true
-//        isProcessingComplete = false // Reset at the start of processing
-//        
-//        defer {
-//            isProcessing = false
-//            isProcessingComplete = true // Set to true when processing is complete, even if there's an error
-//        }
-//        
-//        do {
-//            let recognizedText = try await withCheckedThrowingContinuation { continuation in
-//                TextRecognitionService.shared.performTextRecognition(imageData: imageData) { result in
-//                    continuation.resume(returning: result)
-//                }
-//            }
-//            self.recognizedText = recognizedText
-//            logger.debug("Recognized text: \(recognizedText)")
-//            
-//            let processedReceipt = try await apiService.sendExtractedTextToAPI(extractedText: recognizedText)
-//            self.processedReceipt = processedReceipt
-//            print("Processed Receipt: \(processedReceipt)")
-//        } catch {
-//            logger.error("Error processing photo: \(error.localizedDescription)")
-//            self.processedReceipt = APIReceipt() // Clear any previous receipt in case of error
-//        }
-//    }
-//    func processPhoto(imageData: Data) async {
-//        isProcessing = true
-//        isProcessingComplete = false
-//        processingStartTime = Date()
-//        
-//        // Start a timer to update processing time
-//        DispatchQueue.main.async {
-//            self.processingTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
-//                guard let self = self, let startTime = self.processingStartTime else { return }
-//                self.processingTime = Date().timeIntervalSince(startTime)
-//            }
-//        }
-//        
-//        defer {
-//            DispatchQueue.main.async {
-//                self.isProcessing = false
-//                self.isProcessingComplete = true
-//                self.processingTimer?.invalidate()
-//                self.processingTimer = nil
-//            }
-//        }
-//        
-//        do {
-//            let recognizedText = try await withCheckedThrowingContinuation { continuation in
-//                TextRecognitionService.shared.performTextRecognition(imageData: imageData) { result in
-//                    continuation.resume(returning: result)
-//                }
-//            }
-//            self.recognizedText = recognizedText
-//            logger.debug("Recognized text: \(recognizedText)")
-//            
-//            let processedReceipt = try await apiService.sendExtractedTextToAPI(extractedText: recognizedText)
-//            self.processedReceipt = processedReceipt
-//            print("Processed Receipt: \(processedReceipt)")
-//        } catch {
-//            logger.error("Error processing photo: \(error.localizedDescription)")
-//            self.processedReceipt = APIReceipt() // Clear any previous receipt in case of error
-//        }
-//    }
+    
     func processPhoto(imageData: Data) async {
         await MainActor.run {
             isProcessing = true

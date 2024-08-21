@@ -22,17 +22,14 @@ struct HomeView: View {
                 ReceiptListView(rviewModel: rviewModel)
             }
         }
-        //.navigationTitle("Fat Check")
-        //.navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                Text("Fat Check")
-                    .font(.largeTitle.weight(.bold))
-                    //.kerning(-1)  // Adjust character spacing
-                    .padding(.top, -2)  // Adjust top padding
-                    .padding(.bottom, -2)  // Adjust bottom padding
-            }
-        }
+        .navigationTitle("Fat Check")
+//        .toolbar {
+//            ToolbarItem(placement: .topBarLeading) {
+//                Text("Fat Check")
+//                    .font(.largeTitle.bold())
+//                    .padding(.top, -15) // Adjust this value as needed
+//            }
+//        }
         .onAppear {
             if !rviewModel.hasAttemptedFetch {
                 Task {
