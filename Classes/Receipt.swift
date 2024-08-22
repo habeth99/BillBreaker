@@ -158,13 +158,90 @@ class Receipt: Codable, Identifiable, ObservableObject, CustomStringConvertible 
             total += item.price
         }
         
+        total = total + self.tip + self.tax
+        
         return total
     }
     
-//    func countClaimedItems() -> Double {
-//        let claimedItemsCount = items!.filter { !$0.claimedBy!.isEmpty }.count
-//        return Double(claimedItemsCount)
+    func amtOwed() -> Double {
+        guard let people = people, let items = items else {
+            return 0.0
+        }
+
+        var totalOwed = 0.0
+
+        for person in people {
+            let claimedItemsTotalPrice = person.claims.compactMap { claimedItemId -> Double? in
+                guard let item = items.first(where: { $0.id == claimedItemId }) else {
+                    return nil
+                }
+                let peopleClaimingItem = countPeopleClaiming(itemID: claimedItemId)
+                return item.price / Double(peopleClaimingItem)
+            }.reduce(0, +)
+
+            totalOwed += claimedItemsTotalPrice
+        }
+
+        // Add tax and tip to the total
+        totalOwed += tax + tip
+
+        return totalOwed
+    }
+    
+//    func amountOwedByPerson(_ personId: String) -> Double {
+//        guard let person = people?.first(where: { $0.id == personId }) else {
+//            return 0.0
+//        }
+//
+//        let claimedItemsTotalPrice = person.claims.compactMap { claimedItemId -> Double? in
+//            guard let item = items?.first(where: { $0.id == claimedItemId }) else {
+//                return nil
+//            }
+//            let peopleClaimingItem = countPeopleClaiming(itemID: claimedItemId)
+//            return item.price / Double(peopleClaimingItem)
+//        }.reduce(0, +)
+//
+//        let taxShare = (claimedItemsTotalPrice / subTotal) * tax
+//        let tipShare = (claimedItemsTotalPrice / subTotal) * tip
+//
+//        return claimedItemsTotalPrice + taxShare + tipShare
 //    }
+    func amountOwedByPerson(_ personId: String) -> Double {
+        guard let person = people?.first(where: { $0.id == personId }) else {
+            return 0.0
+        }
+
+        let claimedItemsTotalPrice = person.claims.compactMap { claimedItemId -> Double? in
+            guard let item = items?.first(where: { $0.id == claimedItemId }) else {
+                return nil
+            }
+            let peopleClaimingItem = max(countPeopleClaiming(itemID: claimedItemId), 1)
+            return item.price / Double(peopleClaimingItem)
+        }.reduce(0, +)
+
+        // Guard against division by zero
+        guard subTotal > 0 else {
+            return claimedItemsTotalPrice
+        }
+
+        let taxShare = (claimedItemsTotalPrice / subTotal) * tax
+        let tipShare = (claimedItemsTotalPrice / subTotal) * tip
+
+        return claimedItemsTotalPrice + taxShare + tipShare
+    }
+    
+    func calculateAmountPaid() -> Double {
+        return (people ?? [])
+            .filter { $0.paid }
+            .reduce(0) { $0 + amountOwedByPerson($1.id) }
+    }
+
+    func calculateStillOwed() -> Double {
+        return (people ?? [])
+            .filter { !$0.paid }
+            .reduce(0) { $0 + amountOwedByPerson($1.id) }
+    }
+    
     func countClaimedItems() -> Double {
         let allClaims = people!.compactMap { $0.claims }
         let uniqueClaimedItems = Set(allClaims.flatMap { $0 })

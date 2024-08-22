@@ -9,8 +9,6 @@ import Foundation
 import SwiftUI
 
 struct SaveCheckView: View {
-    //@Binding var isPresented: Bool
-    //let onDismiss: () -> Void
     @EnvironmentObject var router: Router
     var transformer: ReceiptProcessor
     @State private var isSaving = false
@@ -19,47 +17,45 @@ struct SaveCheckView: View {
     
     var body: some View {
         ZStack {
-            FatCheckTheme.Colors.accentColor
+            Color(.systemGroupedBackground)
                 .ignoresSafeArea()
+            
             VStack {
-                //topButtons
-                ScrollView {
-                    VStack(spacing: 10) {
-                        // ForEach to show items
-                        Text("Items")
-                            .frame(maxWidth: .infinity, alignment: .leading)
+                List {
+                    Section(header: Text("Items")) {
                         ForEach(Array(transformer.receipt.items!.enumerated()), id: \.offset) { index, item in
                             HStack {
                                 Text(item.name)
+                                    .padding(.vertical, FatCheckTheme.Spacing.xs)
                                 Spacer()
                                 Text("$\(item.price, specifier: "%.2f")")
+                                    .padding(.vertical, FatCheckTheme.Spacing.xs)
                             }
-                            .padding()
-                            .background(Color.white)
-                            .cornerRadius(8)
                         }
-                        
-                        Text("Dinner Guests")
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                        ForEach(Array(transformer.receipt.people!.enumerated()), id: \.offset) { index, person in
-                            Text(person.name)
-                                .padding()
-                                .frame(maxWidth: .infinity)
-                                .background(Color.white)
-                                .cornerRadius(8)
+                    }
+                    Section(header: Text("Friends")) {
+                        if (transformer.receipt.people?.count ?? 0) > 1 {
+                            ForEach(transformer.receipt.people!, id: \.id) { person in
+                                Text(person.name)
+                                    .padding(.vertical, FatCheckTheme.Spacing.xs)
+                            }
+                        } else {
+                            Text("Warning: No friends added, please add friends")
+                                .foregroundColor(.red)
+                                .padding(.vertical, FatCheckTheme.Spacing.xs)
                         }
                     }
                 }
-                .navigationBarTitle("Review", displayMode: .inline)
+                .listStyle(InsetGroupedListStyle())
                 
                 Spacer()
-                // Button to save
                 saveButton
-                // Button to cancel
+                    .padding(.horizontal, FatCheckTheme.Spacing.sm)
                 cancelButton
+                    .padding(.horizontal, FatCheckTheme.Spacing.sm)
             }
-            .padding(.horizontal)
         }
+        .navigationBarTitle("Review", displayMode: .inline)
         .alert(isPresented: $showAlert) {
             Alert(title: Text("Save Receipt"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
         }
@@ -103,7 +99,6 @@ struct SaveCheckView: View {
     }
     
     private func save() {
-        //todo
         isSaving = true
         transformer.saveReceipt2 { success in
             DispatchQueue.main.async {
@@ -111,7 +106,6 @@ struct SaveCheckView: View {
                 if success {
                     alertMessage = "Receipt saved successfully!"
                     showAlert = true
-                    //change this to go to the receipt details view
                 } else {
                     alertMessage = "Failed to save receipt. Please try again."
                     showAlert = true
@@ -121,26 +115,30 @@ struct SaveCheckView: View {
     }
 }
 
-// Mock data
-//extension ReceiptProcessor {
-//    static var mockProcessor: ReceiptProcessor {
-//        let mockItems = [
-//            Item(name: "Pizza", price: 12.99),
-//            Item(name: "Salad", price: 7.99),
-//            Item(name: "Soda", price: 2.50),
-//            Item(name: "Dessert", price: 5.99)
-//        ]
-//        let mockReceipt = Receipt(items: mockItems)
-//        return ReceiptProcessor()
-//    }
-//}
-//
-//struct SaveCheckView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        SaveCheckView(
-//            isPresented: .constant(true),
-//            onDismiss: {},
-//            transformer: ReceiptProcessor.mockProcessor
-//        )
-//    }
-//}
+//Preview
+struct SaveCheckView_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationView {
+            SaveCheckView(transformer: MockReceiptProcessor())
+                .environmentObject(Router())
+        }
+    }
+}
+
+// Mock data and classes
+class MockReceiptProcessor: ReceiptProcessor {
+    var mockReceipt: Receipt = Receipt(
+        items: [
+            Item(name: "Burger", price: 12.99),
+            Item(name: "Fries", price: 3.99),
+            Item(name: "Soda", price: 2.49),
+            Item(name: "Ice Cream", price: 5.99)
+        ],
+        people: [
+            LegitP(name: "Alice"),
+            LegitP(name: "Bob"),
+            LegitP(name: "Charlie")
+        ]
+    )
+}
+

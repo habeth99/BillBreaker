@@ -16,7 +16,9 @@ struct AddPeopleView: View {
     
     var body: some View {
         ZStack {
-            FatCheckTheme.Colors.accentColor
+//            Color.gray.opacity(0.1)
+//                .ignoresSafeArea()
+            Color(.systemGroupedBackground)
                 .ignoresSafeArea()
             VStack {
                 ScrollView {
@@ -26,7 +28,7 @@ struct AddPeopleView: View {
                         }
                         cancelButton
                     }
-                    .padding(.horizontal)
+                    .padding(FatCheckTheme.Spacing.md)
                 }
                 .navigationBarItems(
                     trailing: Button("Next") {
@@ -45,13 +47,13 @@ struct AddPeopleView: View {
     private func guestTextField(index: Int) -> some View {
         TextField("Guest \(index + 1)", text: $guests[index])
             .font(.system(size: 18))
-            .padding()
+            .padding(FatCheckTheme.Spacing.sm)
             .background(Color.white)
             .cornerRadius(10)
-            .overlay(
-                RoundedRectangle(cornerRadius: 10)
-                    .stroke(Color.gray, lineWidth: 1)
-            )
+//            .overlay(
+//                RoundedRectangle(cornerRadius: FatCheckTheme.Spacing.xs)
+//                    .stroke(Color.gray, lineWidth: 1)
+//            )
     }
     
     private func addGuest() {
