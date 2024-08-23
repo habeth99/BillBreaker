@@ -206,28 +206,137 @@ class Receipt: Codable, Identifiable, ObservableObject, CustomStringConvertible 
 //
 //        return claimedItemsTotalPrice + taxShare + tipShare
 //    }
+//    func amountOwedByPerson(_ personId: String) -> Double {
+//        guard let person = people?.first(where: { $0.id == personId }) else {
+//            return 0.0
+//        }
+//
+//        let claimedItemsTotalPrice = person.claims.compactMap { claimedItemId -> Double? in
+//            guard let item = items?.first(where: { $0.id == claimedItemId }) else {
+//                return nil
+//            }
+//            let peopleClaimingItem = max(countPeopleClaiming(itemID: claimedItemId), 1)
+//            return item.price / Double(peopleClaimingItem)
+//        }.reduce(0, +)
+//
+//        // Guard against division by zero
+//        guard subTotal > 0 else {
+//            return claimedItemsTotalPrice
+//        }
+//
+//        let taxShare = (claimedItemsTotalPrice / subTotal) * tax
+//        let tipShare = (claimedItemsTotalPrice / subTotal) * tip
+//
+//        return claimedItemsTotalPrice + taxShare + tipShare
+//    }
+//    func amountOwedByPerson(_ personId: String) -> Double {
+//        guard let person = people?.first(where: { $0.id == personId }),
+//              let items = items,
+//              subTotal > 0 else {
+//            return 0.0
+//        }
+//
+//        let claimedItemsTotalPrice = person.claims.reduce(0.0) { total, claimedItemId in
+//            guard let item = items.first(where: { $0.id == claimedItemId }) else {
+//                return total
+//            }
+//            let peopleClaimingItem = max(countPeopleClaiming(itemID: claimedItemId), 1)
+//            return total + (item.price / Double(peopleClaimingItem))
+//        }
+//
+//        // Calculate the person's share of the subtotal
+//        let personShare = claimedItemsTotalPrice / subTotal
+//
+//        // Calculate tax and tip share based on the person's share of the subtotal
+//        let taxShare = personShare * tax
+//        let tipShare = personShare * tip
+//
+//        return claimedItemsTotalPrice + taxShare + tipShare
+//    }
+//    func amountOwedByPerson(_ personId: String) -> Double {
+//
+//        print("Calculating amount owed for person: \(personId)")
+//        print("People in receipt: \(people?.map { "\($0.id): \($0.name)" } ?? [])")
+//        print("Items in receipt: \(items?.map { "\($0.id): \($0.name)" } ?? [])")
+//        print("Subtotal: \(subTotal)")
+//
+//        guard let person = people?.first(where: { $0.id == personId }) else {
+//            print("Person not found")
+//            return 0.0
+//        }
+//        guard let items = items, !items.isEmpty else {
+//            print("Items array is empty or nil")
+//            return 0.0
+//        }
+//        guard subTotal > 0 else {
+//            print("Subtotal is zero or negative")
+//            return 0.0
+//        }
+//
+//
+//        let claimedItemsTotalPrice = person.claims.reduce(0.0) { total, claimedItemId in
+//            guard let item = items.first(where: { $0.id == claimedItemId }) else {
+//                print("Item not found for claim \(claimedItemId)")
+//                return total
+//            }
+//            let peopleClaimingItem = max(countPeopleClaiming(itemID: claimedItemId), 1)
+//            let itemShare = item.price / Double(peopleClaimingItem)
+//            print("Item \(item.name): price = \(item.price), people claiming = \(peopleClaimingItem), share = \(itemShare)")
+//            return total + itemShare
+//        }
+//
+//        let personShare = claimedItemsTotalPrice / subTotal
+//        let taxShare = personShare * tax
+//        let tipShare = personShare * tip
+//        
+//        let totalOwed = claimedItemsTotalPrice + taxShare + tipShare
+//        print("Person \(personId): claimed total = \(claimedItemsTotalPrice), tax share = \(taxShare), tip share = \(tipShare), total owed = \(totalOwed)")
+//        return totalOwed
+//    }
     func amountOwedByPerson(_ personId: String) -> Double {
+        print("Calculating amount owed for person: \(personId)")
+        print("People in receipt: \(people?.map { "\($0.id): \($0.name)" } ?? [])")
+        print("Items in receipt: \(items?.map { "\($0.id): \($0.name) - $\($0.price)" } ?? [])")
+        
         guard let person = people?.first(where: { $0.id == personId }) else {
+            print("Person not found")
+            return 0.0
+        }
+        guard let items = items, !items.isEmpty else {
+            print("Items array is empty or nil")
+            return 0.0
+        }
+        
+        let subtotal = calculatedSubTotal
+        print("Calculated subtotal: \(subtotal)")
+        
+        guard subtotal > 0 else {
+            print("Calculated subtotal is zero or negative")
             return 0.0
         }
 
-        let claimedItemsTotalPrice = person.claims.compactMap { claimedItemId -> Double? in
-            guard let item = items?.first(where: { $0.id == claimedItemId }) else {
-                return nil
+        let claimedItemsTotalPrice = person.claims.reduce(0.0) { total, claimedItemId in
+            guard let item = items.first(where: { $0.id == claimedItemId }) else {
+                print("Item not found for claim \(claimedItemId)")
+                return total
             }
             let peopleClaimingItem = max(countPeopleClaiming(itemID: claimedItemId), 1)
-            return item.price / Double(peopleClaimingItem)
-        }.reduce(0, +)
-
-        // Guard against division by zero
-        guard subTotal > 0 else {
-            return claimedItemsTotalPrice
+            let itemShare = item.price / Double(peopleClaimingItem)
+            print("Item \(item.name): price = \(item.price), people claiming = \(peopleClaimingItem), share = \(itemShare)")
+            return total + itemShare
         }
 
-        let taxShare = (claimedItemsTotalPrice / subTotal) * tax
-        let tipShare = (claimedItemsTotalPrice / subTotal) * tip
-
-        return claimedItemsTotalPrice + taxShare + tipShare
+        let personShare = claimedItemsTotalPrice / subtotal
+        let taxShare = personShare * tax
+        let tipShare = personShare * tip
+        
+        let totalOwed = claimedItemsTotalPrice + taxShare + tipShare
+        print("Person \(personId): claimed total = \(claimedItemsTotalPrice), tax share = \(taxShare), tip share = \(tipShare), total owed = \(totalOwed)")
+        return totalOwed
+    }
+    
+    var calculatedSubTotal: Double {
+        return items?.reduce(0) { $0 + $1.price } ?? 0
     }
     
     func calculateAmountPaid() -> Double {
@@ -236,10 +345,28 @@ class Receipt: Codable, Identifiable, ObservableObject, CustomStringConvertible 
             .reduce(0) { $0 + amountOwedByPerson($1.id) }
     }
 
+//    func calculateStillOwed() -> Double {
+//        return (people ?? [])
+//            .filter { !$0.paid }
+//            .reduce(0) { $0 + amountOwedByPerson($1.id) }
+//    }
+//    func calculateStillOwed() -> Double {
+//        let stillOwed = (people ?? [])
+//            .filter { !$0.paid }
+//            .reduce(0) { $0 + amountOwedByPerson($1.id) }
+//        print("Calculate still owed for receipt \(id): \(stillOwed)")
+//        return stillOwed
+//    }
     func calculateStillOwed() -> Double {
-        return (people ?? [])
+        print("Calculating still owed for receipt \(id)")
+        print("People: \(people?.map { "\($0.id): \($0.name) (paid: \($0.paid))" } ?? [])")
+        print("Calculated subtotal: \(calculatedSubTotal)")
+        
+        let stillOwed = (people ?? [])
             .filter { !$0.paid }
             .reduce(0) { $0 + amountOwedByPerson($1.id) }
+        print("Still owed: \(stillOwed)")
+        return stillOwed
     }
     
     func countClaimedItems() -> Double {

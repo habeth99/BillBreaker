@@ -43,7 +43,7 @@
 		E21056EB2C75BC5D00813084 /* DefaultTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21056EA2C75BC5D00813084 /* DefaultTip.swift */; };
 		E21056ED2C75D41100813084 /* CongratsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21056EC2C75D41100813084 /* CongratsView.swift */; };
 		E21056EF2C76E5BE00813084 /* HaveNotPaid.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21056EE2C76E5BE00813084 /* HaveNotPaid.swift */; };
-		E21056F12C76E8D200813084 /* PersonPill.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21056F02C76E8D200813084 /* PersonPill.swift */; };
+		E21056F12C76E8D200813084 /* NameTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21056F02C76E8D200813084 /* NameTag.swift */; };
 		E21056F32C76EDC500813084 /* CheckProgressCirc.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21056F22C76EDC500813084 /* CheckProgressCirc.swift */; };
 		E21056F52C76F00900813084 /* CardDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21056F42C76F00900813084 /* CardDetails.swift */; };
 		E21466C42BAE72B2000A61DB /* billbreakerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21466C32BAE72B2000A61DB /* billbreakerApp.swift */; };
@@ -213,7 +213,7 @@
 		E21056EA2C75BC5D00813084 /* DefaultTip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTip.swift; sourceTree = "<group>"; };
 		E21056EC2C75D41100813084 /* CongratsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongratsView.swift; sourceTree = "<group>"; };
 		E21056EE2C76E5BE00813084 /* HaveNotPaid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HaveNotPaid.swift; sourceTree = "<group>"; };
-		E21056F02C76E8D200813084 /* PersonPill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonPill.swift; sourceTree = "<group>"; };
+		E21056F02C76E8D200813084 /* NameTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameTag.swift; sourceTree = "<group>"; };
 		E21056F22C76EDC500813084 /* CheckProgressCirc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckProgressCirc.swift; sourceTree = "<group>"; };
 		E21056F42C76F00900813084 /* CardDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetails.swift; sourceTree = "<group>"; };
 		E21466C02BAE72B2000A61DB /* billbreaker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = billbreaker.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -414,7 +414,7 @@
 				E209C65B2C35150900D9E3A2 /* PeopleSectionView.swift */,
 				E2019F0B2C73F30500094448 /* Statboard.swift */,
 				E21056EE2C76E5BE00813084 /* HaveNotPaid.swift */,
-				E21056F02C76E8D200813084 /* PersonPill.swift */,
+				E21056F02C76E8D200813084 /* NameTag.swift */,
 				E2019F072C73ACF200094448 /* EmptyStateView.swift */,
 				E203B1402C500F9300D16732 /* FatCheckThemes.swift */,
 				E20B1AED2C2D279E0059F0D3 /* Info.plist */,
@@ -856,7 +856,7 @@
 				E27966032BC38F66000B0368 /* SignUpView.swift in Sources */,
 				E2B83BC72BEC11EF00A29D71 /* NewReceiptView.swift in Sources */,
 				E209C65A2C35147D00D9E3A2 /* ItemRowView.swift in Sources */,
-				E21056F12C76E8D200813084 /* PersonPill.swift in Sources */,
+				E21056F12C76E8D200813084 /* NameTag.swift in Sources */,
 				E2DDFC022BB1E7DD00BAD5AC /* PhotoItemView.swift in Sources */,
 				E21AA1762C6409B500EF87C8 /* ReviewView.swift in Sources */,
 				E21C90642C46210D008AD256 /* SplashView.swift in Sources */,

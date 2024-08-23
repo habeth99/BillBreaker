@@ -31,6 +31,31 @@ class ReceiptViewModel: ObservableObject {
     private var dbRef = Database.database().reference()
     private var cancellables = Set<AnyCancellable>()
     
+//    var totalAmountOwed: Double {
+//        receiptList.reduce(0.0) { total, receipt in
+//            total + receipt.calculateStillOwed()
+//        }
+//    }
+//    
+//    var openChecksCount: Int {
+//        receiptList.filter { $0.calculateStillOwed() > 0 }.count
+//    }
+    var totalAmountOwed: Double {
+        let total = receiptList.reduce(0.0) { total, receipt in
+            let stillOwed = receipt.calculateStillOwed()
+            print("Receipt \(receipt.id): Still owed = \(stillOwed)")
+            return total + stillOwed
+        }
+        print("Total amount owed across all receipts: \(total)")
+        return total
+    }
+
+    var openChecksCount: Int {
+        let count = receiptList.filter { $0.calculateStillOwed() > 0 }.count
+        print("Open checks count: \(count)")
+        return count
+    }
+    
     init() {
         //self.userViewModel = user
         self.receipt = Receipt()

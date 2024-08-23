@@ -10,15 +10,15 @@ import SwiftUI
 
 struct CardDetails: View {
     var total: Double
+    var title: String
     
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
             Text("$\(String(format: "%.2f", total))")
             .font(.largeTitle)
-                //.padding(FatCheckTheme.Spacing.sm)
-            Text("Total")
-                //.padding(.horizontal, FatCheckTheme.Spacing.md)
-            //Text("Not paid up:")
+            .fontWeight(.medium)
+            Text(title)
+                .font(.subheadline)
         }
     }
 }

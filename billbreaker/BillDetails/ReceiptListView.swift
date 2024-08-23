@@ -15,7 +15,7 @@ struct ReceiptListView: View {
     var body: some View {
         ScrollView {
             VStack (spacing: 0) {
-                StatboardView()
+                StatboardView(rviewModel: rviewModel)
                 HStack (spacing: 0) {
                     Text("Recent Checks")
                         .padding(.horizontal, FatCheckTheme.Spacing.sm)
@@ -29,6 +29,7 @@ struct ReceiptListView: View {
                     CheckCard(receipt: receipt)
                 }
             }
+            .padding(.horizontal, FatCheckTheme.Spacing.sm)
         }
         .background(Color.gray.opacity(0.2))
     }
