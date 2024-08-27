@@ -86,7 +86,7 @@ struct DisplayItemView: View {
         HStack {
             Text(item.name)
             Spacer()
-            Text(String(format: "%.2f", item.price))
+            Text("$\(item.price)")
         }
         .contentShape(Rectangle())
         .onTapGesture(perform: onEdit)
@@ -96,7 +96,7 @@ struct DisplayItemView: View {
 
 struct EditingItemView: View {
     @State private var editedName: String
-    @State private var editedPrice: Double
+    @State private var editedPrice: Decimal
     let item: Item
     let onEndEdit: (Item) -> Void
 

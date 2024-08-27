@@ -27,6 +27,7 @@ struct ReceiptListView: View {
             VStack (spacing: 0) {
                 ForEach(rviewModel.receiptList, id: \.id) { receipt in
                     CheckCard(receipt: receipt)
+                        .padding(.bottom, FatCheckTheme.Spacing.sm)
                 }
             }
             .padding(.horizontal, FatCheckTheme.Spacing.sm)

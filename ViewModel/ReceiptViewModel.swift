@@ -21,43 +21,32 @@ class ReceiptViewModel: ObservableObject {
     @Published var people: [LegitP] = []
     @Published var selectedPerson: LegitP?
     @Published var selectedItemsIds: [String] = []
-    //@Published var selectedReceiptId: String?
     @Published private(set) var listenersSetUp = false
     var userID: String?
-    //var userViewModel: UserViewModel
     @Published private(set) var isLoaded = false
     @Published var hasAttemptedFetch: Bool = false
     
     private var dbRef = Database.database().reference()
     private var cancellables = Set<AnyCancellable>()
     
-//    var totalAmountOwed: Double {
-//        receiptList.reduce(0.0) { total, receipt in
-//            total + receipt.calculateStillOwed()
-//        }
-//    }
-//    
-//    var openChecksCount: Int {
-//        receiptList.filter { $0.calculateStillOwed() > 0 }.count
-//    }
-    var totalAmountOwed: Double {
-        let total = receiptList.reduce(0.0) { total, receipt in
+
+    var totalAmountOwed: Decimal {
+        let total = receiptList.reduce(Decimal.zero) { total, receipt in
             let stillOwed = receipt.calculateStillOwed()
-            print("Receipt \(receipt.id): Still owed = \(stillOwed)")
+            //print("Receipt \(receipt.id): Still owed = \(stillOwed)")
             return total + stillOwed
         }
-        print("Total amount owed across all receipts: \(total)")
+        //print("Total amount owed across all receipts: \(total)")
         return total
     }
 
     var openChecksCount: Int {
         let count = receiptList.filter { $0.calculateStillOwed() > 0 }.count
-        print("Open checks count: \(count)")
+        //print("Open checks count: \(count)")
         return count
     }
     
     init() {
-        //self.userViewModel = user
         self.receipt = Receipt()
         self.userID = User.getUserdId() ?? "VERY BAD"
         print("RVM initialized with user id: \(userID)\n")
@@ -127,7 +116,7 @@ class ReceiptViewModel: ObservableObject {
             self.hasAttemptedFetch = true
         }
         self.receiptList = fetchedReceipts
-        print("All receipts fetched: \(self.receiptList)")
+        //print("All receipts fetched: \(self.receiptList)")
         
         if !listenersSetUp {
             setupReceiptListeners(receiptIDs: receiptIDs)
@@ -146,7 +135,7 @@ class ReceiptViewModel: ObservableObject {
                 return nil
             }
             
-            print("Receipt data snapshot value: \(value)")
+            //print("Receipt data snapshot value: \(value)")
             
             let data = try JSONSerialization.data(withJSONObject: value)
             let loadedReceipt = try JSONDecoder().decode(Receipt.self, from: data)
@@ -177,6 +166,9 @@ class ReceiptViewModel: ObservableObject {
         self.receipt = Receipt()
     }
     
+    
+    //url builder function
+    
     func shareCheck(receiptId: String) {
         // Create a web URL for your app
         let webURLString = "https://www.fatcheck.app/receipt/\(receiptId)"
@@ -194,6 +186,7 @@ class ReceiptViewModel: ObservableObject {
         }
     }
     
+    
 //================================================================================================
         //Listeners Section
 //================================================================================================
@@ -201,12 +194,12 @@ class ReceiptViewModel: ObservableObject {
     func setupReceiptListeners(receiptIDs: [String]) {
         guard !listenersSetUp else { return }
         
-        print("setting up listeners for receipts: \(receiptIDs)\n")
+        //print("setting up listeners for receipts: \(receiptIDs)\n")
         
         for receiptID in receiptIDs {
-            print("setting up listener for id: \(receiptID)\n")
+            //print("setting up listener for id: \(receiptID)\n")
             dbRef.child("receipts").child(receiptID).observe(.value, with: { [weak self] snapshot in
-                print("Receipt data snapshot: \(snapshot)")
+                //print("Receipt data snapshot: \(snapshot)")
 
                 guard snapshot.exists() else {
                     print("Snapshot does not exist.")
@@ -247,7 +240,7 @@ class ReceiptViewModel: ObservableObject {
     
     //People Listeners
     func setupPeopleListeners(_ receiptRef: DatabaseReference, receiptID: String) {
-        print("setting up people listners for id: \(receiptID)")
+        //print("setting up people listners for id: \(receiptID)")
         let peopleRef = receiptRef.child("people")
         peopleRef.observe(.value, with: { [weak self] snapshot in
             guard let strongSelf = self, snapshot.exists(),
@@ -284,7 +277,7 @@ class ReceiptViewModel: ObservableObject {
     
     //Items Listeners
     func setupItemListeners(_ receiptRef: DatabaseReference, receiptID: String) {
-        print("setting up item listeners for id: \(receiptID)")
+        //print("setting up item listeners for id: \(receiptID)")
         let itemsRef = receiptRef.child("items")
         itemsRef.observe(.value, with: { [weak self] snapshot in
             guard let strongSelf = self, snapshot.exists(),
@@ -347,7 +340,7 @@ class ReceiptViewModel: ObservableObject {
         
             // Append the new receipt ID
             receipts.append(receiptId)
-            print("Appending receipt ID: \(receiptId) to user ID: \(self.receipt.userId)")
+            //print("Appending receipt ID: \(receiptId) to user ID: \(self.receipt.userId)")
         
             // Update the user's receipts in Firebase
             userReceiptsRef.setValue(receipts) { error, _ in
@@ -380,7 +373,7 @@ class ReceiptViewModel: ObservableObject {
 
         if receipt.id.isEmpty {
             receipt.id = dbRef.child("receipts").childByAutoId().key ?? ""
-            print("Generated new receipt ID: \(receipt.id)")
+            //print("Generated new receipt ID: \(receipt.id)")
         }
 
         //print("Saving receipt with ID: \(receipt.id)")
@@ -420,7 +413,7 @@ class ReceiptViewModel: ObservableObject {
         }
     }
 
-    func newReceipt(name: String, tax: Double, tip: Double, price: Double, items: [Item], people: [LegitP]) {
+    func newReceipt(name: String, tax: Decimal, tip: Decimal, price: Decimal, items: [Item], people: [LegitP]) {
         let currentDate = Date()
         print("Current date: \(currentDate)")
 

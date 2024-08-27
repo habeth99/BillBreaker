@@ -10,7 +10,16 @@ import SwiftUI
 
 struct NameTag: View {
     var person: LegitP
-    var amountOwed: Double
+    var amountOwed: Decimal
+    var receipt: Receipt
+    
+    private var formattedAmount: String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.maximumFractionDigits = 2
+        formatter.minimumFractionDigits = 2
+        return formatter.string(from: NSDecimalNumber(decimal: amountOwed)) ?? "$0.00"
+    }
     
     var body: some View {
         Button(action: openLink) {
@@ -24,12 +33,11 @@ struct NameTag: View {
                                 .foregroundColor(.black)
                                 .padding(.horizontal, FatCheckTheme.Spacing.md)
                             Spacer()
-                            Text("-$\(String(format: "%.2f", amountOwed))")
+                            Text(formattedAmount)
                                 .foregroundColor(.black)
-//                                .padding(.horizontal, FatCheckTheme.Spacing.md)
                             Image(systemName: "square.and.arrow.up")
                                 .foregroundColor(.white)
-                                .padding( FatCheckTheme.Spacing.md)
+                                .padding(FatCheckTheme.Spacing.md)
                         }
                     )
             }
@@ -39,16 +47,7 @@ struct NameTag: View {
     }
     
     func openLink() {
-        // TODO: Implement openLink functionality
-        print("i would be surprised")
-    }
-}
-
-let mockperson = LegitP(name: "Jake", color: .green)
-
-struct NameTag_Previews: PreviewProvider {
-    static var previews: some View {
-        NameTag(person: mockperson, amountOwed: 20.00)
+        receipt.sharePersonalCheck(receiptId: receipt.id, personName: person.name, receiptName: receipt.name)
     }
 }
 

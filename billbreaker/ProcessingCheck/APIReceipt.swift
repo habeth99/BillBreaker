@@ -22,13 +22,13 @@ class APIReceipt: Codable, CustomStringConvertible {
     struct Item: Codable {
         let quantity: Int
         let name: String
-        let price: Double
+        let price: Decimal
         let details: String
     }
-    let subTotal: Double
-    let tax: Double
-    let tip: Double
-    let total: Double
+    let subTotal: Decimal
+    let tax: Decimal
+    let tip: Decimal
+    let total: Decimal
     let method: String?
     let cardLastFour: String?
     
@@ -37,10 +37,10 @@ class APIReceipt: Codable, CustomStringConvertible {
         address: String = "",
         dateTime: String = "",
         items: [Item] = [],
-        subTotal: Double = 0.0,
-        tax: Double = 0.0,
-        tip: Double = 0.0,
-        total: Double = 0.0,
+        subTotal: Decimal = 0.0,
+        tax: Decimal = 0.0,
+        tip: Decimal = 0.0,
+        total: Decimal = 0.0,
         method: String? = nil,
         cardLastFour: String? = nil
     ) {

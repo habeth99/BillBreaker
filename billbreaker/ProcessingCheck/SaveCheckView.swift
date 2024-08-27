@@ -28,7 +28,7 @@ struct SaveCheckView: View {
                                 Text(item.name)
                                     .padding(.vertical, FatCheckTheme.Spacing.xs)
                                 Spacer()
-                                Text("$\(item.price, specifier: "%.2f")")
+                                Text("$\(NSDecimalNumber(decimal: item.price).stringValue)")
                                     .padding(.vertical, FatCheckTheme.Spacing.xs)
                             }
                         }
@@ -106,6 +106,9 @@ struct SaveCheckView: View {
                 if success {
                     alertMessage = "Receipt saved successfully!"
                     showAlert = true
+                    router.endScanFlow()
+                    router.navigateToReceipt(id: transformer.receipt.id)
+                    
                 } else {
                     alertMessage = "Failed to save receipt. Please try again."
                     showAlert = true

@@ -57,8 +57,9 @@ struct SettingsView: View {
                     
                     Section{
                         Button(action: {
-                            // some delete account action
-                            print("dis button works")
+                            Task {
+                                await viewModel.deleteAccount()
+                            }
                         }) {
                             Text("Delete Account")
                         }
@@ -78,6 +79,10 @@ struct SettingsView: View {
             }
         }
     }
+//    funce viewDeletHelper() {
+//
+//    }
+    
 }
 
 

@@ -43,6 +43,7 @@ class UserViewModel: ObservableObject {
         }
     }
     
+    
     private func updateAuthState(userId: String?, isAuthenticated: Bool) async {
         await MainActor.run {
             self.userID = userId
@@ -132,9 +133,52 @@ class UserViewModel: ObservableObject {
         writeUserToFirebase(currentUser)
     }
     
-    func deleteAccount() {
-        //TODO
+    // function that deletes the users account but not receipts yet
+    func deleteAccount() async {
+        print("Starting account deletion process")
+        
+        guard let currentUser = Auth.auth().currentUser else {
+            print("Error: No authenticated user found")
+            return
+        }
+        
+        let userId = currentUser.uid
+        print("Authenticated user ID: \(userId)")
+        
+        // 1. Delete user data from Firebase Realtime Database
+        do {
+            print("Attempting to delete user data from Realtime Database")
+            try await dbRef.child("users").child(userId).removeValue()
+            print("User data successfully deleted from Realtime Database")
+        } catch {
+            print("Error deleting user data from Realtime Database: \(error.localizedDescription)")
+            return
+        }
+        
+        // 2. Delete the user's authentication account
+        do {
+            print("Attempting to delete user authentication account")
+            try await currentUser.delete()
+            print("User authentication account successfully deleted")
+            
+            // 3. Update the app state
+            await updateAuthState(userId: nil, isAuthenticated: false)
+            print("App state updated: User signed out")
+            
+            // 4. Clear local user data
+            await MainActor.run {
+                self.currentUser = nil
+                self.isUserDataLoaded = false
+            }
+            print("Local user data cleared")
+            
+        } catch {
+            print("Error deleting user authentication account: \(error.localizedDescription)")
+        }
     }
+    
+    
+    //====================================
     
     func printCurrentUserId() {
         if let currentUser = self.currentUser {
@@ -144,26 +188,18 @@ class UserViewModel: ObservableObject {
         }
     }
     
-//    func getUser() -> String {
-//        guard let currUserId = self.currentUser?.id else {
-//            print("No current user is logged in.")
-//            return ""
-//        }
-//        return currUserId
-//    }
-    
     func fetchUser() {
         guard let userID = userID else {
             print("UserID is nil.")
             return
         }
 
-        print("Fetching user data for userID: \(userID)")
+        //print("Fetching user data for userID: \(userID)")
 
         dbRef.child("users").child(userID).observeSingleEvent(of: .value) { [weak self] snapshot in
             guard let self = self else { return }
             
-            print("User data snapshot: \(snapshot)")
+            //print("User data snapshot: \(snapshot)")
 
             guard snapshot.exists(), let value = snapshot.value as? [String: Any] else {
                 print("Snapshot does not exist or contain valid data.")
@@ -172,7 +208,7 @@ class UserViewModel: ObservableObject {
             do {
                 let data = try JSONSerialization.data(withJSONObject: value)
                 let user = try JSONDecoder().decode(User.self, from: data)
-                print("Decoded user: \(user)")
+                //print("Decoded user: \(user)")
                 Task { @MainActor in
                     self.currentUser = user
                     self.isUserAuthenticated = true

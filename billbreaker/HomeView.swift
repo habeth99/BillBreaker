@@ -16,26 +16,26 @@ struct HomeView: View {
     
     var body: some View {
         Group {
-            if rviewModel.hasAttemptedFetch && rviewModel.receiptList.isEmpty {
+            if //rviewModel.hasAttemptedFetch &&
+                rviewModel.receiptList.isEmpty {
                 EmptyStateView()
             } else {
                 ReceiptListView(rviewModel: rviewModel)
             }
         }
         .navigationTitle("Fat Check")
-//        .toolbar {
-//            ToolbarItem(placement: .topBarLeading) {
-//                Text("Fat Check")
-//                    .font(.largeTitle.bold())
-//                    .padding(.top, -15) // Adjust this value as needed
+//        .onAppear {
+//            if !rviewModel.hasAttemptedFetch {
+//                Task {
+//                    await rviewModel.fetchUserReceipts()
+//                }
 //            }
 //        }
         .onAppear {
-            if !rviewModel.hasAttemptedFetch {
-                Task {
-                    await rviewModel.fetchUserReceipts()
-                }
+            Task {
+                await rviewModel.fetchUserReceipts()
             }
+            
         }
     }
 }

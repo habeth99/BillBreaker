@@ -55,8 +55,68 @@ class ReceiptProcessor: ObservableObject {
         return dbRef.child("receipts").child(receiptId).child("persons").childByAutoId().key ?? ""
     }
     
+//    func saveReceipt2(completion: @escaping (Bool) -> Void) {
+//
+//        if receipt.id.isEmpty {
+//            receipt.id = dbRef.child("receipts").childByAutoId().key ?? ""
+//            print("Generated new receipt ID: \(receipt.id)")
+//        }
+//        
+//        receipt.items = receipt.items?.map { item in
+//            var updatedItem = item
+//            if updatedItem.id.isEmpty {
+//                updatedItem.id = dbRef.child("receipts").child(receipt.id).child("items").childByAutoId().key ?? ""
+//            }
+//            return updatedItem
+//        }
+//        
+//        receipt.people = receipt.people?.map { person in
+//            var updatedPerson = person
+//            if updatedPerson.id.isEmpty {
+//                updatedPerson.id = dbRef.child("receipts").child(receipt.id).child("people").childByAutoId().key ?? ""
+//            }
+//            return updatedPerson
+//        }
+//        
+//        receipt.userId = User.getUserdId() ?? ""
+//
+//        //print("Saving receipt with ID: \(receipt.id)")
+//        
+//        let receiptData: [String: Any] = [
+//            "id": receipt.id,
+//            "userId": receipt.userId,
+//            "name": receipt.name,
+//            "date": receipt.date,
+//            "createdAt": receipt.createdAt,
+//            "tax": receipt.tax,
+//            "tip": receipt.tip,
+//            "items": receipt.items?.map { item in
+//                ["id": item.id, "name": item.name, "price": item.price]
+//            } ?? [],
+//            "people": receipt.people?.map { $0.toDict() } ?? []
+//        ]
+//
+//        //print("Receipt data to save: \(receiptData)")
+//
+//        dbRef.child("receipts").child(receipt.id).setValue(receiptData) { error, _ in
+//            if let error = error {
+//                print("Error saving receipt: \(error.localizedDescription)")
+//                completion(false)
+//            } else {
+//                print("Receipt saved successfully")
+//                self.saveReceiptToUser(receiptId: self.receipt.id) { success in
+//                    if success {
+//                        print("Receipt ID added to user successfully.")
+//                        completion(true)
+//                    } else {
+//                        print("Failed to add receipt ID to user.")
+//                        completion(false)
+//                    }
+//                }
+//            }
+//        }
+//    }
     func saveReceipt2(completion: @escaping (Bool) -> Void) {
-
         if receipt.id.isEmpty {
             receipt.id = dbRef.child("receipts").childByAutoId().key ?? ""
             print("Generated new receipt ID: \(receipt.id)")
@@ -77,9 +137,9 @@ class ReceiptProcessor: ObservableObject {
             }
             return updatedPerson
         }
-
-        //print("Saving receipt with ID: \(receipt.id)")
         
+        receipt.userId = User.getUserdId() ?? ""
+
         let receiptData: [String: Any] = [
             "id": receipt.id,
             "userId": receipt.userId,
@@ -91,10 +151,13 @@ class ReceiptProcessor: ObservableObject {
             "items": receipt.items?.map { item in
                 ["id": item.id, "name": item.name, "price": item.price]
             } ?? [],
-            "people": receipt.people?.map { $0.toDict() } ?? []
+            "people": receipt.people?.map { person in
+                var personDict = person.toDict()
+                // Always include userId, even if it's an empty string
+                personDict["userId"] = person.userId
+                return personDict
+            } ?? []
         ]
-
-        //print("Receipt data to save: \(receiptData)")
 
         dbRef.child("receipts").child(receipt.id).setValue(receiptData) { error, _ in
             if let error = error {
@@ -140,13 +203,52 @@ class ReceiptProcessor: ObservableObject {
             }
             
             return LegitP(
-                id: "",
+                id: createPersonId(receiptId: receipt.id),
                 name: guestName,
                 userId: "",
                 claims: [],
                 paid: false,
                 color: color
             )
+        }
+        
+        //matchCurrentUser()
+        Task {
+            await matchCurrentUser()
+        }
+    }
+    
+    func matchCurrentUser() async {
+        guard let currentUser = Auth.auth().currentUser else {
+            print("No current user")
+            return
+        }
+
+        do {
+            let snapshot = try await Database.database().reference()
+                .child("users")
+                .child(currentUser.uid)
+                .getData()
+            
+            guard let userData = snapshot.value as? [String: Any],
+                  let currentUserName = userData["name"] as? String else {
+                print("Unable to fetch current user's name")
+                return
+            }
+
+            if let index = receipt.people?.firstIndex(where: { $0.name.lowercased() == currentUserName.lowercased() }) {
+                receipt.people?[index].userId = currentUser.uid
+                print("Matched current user: \(currentUserName) with ID: \(currentUser.uid)")
+            } else {
+                print("No match found for current user: \(currentUserName)")
+            }
+            
+            // Notify observers that the receipt has been updated
+            await MainActor.run {
+                objectWillChange.send()
+            }
+        } catch {
+            print("Error fetching user data: \(error.localizedDescription)")
         }
     }
     
