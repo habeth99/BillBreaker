@@ -12,17 +12,11 @@ struct ItemsSectionView: View {
     @ObservedObject var rviewModel: ReceiptViewModel
     
     var body: some View {
-        VStack(alignment: .leading) {
-            ForEach(rviewModel.receipt.items ?? [], id: \.id) { item in
-                let users = self.getUsersForItem(item: item)
-                
-                ItemRowView(item: item, users: users, rviewModel: rviewModel)
-            }
+        ForEach(rviewModel.receipt.items ?? [], id: \.id) { item in
+            let users = self.getUsersForItem(item: item)
+            
+            ItemRowView(item: item, users: users, rviewModel: rviewModel)
         }
-        .background(Color.white)
-        .cornerRadius(12)
-        .frame(maxWidth: .infinity) // Adjust width dynamically
-        .shadow(radius: 1)
     }
     
     private func getUsersForItem(item: Item) -> [LegitP] {

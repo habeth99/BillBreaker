@@ -14,32 +14,33 @@ struct BillDetailsView: View {
     
     var body: some View {
         ZStack {
-            // Make background gray
             Color.gray.opacity(0.2).edgesIgnoringSafeArea(.all)
-            ScrollView {
-                VStack(alignment: .leading, spacing: 10) {
-                    // MARK: Header
-                    Text("Items")
-                        .font(.title)
-                        .fontWeight(.semibold)
-                        .foregroundColor(Color(.black))
+            
+            List {
+                Section(header: Text("Items")) {
                     ItemsSectionView(rviewModel: rviewModel)
-                    PeopleSectionView(rviewModel: rviewModel)
                 }
-                .padding(EdgeInsets(top: 30, leading: 19, bottom: 0, trailing: 24))
+                
+                Section(header: Text("Friends")) {
+                    PeopleSectionView(rviewModel: rviewModel)
+                        .listRowInsets(EdgeInsets())
+                        .listRowBackground(Color.clear)
+                        .listRowSeparator(.hidden)
+                }
             }
         }
         .navigationBarTitle(rviewModel.receipt.name, displayMode: .automatic)
-        .toolbar{
+        .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 ShareButtonView(rviewModel: rviewModel)
             }
         }
         .onAppear {
-             rviewModel.setReceipt(receiptId: receiptId)
+            rviewModel.setReceipt(receiptId: receiptId)
         }
     }
 }
+
 
 // Preview
 //struct BillDetailsView_Previews: PreviewProvider {
@@ -58,10 +59,10 @@ struct BillDetailsView: View {
 //
 //        let mockReceipt = Receipt(id: "1", userId: "user1", name: "Test Receipt", date: "2024-05-28", createdAt: "12:00 PM", tax: 2.0, items: mockItems, people: mockPeople)
 //
-//        let mockViewModel = ReceiptViewModel(user: UserViewModel())
+//        let mockViewModel = ReceiptViewModel()
 //        mockViewModel.receipt = mockReceipt
 //
-//        return BillDetailsView(rviewModel: mockViewModel, receipt: mockReceipt)
+//        return BillDetailsView(rviewModel: mockViewModel, receiptId: mockReceipt.id)
 //            .environmentObject(UserViewModel())
 //    }
 //}

@@ -51,15 +51,12 @@ struct MainTabView: View {
                 AddButton(action: {
                     router.navToCamera()
                 })
-                //.padding(),
-                //alignment: .bottom
                 .padding(.trailing, 22)
                 .padding(.bottom, -12)
             )
             
             if router.isScanFlowActive {
                 ScanFlowView(transformer: transformer)
-                    //.environmentObject(router)
                     .transition(.opacity)
                     .zIndex(1)
             }
@@ -70,29 +67,9 @@ struct MainTabView: View {
     }
 }
 
-//struct ScanFlowView: View {
-//    @EnvironmentObject var router: Router
-//    @ObservedObject var transformer: ReceiptProcessor
-//    
-//    var body: some View {
-//        NavigationStack(path: $router.scanPath) {
-//            ReviewView(transformer: transformer)
-//                .navigationDestination(for: ScanRoute.self) { route in
-//                    switch route {
-//                    case .items:
-//                        ReviewView(transformer: transformer)
-//                    case .people:
-//                        AddPeopleView(transformer: transformer)
-//                    case .review:
-//                        SaveCheckView(transformer: transformer)
-//                    }
-//                }
-//        }
-//        .transition(.opacity)
-//    }
-//}
 struct ScanFlowView: View {
     @EnvironmentObject var router: Router
+    @EnvironmentObject var viewModel: UserViewModel
     @ObservedObject var transformer: ReceiptProcessor
     
     var body: some View {
@@ -101,7 +78,7 @@ struct ScanFlowView: View {
                 .navigationDestination(for: ScanRoute.self) { route in
                     switch route {
                     case .people:
-                        AddPeopleView(transformer: transformer)
+                        AddPeopleView(userName: viewModel.currentUser?.name ?? "FatCheck User", transformer: transformer)
                     case .review:
                         SaveCheckView(transformer: transformer)
                     case .items:

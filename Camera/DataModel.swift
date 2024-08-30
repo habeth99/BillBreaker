@@ -9,14 +9,69 @@ import Vision
 import Combine
 import CoreImage
 
+//final class DataModel: ObservableObject {
+//    let camera = Camera()
+//    let photoCollection = PhotoCollection(smartAlbum: .smartAlbumUserLibrary)
+//    var isPhotosLoaded = false
+//    private let apiService = APIService.shared
+//    private let textRecognitionService = TextRecognitionService.shared
+//    @Published var capturedImage: UIImage?
+//    @Published var showFullScreenImage: Bool = false
+//    
+//    //@Published var viewfinderImage: Image?
+//    @Published var thumbnailImage: Image?
+//    @Published var recognizedText: String = ""
+//    @Published var prices: [String] = []
+//    @Published var processedReceipt = APIReceipt()
+//    @Published var isProcessing: Bool = false
+//    @Published var isProcessingComplete: Bool = false
+//    @Published var viewfinderImage: Image?
+//    private var viewfinderCancellable: AnyCancellable?
+//    private let context = CIContext()
+//    
+//    @Published var processingTime: TimeInterval = 0
+//    private var processingStartTime: Date?
+//    private var processingTimer: Timer?
+//    
+//    init() {
+//        Task {
+//            await handleCameraPreviews()
+//        }
+//        
+//        Task {
+//            await handleCameraPhotos()
+//        }
+//    }
+//
+//    func handleCameraPreviews() async {
+//        let imageStream = camera.previewStream
+//            .map { $0.image }
+//
+//        for await image in imageStream {
+//            await MainActor.run {
+//                viewfinderImage = image
+//            }
+//        }
+//    }
+//    
+//    @MainActor
+//    func handleCameraPhotos() async {
+//        let unpackedPhotoStream = camera.photoStream
+//            .compactMap { self.unpackPhoto($0) }
+//        
+//        for await photoData in unpackedPhotoStream {
+//            await processPhoto(imageData: photoData.imageData)
+//        }
+//    }
 final class DataModel: ObservableObject {
     let camera = Camera()
     let photoCollection = PhotoCollection(smartAlbum: .smartAlbumUserLibrary)
     var isPhotosLoaded = false
     private let apiService = APIService.shared
     private let textRecognitionService = TextRecognitionService.shared
-    
-    //@Published var viewfinderImage: Image?
+    @Published var capturedImage: UIImage?
+    @Published var showFullScreenImage: Bool = false
+
     @Published var thumbnailImage: Image?
     @Published var recognizedText: String = ""
     @Published var prices: [String] = []
@@ -26,18 +81,16 @@ final class DataModel: ObservableObject {
     @Published var viewfinderImage: Image?
     private var viewfinderCancellable: AnyCancellable?
     private let context = CIContext()
-    
-    //possible percent based progress bar solution
- //   @Published var percent: Double = 0.00
+
     @Published var processingTime: TimeInterval = 0
     private var processingStartTime: Date?
     private var processingTimer: Timer?
-    
+
     init() {
         Task {
             await handleCameraPreviews()
         }
-        
+
         Task {
             await handleCameraPhotos()
         }
@@ -53,16 +106,23 @@ final class DataModel: ObservableObject {
             }
         }
     }
-    
+
     @MainActor
     func handleCameraPhotos() async {
         let unpackedPhotoStream = camera.photoStream
             .compactMap { self.unpackPhoto($0) }
-        
+
         for await photoData in unpackedPhotoStream {
+            if let image = UIImage(data: photoData.imageData) {
+                self.capturedImage = image
+                self.showFullScreenImage = true
+            }
             await processPhoto(imageData: photoData.imageData)
         }
     }
+
+
+
 
     func processPhoto(imageData: Data) async {
         await MainActor.run {

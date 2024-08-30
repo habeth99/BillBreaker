@@ -15,27 +15,42 @@ struct ReviewView: View {
 
     var body: some View {
         ZStack {
-            //FatCheckTheme.Colors.accentColor.edgesIgnoringSafeArea(.all)
             VStack(spacing: 0) {
                 List {
-                    ForEach(transformer.receipt.items ?? [], id: \.id) { item in
-                        EditableItemView(
-                            item: item,
-                            isEditing: editingItemId == item.id,
-                            onEdit: { editingItemId = item.id },
-                            onEndEdit: { updatedItem in
-                                editingItemId = nil
-                                updateItem(updatedItem)
-                            }
-                        )
+                    Section {
+                        ForEach(transformer.receipt.items ?? [], id: \.id) { item in
+                            EditableItemView(
+                                item: item,
+                                isEditing: editingItemId == item.id,
+                                onEdit: { editingItemId = item.id },
+                                onEndEdit: { updatedItem in
+                                    editingItemId = nil
+                                    updateItem(updatedItem)
+                                }
+                            )
+                        }
+                        .onDelete(perform: deleteItems)
                     }
-                    .onDelete(perform: deleteItems)
+                    
+                    Section {
+                        Button(action: {
+                            // navigates "back" to the camera
+                            router.navToCamera()
+                            //gets rid of items review page
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                router.endScanFlow()
+                            }
+                        }) {
+                            Text("Re-scan")
+                                .foregroundColor(.red)
+                        }
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .listRowBackground(Color.clear)
+                    }
+                    .padding(FatCheckTheme.Spacing.sm)
                     
                 }
-                //.listStyle(PlainListStyle())
-                //.padding(FatCheckTheme.Spacing.sm)
             }
-            //.background(FatCheckTheme.Colors.accentColor)
             
             AddButton(action: {
                 transformer.addItem(newItem: Item())
@@ -43,11 +58,14 @@ struct ReviewView: View {
             
         }
         .navigationBarItems(
+            leading: Button("Cancel") {
+                router.endScanFlow()
+            },
             trailing: Button("Next") {
                 router.navigateInScanFlow(to: .people)
             }
         )
-        .navigationBarTitle("Menu Items", displayMode: .inline)
+        .navigationBarTitle("Items", displayMode: .inline)
         .accentColor(.blue)
     }
 
@@ -58,86 +76,6 @@ struct ReviewView: View {
     private func updateItem(_ updatedItem: Item) {
         if let index = transformer.receipt.items?.firstIndex(where: { $0.id == updatedItem.id }) {
             transformer.receipt.items?[index] = updatedItem
-        }
-    }
-}
-
-
-struct EditableItemView: View {
-    let item: Item
-    let isEditing: Bool
-    let onEdit: () -> Void
-    let onEndEdit: (Item) -> Void
-
-    var body: some View {
-        if isEditing {
-            EditingItemView(item: item, onEndEdit: onEndEdit)
-        } else {
-            DisplayItemView(item: item, onEdit: onEdit)
-        }
-    }
-}
-
-struct DisplayItemView: View {
-    let item: Item
-    let onEdit: () -> Void
-
-    var body: some View {
-        HStack {
-            Text(item.name)
-            Spacer()
-            Text("$\(item.price)")
-        }
-        .contentShape(Rectangle())
-        .onTapGesture(perform: onEdit)
-        .padding(.vertical, 8)
-    }
-}
-
-struct EditingItemView: View {
-    @State private var editedName: String
-    @State private var editedPrice: Decimal
-    let item: Item
-    let onEndEdit: (Item) -> Void
-
-    init(item: Item, onEndEdit: @escaping (Item) -> Void) {
-        self.item = item
-        self.onEndEdit = onEndEdit
-        _editedName = State(initialValue: item.name)
-        _editedPrice = State(initialValue: item.price)
-    }
-
-    var body: some View {
-        HStack {
-            TextField("Name", text: $editedName)
-            TextField("Price", value: $editedPrice, formatter: NumberFormatter())
-                .keyboardType(.decimalPad)
-        }
-        .textFieldStyle(RoundedBorderTextFieldStyle())
-        .padding(.vertical, 8)
-        .onDisappear {
-            let updatedItem = Item(id: item.id, name: editedName, price: editedPrice)
-            onEndEdit(updatedItem)
-        }
-    }
-}
-
-
-//previewwwwww
-struct ReviewView_Previews: PreviewProvider {
-    static var previews: some View {
-        let mockTransformer = ReceiptProcessor()
-        mockTransformer.receipt.items = [
-            Item(id: "1", name: "Pizza", price: 10.99),
-            Item(id: "2", name: "Salad", price: 7.99),
-            Item(id: "3", name: "Soda", price: 2.50)
-        ]
-        
-        let mockRouter = Router()
-        
-        return NavigationView {
-            ReviewView(transformer: mockTransformer)
-                .environmentObject(mockRouter)
         }
     }
 }

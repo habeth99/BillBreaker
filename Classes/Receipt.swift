@@ -163,116 +163,129 @@ class Receipt: Codable, Identifiable, ObservableObject, CustomStringConvertible 
         return total
     }
     
-//    func amtOwed() -> Decimal {
-//        guard let people = people, let items = items else {
-//            return Decimal(0)
-//        }
-//
-//        var totalOwed = Decimal(0)
-//
-//        for person in people {
-//            if person.paid {
-//                continue  // Skip this person if they've already paid
-//            }
-//
-//            let claimedItemsTotalPrice = person.claims.compactMap { claimedItemId -> Decimal? in
-//                guard let item = items.first(where: { $0.id == claimedItemId }) else {
-//                    return nil
-//                }
-//                let peopleClaimingItem = Decimal(countPeopleClaiming(itemID: claimedItemId))
-//                return item.price / peopleClaimingItem
-//            }.reduce(Decimal(0), +)
-//
-//            totalOwed += claimedItemsTotalPrice
-//        }
-//
-//        // Calculate unpaid people's share of tax and tip
-//        let unpaidPeopleCount = Decimal(people.filter { !$0.paid }.count)
-//        let totalPeopleCount = Decimal(people.count)
-//        
-//        if totalPeopleCount > 0 {
-//            let taxAndTipShare = (tax + tip) * unpaidPeopleCount / totalPeopleCount
-//            totalOwed += taxAndTipShare
-//        }
-//
-//        return totalOwed
-//    }
     func amtOwed() -> Decimal {
         guard let people = people, let items = items else {
             return Decimal(0)
         }
 
-        var totalOwed = Decimal(0)
-
-        for person in people {
-            // Skip this person if they've already paid or if they are the user
-            if person.paid || !person.userId.isEmpty {
-                continue
-            }
-
-            let claimedItemsTotalPrice = person.claims.compactMap { claimedItemId -> Decimal? in
-                guard let item = items.first(where: { $0.id == claimedItemId }) else {
-                    return nil
-                }
-                let peopleClaimingItem = Decimal(countPeopleClaiming(itemID: claimedItemId))
-                return item.price / peopleClaimingItem
-            }.reduce(Decimal(0), +)
-
-            totalOwed += claimedItemsTotalPrice
-        }
-
-        // Calculate share of tax and tip for unpaid, non-user people
-        let eligiblePeople = people.filter { !$0.paid && $0.userId.isEmpty }
-        let eligiblePeopleCount = Decimal(eligiblePeople.count)
-        let totalPeopleCount = Decimal(people.count)
+        let totalAmount = items.reduce(Decimal(0)) { $0 + $1.price } + tax + tip
         
-        if totalPeopleCount > 0 {
-            let taxAndTipShare = (tax + tip) * eligiblePeopleCount / totalPeopleCount
-            totalOwed += taxAndTipShare
+        // Check if any items are claimed
+        let totalClaimedItems = people.flatMap { $0.claims }.count
+        
+        if totalClaimedItems == 0 {
+            // If no items are claimed, return the full amount
+            return totalAmount
         }
-
-        return totalOwed
+        
+        // Find the user (assuming user has a non-empty userId)
+        let user = people.first { !$0.userId.isEmpty }
+        
+        if let user = user, !user.claims.isEmpty {
+            // If the user has claimed items, subtract their amount from the total
+            let userAmount = calculatePersonAmount(user, items: items)
+            return totalAmount - userAmount
+        }
+        
+        // In any other situation, subtract amounts of paid persons
+        let paidAmount = people.filter { $0.paid || !$0.userId.isEmpty }
+                               .reduce(Decimal(0)) { $0 + calculatePersonAmount($1, items: items) }
+        
+        return totalAmount - paidAmount
     }
     
+    private func calculatePersonAmount(_ person: LegitP, items: [Item]) -> Decimal {
+        let claimedItemsAmount = person.claims.compactMap { claimedItemId -> Decimal? in
+            guard let item = items.first(where: { $0.id == claimedItemId }) else {
+                return nil
+            }
+            let peopleClaimingItem = Decimal(countPeopleClaiming(itemID: claimedItemId))
+            return item.price / peopleClaimingItem
+        }.reduce(Decimal(0), +)
+        
+        let personShare = claimedItemsAmount / items.reduce(Decimal(0)) { $0 + $1.price }
+        let taxShare = personShare * tax
+        let tipShare = personShare * tip
+        
+        return claimedItemsAmount + taxShare + tipShare
+    }
+
+    func calculateStillOwed() -> Decimal {
+        guard let people = people, let items = items else {
+            return Decimal(0)
+        }
+
+        // Calculate the total of all items, tax, and tip
+        let totalAmount = items.reduce(Decimal(0)) { $0 + $1.price } + tax + tip
+
+        var amountPaid = Decimal(0)
+
+        // Find the user (assuming user has a non-empty userId)
+        if let user = people.first(where: { !$0.userId.isEmpty }) {
+            if !user.claims.isEmpty {
+                // If the user has claimed items, subtract their amount
+                amountPaid += calculatePersonAmount2(user)
+            }
+        }
+
+        // Subtract amounts for all paid people (excluding the user if already counted)
+        for person in people {
+            if person.paid && person.userId.isEmpty {
+                amountPaid += calculatePersonAmount2(person)
+            }
+        }
+
+        // Calculate the amount still owed
+        let stillOwed = totalAmount - amountPaid
+
+        // Ensure we don't return a negative value
+        return max(stillOwed, Decimal(0))
+    }
+
+    private func calculatePersonAmount2(_ person: LegitP) -> Decimal {
+        guard let items = items else { return Decimal(0) }
+
+        let claimedItemsAmount = person.claims.compactMap { claimedItemId -> Decimal? in
+            guard let item = items.first(where: { $0.id == claimedItemId }) else {
+                return nil
+            }
+            let peopleClaimingItem = Decimal(countPeopleClaiming(itemID: claimedItemId))
+            return item.price / peopleClaimingItem
+        }.reduce(Decimal(0), +)
+        
+        let totalItemsPrice = items.reduce(Decimal(0)) { $0 + $1.price }
+        let personShare = claimedItemsAmount / totalItemsPrice
+        let taxShare = personShare * tax
+        let tipShare = personShare * tip
+        
+        return claimedItemsAmount + taxShare + tipShare
+    }
+
     func amountOwedByPerson(_ personId: String) -> Decimal {
-
-        print("Calculating amount owed for person: \(personId)")
-        //print("People in receipt: \(people?.map { "\($0.id): \($0.name)" } ?? [])")
-        //print("Items in receipt: \(items?.map { "\($0.id): \($0.name)" } ?? [])")
-        print("Subtotal: \(subTotal)")
-
         guard let person = people?.first(where: { $0.id == personId }) else {
-            print("Person not found")
             return 0.0
         }
-        guard let items = items, !items.isEmpty else {
-            print("Items array is empty or nil")
+        
+        if person.claims.isEmpty {
+            // If this person has no claims, return 0
             return 0.0
-        }
-
-        if subTotal <= 0 {
-            subTotal = calculatedSubTotal
-            print("Subtotal was zero or negative. Recalculated subtotal: \(subTotal)")
         }
         
         let claimedItemsTotalPrice = person.claims.reduce(Decimal(0)) { total, claimedItemId in
-            guard let item = items.first(where: { $0.id == claimedItemId }) else {
-                print("Item not found for claim \(claimedItemId)")
+            guard let item = items?.first(where: { $0.id == claimedItemId }) else {
                 return total
             }
             let peopleClaimingItem = max(countPeopleClaiming(itemID: claimedItemId), 1)
             let itemShare = item.price / Decimal(peopleClaimingItem)
-            //print("Item \(item.name): price = \(item.price), people claiming = \(peopleClaimingItem), share = \(itemShare)")
             return total + itemShare
         }
 
-        let personShare = claimedItemsTotalPrice / subTotal
+        let totalClaimedPrice = (items ?? []).reduce(Decimal(0)) { $0 + $1.price }
+        let personShare = totalClaimedPrice > 0 ? claimedItemsTotalPrice / totalClaimedPrice : 0
         let taxShare = personShare * tax
         let tipShare = personShare * tip
-        
-        let totalOwed = claimedItemsTotalPrice + taxShare + tipShare
-        //print("Person \(personId): claimed total = \(claimedItemsTotalPrice), tax share = \(taxShare), tip share = \(tipShare), total owed = \(totalOwed)")
-        return totalOwed
+
+        return claimedItemsTotalPrice + taxShare + tipShare
     }
     
     var calculatedSubTotal: Decimal {
@@ -283,18 +296,6 @@ class Receipt: Codable, Identifiable, ObservableObject, CustomStringConvertible 
         return (people ?? [])
             .filter { $0.paid }
             .reduce(0) { $0 + amountOwedByPerson($1.id) }
-    }
-
-    func calculateStillOwed() -> Decimal {
-        //print("Calculating still owed for receipt \(id)")
-        //print("People: \(people?.map { "\($0.id): \($0.name) (paid: \($0.paid))" } ?? [])")
-        //print("Calculated subtotal: \(calculatedSubTotal)")
-        
-        let stillOwed = (people ?? [])
-            .filter { !$0.paid }
-            .reduce(0) { $0 + amountOwedByPerson($1.id) }
-        //print("Still owed: \(stillOwed)")
-        return stillOwed
     }
     
     func countClaimedItems() -> Decimal {
@@ -313,7 +314,6 @@ class Receipt: Codable, Identifiable, ObservableObject, CustomStringConvertible 
         
         return dateFormatter.date(from: self.date) ?? Date()
     }
-    
     
     func sharePersonalCheck(receiptId: String, personName: String, receiptName: String) {
         // Create a web URL for your app

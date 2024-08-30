@@ -27,11 +27,15 @@ struct ReceiptListView: View {
             VStack (spacing: 0) {
                 ForEach(rviewModel.receiptList, id: \.id) { receipt in
                     CheckCard(receipt: receipt)
+                        .padding(.horizontal, FatCheckTheme.Spacing.sm)
                         .padding(.bottom, FatCheckTheme.Spacing.sm)
                 }
             }
-            .padding(.horizontal, FatCheckTheme.Spacing.sm)
+            //.padding(.horizontal, FatCheckTheme.Spacing.md)
         }
-        .background(Color.gray.opacity(0.2))
+        .background(Color(.systemGroupedBackground))
+        .refreshable {
+            await rviewModel.fetchUserReceipts()
+        }
     }
 }

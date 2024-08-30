@@ -57,6 +57,7 @@ class LegitP: Identifiable, ObservableObject, Codable {
             "name": self.name,
             "userId": self.userId,
             "claims": self.claims,
+            "paid": self.paid,
             "color": LegitP.colorToStr[self.color]!
         ]
     }

@@ -55,7 +55,7 @@ struct CheckCard: View {
             }
             .padding(FatCheckTheme.Spacing.md)
             .background(
-                RoundedRectangle(cornerRadius: FatCheckTheme.Spacing.md)
+                RoundedRectangle(cornerRadius: FatCheckTheme.Spacing.sm)
                     .fill(FatCheckTheme.Colors.white)
             )
         }

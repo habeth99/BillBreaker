@@ -15,7 +15,7 @@ struct StatboardView: View {
         ZStack {
             //FatCheckTheme.Colors.accentColor
             //Color.gray.opacity(0.1)
-            RoundedRectangle(cornerRadius: FatCheckTheme.Spacing.md)
+            RoundedRectangle(cornerRadius: FatCheckTheme.Spacing.sm)
                 .fill(FatCheckTheme.Colors.white)
                 .frame(maxWidth: .infinity, maxHeight: FatCheckTheme.Size.sm)
 

@@ -20,40 +20,45 @@ struct SaveCheckView: View {
             Color(.systemGroupedBackground)
                 .ignoresSafeArea()
             
-            VStack {
-                List {
-                    Section(header: Text("Items")) {
-                        ForEach(Array(transformer.receipt.items!.enumerated()), id: \.offset) { index, item in
-                            HStack {
-                                Text(item.name)
-                                    .padding(.vertical, FatCheckTheme.Spacing.xs)
-                                Spacer()
-                                Text("$\(NSDecimalNumber(decimal: item.price).stringValue)")
-                                    .padding(.vertical, FatCheckTheme.Spacing.xs)
-                            }
-                        }
-                    }
-                    Section(header: Text("Friends")) {
-                        if (transformer.receipt.people?.count ?? 0) > 1 {
-                            ForEach(transformer.receipt.people!, id: \.id) { person in
-                                Text(person.name)
-                                    .padding(.vertical, FatCheckTheme.Spacing.xs)
-                            }
-                        } else {
-                            Text("Warning: No friends added, please add friends")
-                                .foregroundColor(.red)
+            List {
+                Section(header: Text("Items")) {
+                    ForEach(Array(transformer.receipt.items!.enumerated()), id: \.offset) { index, item in
+                        HStack {
+                            Text(item.name)
+                                .padding(.vertical, FatCheckTheme.Spacing.xs)
+                            Spacer()
+                            Text(item.price.formatted(.currency(code: "USD").precision(.fractionLength(2))))
                                 .padding(.vertical, FatCheckTheme.Spacing.xs)
                         }
                     }
                 }
-                .listStyle(InsetGroupedListStyle())
+                Section(header: Text("Friends")) {
+                    if (transformer.receipt.people?.count ?? 0) > 1 {
+                        ForEach(transformer.receipt.people!, id: \.id) { person in
+                            Text(person.name)
+                                .padding(.vertical, FatCheckTheme.Spacing.xs)
+                        }
+                    } else {
+                        Text("Warning: No friends added, please add friends")
+                            .foregroundColor(.red)
+                            .padding(.vertical, FatCheckTheme.Spacing.xs)
+                    }
+                }
                 
-                Spacer()
-                saveButton
-                    .padding(.horizontal, FatCheckTheme.Spacing.sm)
-                cancelButton
-                    .padding(.horizontal, FatCheckTheme.Spacing.sm)
+                Section {
+                    Button(action: cancel) {
+                        Text("Cancel")
+                            .foregroundColor(.red)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                    }
+                    .listRowBackground(Color.clear)
+                }
             }
+            .listStyle(InsetGroupedListStyle())
+            .navigationBarItems(
+                trailing: Button("Save", action: save)
+            )
         }
         .navigationBarTitle("Review", displayMode: .inline)
         .alert(isPresented: $showAlert) {
@@ -69,29 +74,6 @@ struct SaveCheckView: View {
                 }
             }
         )
-    }
-    
-    private var cancelButton: some View {
-        Button(action: cancel) {
-            Text("Cancel")
-                .foregroundColor(.white)
-                .frame(maxWidth: .infinity)
-                .padding()
-                .background(FatCheckTheme.Colors.primaryColor)
-                .cornerRadius(10)
-        }
-    }
-    
-    private var saveButton: some View {
-        Button(action: save) {
-            Text("Save")
-                .foregroundColor(.white)
-                .frame(maxWidth: .infinity)
-                .padding()
-                .background(FatCheckTheme.Colors.primaryColor)
-                .cornerRadius(10)
-        }
-        .disabled(isSaving)
     }
     
     private func cancel() {

@@ -68,13 +68,13 @@ struct ItemRowView: View {
         VStack {
             HStack {
                 Text(item.name)
-                    .padding()
+                    .padding(.vertical, FatCheckTheme.Spacing.xs)
                 ForEach(users ?? [], id: \.id) { person in
                     if (!users.isEmpty) {
                         Circle()
                             .fill(person.color)
                             .frame(width: 19, height: 19)
-                            .padding(.vertical)
+                            //.padding(.vertical, FatCheckTheme.Spacing.sm)
                             .overlay(
                                 Text(person.name.prefix(1)) // Display only the first letter to fit the circle
                                     .font(.caption)
@@ -84,7 +84,7 @@ struct ItemRowView: View {
                 }
                 Spacer()
                 Text(formattedPrice)
-                    .padding()
+                    .padding(.vertical, FatCheckTheme.Spacing.xs)
             }
             .onTapGesture {
                 if rviewModel.selectedPerson != nil {
