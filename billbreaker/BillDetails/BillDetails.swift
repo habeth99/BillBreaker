@@ -21,12 +21,12 @@ struct BillDetailsView: View {
                     ItemsSectionView(rviewModel: rviewModel)
                 }
                 
-                Section(header: Text("Friends")) {
+                //Section(header: Text("Friends")) {
                     PeopleSectionView(rviewModel: rviewModel)
-                        .listRowInsets(EdgeInsets())
-                        .listRowBackground(Color.clear)
+                        //.listRowInsets(EdgeInsets())
+                        //.listRowBackground(Color.clear)
                         .listRowSeparator(.hidden)
-                }
+                //}
             }
         }
         .navigationBarTitle(rviewModel.receipt.name, displayMode: .automatic)
@@ -39,6 +39,7 @@ struct BillDetailsView: View {
             rviewModel.setReceipt(receiptId: receiptId)
         }
     }
+
 }
 
 

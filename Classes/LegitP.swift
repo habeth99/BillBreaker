@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 class LegitP: Identifiable, ObservableObject, Codable {
+    
     @Published var id: String
     @Published var name: String
     @Published var userId: String

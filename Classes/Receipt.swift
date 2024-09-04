@@ -298,6 +298,20 @@ class Receipt: Codable, Identifiable, ObservableObject, CustomStringConvertible 
             .reduce(0) { $0 + amountOwedByPerson($1.id) }
     }
     
+    func deleteItem(id: String) {
+        items?.removeAll { $0.id == id }
+        
+        for person in people ?? [] {
+            person.claims.removeAll { $0 == id }
+        }
+        
+    }
+    
+    func deletePerson(id: String) {
+        //todo
+        people?.removeAll { $0.id == id }
+    }
+    
     func countClaimedItems() -> Decimal {
         let allClaims = people!.compactMap { $0.claims }
         let uniqueClaimedItems = Set(allClaims.flatMap { $0 })
