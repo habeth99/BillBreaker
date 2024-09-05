@@ -15,35 +15,36 @@ struct SignUpView: View {
     @State private var venmoHandle: String = ""
     @State private var cashAppHandle: String = ""
     @EnvironmentObject var viewModel: UserViewModel
-    @Environment(\.dismiss) private var dismiss
     
     var body: some View {
         VStack {
-            Form {
-                TextField("Name", text: $name)
-                TextField("Email", text: $email)
-                TextField("Venmo Handle", text: $venmoHandle)
-                TextField("Cash App Handle", text: $cashAppHandle)
-                TextField("Password", text: $password)
-                
-                    
-                Button("Sign Up") {
-                    Task{
-                        await viewModel.signUp(email: email, password: password, name: name, venmoHandle: venmoHandle, cashAppHandle: cashAppHandle)
-                    }
+            Text("Create an account")
+                .font(.system(size: 32))
+                .padding(.top, FatCheckTheme.Spacing.xxxl)
+            
+            Spacer()
+            
+            Button(action: {
+                // Perform sign in with Apple, then navigate to onboarding
+            }) {
+                HStack {
+                    Image(systemName: "apple.logo")
+                    Text("Sign up with Apple")
                 }
+                .frame(maxWidth: .infinity)
+                .padding()
+                .background(Color.black)
+                .cornerRadius(FatCheckTheme.Spacing.sm)  // Adjust the radius as needed
+                .foregroundColor(.white)
             }
-            Button {
-                dismiss()
-            } label: {
-                HStack{
-                    Text("Already have an account?")
-                    Text("Log in")
-                        .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                }
-            }
+            .padding(.horizontal)
+            
+            Text("By signing up, you agree to the Terms of Service and Privacy Policy")
+                .font(.caption)
+                .padding(FatCheckTheme.Spacing.sm)
+            
+            Spacer()
         }
-
     }
 }
 

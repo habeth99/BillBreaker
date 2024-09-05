@@ -8,12 +8,22 @@
 import Foundation
 import SwiftUI
 import FirebaseAuth
+import FirebaseDatabase
+import Firebase
 
 struct SettingsView: View {
     @EnvironmentObject var viewModel: UserViewModel
     @State private var isLoading = false
     @State private var showError = false
     @State private var errorMessage = ""
+    @State private var showDeleteConfirmation = false
+    @State private var isEditing = false
+    
+    // New state variables for editable fields
+    @State private var editedName = ""
+    @State private var editedEmail = ""
+    @State private var editedVenmoHandle = ""
+    @State private var editedCashAppHandle = ""
 
     var body: some View {
         Group {
@@ -23,6 +33,25 @@ struct SettingsView: View {
                 userSettingsList(user: user)
             } else {
                 noUserView
+            }
+        }
+        .navigationTitle("Profile")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(isEditing ? "Done" : "Edit") {
+                    if isEditing {
+                        // Save changes when switching from Edit to Done
+                        saveChanges()
+                    } else {
+                        // Initialize editable fields when switching to Edit mode
+                        editedName = viewModel.currentUser?.name ?? ""
+                        editedEmail = viewModel.currentUser?.email ?? ""
+                        editedVenmoHandle = viewModel.currentUser?.venmoHandle ?? ""
+                        editedCashAppHandle = viewModel.currentUser?.cashAppHandle ?? ""
+                    }
+                    isEditing.toggle()
+                }
             }
         }
         .onAppear(perform: fetchUserIfNeeded)
@@ -47,26 +76,39 @@ struct SettingsView: View {
 
     private func userSettingsList(user: User) -> some View {
         List {
-            Section("Profile") {
-                HStack {
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text(user.name)
-                            .font(.subheadline)
-                            .fontWeight(.semibold)
-                            .padding(.top, 4)
-                        Text(user.email)
-                            .font(.subheadline)
-                            .foregroundColor(.blue)
+            Section {
+                if isEditing {
+                    TextField("Name", text: $editedName)
+                    TextField("Email", text: $editedEmail)
+                } else {
+                    HStack {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(user.name)
+                                .font(.subheadline)
+                                .fontWeight(.semibold)
+                                .padding(.top, 4)
+                            Text(user.email)
+                                .font(.subheadline)
+                                .foregroundColor(.blue)
+                        }
                     }
                 }
             }
             
             Section {
-                SettingsRowView(imageName: "dollarsign.circle.fill", title: "Venmo: ", tintColor: .blue, descr: user.venmoHandle)
+                if isEditing {
+                    TextField("Venmo Handle", text: $editedVenmoHandle)
+                } else {
+                    SettingsRowView(imageName: "dollarsign.circle.fill", title: "Venmo: ", tintColor: .blue, descr: user.venmoHandle)
+                }
             }
             
             Section {
-                SettingsRowView(imageName: "dollarsign.circle.fill", title: "CashApp: ", tintColor: .green, descr: user.cashAppHandle)
+                if isEditing {
+                    TextField("CashApp Handle", text: $editedCashAppHandle)
+                } else {
+                    SettingsRowView(imageName: "dollarsign.circle.fill", title: "CashApp: ", tintColor: .green, descr: user.cashAppHandle)
+                }
             }
             
             Section {
@@ -80,15 +122,28 @@ struct SettingsView: View {
             }
             
             Section {
-                Button(action: {
-                    Task {
-                        await viewModel.deleteAccount()
+                HStack {
+                    Spacer()
+                    Button(action: {
+                        showDeleteConfirmation = true
+                    }) {
+                        Text("Delete account")
+                            .foregroundColor(.red)
                     }
-                }) {
-                    Text("Delete Account")
-                        .foregroundColor(.red)
+                    .alert("Delete account", isPresented: $showDeleteConfirmation) {
+                        Button("Yes", role: .destructive) {
+                            Task {
+                                await viewModel.deleteAccount()
+                            }
+                        }
+                        Button("No", role: .cancel) {}
+                    } message: {
+                        Text("Are you sure you want to delete your account?")
+                    }
+                    Spacer()
                 }
             }
+            .listRowBackground(Color.clear)
         }
         .refreshable {
             await refreshUser()
@@ -106,13 +161,38 @@ struct SettingsView: View {
     private func refreshUser() async {
         isLoading = true
         do {
-            viewModel.fetchUser()
-            isLoading = false
+            guard let user = Auth.auth().currentUser else {
+                throw NSError(domain: "ProfileView", code: 0, userInfo: [NSLocalizedDescriptionKey: "No authenticated user found"])
+            }
+            
+            let db = Database.database().reference()
+            let userRef = db.child("users").child(user.uid)
+            
+            let snapshot = try await userRef.getData()
+            if let userData = snapshot.value as? [String: Any] {
+                // Assuming you have a User model that conforms to Codable
+                let jsonData = try JSONSerialization.data(withJSONObject: userData)
+                let currentUser = try JSONDecoder().decode(User.self, from: jsonData)
+                
+                await MainActor.run {
+                    viewModel.currentUser = currentUser
+                    isLoading = false
+                }
+            } else {
+                throw NSError(domain: "ProfileView", code: 1, userInfo: [NSLocalizedDescriptionKey: "User data not found"])
+            }
         } catch {
-            isLoading = false
-            errorMessage = error.localizedDescription
-            showError = true
+            await MainActor.run {
+                isLoading = false
+                errorMessage = error.localizedDescription
+                showError = true
+            }
         }
+    }
+    
+    private func saveChanges() {
+        // Update the user information in the ViewModel
+        viewModel.updateUser(name: editedName, email: editedEmail, venmoHandle: editedVenmoHandle, cashAppHandle: editedCashAppHandle)
     }
 }
 

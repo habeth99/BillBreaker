@@ -13,7 +13,7 @@ import FirebaseFirestoreSwift
 import CryptoKit
 import AuthenticationServices
 
-class UserViewModel: ObservableObject {
+class UserViewModel: NSObject, ObservableObject {
     @Published var isUserAuthenticated: Bool = false
     @Published var currentUser: User?
     @Published var showLoginView: Bool = false
@@ -29,7 +29,22 @@ class UserViewModel: ObservableObject {
     private var authStateDidChangeListenerHandle: AuthStateDidChangeListenerHandle?
     private var cancellables = Set<AnyCancellable>()
 
-    init() {
+    //added override
+//    override init() {
+//        Task {
+//            await setupInitialState()
+//        }
+//    }
+    override init() {
+        self.isUserAuthenticated = false
+        self.showLoginView = false
+        self.showSignupView = false
+        self.isUserDataLoaded = false
+        self.dbRef = Database.database().reference()
+        self.cancellables = Set<AnyCancellable>()
+        
+        super.init()
+        
         Task {
             await setupInitialState()
         }
@@ -123,14 +138,23 @@ class UserViewModel: ObservableObject {
         }
     }
     
-    // Update User data in Firebase
-    func updateUser() {
-        guard let currentUser = currentUser else {
-            print("Current user is nil.")
-            return
+    func updateUser(name: String, email: String, venmoHandle: String, cashAppHandle: String) {
+        let userRef = dbRef.child("users").child(User.getUserdId() ?? "")
+        
+        let updates: [String: Any] = [
+            "name": name,
+            "email": email,
+            "venmoHandle": venmoHandle,
+            "cashAppHandle": cashAppHandle
+        ]
+        
+        userRef.updateChildValues(updates) { error, _ in
+            if let error = error {
+                print("Error updating user: \(error.localizedDescription)")
+            } else {
+                print("User updated successfully")
+            }
         }
-        print("Updating user with ID: \(currentUser.id)")
-        writeUserToFirebase(currentUser)
     }
     
     // function that deletes the users account but not receipts yet
@@ -243,6 +267,21 @@ class UserViewModel: ObservableObject {
     
 //================================================================================================
     
+    //newest function
+    func signInWithApple() {
+        let nonce = randomNonceString()
+        currentNonce = sha256(nonce)
+        
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        let request = appleIDProvider.createRequest()
+        request.requestedScopes = [.fullName, .email]
+        request.nonce = sha256(nonce)
+        
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        authorizationController.delegate = self
+        authorizationController.performRequests()
+    }
+    
     // function for starting apple sign in with a request
     func handleSignInWithAppleRequest(_ request: ASAuthorizationAppleIDRequest){
         request.requestedScopes = [.fullName, .email]
@@ -252,15 +291,71 @@ class UserViewModel: ObservableObject {
     }
     
     // function that signs in apple user with completion handler
+//    func handleSignInWithCompletion(_ result: Result<ASAuthorization, Error>) {
+//        print("top of withcompletion")
+//        if case .failure(let failure) = result {
+//            print("failure!")
+//            errorMessage = failure.localizedDescription
+//        } else if case .success(let success) = result {
+//            if let appleIDCredential = success.credential as? ASAuthorizationAppleIDCredential {
+//                guard let nonce = currentNonce else {
+//                    fatalError("invalid state: a login callback was received, but no login request was sent")
+//                }
+//                guard let appleIDToken = appleIDCredential.identityToken else {
+//                    print("Unable to fetch identity token")
+//                    return
+//                }
+//                guard let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
+//                    print("Unable to serialize token string from data: \(appleIDToken.debugDescription)")
+//                    return
+//                }
+//                let credential = OAuthProvider.credential(withProviderID: "apple.com", idToken: idTokenString, rawNonce: nonce)
+//                Task {
+//                    do {
+//                        let authResult = try await Auth.auth().signIn(with: credential)
+//                        if let firebaseUser: FirebaseAuth.User? = authResult.user {
+//                            var userName = firebaseUser?.displayName ?? "No Name"
+//                            if let fullName = appleIDCredential.fullName {
+//                                // Use the full name directly if available
+//                                userName = PersonNameComponentsFormatter().string(from: fullName).trimmingCharacters(in: .whitespaces)
+//                            }
+//
+//                            let billbreakerUser = User(id: firebaseUser?.uid,
+//                                                       name: userName,
+//                                                       email: firebaseUser?.email ?? "",
+//                                                       venmoHandle: "",
+//                                                       cashAppHandle: "",
+//                                                       receipts: [])
+//                            self.currentUser = billbreakerUser
+//                            print("billbreakerUser is: \(billbreakerUser)")
+//                            
+//                            // Check if the user already exists in the database
+//                            let ref = Database.database().reference().child("users").child(firebaseUser!.uid)
+//                            ref.observeSingleEvent(of: .value) { snapshot in
+//                                if !snapshot.exists() {
+//                                    // User does not exist, store their data
+//                                    self.storeUserData(billbreakerUser, fullName: userName)
+//                                }
+//                                // Set isUserAuthenticated to true
+//                                self.isUserAuthenticated = true
+//                                print("User authenticated successfully")
+//                            }
+//                        } else {
+//                            print("Error: Firebase user is nil")
+//                        }
+//                    } catch {
+//                        print("Error during sign-in: \(error.localizedDescription)")
+//                    }
+//                }
+//            }
+//        }
+//    }
     func handleSignInWithCompletion(_ result: Result<ASAuthorization, Error>) {
-        print("top of withcompletion")
-        if case .failure(let failure) = result {
-            print("failure!")
-            errorMessage = failure.localizedDescription
-        } else if case .success(let success) = result {
-            if let appleIDCredential = success.credential as? ASAuthorizationAppleIDCredential {
+        switch result {
+        case .success(let authorization):
+            if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
                 guard let nonce = currentNonce else {
-                    fatalError("invalid state: a login callback was received, but no login request was sent")
+                    fatalError("Invalid state: A login callback was received, but no login request was sent.")
                 }
                 guard let appleIDToken = appleIDCredential.identityToken else {
                     print("Unable to fetch identity token")
@@ -270,45 +365,54 @@ class UserViewModel: ObservableObject {
                     print("Unable to serialize token string from data: \(appleIDToken.debugDescription)")
                     return
                 }
-                let credential = OAuthProvider.credential(withProviderID: "apple.com", idToken: idTokenString, rawNonce: nonce)
+                
+                let credential = OAuthProvider.credential(withProviderID: "apple.com",
+                                                          idToken: idTokenString,
+                                                          rawNonce: nonce)
+                
                 Task {
                     do {
                         let authResult = try await Auth.auth().signIn(with: credential)
-                        if let firebaseUser: FirebaseAuth.User? = authResult.user {
-                            var userName = firebaseUser?.displayName ?? "No Name"
-                            if let fullName = appleIDCredential.fullName {
-                                // Use the full name directly if available
-                                userName = PersonNameComponentsFormatter().string(from: fullName).trimmingCharacters(in: .whitespaces)
-                            }
+                        let firebaseUser = authResult.user
+                        var userName = firebaseUser.displayName ?? "No Name"
+                        if let fullName = appleIDCredential.fullName {
+                            userName = PersonNameComponentsFormatter().string(from: fullName).trimmingCharacters(in: .whitespaces)
+                        }
 
-                            let billbreakerUser = User(id: firebaseUser?.uid,
-                                                       name: userName,
-                                                       email: firebaseUser?.email ?? "",
-                                                       venmoHandle: "",
-                                                       cashAppHandle: "",
-                                                       receipts: [])
+                        let billbreakerUser = User(id: firebaseUser.uid,
+                                                   name: userName,
+                                                   email: firebaseUser.email ?? "",
+                                                   venmoHandle: "",
+                                                   cashAppHandle: "",
+                                                   receipts: [])
+                        
+                        await MainActor.run {
                             self.currentUser = billbreakerUser
-                            print("billbreakerUser is: \(billbreakerUser)")
-                            
-                            // Check if the user already exists in the database
-                            let ref = Database.database().reference().child("users").child(firebaseUser!.uid)
-                            ref.observeSingleEvent(of: .value) { snapshot in
-                                if !snapshot.exists() {
-                                    // User does not exist, store their data
-                                    self.storeUserData(billbreakerUser, fullName: userName)
-                                }
-                                // Set isUserAuthenticated to true
-                                self.isUserAuthenticated = true
-                                print("User authenticated successfully")
+                            self.isUserAuthenticated = true
+                        }
+                        
+                        print("billbreakerUser is: \(billbreakerUser)")
+                        
+                        // Check if the user already exists in the database
+                        let ref = Database.database().reference().child("users").child(firebaseUser.uid)
+                        ref.observeSingleEvent(of: .value) { snapshot in
+                            if !snapshot.exists() {
+                                // User does not exist, store their data
+                                self.storeUserData(billbreakerUser, fullName: userName)
                             }
-                        } else {
-                            print("Error: Firebase user is nil")
+                            print("User authenticated successfully")
                         }
                     } catch {
                         print("Error during sign-in: \(error.localizedDescription)")
+                        await MainActor.run {
+                            self.errorMessage = error.localizedDescription
+                        }
                     }
                 }
             }
+        case .failure(let error):
+            print("Authorization failed: \(error.localizedDescription)")
+            self.errorMessage = error.localizedDescription
         }
     }
 
@@ -388,4 +492,42 @@ class UserViewModel: ObservableObject {
         
 //================================================================================================
     
+}
+
+
+//extension UserViewModel: ASAuthorizationControllerDelegate {
+//    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+//        handleSignInWithCompletion(.success(authorization))
+//    }
+//    
+//    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+//        handleSignInWithCompletion(.failure(error))
+//    }
+//}
+//
+//// Add this extension to make UserViewModel conform to ASAuthorizationControllerPresentationContextProviding
+//extension UserViewModel: ASAuthorizationControllerPresentationContextProviding {
+//    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+//        return UIApplication.shared.windows.first!
+//    }
+//}
+extension UserViewModel: ASAuthorizationControllerDelegate {
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        handleSignInWithCompletion(.success(authorization))
+    }
+    
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        handleSignInWithCompletion(.failure(error))
+    }
+}
+
+extension UserViewModel: ASAuthorizationControllerPresentationContextProviding {
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return UIApplication.shared.connectedScenes
+            .filter { $0.activationState == .foregroundActive }
+            .compactMap { $0 as? UIWindowScene }
+            .first?
+            .windows
+            .first { $0.isKeyWindow } ?? UIWindow()
+    }
 }

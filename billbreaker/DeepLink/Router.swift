@@ -10,6 +10,7 @@ import Foundation
 
 class Router: ObservableObject {
     @Published var path = NavigationPath()
+    @Published var authPath = NavigationPath()
     @Published var selectedId: String?
     @Published var selectedTab: Tab = .home
     @Published var isCameraPresented = false
@@ -30,6 +31,11 @@ class Router: ObservableObject {
 
     func navigateToMainTab(_ tab: MainTabRoute) {
         path.append(AppRoute.mainTab(tab))
+    }
+    
+    //for the sign in and sign up stuff
+    func navigateAuth(to route: AuthRoute) {
+        authPath.append(route)
     }
     
     func startScanFlow() {
@@ -79,4 +85,9 @@ enum ScanRoute: Hashable {
 
 enum ReceiptRoute: Hashable {
     case details(receiptId: String)
+}
+
+enum AuthRoute: Hashable {
+    case signIn
+    case signUp
 }

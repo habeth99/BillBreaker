@@ -287,7 +287,6 @@ struct PeopleSectionView: View {
                     Text(formattedCurrency(personTaxShare))
                 }
                 .font(.subheadline)
-                Text("Total")
             }
             
             Spacer()
