@@ -30,9 +30,7 @@ struct SignInView: View {
                     viewModel.handleSignInWithAppleRequest(request)
                 },
                 onCompletion: { result in
-                    print("before handle with completion call")
                     viewModel.handleSignInWithCompletion(result)
-                    print("after handle with completion call")
                 }
             )
             .signInWithAppleButtonStyle(.black)

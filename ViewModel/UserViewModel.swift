@@ -22,8 +22,6 @@ struct OnboardingAnswers: Codable {
 class UserViewModel: ObservableObject {
     @Published var isUserAuthenticated: Bool = false
     @Published var currentUser: User?
-//    @Published var showLoginView: Bool = false
-//    @Published var showSignupView: Bool = false
     @Published var errorMessage: String?
     @Published var isUserDataLoaded = false
     @Published var isNewUser = false
@@ -42,30 +40,6 @@ class UserViewModel: ObservableObject {
         }
     }
     
-    func saveOnboardingAnswers() {
-        guard let userId = Auth.auth().currentUser?.uid else {
-            print("No authenticated user")
-            return
-        }
-        
-        let userRef = dbRef.child("users").child(userId)
-        
-        let onboardingData: [String: Any] = [
-            "mostExcitedFeature": onboardingAnswers.mostExcitedFeature ?? "",
-            "defaultTipPercentage": onboardingAnswers.defaultTipPercentage ?? false,
-            "wantsPushNotifications": onboardingAnswers.wantsPushNotifications ?? false
-        ]
-        
-        userRef.updateChildValues(onboardingData) { error, _ in
-            if let error = error {
-                print("Error saving onboarding answers: \(error)")
-            } else {
-                print("Onboarding answers successfully saved")
-                self.isNewUser = false
-            }
-        }
-    }
-    
     private func setupInitialState() async {
         if let currentUser = Auth.auth().currentUser {
             await updateAuthState(userId: currentUser.uid, isAuthenticated: true)
@@ -74,24 +48,210 @@ class UserViewModel: ObservableObject {
         }
     }
     
+//    private func updateAuthState(userId: String?, isAuthenticated: Bool) async {
+//        await MainActor.run {
+//            self.userID = userId
+//            self.isUserAuthenticated = isAuthenticated
+//            if isAuthenticated {
+//                print("Authenticated user ID: \(self.userID ?? "No user ID")")
+//                self.setupUserListener()
+//                self.fetchUser()
+//            } else {
+//                print("No authenticated user found.")
+//                self.currentUser = nil
+//            }
+//        }
+//    }
     private func updateAuthState(userId: String?, isAuthenticated: Bool) async {
+        print("UserViewModel: Updating auth state - userId: \(userId ?? "nil"), isAuthenticated: \(isAuthenticated)")
         await MainActor.run {
             self.userID = userId
             self.isUserAuthenticated = isAuthenticated
             if isAuthenticated {
-                print("Authenticated user ID: \(self.userID ?? "No user ID")")
+                print("UserViewModel: Authenticated user ID: \(self.userID ?? "No user ID")")
                 self.setupUserListener()
                 self.fetchUser()
             } else {
-                print("No authenticated user found.")
+                print("UserViewModel: No authenticated user found.")
                 self.currentUser = nil
             }
         }
     }
     
+//    func checkUserSession() {
+//        Task {
+//            await updateAuthState(userId: Auth.auth().currentUser?.uid, isAuthenticated: Auth.auth().currentUser != nil)
+//        }
+//    }
     func checkUserSession() {
+        print("UserViewModel: Starting checkUserSession")
         Task {
             await updateAuthState(userId: Auth.auth().currentUser?.uid, isAuthenticated: Auth.auth().currentUser != nil)
+            print("UserViewModel: Finished checkUserSession - isUserAuthenticated: \(isUserAuthenticated), userID: \(userID ?? "nil")")
+        }
+    }
+    
+//    func fetchUser() {
+//        guard let userID = userID else {
+//            print("UserID is nil.")
+//            return
+//        }
+//
+//        dbRef.child("users").child(userID).observeSingleEvent(of: .value) { [weak self] snapshot in
+//            guard let self = self else { return }
+//            
+//            guard snapshot.exists() else {
+//                print("User data does not exist.")
+//                return
+//            }
+//            
+//            var userData: [String: Any] = [:]
+//            
+//            // Extract only the needed fields
+//            for field in ["name", "email", "cashAppHandle", "venmoHandle"] {
+//                userData[field] = snapshot.childSnapshot(forPath: field).value
+//            }
+//            
+//            // Add userID to the userData
+//            userData["id"] = userID
+//            
+//            // Handle receipts separately as they might be more complex
+//            if let receipts = snapshot.childSnapshot(forPath: "receipts").value as? [String: Any] {
+//                userData["receipts"] = receipts
+//            }
+//            
+//            do {
+//                let data = try JSONSerialization.data(withJSONObject: userData)
+//                let user = try JSONDecoder().decode(User.self, from: data)
+//                
+//                Task { @MainActor in
+//                    self.currentUser = user
+//                    self.isUserAuthenticated = true
+//                    self.isUserDataLoaded = true
+//                }
+//                self.setupUserListener()
+//            } catch {
+//                print("Error decoding user: \(error.localizedDescription)")
+//            }
+//        }
+//    }
+    func fetchUser() {
+        print("UserViewModel: Starting fetchUser")
+        guard let userID = userID else {
+            print("UserViewModel: fetchUser - UserID is nil.")
+            return
+        }
+
+        dbRef.child("users").child(userID).observeSingleEvent(of: .value) { [weak self] snapshot in
+            guard let self = self else { return }
+            
+            print("UserViewModel: fetchUser - Snapshot received")
+            
+            guard snapshot.exists() else {
+                print("UserViewModel: fetchUser - User data does not exist.")
+                return
+            }
+            
+            print("UserViewModel: fetchUser - Snapshot contents:")
+            self.printSnapshot(snapshot)
+            
+            var userData: [String: Any] = [:]
+            
+            // Extract only the needed fields
+            for field in ["name", "email", "cashAppHandle", "venmoHandle"] {
+                userData[field] = snapshot.childSnapshot(forPath: field).value
+                print("UserViewModel: fetchUser - \(field): \(String(describing: userData[field]))")
+            }
+            
+            // Add userID to the userData
+            userData["id"] = userID
+            print("UserViewModel: fetchUser - id: \(userID)")
+            
+            // Handle receipts separately as they might be more complex
+            if let receipts = snapshot.childSnapshot(forPath: "receipts").value as? [String: Any] {
+                userData["receipts"] = receipts
+                print("UserViewModel: fetchUser - receipts: \(receipts)")
+            }
+            
+            do {
+                let data = try JSONSerialization.data(withJSONObject: userData)
+                let user = try JSONDecoder().decode(User.self, from: data)
+                
+                Task { @MainActor in
+                    self.currentUser = user
+                    self.isUserAuthenticated = true
+                    self.isUserDataLoaded = true
+                    print("UserViewModel: fetchUser - User data loaded successfully. isUserAuthenticated: \(self.isUserAuthenticated), isUserDataLoaded: \(self.isUserDataLoaded)")
+                    print("UserViewModel: fetchUser - Decoded user: \(user)")
+                }
+                self.setupUserListener()
+            } catch {
+                print("UserViewModel: Error decoding user: \(error.localizedDescription)")
+            }
+        }
+    }
+
+    // Helper function to print snapshot contents
+    private func printSnapshot(_ snapshot: DataSnapshot, indent: String = "") {
+        let value = snapshot.value ?? "null"
+        print("\(indent)\(snapshot.key): \(value)")
+        
+        if let children = snapshot.children.allObjects as? [DataSnapshot] {
+            for child in children {
+                printSnapshot(child, indent: indent + "  ")
+            }
+        }
+    }
+    
+    
+    
+    
+
+    private func setupUserListener() {
+        guard let userID = userID else { return }
+        dbRef.child("users").child(userID).observe(.value) { [weak self] snapshot in
+            guard let self = self, let value = snapshot.value as? [String: Any] else { return }
+            
+            do {
+                let data = try JSONSerialization.data(withJSONObject: value)
+                let user = try JSONDecoder().decode(User.self, from: data)
+                Task { @MainActor in
+                    self.currentUser = user
+                }
+            } catch {
+                print("Error decoding user: \(error.localizedDescription)")
+            }
+        }
+    }
+
+    
+//================================================================================================
+    //functions: signOut, deleteAccount, updateUser, printCurrentUserId, saveOnboardingAnswers
+    
+    func updateUser(name: String, email: String, venmoHandle: String, cashAppHandle: String) {
+        let userRef = dbRef.child("users").child(User.getUserdId() ?? "")
+        
+        let updates: [String: Any] = [
+            "name": name,
+            "email": email,
+            "venmoHandle": venmoHandle,
+            "cashAppHandle": cashAppHandle
+        ]
+        
+        userRef.updateChildValues(updates) { error, _ in
+            if let error = error {
+                print("Error updating user: \(error.localizedDescription)")
+            } else {
+                print("User updated successfully")
+            }
+        }
+    }
+    
+    func printCurrentUserId() {
+        if let currentUser = self.currentUser {
+            print("Current user ID is: \(currentUser.id)")
+        } else {
+            print("No current user is logged in.")
         }
     }
     
@@ -126,43 +286,6 @@ class UserViewModel: ObservableObject {
         }
     }
 
-    // Write User instance to Firebase
-    func writeUserToFirebase(_ user: User) {
-        //print("Writing user to Firebase: \(user)")
-        guard let userData = try? JSONEncoder().encode(user),
-              let userDict = try? JSONSerialization.jsonObject(with: userData) as? [String: Any] else {
-            print("Error encoding user data.")
-            return
-        }
-        dbRef.child("users").child(user.id).setValue(userDict) { error, _ in
-            if let error = error {
-                print("Error writing user to Firebase: \(error.localizedDescription)")
-            } else {
-                print("User written to Firebase successfully.")
-            }
-        }
-    }
-    
-    func updateUser(name: String, email: String, venmoHandle: String, cashAppHandle: String) {
-        let userRef = dbRef.child("users").child(User.getUserdId() ?? "")
-        
-        let updates: [String: Any] = [
-            "name": name,
-            "email": email,
-            "venmoHandle": venmoHandle,
-            "cashAppHandle": cashAppHandle
-        ]
-        
-        userRef.updateChildValues(updates) { error, _ in
-            if let error = error {
-                print("Error updating user: \(error.localizedDescription)")
-            } else {
-                print("User updated successfully")
-            }
-        }
-    }
-    
-    // function that deletes the users account but not receipts yet
     func deleteAccount() async {
         print("Starting account deletion process")
         
@@ -206,75 +329,26 @@ class UserViewModel: ObservableObject {
         }
     }
     
-    
-    //====================================
-    
-    func printCurrentUserId() {
-        if let currentUser = self.currentUser {
-            print("Current user ID is: \(currentUser.id)")
-        } else {
-            print("No current user is logged in.")
-        }
-    }
-    
-    func fetchUser() {
-        guard let userID = userID else {
-            print("UserID is nil.")
+    func saveOnboardingAnswers() {
+        guard let userId = Auth.auth().currentUser?.uid else {
+            print("No authenticated user")
             return
         }
-
-        dbRef.child("users").child(userID).observeSingleEvent(of: .value) { [weak self] snapshot in
-            guard let self = self else { return }
-            
-            guard snapshot.exists() else {
-                print("User data does not exist.")
-                return
-            }
-            
-            var userData: [String: Any] = [:]
-            
-            // Extract only the needed fields
-            for field in ["name", "email", "cashAppHandle", "venmoHandle"] {
-                userData[field] = snapshot.childSnapshot(forPath: field).value
-            }
-            
-            // Add userID to the userData
-            userData["id"] = userID
-            
-            // Handle receipts separately as they might be more complex
-            if let receipts = snapshot.childSnapshot(forPath: "receipts").value as? [String: Any] {
-                userData["receipts"] = receipts
-            }
-            
-            do {
-                let data = try JSONSerialization.data(withJSONObject: userData)
-                let user = try JSONDecoder().decode(User.self, from: data)
-                
-                Task { @MainActor in
-                    self.currentUser = user
-                    self.isUserAuthenticated = true
-                    self.isUserDataLoaded = true
-                }
-                self.setupUserListener()
-            } catch {
-                print("Error decoding user: \(error.localizedDescription)")
-            }
-        }
-    }
-
-    private func setupUserListener() {
-        guard let userID = userID else { return }
-        dbRef.child("users").child(userID).observe(.value) { [weak self] snapshot in
-            guard let self = self, let value = snapshot.value as? [String: Any] else { return }
-            
-            do {
-                let data = try JSONSerialization.data(withJSONObject: value)
-                let user = try JSONDecoder().decode(User.self, from: data)
-                Task { @MainActor in
-                    self.currentUser = user
-                }
-            } catch {
-                print("Error decoding user: \(error.localizedDescription)")
+        
+        let userRef = dbRef.child("users").child(userId)
+        
+        let onboardingData: [String: Any] = [
+            "mostExcitedFeature": onboardingAnswers.mostExcitedFeature ?? "",
+            "defaultTipPercentage": onboardingAnswers.defaultTipPercentage ?? false,
+            "wantsPushNotifications": onboardingAnswers.wantsPushNotifications ?? false
+        ]
+        
+        userRef.updateChildValues(onboardingData) { error, _ in
+            if let error = error {
+                print("Error saving onboarding answers: \(error)")
+            } else {
+                print("Onboarding answers successfully saved")
+                self.isNewUser = false
             }
         }
     }
@@ -291,19 +365,16 @@ class UserViewModel: ObservableObject {
         request.requestedScopes = [.fullName, .email]
         let nonce = randomNonceString()
         currentNonce = sha256(nonce)
-        print("signinwithapplerequest ran fully")
     }
     
-    // function that signs in apple user with completion handler
     func handleSignInWithCompletion(_ result: Result<ASAuthorization, Error>) {
-        print("top of withcompletion")
         if case .failure(let failure) = result {
-            print("failure!")
+            print("Sign-in failure: \(failure.localizedDescription)")
             errorMessage = failure.localizedDescription
         } else if case .success(let success) = result {
             if let appleIDCredential = success.credential as? ASAuthorizationAppleIDCredential {
                 guard let nonce = currentNonce else {
-                    fatalError("invalid state: a login callback was received, but no login request was sent")
+                    fatalError("Invalid state: a login callback was received, but no login request was sent")
                 }
                 guard let appleIDToken = appleIDCredential.identityToken else {
                     print("Unable to fetch identity token")
@@ -320,7 +391,6 @@ class UserViewModel: ObservableObject {
                         if let firebaseUser: FirebaseAuth.User? = authResult.user {
                             var userName = firebaseUser?.displayName ?? "No Name"
                             if let fullName = appleIDCredential.fullName {
-                                // Use the full name directly if available
                                 userName = PersonNameComponentsFormatter().string(from: fullName).trimmingCharacters(in: .whitespaces)
                             }
 
@@ -330,19 +400,31 @@ class UserViewModel: ObservableObject {
                                                        venmoHandle: "",
                                                        cashAppHandle: "",
                                                        receipts: [])
-                            self.currentUser = billbreakerUser
-                            print("billbreakerUser is: \(billbreakerUser)")
+                            
+                            print("Signed in user: \(billbreakerUser)")
+                            
+                            // Update auth state and fetch user data
+                            await self.updateAuthState(userId: firebaseUser?.uid, isAuthenticated: true)
                             
                             // Check if the user already exists in the database
                             let ref = Database.database().reference().child("users").child(firebaseUser!.uid)
-                            ref.observeSingleEvent(of: .value) { snapshot in
+                            ref.observeSingleEvent(of: .value) { [weak self] snapshot in
+                                guard let self = self else { return }
+                                
                                 if !snapshot.exists() {
                                     // User does not exist, store their data
                                     self.storeUserData(billbreakerUser, fullName: userName)
                                 }
-                                // Set isUserAuthenticated to true
-                                self.isUserAuthenticated = true
-                                print("User authenticated successfully")
+                                
+                                // Fetch user data to ensure we have the most up-to-date information
+                                self.fetchUser()
+                                
+                                // Update UI on the main thread
+                                DispatchQueue.main.async {
+                                    self.isUserAuthenticated = true
+                                    self.isUserDataLoaded = true
+                                    print("User authenticated and data loaded successfully")
+                                }
                             }
                         } else {
                             print("Error: Firebase user is nil")
@@ -354,9 +436,9 @@ class UserViewModel: ObservableObject {
             }
         }
     }
+    
 
     func storeUserData(_ user: User?, fullName: String?) {
-        print("top of storeuserdata")
         guard let currentUser = user else {
             print("Current user is nil.")
             return

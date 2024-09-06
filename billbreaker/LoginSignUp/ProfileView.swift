@@ -13,6 +13,7 @@ import Firebase
 
 struct SettingsView: View {
     @EnvironmentObject var viewModel: UserViewModel
+    @EnvironmentObject var router: Router
     @State private var isLoading = false
     @State private var showError = false
     @State private var errorMessage = ""
@@ -116,6 +117,8 @@ struct SettingsView: View {
                     Task {
                         await viewModel.signOut()
                     }
+                    router.resetToInitialState()
+                    
                 }) {
                     SettingsRowView(imageName: "arrow.left.circle.fill", title: "Sign Out", tintColor: .red, descr: "")
                 }

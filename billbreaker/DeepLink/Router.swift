@@ -68,6 +68,16 @@ class Router: ObservableObject {
         path.removeLast(path.count)
         endScanFlow()
     }
+    
+    func resetToInitialState() {
+        path = NavigationPath()
+        authPath = NavigationPath()
+        selectedId = nil
+        selectedTab = .home
+        isCameraPresented = false
+        isScanFlowActive = false
+        scanPath = []
+    }
 }
 
 enum AppRoute: Hashable {
