@@ -188,7 +188,7 @@ class Receipt: Codable, Identifiable, ObservableObject, CustomStringConvertible 
         }
         
         // In any other situation, subtract amounts of paid persons
-        let paidAmount = people.filter { $0.paid || !$0.userId.isEmpty }
+        let paidAmount = people.filter { $0.paid }
                                .reduce(Decimal(0)) { $0 + calculatePersonAmount($1, items: items) }
         
         return totalAmount - paidAmount

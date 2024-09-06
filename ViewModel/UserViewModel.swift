@@ -22,8 +22,8 @@ struct OnboardingAnswers: Codable {
 class UserViewModel: ObservableObject {
     @Published var isUserAuthenticated: Bool = false
     @Published var currentUser: User?
-    @Published var showLoginView: Bool = false
-    @Published var showSignupView: Bool = false
+//    @Published var showLoginView: Bool = false
+//    @Published var showSignupView: Bool = false
     @Published var errorMessage: String?
     @Published var isUserDataLoaded = false
     @Published var isNewUser = false
@@ -94,43 +94,34 @@ class UserViewModel: ObservableObject {
             await updateAuthState(userId: Auth.auth().currentUser?.uid, isAuthenticated: Auth.auth().currentUser != nil)
         }
     }
-
-    func signUp(email: String, password: String, name: String, venmoHandle: String, cashAppHandle: String) async {
-        do {
-            let authResult = try await Auth.auth().createUser(withEmail: email, password: password)
-            let user = authResult.user
-            let newUser = User(id: user.uid, name: name, email: email, venmoHandle: venmoHandle, cashAppHandle: cashAppHandle, receipts: [])
-            print("New user created: \(newUser)")
-            writeUserToFirebase(newUser)
-            await updateAuthState(userId: user.uid, isAuthenticated: true)
-            await MainActor.run {
-                self.currentUser = newUser
-            }
-        } catch {
-            print("Error signing up: \(error.localizedDescription)")
-            await updateAuthState(userId: nil, isAuthenticated: false)
-        }
-    }
-
-    func signIn(email: String, password: String) async {
-        do {
-            let authResult = try await Auth.auth().signIn(withEmail: email, password: password)
-            let user = authResult.user
-            print("User signed in: \(user.uid)")
-            await updateAuthState(userId: user.uid, isAuthenticated: true)
-            fetchUser()
-        } catch {
-            print("Error signing in: \(error.localizedDescription)")
-            await updateAuthState(userId: nil, isAuthenticated: false)
-        }
-    }
-
+    
     func signOut() async {
         do {
             try Auth.auth().signOut()
-            await updateAuthState(userId: nil, isAuthenticated: false)
-            print("User signed out successfully.")
+            await MainActor.run {
+                // Reset all user-related properties
+                self.userID = nil
+                self.isUserAuthenticated = false
+                self.currentUser = nil
+                self.isUserDataLoaded = false
+                self.isNewUser = false
+                self.onboardingAnswers = OnboardingAnswers()
+                self.errorMessage = nil
+                
+                // Remove any active listeners
+                if let handle = self.authStateDidChangeListenerHandle {
+                    Auth.auth().removeStateDidChangeListener(handle)
+                    self.authStateDidChangeListenerHandle = nil
+                }
+                
+                // Cancel any ongoing publishers
+                self.cancellables.removeAll()
+            }
+            print("User signed out successfully and app state reset.")
         } catch {
+            await MainActor.run {
+                self.errorMessage = "Error signing out: \(error.localizedDescription)"
+            }
             print("Error signing out: \(error.localizedDescription)")
         }
     }
@@ -225,39 +216,6 @@ class UserViewModel: ObservableObject {
             print("No current user is logged in.")
         }
     }
-    
-//    func fetchUser() {
-//        guard let userID = userID else {
-//            print("UserID is nil.")
-//            return
-//        }
-//
-//        //print("Fetching user data for userID: \(userID)")
-//
-//        dbRef.child("users").child(userID).observeSingleEvent(of: .value) { [weak self] snapshot in
-//            guard let self = self else { return }
-//            
-//            //print("User data snapshot: \(snapshot)")
-//
-//            guard snapshot.exists(), let value = snapshot.value as? [String: Any] else {
-//                print("Snapshot does not exist or contain valid data.")
-//                return
-//            }
-//            do {
-//                let data = try JSONSerialization.data(withJSONObject: value)
-//                let user = try JSONDecoder().decode(User.self, from: data)
-//                //print("Decoded user: \(user)")
-//                Task { @MainActor in
-//                    self.currentUser = user
-//                    self.isUserAuthenticated = true
-//                    self.isUserDataLoaded = true
-//                }
-//                self.setupUserListener()
-//            } catch {
-//                print("Error decoding user: \(error.localizedDescription)")
-//            }
-//        }
-//    }
     
     func fetchUser() {
         guard let userID = userID else {

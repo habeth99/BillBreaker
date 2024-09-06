@@ -107,9 +107,6 @@ class Camera: NSObject {
         sessionQueue = DispatchQueue(label: "session queue")
         
         captureDevice = availableCaptureDevices.first ?? AVCaptureDevice.default(for: .video)
-        
-        UIDevice.current.beginGeneratingDeviceOrientationNotifications()
-        NotificationCenter.default.addObserver(self, selector: #selector(updateForDeviceOrientation), name: UIDevice.orientationDidChangeNotification, object: nil)
     }
     
     private func configureCaptureSession(completionHandler: (_ success: Bool) -> Void) {
@@ -224,6 +221,9 @@ class Camera: NSObject {
     
     private func updateVideoOutputConnection() {
         if let videoOutput = videoOutput, let videoOutputConnection = videoOutput.connection(with: .video) {
+            if videoOutputConnection.isVideoOrientationSupported {
+                videoOutputConnection.videoOrientation = .portrait
+            }
             if videoOutputConnection.isVideoMirroringSupported {
                 videoOutputConnection.isVideoMirrored = isUsingFrontCaptureDevice
             }
@@ -272,35 +272,21 @@ class Camera: NSObject {
             self.captureDevice = AVCaptureDevice.default(for: .video)
         }
     }
-
-    private var deviceOrientation: UIDeviceOrientation {
-        var orientation = UIDevice.current.orientation
-        if orientation == UIDeviceOrientation.unknown {
-            orientation = UIScreen.main.orientation
-        }
-        return orientation
-    }
     
     @objc
     func updateForDeviceOrientation() {
         //TODO: Figure out if we need this for anything.
     }
     
-    private func videoOrientationFor(_ deviceOrientation: UIDeviceOrientation) -> AVCaptureVideoOrientation? {
-        switch deviceOrientation {
-        case .portrait: return AVCaptureVideoOrientation.portrait
-        case .portraitUpsideDown: return AVCaptureVideoOrientation.portraitUpsideDown
-        case .landscapeLeft: return AVCaptureVideoOrientation.landscapeRight
-        case .landscapeRight: return AVCaptureVideoOrientation.landscapeLeft
-        default: return nil
-        }
+    private func videoOrientationFor(_ deviceOrientation: UIDeviceOrientation) -> AVCaptureVideoOrientation {
+        // Always return portrait orientation
+        return .portrait
     }
     
     func takePhoto() {
         guard let photoOutput = self.photoOutput else { return }
         
         sessionQueue.async {
-        
             var photoSettings = AVCapturePhotoSettings()
 
             if photoOutput.availablePhotoCodecTypes.contains(.hevc) {
@@ -316,9 +302,8 @@ class Camera: NSObject {
             photoSettings.photoQualityPrioritization = .balanced
             
             if let photoOutputVideoConnection = photoOutput.connection(with: .video) {
-                if photoOutputVideoConnection.isVideoOrientationSupported,
-                    let videoOrientation = self.videoOrientationFor(self.deviceOrientation) {
-                    photoOutputVideoConnection.videoOrientation = videoOrientation
+                if photoOutputVideoConnection.isVideoOrientationSupported {
+                    photoOutputVideoConnection.videoOrientation = .portrait
                 }
             }
             
@@ -345,30 +330,11 @@ extension Camera: AVCaptureVideoDataOutputSampleBufferDelegate {
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         guard let pixelBuffer = sampleBuffer.imageBuffer else { return }
         
-        if connection.isVideoOrientationSupported,
-           let videoOrientation = videoOrientationFor(deviceOrientation) {
-            connection.videoOrientation = videoOrientation
+        if connection.isVideoOrientationSupported {
+            connection.videoOrientation = .portrait
         }
 
         addToPreviewStream?(CIImage(cvPixelBuffer: pixelBuffer))
-    }
-}
-
-fileprivate extension UIScreen {
-
-    var orientation: UIDeviceOrientation {
-        let point = coordinateSpace.convert(CGPoint.zero, to: fixedCoordinateSpace)
-        if point == CGPoint.zero {
-            return .portrait
-        } else if point.x != 0 && point.y != 0 {
-            return .portraitUpsideDown
-        } else if point.x == 0 && point.y != 0 {
-            return .landscapeRight //.landscapeLeft
-        } else if point.x != 0 && point.y == 0 {
-            return .landscapeLeft //.landscapeRight
-        } else {
-            return .unknown
-        }
     }
 }
 
