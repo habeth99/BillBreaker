@@ -22,5 +22,7 @@
 		<key>NSAppClipRequestLocationConfirmation</key>
 		<false/>
 	</dict>
+	<key>NSUserNotificationsUsageDescription</key>
+	<string>Allow notifications for check reminders and updates</string>
 </dict>
 </plist>

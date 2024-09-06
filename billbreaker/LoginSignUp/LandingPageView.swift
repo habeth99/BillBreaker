@@ -55,6 +55,13 @@ struct LandingPageView: View {
                     SignInView()
                 case .signUp:
                     SignUpView()
+                case .mostExcited:
+                    MostExcitedView()
+                case .defaultTip:
+                    DefaultTipView()
+                case .pushNot:
+                    PushNotView()
+
                 }
             }
         }

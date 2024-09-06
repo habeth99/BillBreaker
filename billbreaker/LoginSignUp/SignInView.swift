@@ -24,35 +24,21 @@ struct SignInView: View {
                 .font(.subheadline)
             Spacer()
             //Sign In with Apple Button
-//            SignInWithAppleButton(
-//                .signIn,
-//                onRequest: { request in
-//                    viewModel.handleSignInWithAppleRequest(request)
-//                },
-//                onCompletion: { result in
-//                    print("before handle with completion call")
-//                    viewModel.handleSignInWithCompletion(result)
-//                    print("after handle with completion call")
-//                }
-//            )
-//            .signInWithAppleButtonStyle(.black)
-//            .frame(maxWidth: .infinity)
-//            .frame(maxHeight: 56)
-//            .cornerRadius(FatCheckTheme.Spacing.sm)
-//            .padding(.horizontal)
-            Button(action: {
-                viewModel.signInWithApple()
-            }) {
-                HStack {
-                    Image(systemName: "apple.logo")
-                    Text("Sign in with Apple")
+            SignInWithAppleButton(
+                .signIn,
+                onRequest: { request in
+                    viewModel.handleSignInWithAppleRequest(request)
+                },
+                onCompletion: { result in
+                    print("before handle with completion call")
+                    viewModel.handleSignInWithCompletion(result)
+                    print("after handle with completion call")
                 }
-                .frame(maxWidth: .infinity)
-                .padding()
-                .background(Color.black)
-                .cornerRadius(FatCheckTheme.Spacing.sm)  // Adjust the radius as needed
-                .foregroundColor(.white)
-            }
+            )
+            .signInWithAppleButtonStyle(.black)
+            .frame(maxWidth: .infinity)
+            .frame(maxHeight: 56)
+            .cornerRadius(FatCheckTheme.Spacing.sm)
             .padding(.horizontal)
         
             Spacer()
@@ -68,3 +54,33 @@ struct SignInView: View {
 //    }
 //}
 
+// CUSTOM apple buttons should i need them
+//            Button(action: {
+//                //viewModel.signInWithApple()
+//            }) {
+//                HStack {
+//                    Image(systemName: "apple.logo")
+//                    Text("Sign in with Apple")
+//                }
+//                .frame(maxWidth: .infinity)
+//                .padding()
+//                .background(Color.black)
+//                .cornerRadius(FatCheckTheme.Spacing.sm)  // Adjust the radius as needed
+//                .foregroundColor(.white)
+//            }
+//            .padding(.horizontal)
+
+//            Button(action: {
+//                // Perform sign in with Apple, then navigate to onboarding
+//            }) {
+//                HStack {
+//                    Image(systemName: "apple.logo")
+//                    Text("Sign up with Apple")
+//                }
+//                .frame(maxWidth: .infinity)
+//                .padding()
+//                .background(Color.black)
+//                .cornerRadius(FatCheckTheme.Spacing.sm)  // Adjust the radius as needed
+//                .foregroundColor(.white)
+//            }
+//            .padding(.horizontal)

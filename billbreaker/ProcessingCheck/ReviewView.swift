@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import UIKit
 
 struct ReviewView: View {
     @ObservedObject var transformer: ReceiptProcessor

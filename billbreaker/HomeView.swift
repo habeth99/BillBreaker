@@ -16,21 +16,13 @@ struct HomeView: View {
     
     var body: some View {
         Group {
-            if //rviewModel.hasAttemptedFetch &&
-                rviewModel.receiptList.isEmpty {
+            if rviewModel.receiptList.isEmpty {
                 EmptyStateView()
             } else {
                 ReceiptListView(rviewModel: rviewModel)
             }
         }
         .navigationTitle("Fat Check")
-//        .onAppear {
-//            if !rviewModel.hasAttemptedFetch {
-//                Task {
-//                    await rviewModel.fetchUserReceipts()
-//                }
-//            }
-//        }
         .onAppear {
             Task {
                 await rviewModel.fetchUserReceipts()

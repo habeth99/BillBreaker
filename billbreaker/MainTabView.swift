@@ -13,6 +13,8 @@ struct MainTabView: View {
     @EnvironmentObject var viewModel: UserViewModel
     @StateObject var transformer = ReceiptProcessor()
     @State private var isReceiptFlowActive = false
+    @State private var hideAddButton = false
+    
     
     var body: some View {
         ZStack {
@@ -34,6 +36,7 @@ struct MainTabView: View {
                                 switch receiptRoute {
                                 case .details(let receiptId):
                                     BillDetailsView(rviewModel: ReceiptViewModel(), receiptId: receiptId)
+                                        .toolbar(.hidden, for: .tabBar)
                                 }
                             default:
                                 EmptyView()
@@ -48,11 +51,15 @@ struct MainTabView: View {
                 Spacer()
             }
             .overlay(
-                AddButton(action: {
-                    router.navToCamera()
-                })
-                .padding(.trailing, 22)
-                .padding(.bottom, -12)
+                Group {
+                    if (router.path.isEmpty && router.selectedTab == .home) || router.selectedTab == .settings {
+                        AddButton(action: {
+                            router.navToCamera()
+                        })
+                        .padding(.trailing, 22)
+                        .padding(.bottom, -12)
+                    }
+                }
             )
             
             if router.isScanFlowActive {

@@ -38,6 +38,10 @@ class Router: ObservableObject {
         authPath.append(route)
     }
     
+    func resetAuth() {
+        authPath.removeLast(authPath.count)
+    }
+    
     func startScanFlow() {
         isScanFlowActive = true
         scanPath = [.items]
@@ -73,7 +77,6 @@ enum AppRoute: Hashable {
 
 enum MainTabRoute: Hashable {
     case home
-    //case importPhoto
     case settings
 }
 
@@ -90,4 +93,9 @@ enum ReceiptRoute: Hashable {
 enum AuthRoute: Hashable {
     case signIn
     case signUp
+    case mostExcited
+    case defaultTip
+    case pushNot
 }
+
+
