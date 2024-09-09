@@ -28,6 +28,10 @@ class Router: ObservableObject {
     func navigateToReceipt(id: String) {
         path.append(AppRoute.receipt(.details(receiptId: id)))
     }
+    
+//    func navigateToPreDetails(id: String) {
+//        path.append(AppRoute.receipt(.preDetails(receiptId: id)))
+//    }
 
     func navigateToMainTab(_ tab: MainTabRoute) {
         path.append(AppRoute.mainTab(tab))
@@ -97,6 +101,7 @@ enum ScanRoute: Hashable {
 }
 
 enum ReceiptRoute: Hashable {
+    //case preDetails(receiptId: String)
     case details(receiptId: String)
 }
 

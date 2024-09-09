@@ -34,6 +34,8 @@ struct MainTabView: View {
                             switch route {
                             case .receipt(let receiptRoute):
                                 switch receiptRoute {
+//                                case .preDetails(let receiptId):
+//                                    PreDetailsView(rviewModel: ReceiptViewModel(), receiptId: receiptId)
                                 case .details(let receiptId):
                                     BillDetailsView(rviewModel: ReceiptViewModel(), receiptId: receiptId)
                                         .toolbar(.hidden, for: .tabBar)

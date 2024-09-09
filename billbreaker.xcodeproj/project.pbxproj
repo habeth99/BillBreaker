@@ -109,6 +109,8 @@
 		E2D1D8DD2C810B070045FA3A /* SectionsForReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D1D8DC2C810B070045FA3A /* SectionsForReview.swift */; };
 		E2D1D8DF2C8A2A2A0045FA3A /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D1D8DE2C8A2A2A0045FA3A /* WebView.swift */; };
 		E2D1D8E12C8A2A3E0045FA3A /* LegalDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D1D8E02C8A2A3E0045FA3A /* LegalDocument.swift */; };
+		E2D1D8E32C8BFE5D0045FA3A /* AddButton2.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D1D8E22C8BFE5D0045FA3A /* AddButton2.swift */; };
+		E2D1D8E52C8C2F6F0045FA3A /* PreDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D1D8E42C8C2F6F0045FA3A /* PreDetailsView.swift */; };
 		E2D1F2A02BC0B18200B27278 /* Receipt.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D1F29F2BC0B18200B27278 /* Receipt.swift */; };
 		E2D1F2A22BC0CD3400B27278 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D1F2A12BC0CD3400B27278 /* User.swift */; };
 		E2DDFBF22BB1E74A00BAD5AC /* CachedImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFBF12BB1E74A00BAD5AC /* CachedImageManager.swift */; };
@@ -258,6 +260,8 @@
 		E2D1D8DC2C810B070045FA3A /* SectionsForReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionsForReview.swift; sourceTree = "<group>"; };
 		E2D1D8DE2C8A2A2A0045FA3A /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		E2D1D8E02C8A2A3E0045FA3A /* LegalDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegalDocument.swift; sourceTree = "<group>"; };
+		E2D1D8E22C8BFE5D0045FA3A /* AddButton2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddButton2.swift; sourceTree = "<group>"; };
+		E2D1D8E42C8C2F6F0045FA3A /* PreDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreDetailsView.swift; sourceTree = "<group>"; };
 		E2D1F29F2BC0B18200B27278 /* Receipt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Receipt.swift; sourceTree = "<group>"; };
 		E2D1F2A12BC0CD3400B27278 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		E2DBA9C52C58478B000F3559 /* APIReceipt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIReceipt.swift; sourceTree = "<group>"; };
@@ -341,6 +345,7 @@
 				E209C6572C35143300D9E3A2 /* ItemsSectionView.swift */,
 				E2482FD52C4654B7008B18BF /* ReceiptListView.swift */,
 				E2D1D8DA2C7EDBC10045FA3A /* SelectorButton.swift */,
+				E2D1D8E42C8C2F6F0045FA3A /* PreDetailsView.swift */,
 			);
 			path = BillDetails;
 			sourceTree = "<group>";
@@ -448,6 +453,7 @@
 			isa = PBXGroup;
 			children = (
 				E2019F052C714BE100094448 /* AddButton.swift */,
+				E2D1D8E22C8BFE5D0045FA3A /* AddButton2.swift */,
 			);
 			path = Buttons;
 			sourceTree = "<group>";
@@ -828,6 +834,7 @@
 				E209C6562C34F3C300D9E3A2 /* BillDetails.swift in Sources */,
 				E209C65C2C35150900D9E3A2 /* PeopleSectionView.swift in Sources */,
 				E2019F082C73ACF200094448 /* EmptyStateView.swift in Sources */,
+				E2D1D8E52C8C2F6F0045FA3A /* PreDetailsView.swift in Sources */,
 				E2409E222BED9B7B00A5940D /* AppDelegate.swift in Sources */,
 				E20B0CDC2C6D19EF00624B44 /* CheckCardView.swift in Sources */,
 				E2DDFC042BB1E7E600BAD5AC /* PhotoLibrary.swift in Sources */,
@@ -848,6 +855,7 @@
 				E209C65A2C35147D00D9E3A2 /* ItemRowView.swift in Sources */,
 				E2D1D8DB2C7EDBC10045FA3A /* SelectorButton.swift in Sources */,
 				E21056F12C76E8D200813084 /* NameTag.swift in Sources */,
+				E2D1D8E32C8BFE5D0045FA3A /* AddButton2.swift in Sources */,
 				E2D1D8DD2C810B070045FA3A /* SectionsForReview.swift in Sources */,
 				E2DDFC022BB1E7DD00BAD5AC /* PhotoItemView.swift in Sources */,
 				E21AA1762C6409B500EF87C8 /* ReviewView.swift in Sources */,

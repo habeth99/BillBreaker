@@ -40,6 +40,7 @@ struct billbreakerApp: App {
                         print("id is: \(receiptId)")
                         
                         router.navigateToReceipt(id: receiptId)
+                        //router.navigateToPreDetails(id: receiptId)
                         router.selectedId = receiptId
                     }
             }

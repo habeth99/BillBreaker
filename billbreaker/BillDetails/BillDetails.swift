@@ -20,15 +20,18 @@ struct BillDetailsView: View {
                 Section(header: Text("Items")) {
                     ItemsSectionView(rviewModel: rviewModel)
                 }
-                
-                //Section(header: Text("Friends")) {
-                    PeopleSectionView(rviewModel: rviewModel)
-                        //.listRowInsets(EdgeInsets())
-                        //.listRowBackground(Color.clear)
-                        .listRowSeparator(.hidden)
-                //}
+                PeopleSectionView(rviewModel: rviewModel)
+                    .listRowSeparator(.hidden)
             }
         }
+//        .overlay(
+//
+//            AddButton2(action: {}, menuItems: [
+//                ContextMenuItem(title: "Add Item", iconName: "cart", action: { /* Add item action */ }),
+//                ContextMenuItem(title: "Add Friend", iconName: "person", action: { /* Add friend action */ })
+//            ])
+//            
+//        )
         .navigationBarTitle(rviewModel.receipt.name, displayMode: .automatic)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
