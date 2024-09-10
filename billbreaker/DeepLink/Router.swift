@@ -11,7 +11,7 @@ import Foundation
 class Router: ObservableObject {
     @Published var path = NavigationPath()
     @Published var authPath = NavigationPath()
-    @Published var selectedId: String?
+    //@Published var selectedId: String?
     @Published var selectedTab: Tab = .home
     @Published var isCameraPresented = false
     @Published var isScanFlowActive = false
@@ -29,9 +29,9 @@ class Router: ObservableObject {
         path.append(AppRoute.receipt(.details(receiptId: id)))
     }
     
-//    func navigateToPreDetails(id: String) {
-//        path.append(AppRoute.receipt(.preDetails(receiptId: id)))
-//    }
+    func navigateToPreDetails(id: String) {
+        path.append(AppRoute.receipt(.preDetails(receiptId: id)))
+    }
 
     func navigateToMainTab(_ tab: MainTabRoute) {
         path.append(AppRoute.mainTab(tab))
@@ -76,7 +76,6 @@ class Router: ObservableObject {
     func resetToInitialState() {
         path = NavigationPath()
         authPath = NavigationPath()
-        selectedId = nil
         selectedTab = .home
         isCameraPresented = false
         isScanFlowActive = false
@@ -101,7 +100,7 @@ enum ScanRoute: Hashable {
 }
 
 enum ReceiptRoute: Hashable {
-    //case preDetails(receiptId: String)
+    case preDetails(receiptId: String)
     case details(receiptId: String)
 }
 

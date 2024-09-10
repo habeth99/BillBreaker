@@ -10,6 +10,8 @@ import SwiftUI
 
 struct AddPeopleView: View {
     @State private var guests: [String]
+    @State private var errorMessage: String?
+    @State private var errorMessage2: String?
     private let maxGuests = 10
     var transformer: ReceiptProcessor
     @EnvironmentObject var router: Router
@@ -25,6 +27,19 @@ struct AddPeopleView: View {
             Color(.systemGroupedBackground)
                 .ignoresSafeArea()
             VStack {
+                if let errorMessage = errorMessage {
+                    Text(errorMessage)
+                        .foregroundColor(.red)
+                        .padding(.top)
+                        .padding(.horizontal)
+                }
+                if let errorMessage2 = errorMessage2 {
+                    Text(errorMessage2)
+                        .foregroundColor(.red)
+                        .padding(.top)
+                        .padding(.horizontal)
+                }
+                
                 List {
                     ForEach(guests.indices, id: \.self) { index in
                         guestTextField(index: index)
@@ -32,10 +47,7 @@ struct AddPeopleView: View {
                     .onDelete(perform: deleteGuests)
                 }
                 .navigationBarItems(
-                    trailing: Button("Next") {
-                        transformer.createLegitPs(guests: guests)
-                        router.navigateInScanFlow(to: .review)
-                    }
+                    trailing: Button("Next", action: next)
                 )
                 .navigationBarTitle("Add Friends", displayMode: .inline)
             }
@@ -57,13 +69,30 @@ struct AddPeopleView: View {
             print("Maximum number of guests reached")
             return
         }
-        guests.append("")
+        
+        if let lastGuest = guests.last, !lastGuest.isEmpty {
+            guests.append("")
+        } else {
+            errorMessage2 = "fill in name before adding more friends."
+        }
     }
     
     private func deleteGuests(at offsets: IndexSet) {
         guests.remove(atOffsets: offsets)
         if guests.isEmpty {
             guests = [""]
+        }
+    }
+    
+    private func next() {
+        let nonEmptyGuests = guests.filter { !$0.isEmpty }
+        
+        if nonEmptyGuests.count >= 2 {
+            errorMessage = nil // Clear any previous error message
+            transformer.createLegitPs(guests: guests)
+            router.navigateInScanFlow(to: .review)
+        } else {
+            errorMessage = "Please add at least one friend to continue."
         }
     }
 }

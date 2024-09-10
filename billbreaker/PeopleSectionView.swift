@@ -312,7 +312,9 @@ struct PeopleSectionView: View {
     }
     
     private func payUp() {
-        print("Pay up action")
+        let payViewModel = PayBack()
+        payViewModel.payWithVenmo(recipient: "Gary-Miller-3", amount: "1.00")
+        //payViewModel.openCashApp(recipient: "$fattystacky" , amount: "1.00")
     }
 }
 

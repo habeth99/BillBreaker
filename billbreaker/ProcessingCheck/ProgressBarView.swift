@@ -19,23 +19,20 @@ struct ProgressBarView: View {
                 Text("Scanning Check...")
                 ZStack(alignment: .leading) {
                     RoundedRectangle(cornerRadius: FatCheckTheme.Spacing.md, style: .continuous)
-                        .frame(width: 300, height: 20)
-                        .foregroundColor(.gray.opacity(0.2))
+                        .frame(width: 310, height: 10)
+                        .foregroundColor(.gray.opacity(0.4))
                         .padding(FatCheckTheme.Spacing.xxl)
                     
                     RoundedRectangle(cornerRadius: FatCheckTheme.Spacing.md, style: .continuous)
-                        .frame(width: 300 * progress, height: 20)
+                        .frame(width: 310 * progress, height: 10)
                         .foregroundColor(FatCheckTheme.Colors.primaryColor)
                         .padding(FatCheckTheme.Spacing.xxl)
                 }
-//                Text("\(Int(progress * 99))%")
-//                    .font(.headline)
-//                    .foregroundColor(FatCheckTheme.Colors.primaryColor)
             }
         }
         .onAppear {
             withAnimation(.easeInOut(duration: 7)) {
-                progress = 0.99 // 99%
+                progress = 0.95 // 95%
             }
         }
     }

@@ -14,6 +14,7 @@ struct MainTabView: View {
     @StateObject var transformer = ReceiptProcessor()
     @State private var isReceiptFlowActive = false
     @State private var hideAddButton = false
+    @StateObject var rviewModel = ReceiptViewModel()
     
     
     var body: some View {
@@ -29,15 +30,16 @@ struct MainTabView: View {
                 .tag(Router.Tab.settings)
                 
                 NavigationStack(path: $router.path) {
-                    HomeView(rviewModel: ReceiptViewModel())
+                    HomeView(rviewModel: rviewModel)
                         .navigationDestination(for: AppRoute.self) { route in
                             switch route {
                             case .receipt(let receiptRoute):
                                 switch receiptRoute {
-//                                case .preDetails(let receiptId):
-//                                    PreDetailsView(rviewModel: ReceiptViewModel(), receiptId: receiptId)
+                                case .preDetails(let receiptId):
+                                    PreDetailsView(rviewModel: rviewModel, receiptId: receiptId)
+                                        .toolbar(.hidden, for: .tabBar)
                                 case .details(let receiptId):
-                                    BillDetailsView(rviewModel: ReceiptViewModel(), receiptId: receiptId)
+                                    BillDetailsView(rviewModel: rviewModel, receiptId: receiptId)
                                         .toolbar(.hidden, for: .tabBar)
                                 }
                             default:
