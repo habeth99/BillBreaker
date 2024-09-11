@@ -55,6 +55,8 @@ struct AddPeopleView: View {
             VStack {
                 Spacer()
                 AddButton(action: addGuest)
+                    .padding(.trailing, 22)
+                    .padding(.bottom, -12)
             }
         }
     }

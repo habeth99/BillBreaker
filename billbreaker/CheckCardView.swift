@@ -11,10 +11,10 @@ import SwiftUI
 struct CheckCard: View {
     var receipt: Receipt
     @EnvironmentObject var router: Router
-    @EnvironmentObject var userViewModel: UserViewModel // Assuming you have a UserViewModel to get the current user
+    @EnvironmentObject var userViewModel: UserViewModel
     
     private var progressValue: Double {
-        let amountPaid = receipt.getTotal() - receipt.amtOwed()
+        let amountPaid = receipt.getTotal() - receipt.calculateStillOwed()
         return (amountPaid as NSDecimalNumber).doubleValue / (receipt.getTotal() as NSDecimalNumber).doubleValue
     }
     
@@ -40,7 +40,7 @@ struct CheckCard: View {
                 }
                 .padding(.bottom, FatCheckTheme.Spacing.sm)
                 HStack{
-                    CardDetails(total: receipt.amtOwed(), title: "Amount owed")
+                    CardDetails(total: receipt.calculateStillOwed(), title: "Amount owed")
                     Spacer()
                     CardDetails(total: receipt.getTotal(), title: "Total")
                 }

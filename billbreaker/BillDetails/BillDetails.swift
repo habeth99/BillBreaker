@@ -24,14 +24,14 @@ struct BillDetailsView: View {
                     .listRowSeparator(.hidden)
             }
         }
-//        .overlay(
-//
-//            AddButton2(action: {}, menuItems: [
-//                ContextMenuItem(title: "Add Item", iconName: "cart", action: { /* Add item action */ }),
-//                ContextMenuItem(title: "Add Friend", iconName: "person", action: { /* Add friend action */ })
-//            ])
-//            
-//        )
+        .overlay(
+            AddButton2(
+                itemAction: { print("Add Item tapped") },
+                personAction: { print("Add Person tapped") }
+            )
+            .padding(.trailing, 22)
+            .padding(.bottom, -12)
+        )
         .navigationBarTitle(rviewModel.receipt.name, displayMode: .automatic)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {

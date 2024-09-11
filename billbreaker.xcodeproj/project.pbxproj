@@ -24,7 +24,6 @@
 		E209C6582C35143300D9E3A2 /* ItemsSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E209C6572C35143300D9E3A2 /* ItemsSectionView.swift */; };
 		E209C65A2C35147D00D9E3A2 /* ItemRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E209C6592C35147D00D9E3A2 /* ItemRowView.swift */; };
 		E209C65C2C35150900D9E3A2 /* PeopleSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E209C65B2C35150900D9E3A2 /* PeopleSectionView.swift */; };
-		E20B0CD22C67CE0100624B44 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20B0CD12C67CE0100624B44 /* HomeViewModel.swift */; };
 		E20B0CD42C697B0200624B44 /* SaveCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20B0CD32C697B0200624B44 /* SaveCheckView.swift */; };
 		E20B0CD62C6A78F000624B44 /* ProgressBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20B0CD52C6A78F000624B44 /* ProgressBarView.swift */; };
 		E20B0CDC2C6D19EF00624B44 /* CheckCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20B0CDB2C6D19EF00624B44 /* CheckCardView.swift */; };
@@ -52,6 +51,7 @@
 		E21AA1782C64FEAE00EF87C8 /* AddPeopleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21AA1772C64FEAE00EF87C8 /* AddPeopleView.swift */; };
 		E21C90642C46210D008AD256 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21C90632C46210D008AD256 /* SplashView.swift */; };
 		E21CE2DB2C8FE66600C774EE /* PayBack.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21CE2DA2C8FE66500C774EE /* PayBack.swift */; };
+		E21CE2DD2C915FDA00C774EE /* Confetti.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21CE2DC2C915FDA00C774EE /* Confetti.swift */; };
 		E2409E202BED3B0800A5940D /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2409E1F2BED3B0800A5940D /* ProfileView.swift */; };
 		E2409E222BED9B7B00A5940D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2409E212BED9B7B00A5940D /* AppDelegate.swift */; };
 		E2482FD62C4654B7008B18BF /* ReceiptListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2482FD52C4654B7008B18BF /* ReceiptListView.swift */; };
@@ -197,7 +197,6 @@
 		E209C6572C35143300D9E3A2 /* ItemsSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsSectionView.swift; sourceTree = "<group>"; };
 		E209C6592C35147D00D9E3A2 /* ItemRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemRowView.swift; sourceTree = "<group>"; };
 		E209C65B2C35150900D9E3A2 /* PeopleSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleSectionView.swift; sourceTree = "<group>"; };
-		E20B0CD12C67CE0100624B44 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		E20B0CD32C697B0200624B44 /* SaveCheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveCheckView.swift; sourceTree = "<group>"; };
 		E20B0CD52C6A78F000624B44 /* ProgressBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBarView.swift; sourceTree = "<group>"; };
 		E20B0CDB2C6D19EF00624B44 /* CheckCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckCardView.swift; sourceTree = "<group>"; };
@@ -226,6 +225,7 @@
 		E21AA1772C64FEAE00EF87C8 /* AddPeopleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPeopleView.swift; sourceTree = "<group>"; };
 		E21C90632C46210D008AD256 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		E21CE2DA2C8FE66500C774EE /* PayBack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayBack.swift; sourceTree = "<group>"; };
+		E21CE2DC2C915FDA00C774EE /* Confetti.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Confetti.swift; sourceTree = "<group>"; };
 		E2409E1F2BED3B0800A5940D /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		E2409E212BED9B7B00A5940D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E2482FD52C4654B7008B18BF /* ReceiptListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptListView.swift; sourceTree = "<group>"; };
@@ -418,6 +418,7 @@
 				E203B1402C500F9300D16732 /* FatCheckThemes.swift */,
 				E21056F22C76EDC500813084 /* CheckProgressCirc.swift */,
 				E21056F42C76F00900813084 /* CardDetails.swift */,
+				E21CE2DC2C915FDA00C774EE /* Confetti.swift */,
 				E20B1AED2C2D279E0059F0D3 /* Info.plist */,
 				E206BCAC2C471B9F003E6C84 /* GoogleService-Info.plist */,
 				E2A47A282C1CFA520023E29D /* billbreaker.entitlements */,
@@ -586,7 +587,6 @@
 				E27966102BC4DA5E000B0368 /* ItemVIewModel.swift */,
 				E27966122BC4DADB000B0368 /* PersonViewModel.swift */,
 				E2092B822C2C826100A6B4EF /* ReceiptViewModel.swift */,
-				E20B0CD12C67CE0100624B44 /* HomeViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -878,10 +878,10 @@
 				E27966072BC476BD000B0368 /* LegitP.swift in Sources */,
 				E2DDFC062BB1E7ED00BAD5AC /* PhotoView.swift in Sources */,
 				E21056ED2C75D41100813084 /* PushNotView.swift in Sources */,
+				E21CE2DD2C915FDA00C774EE /* Confetti.swift in Sources */,
 				E20B0CD42C697B0200624B44 /* SaveCheckView.swift in Sources */,
 				E26472262C58983D00B2DF11 /* APIService.swift in Sources */,
 				E2DDFBF22BB1E74A00BAD5AC /* CachedImageManager.swift in Sources */,
-				E20B0CD22C67CE0100624B44 /* HomeViewModel.swift in Sources */,
 				E2DDFBFC2BB1E7C000BAD5AC /* PhotoAssetCollection.swift in Sources */,
 				E21056F52C76F00900813084 /* CardDetails.swift in Sources */,
 				E24A2AF62C385E9700273673 /* CustomHeaderView.swift in Sources */,

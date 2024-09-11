@@ -9,10 +9,9 @@ import Foundation
 import SwiftUI
 
 struct AddButton2: View {
-    let action: () -> Void
-    var menuItems: [ContextMenuItem]
-    
-    @State private var showPopover = false
+    @State private var showMenu = false
+    let itemAction: () -> Void
+    let personAction: () -> Void
     
     var body: some View {
         VStack {
@@ -21,7 +20,9 @@ struct AddButton2: View {
             HStack {
                 Spacer()
                 
-                Button(action: { showPopover = true }) {
+                Button(action: {
+                    showMenu.toggle()
+                }) {
                     Image(systemName: "plus")
                         .font(.system(size: 24))
                         .foregroundColor(.white)
@@ -29,43 +30,74 @@ struct AddButton2: View {
                         .background(.black)
                         .clipShape(Circle())
                 }
-                .popover(isPresented: $showPopover, arrowEdge: .bottom) {
-                    PopoverContent(menuItems: menuItems, dismissAction: { showPopover = false })
-                }
+                .buttonStyle(PlainButtonStyle())
+                .overlay(
+                    VStack {
+                        if showMenu {
+                            ContextMenuContent(
+                                itemAction: {
+                                    itemAction()
+                                    showMenu = false
+                                },
+                                personAction: {
+                                    personAction()
+                                    showMenu = false
+                                },
+                                dismissAction: { showMenu = false }
+                            )
+                            .offset(y: -100) // Adjusted to position higher above the button
+                            .offset(x: -100)
+                            .transition(.scale.combined(with: .opacity))
+                            .zIndex(1)
+                        }
+                    }
+                    .animation(.spring(), value: showMenu)
+                )
             }
             .padding()
         }
-        .background(.clear)
-        .ignoresSafeArea()
     }
 }
 
-struct PopoverContent: View {
-    let menuItems: [ContextMenuItem]
+struct ContextMenuContent: View {
+    let itemAction: () -> Void
+    let personAction: () -> Void
     let dismissAction: () -> Void
     
     var body: some View {
-        VStack(spacing: 10) {
-            ForEach(menuItems) { item in
-                Button(action: {
-                    item.action()
-                    dismissAction()
-                }) {
-                    Label(item.title, systemImage: item.iconName)
-                        .foregroundColor(.primary)
-                        .padding(.vertical, 8)
-                        .padding(.horizontal, 16)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+        VStack(alignment: .leading, spacing: 12) {
+            Button(action: itemAction) {
+                HStack {
+                    Image(systemName: "square.and.pencil")
+                    Text("Item")
                 }
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
+            .buttonStyle(MenuButtonStyle())
+            
+            Button(action: personAction) {
+                HStack {
+                    Image(systemName: "person.fill")
+                    Text("Person")
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            .buttonStyle(MenuButtonStyle())
         }
         .padding()
+        .background(Color(UIColor.systemBackground))
+        .cornerRadius(12)
+        .shadow(radius: 10)
+        .frame(width: 200) // Set a fixed width to ensure text visibility
     }
 }
 
-struct ContextMenuItem: Identifiable {
-    let id = UUID()
-    let title: String
-    let iconName: String
-    let action: () -> Void
+struct MenuButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .padding(.vertical, 8)
+            .padding(.horizontal, 12)
+            .background(configuration.isPressed ? Color.gray.opacity(0.2) : Color.clear)
+            .cornerRadius(8)
+    }
 }

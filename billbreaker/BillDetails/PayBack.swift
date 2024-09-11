@@ -7,6 +7,8 @@
 
 import Foundation
 import SwiftUI
+import FirebaseDatabase
+import Firebase
 
 class PayBack: ObservableObject {
     func payWithVenmo(recipient: String, amount: String) {
@@ -22,6 +24,22 @@ class PayBack: ObservableObject {
             if let fallbackURL = URL(string: "https://venmo.com/") {
                 UIApplication.shared.open(fallbackURL, options: [:], completionHandler: nil)
             }
+        }
+    }
+    
+    func fetchVenmoHandle(forUserID userID: String, completion: @escaping (String?) -> Void) {
+        let ref = Database.database().reference()
+        
+        ref.child("users").child(userID).observeSingleEvent(of: .value) { snapshot in
+            if let userData = snapshot.value as? [String: Any],
+               let venmoHandle = userData["venmoHandle"] as? String {
+                completion(venmoHandle)
+            } else {
+                completion(nil)
+            }
+        } withCancel: { error in
+            print("Error fetching Venmo handle: \(error.localizedDescription)")
+            completion(nil)
         }
     }
     

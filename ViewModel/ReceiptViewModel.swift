@@ -29,20 +29,25 @@ class ReceiptViewModel: ObservableObject {
     private var dbRef = Database.database().reference()
     private var cancellables = Set<AnyCancellable>()
     
-
     var totalAmountOwed: Decimal {
         let total = receiptList.reduce(Decimal.zero) { total, receipt in
             let stillOwed = receipt.calculateStillOwed()
-            //print("Receipt \(receipt.id): Still owed = \(stillOwed)")
             return total + stillOwed
         }
-        //print("Total amount owed across all receipts: \(total)")
         return total
     }
-
+    
     var openChecksCount: Int {
-        let count = receiptList.filter { $0.calculateStillOwed() > 0 }.count
-        //print("Open checks count: \(count)")
+        let threshold = Decimal(string: "0.01")!
+        
+        let openChecks = receiptList.filter { receipt in
+            let stillOwed = receipt.calculateStillOwed()
+            print("Receipt ID: \(receipt.id), Still owed: \(stillOwed)")
+            return stillOwed > threshold
+        }
+        
+        let count = openChecks.count
+        print("Open checks count: \(count)")
         return count
     }
     
@@ -50,17 +55,7 @@ class ReceiptViewModel: ObservableObject {
         self.receipt = Receipt()
         self.userID = User.getUserdId() ?? "VERY BAD"
         print("RVM initialized with user id: \(userID)\n")
-        
-        // Observe the isUserDataLoaded property
-        //        userViewModel.$isUserDataLoaded
-        //            .filter { $0 }  // Only trigger when it becomes true
-        //            .first()  // We only need to trigger this once
-        //            .sink { [weak self] _ in
-        //                Task {
-        //                    await self?.fetchUserReceipts()
-        //                }
-        //            }
-        //            .store(in: &cancellables)
+
         Task {
             await fetchUserReceipts()
             DispatchQueue.main.async {
@@ -98,9 +93,7 @@ class ReceiptViewModel: ObservableObject {
                     print("Receipt data not found for ID: \(receiptID)")
                     continue
                 }
-                
                 //print("Receipt data snapshot value for \(receiptID): \(receiptData)")
-
                 let data = try JSONSerialization.data(withJSONObject: receiptData, options: [])
                 let receipt = try JSONDecoder().decode(Receipt.self, from: data)
                 if !fetchedReceipts.contains(where: { $0.id == receipt.id }) {
@@ -168,7 +161,6 @@ class ReceiptViewModel: ObservableObject {
     
     
     //url builder function
-    
     func shareCheck(receiptId: String) {
         // Create a web URL for your app
         let webURLString = "https://www.fatcheck.app/receipt/\(receiptId)"
@@ -483,16 +475,6 @@ class ReceiptViewModel: ObservableObject {
         self.people = receiptPeople
         print("Initial people set from receipt: \(self.people)")
 
-//        if let currentUser = userViewModel.currentUser {
-//            let currentUserPerson = LegitP(id: dbRef.child("people").childByAutoId().key ?? "BAD5", name: currentUser.name)
-//            print("Current user person: \(currentUserPerson)")
-//
-//            if !people.contains(where: { $0.name == currentUserPerson.name }) {
-//                people.append(currentUserPerson)
-//                print("Added current user to people: \(currentUserPerson)")
-//            }
-//        }
-
         for index in people.indices {
             if people[index].id.isEmpty {
                 let newId = dbRef.child("people").childByAutoId().key ?? "BAD6"
@@ -503,10 +485,6 @@ class ReceiptViewModel: ObservableObject {
 
         self.receipt.people = self.people
         print("Final people in receipt: \(self.receipt.people ?? [])")
-    }
-    
-    func addUserToItem() {
-        
     }
 
     func setItems() {

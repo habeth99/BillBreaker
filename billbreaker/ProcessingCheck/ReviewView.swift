@@ -56,6 +56,8 @@ struct ReviewView: View {
             AddButton(action: {
                 transformer.addItem(newItem: Item())
             })
+            .padding(.trailing, 22)
+            .padding(.bottom, -12)
             
         }
         .navigationBarItems(

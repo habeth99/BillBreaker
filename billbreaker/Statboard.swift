@@ -13,14 +13,10 @@ struct StatboardView: View {
 
     var body: some View {
         ZStack {
-            //FatCheckTheme.Colors.accentColor
-            //Color.gray.opacity(0.1)
             RoundedRectangle(cornerRadius: FatCheckTheme.Spacing.sm)
                 .fill(FatCheckTheme.Colors.white)
                 .frame(maxWidth: .infinity, maxHeight: FatCheckTheme.Size.sm)
-
                 .padding(.horizontal, FatCheckTheme.Spacing.sm)
-            
             HStack (spacing: 0) {
                 VStack(alignment: .leading, spacing: 0) {
                     Text(NumberFormatter.localizedString(from: rviewModel.totalAmountOwed as NSDecimalNumber, number: .currency))
