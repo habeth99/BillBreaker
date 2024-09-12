@@ -20,8 +20,14 @@ struct BillDetailsView: View {
                 Section(header: Text("Items")) {
                     ItemsSectionView(rviewModel: rviewModel)
                 }
-                PeopleSectionView(rviewModel: rviewModel)
-                    .listRowSeparator(.hidden)
+                //Section {
+                    PeopleSectionView(rviewModel: rviewModel)
+                        //.listRowSeparator(.hidden)
+                //}
+                //.listRowInsets(EdgeInsets())
+                //.listRowSpacing(16)
+                //PeopleSectionView(rviewModel: rviewModel)
+                    //.listRowSeparator(.hidden)
             }
         }
         .overlay(

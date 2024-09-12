@@ -25,33 +25,34 @@ struct PeopleSectionView: View {
     
     var body: some View {
         ForEach(rviewModel.receipt.people ?? [], id: \.id) { person in
-            Section {
+            //Section {
                 personDetails(for: person)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-                    .padding()
-                    .background(person.color.opacity(rviewModel.selectedPerson?.id == person.id ? 1 : 0.2))
+                    .padding(32)
+                    .background(Color.white)
                     .cornerRadius(8)
                     .contentShape(Rectangle())
+                    .listRowInsets(EdgeInsets())
                     .onTapGesture {
                         rviewModel.selectPerson(person)
                     }
-            }
-            .listRowInsets(EdgeInsets())
-            .listRowBackground(Color.clear)
-            .swipeActions {
-                Button(role: .destructive) {
-                    rviewModel.receipt.deletePerson(id: person.id)
-                    rviewModel.saveReceipt { success in
-                        if success {
-                            print("Receipt saved successfully")
-                        } else {
-                            print("Failed to save receipt")
-                        }
-                    }
-                } label: {
-                    Label("Delete", systemImage: "trash")
-                }
-            }
+            //}
+//            .listRowInsets(EdgeInsets())
+//            .listRowBackground(Color.blue)
+//            .swipeActions {
+//                Button(role: .destructive) {
+//                    rviewModel.receipt.deletePerson(id: person.id)
+//                    rviewModel.saveReceipt { success in
+//                        if success {
+//                            print("Receipt saved successfully")
+//                        } else {
+//                            print("Failed to save receipt")
+//                        }
+//                    }
+//                } label: {
+//                    Label("Delete", systemImage: "trash")
+//                }
+//            }
         }
     }
     
@@ -80,12 +81,19 @@ struct PeopleSectionView: View {
 
         return HStack(alignment: .top, spacing: FatCheckTheme.Spacing.md) {
             VStack(alignment: .leading, spacing: FatCheckTheme.Spacing.xs) {
-                Text(person.name)
-                    .font(.title2)
-                    .fontWeight(.semibold)
+                HStack{
+                    Circle()
+                        .fill(person.color)
+                        .frame(width: 19, height: 19)
+                    Text(person.name)
+                        .font(.title2)
+                        .fontWeight(.semibold)
+                }
                 ForEach(itemsWithPrice, id: \.0.id) { item, sharePrice in
                     HStack {
                         Text(item.name)
+                            .lineLimit(1)
+                            .truncationMode(.tail)
                             .font(.subheadline)
                         Spacer()
                         Text(formattedCurrency(sharePrice))
@@ -115,12 +123,12 @@ struct PeopleSectionView: View {
                 Text("Total")
                     .font(.subheadline)
                 Button(action: { payUp(total: total) }) {
-                    Text("Pay Up")
-                        .foregroundColor(.black)
+                    Text("Request")
+                        .foregroundColor(FatCheckTheme.Colors.white)
                         .font(.subheadline)
                         .padding(8)
                         .frame(minWidth: 100)
-                        .background(Color.white)
+                        .background(FatCheckTheme.Colors.primaryColor)
                         .cornerRadius(FatCheckTheme.Spacing.xs)
                 }
                 .buttonStyle(PlainButtonStyle())
@@ -130,18 +138,17 @@ struct PeopleSectionView: View {
     
     private func payUp(total: Decimal) {
         let payViewModel = PayBack()
-        payViewModel.fetchVenmoHandle(forUserID: rviewModel.receipt.userId) { venmoHandle in
-            if let venmoHandle = venmoHandle {
+        //payViewModel.fetchVenmoHandle(forUserID: rviewModel.receipt.userId) { venmoHandle in
+            //if let venmoHandle = venmoHandle {
                 // Use the venmoHandle to initiate the payment
-                print("Venmo handle for payment: \(venmoHandle)")
+                //print("Venmo handle for payment: \(venmoHandle)")
                 // actually opens the venmo app
-                payViewModel.payWithVenmo(recipient: venmoHandle, amount: "\(total)")
-            } else {
-                print("Could not fetch Venmo handle for user")
-            }
-        }
-        
-//        payViewModel.openCashApp(recipient: "$fattystacky" , amount: "1.00")
+                //payViewModel.requestVenmo(recipient: venmoHandle, amount: "\(total)")
+        payViewModel.requestVenmo(amount: "\(total)")
+            //} else {
+                //print("Could not fetch Venmo handle for user")
+            //}
+        //}
     }
 }
 

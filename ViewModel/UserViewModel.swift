@@ -15,7 +15,6 @@ import AuthenticationServices
 
 struct OnboardingAnswers: Codable {
     var mostExcitedFeature: String?
-    var defaultTipPercentage: Bool?
     var wantsPushNotifications: Bool?
 }
 
@@ -276,7 +275,7 @@ class UserViewModel: ObservableObject {
         
         let onboardingData: [String: Any] = [
             "mostExcitedFeature": onboardingAnswers.mostExcitedFeature ?? "",
-            "defaultTipPercentage": onboardingAnswers.defaultTipPercentage ?? false,
+//            "defaultTipPercentage": onboardingAnswers.defaultTipPercentage ?? false,
             "wantsPushNotifications": onboardingAnswers.wantsPushNotifications ?? false
         ]
         

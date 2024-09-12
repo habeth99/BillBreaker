@@ -108,7 +108,6 @@ enum AuthRoute: Hashable {
     case signIn
     case signUp
     case mostExcited
-    case defaultTip
     case pushNot
 }
 

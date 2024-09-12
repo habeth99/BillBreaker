@@ -41,7 +41,7 @@ struct MostExcitedView: View {
             Spacer()
             
             Button(action: {
-                router.navigateAuth(to: .defaultTip)
+                router.navigateAuth(to: .pushNot)
             }) {
                 Text("Next")
                     .frame(maxWidth: .infinity)

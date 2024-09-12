@@ -25,7 +25,7 @@ struct NameTag: View {
         Button(action: openLink) {
             HStack(spacing: 0) {
                 Rectangle()
-                    .fill(person.color.opacity(0.7))
+                    .fill(Color.gray.opacity(0.2))
                     .frame(width: 338, height: 32)
                     .overlay(
                         HStack (spacing: 0){
@@ -36,7 +36,7 @@ struct NameTag: View {
                             Text(formattedAmount)
                                 .foregroundColor(.black)
                             Image(systemName: "square.and.arrow.up")
-                                .foregroundColor(.white)
+                                .foregroundColor(.black)
                                 .padding(FatCheckTheme.Spacing.md)
                         }
                     )

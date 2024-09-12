@@ -33,6 +33,8 @@ struct CheckCard: View {
             VStack (alignment: .leading, spacing: 0) {
                 HStack(alignment:.top) {
                     Text(receipt.name)
+                        .lineLimit(1)
+                        .truncationMode(.tail)
                         .font(.title)
                     Spacer()
                     Text(receipt.formatDate(), style: .date)

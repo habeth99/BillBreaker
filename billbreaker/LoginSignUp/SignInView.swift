@@ -37,48 +37,9 @@ struct SignInView: View {
             .frame(maxWidth: .infinity)
             .frame(maxHeight: 56)
             .cornerRadius(FatCheckTheme.Spacing.sm)
-            .padding(.horizontal)
+            .padding(.horizontal, FatCheckTheme.Spacing.xl)
         
             Spacer()
         }
     }
 }
-
-// Preview
-//struct LoginView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        SignInView()
-//            .environmentObject(UserViewModel())
-//    }
-//}
-
-// CUSTOM apple buttons should i need them
-//            Button(action: {
-//                //viewModel.signInWithApple()
-//            }) {
-//                HStack {
-//                    Image(systemName: "apple.logo")
-//                    Text("Sign in with Apple")
-//                }
-//                .frame(maxWidth: .infinity)
-//                .padding()
-//                .background(Color.black)
-//                .cornerRadius(FatCheckTheme.Spacing.sm)  // Adjust the radius as needed
-//                .foregroundColor(.white)
-//            }
-//            .padding(.horizontal)
-
-//            Button(action: {
-//                // Perform sign in with Apple, then navigate to onboarding
-//            }) {
-//                HStack {
-//                    Image(systemName: "apple.logo")
-//                    Text("Sign up with Apple")
-//                }
-//                .frame(maxWidth: .infinity)
-//                .padding()
-//                .background(Color.black)
-//                .cornerRadius(FatCheckTheme.Spacing.sm)  // Adjust the radius as needed
-//                .foregroundColor(.white)
-//            }
-//            .padding(.horizontal)

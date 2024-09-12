@@ -46,7 +46,7 @@ struct SignUpView: View {
             .frame(maxWidth: .infinity)
             .frame(maxHeight: 56)
             .cornerRadius(FatCheckTheme.Spacing.sm)
-            .padding(.horizontal)
+            .padding(.horizontal, FatCheckTheme.Spacing.xl)
             
             VStack (alignment: .leading) {
                 HStack {

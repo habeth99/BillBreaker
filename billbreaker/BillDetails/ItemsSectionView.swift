@@ -8,38 +8,6 @@
 import Foundation
 import SwiftUI
 
-//struct ItemsSectionView: View {
-//    @ObservedObject var rviewModel: ReceiptViewModel
-//    
-//    var body: some View {
-//        ForEach(rviewModel.receipt.items ?? [], id: \.id) { item in
-//            let users = self.getUsersForItem(item: item)
-//            
-//            ItemRowView(item: item, users: users, rviewModel: rviewModel)
-//                .swipeActions {
-//                    Button(role: .destructive) {
-//                        rviewModel.receipt.deleteItem(id: item.id)
-//
-//                        rviewModel.saveReceipt { success in
-//                            if success {
-//                                print("Receipt saved successfully")
-//                            } else {
-//                                print("Failed to save receipt")
-//                            }
-//                        }
-//                    } label: {
-//                        Label("Delete", systemImage: "trash")
-//                    }
-//                }
-//        }
-//    }
-//    
-//    private func getUsersForItem(item: Item) -> [LegitP] {
-//        return rviewModel.receipt.people?.filter { $0.claims.contains { $0 == item.id } } ?? []
-//    }
-//}
-
-
 struct EditingItemView2: View {
     @ObservedObject var item: Item
     let onEndEdit: (Item) -> Void
@@ -88,39 +56,28 @@ struct ItemsSectionView: View {
                         editingItemId = nil
                     })
                 } else {
-                    HStack {
-                        Text(item.name)
-                            .padding(.vertical, FatCheckTheme.Spacing.xs)
-                            .contentShape(Rectangle())
-                            .onTapGesture {
-                                editingItemId = item.id
-                            }
-                        
-                        Spacer()
-                        
-                        Text(item.price.formatted(.currency(code: "USD")))
-                            .padding(.vertical, FatCheckTheme.Spacing.xs)
-                    }
-                    .overlay(
-                        GeometryReader { geometry in
-                            HStack {
-                                Spacer()
-                                    .frame(width: geometry.size.width * 0.4)
-                                Rectangle()
-                                    .fill(Color.clear)
-                                    .contentShape(Rectangle())
-                                    .onTapGesture {
-                                        if rviewModel.selectedPerson != nil {
-                                            rviewModel.toggleItemSelection(item)
-                                        }
-                                    }
-                            }
+                    ItemRowView2(item: item, users: users, rviewModel: rviewModel)
+                        .padding(.vertical, FatCheckTheme.Spacing.md)
+                        .contentShape(Rectangle())
+                        .onTapGesture {
+                            editingItemId = item.id
                         }
-                    )
-                    .overlay(
-                        ItemRowView2(item: item, users: users, rviewModel: rviewModel)
-                            .allowsHitTesting(false)
-                    )
+                        .overlay(
+                            GeometryReader { geometry in
+                                HStack {
+                                    Spacer()
+                                        .frame(width: geometry.size.width * 0.5)
+                                    Rectangle()
+                                        .fill(Color.clear)
+                                        .contentShape(Rectangle())
+                                        .onTapGesture {
+                                            if rviewModel.selectedPerson != nil {
+                                                rviewModel.toggleItemSelection(item)
+                                            }
+                                        }
+                                }
+                            }
+                        )
                 }
             }
             .swipeActions {
@@ -158,20 +115,33 @@ struct ItemRowView2: View {
     @ObservedObject var rviewModel: ReceiptViewModel
     
     var body: some View {
-        HStack {
-            Text(item.name)
-            ForEach(users, id: \.id) { person in
-                Circle()
-                    .fill(person.color)
-                    .frame(width: 19, height: 19)
-                    .overlay(
-                        Text(person.name.prefix(1))
-                            .font(.caption)
-                            .foregroundColor(.white)
-                    )
+        GeometryReader { geometry in
+            HStack(spacing: 8) {
+                Text(item.name)
+                    .lineLimit(1)
+                    .truncationMode(.tail)
+                    .frame(width: geometry.size.width * 0.5, alignment: .leading)
+                
+                Spacer()
+                
+                HStack(spacing: 2) {
+                    ForEach(users, id: \.id) { person in
+                        Circle()
+                            .fill(person.color)
+                            .frame(width: 19, height: 19)
+                            .overlay(
+                                Text(person.name.prefix(1))
+                                    .font(.caption)
+                                    .foregroundColor(.white)
+                            )
+                    }
+                }
+                .frame(minWidth: 0, maxWidth: .infinity, alignment: .trailing)
+                
+                Text(item.price.formatted(.currency(code: "USD")))
+                    .frame(width: 70, alignment: .trailing)
             }
-            Spacer()
-            Text(item.price.formatted(.currency(code: "USD")))
         }
     }
 }
+

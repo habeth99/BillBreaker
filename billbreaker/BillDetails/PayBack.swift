@@ -11,11 +11,28 @@ import FirebaseDatabase
 import Firebase
 
 class PayBack: ObservableObject {
-    func payWithVenmo(recipient: String, amount: String) {
-        let venmoUsername = recipient.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+    
+// this function uses the name
+//    func requestVenmo(recipient: String, amount: String) {
+//        let venmoUsername = recipient.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+//        let venmoAmount = amount.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+//        
+//        let venmoURL = URL(string: "venmo://paycharge?txn=pay&recipients=\(venmoUsername)&amount=\(venmoAmount)")
+//        
+//        if let url = venmoURL, UIApplication.shared.canOpenURL(url) {
+//            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+//        } else {
+//            // Venmo app is not installed, handle this case (e.g., open App Store or Venmo website)
+//            if let fallbackURL = URL(string: "https://venmo.com/") {
+//                UIApplication.shared.open(fallbackURL, options: [:], completionHandler: nil)
+//            }
+//        }
+//    }
+    func requestVenmo(amount: String) {
         let venmoAmount = amount.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
         
-        let venmoURL = URL(string: "venmo://paycharge?txn=pay&recipients=\(venmoUsername)&amount=\(venmoAmount)")
+        let venmoURL = URL(string: "venmo://paycharge?txn=pay&amount=\(venmoAmount)")
+        //let venmoURL = URL(string: "venmo://pay?amount=\(venmoAmount)")
         
         if let url = venmoURL, UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)

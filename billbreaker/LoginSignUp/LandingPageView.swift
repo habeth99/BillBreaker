@@ -26,28 +26,31 @@ struct LandingPageView: View {
                 
                 Spacer()
                 
-                Button("Sign In") {
+                Button(action: {
                     router.navigateAuth(to: .signIn)
+                }) {
+                    Text("Sign In")
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .padding()
                 }
-                .foregroundColor(.white)
-                .frame(maxWidth: .infinity)
-                .padding()
                 .background(FatCheckTheme.Colors.primaryColor)
                 .cornerRadius(FatCheckTheme.Spacing.sm)
-                .padding(.horizontal)
-                
-                
-                Button("Sign Up") {
-                    router.navigateAuth(to: .signUp)
-                }
-                .foregroundColor(.white)
-                .frame(maxWidth: .infinity)
-                .padding()
-                .background(FatCheckTheme.Colors.primaryColor)
-                .cornerRadius(FatCheckTheme.Spacing.sm)
-                .padding(.horizontal)
-                .padding(.bottom, FatCheckTheme.Spacing.xxxl)
+                .padding(.horizontal, FatCheckTheme.Spacing.xl)
 
+                Button(action: {
+                    router.navigateAuth(to: .signUp)
+                }) {
+                    Text("Sign Up")
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                }
+                .background(FatCheckTheme.Colors.primaryColor)
+                .cornerRadius(FatCheckTheme.Spacing.sm)
+                .padding(.horizontal, FatCheckTheme.Spacing.xl)
+                
+                .padding(.bottom, FatCheckTheme.Spacing.xxxl)
             }
             .navigationDestination(for: AuthRoute.self) { route in
                 switch route {
@@ -57,8 +60,6 @@ struct LandingPageView: View {
                     SignUpView()
                 case .mostExcited:
                     MostExcitedView()
-                case .defaultTip:
-                    DefaultTipView()
                 case .pushNot:
                     PushNotView()
 

@@ -92,6 +92,7 @@
 		E27F2EB62C2690430050E190 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = E27F2EB52C2690430050E190 /* FirebaseFirestore */; };
 		E27F2EB82C26905E0050E190 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E27F2EB72C26905E0050E190 /* FirebaseFirestoreSwift */; };
 		E27F2EBA2C26937A0050E190 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E27F2EB92C26937A0050E190 /* GoogleService-Info.plist */; };
+		E293A2FE2C9247C200EC70B8 /* testlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = E293A2FD2C9247C200EC70B8 /* testlist.swift */; };
 		E29D0EBA2C2555CA00D8DFF0 /* LegitP.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27966062BC476BD000B0368 /* LegitP.swift */; };
 		E29D0EBB2C2555DD00D8DFF0 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27966082BC48178000B0368 /* Item.swift */; };
 		E2A47A272C1CE8140023E29D /* GuestSignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A47A262C1CE8140023E29D /* GuestSignInView.swift */; };
@@ -242,6 +243,7 @@
 		E27966102BC4DA5E000B0368 /* ItemVIewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemVIewModel.swift; sourceTree = "<group>"; };
 		E27966122BC4DADB000B0368 /* PersonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonViewModel.swift; sourceTree = "<group>"; };
 		E27F2EB92C26937A0050E190 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		E293A2FD2C9247C200EC70B8 /* testlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testlist.swift; sourceTree = "<group>"; };
 		E2A47A262C1CE8140023E29D /* GuestSignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestSignInView.swift; sourceTree = "<group>"; };
 		E2A47A282C1CFA520023E29D /* billbreaker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = billbreaker.entitlements; sourceTree = "<group>"; };
 		E2A47A292C1E2D7D0023E29D /* LandingPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingPageView.swift; sourceTree = "<group>"; };
@@ -349,6 +351,7 @@
 				E2D1D8DA2C7EDBC10045FA3A /* SelectorButton.swift */,
 				E2D1D8E42C8C2F6F0045FA3A /* PreDetailsView.swift */,
 				E21CE2DA2C8FE66500C774EE /* PayBack.swift */,
+				E293A2FD2C9247C200EC70B8 /* testlist.swift */,
 			);
 			path = BillDetails;
 			sourceTree = "<group>";
@@ -833,6 +836,7 @@
 				E26472202C5849E600B2DF11 /* APIReceipt.swift in Sources */,
 				E2DDFBF82BB1E7A500BAD5AC /* DataModel.swift in Sources */,
 				E20EC6212BB60C5500223B19 /* HomeView.swift in Sources */,
+				E293A2FE2C9247C200EC70B8 /* testlist.swift in Sources */,
 				E2019F0A2C73BFF900094448 /* MainTabView.swift in Sources */,
 				E209C6562C34F3C300D9E3A2 /* BillDetails.swift in Sources */,
 				E209C65C2C35150900D9E3A2 /* PeopleSectionView.swift in Sources */,
@@ -1147,6 +1151,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1184,6 +1189,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
