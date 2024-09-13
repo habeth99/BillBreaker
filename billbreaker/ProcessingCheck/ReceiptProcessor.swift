@@ -31,11 +31,6 @@ class ReceiptProcessor: ObservableObject {
             transformedReceipt.items![i].id = createItemId(receiptId: recId)
         }
         
-        // Generate and assign person IDs (if needed)
-//        for i in 0..<transformedReceipt.people!.count {
-//            transformedReceipt.people![i].id = createPersonId(receiptId: recId)
-//        }
-        
         print("transformedReceipt is: \(transformedReceipt)")
         
         DispatchQueue.main.async {
@@ -55,67 +50,13 @@ class ReceiptProcessor: ObservableObject {
         return dbRef.child("receipts").child(receiptId).child("persons").childByAutoId().key ?? ""
     }
     
-//    func saveReceipt2(completion: @escaping (Bool) -> Void) {
-//
-//        if receipt.id.isEmpty {
-//            receipt.id = dbRef.child("receipts").childByAutoId().key ?? ""
-//            print("Generated new receipt ID: \(receipt.id)")
-//        }
-//        
-//        receipt.items = receipt.items?.map { item in
-//            var updatedItem = item
-//            if updatedItem.id.isEmpty {
-//                updatedItem.id = dbRef.child("receipts").child(receipt.id).child("items").childByAutoId().key ?? ""
-//            }
-//            return updatedItem
-//        }
-//        
-//        receipt.people = receipt.people?.map { person in
-//            var updatedPerson = person
-//            if updatedPerson.id.isEmpty {
-//                updatedPerson.id = dbRef.child("receipts").child(receipt.id).child("people").childByAutoId().key ?? ""
-//            }
-//            return updatedPerson
-//        }
-//        
-//        receipt.userId = User.getUserdId() ?? ""
-//
-//        //print("Saving receipt with ID: \(receipt.id)")
-//        
-//        let receiptData: [String: Any] = [
-//            "id": receipt.id,
-//            "userId": receipt.userId,
-//            "name": receipt.name,
-//            "date": receipt.date,
-//            "createdAt": receipt.createdAt,
-//            "tax": receipt.tax,
-//            "tip": receipt.tip,
-//            "items": receipt.items?.map { item in
-//                ["id": item.id, "name": item.name, "price": item.price]
-//            } ?? [],
-//            "people": receipt.people?.map { $0.toDict() } ?? []
-//        ]
-//
-//        //print("Receipt data to save: \(receiptData)")
-//
-//        dbRef.child("receipts").child(receipt.id).setValue(receiptData) { error, _ in
-//            if let error = error {
-//                print("Error saving receipt: \(error.localizedDescription)")
-//                completion(false)
-//            } else {
-//                print("Receipt saved successfully")
-//                self.saveReceiptToUser(receiptId: self.receipt.id) { success in
-//                    if success {
-//                        print("Receipt ID added to user successfully.")
-//                        completion(true)
-//                    } else {
-//                        print("Failed to add receipt ID to user.")
-//                        completion(false)
-//                    }
-//                }
-//            }
-//        }
-//    }
+    func updateTip(_ newTip: Decimal) {
+        DispatchQueue.main.async {
+            self.receipt.tip = newTip
+        }
+        objectWillChange.send()
+    }
+    
     func saveReceipt2(completion: @escaping (Bool) -> Void) {
         if receipt.id.isEmpty {
             receipt.id = dbRef.child("receipts").childByAutoId().key ?? ""

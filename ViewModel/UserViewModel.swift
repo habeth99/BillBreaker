@@ -71,8 +71,52 @@ class UserViewModel: ObservableObject {
         }
     }
     
+//    func fetchUser() {
+//        guard let userID = userID else {
+//            print("UserViewModel: fetchUser - UserID is nil.")
+//            return
+//        }
+//
+//        dbRef.child("users").child(userID).observeSingleEvent(of: .value) { [weak self] snapshot in
+//            guard let self = self else { return }
+//            
+//            guard snapshot.exists() else {
+//                print("UserViewModel: fetchUser - User data does not exist.")
+//                return
+//            }
+//            
+//            var userData: [String: Any] = [:]
+//            
+//            // Extract only the needed fields
+//            for field in ["name", "email", "cashAppHandle", "venmoHandle"] {
+//                userData[field] = snapshot.childSnapshot(forPath: field).value
+//                //print("UserViewModel: fetchUser - \(field): \(String(describing: userData[field]))")
+//            }
+//            
+//            // Add userID to the userData
+//            userData["id"] = userID
+//            
+//            // Handle receipts separately as they might be more complex
+//            if let receipts = snapshot.childSnapshot(forPath: "receipts").value as? [String: Any] {
+//                userData["receipts"] = receipts
+//            }
+//            
+//            do {
+//                let data = try JSONSerialization.data(withJSONObject: userData)
+//                let user = try JSONDecoder().decode(User.self, from: data)
+//                
+//                Task { @MainActor in
+//                    self.currentUser = user
+//                    self.isUserAuthenticated = true
+//                    self.isUserDataLoaded = true
+//                }
+//                self.setupUserListener()
+//            } catch {
+//                print("UserViewModel: Error decoding user: \(error.localizedDescription)")
+//            }
+//        }
+//    }
     func fetchUser() {
-        //print("UserViewModel: Starting fetchUser")
         guard let userID = userID else {
             print("UserViewModel: fetchUser - UserID is nil.")
             return
@@ -81,32 +125,31 @@ class UserViewModel: ObservableObject {
         dbRef.child("users").child(userID).observeSingleEvent(of: .value) { [weak self] snapshot in
             guard let self = self else { return }
             
-            //print("UserViewModel: fetchUser - Snapshot received")
-            
             guard snapshot.exists() else {
                 print("UserViewModel: fetchUser - User data does not exist.")
                 return
             }
             
-            //print("UserViewModel: fetchUser - Snapshot contents:")
-            //self.printSnapshot(snapshot)
-            
             var userData: [String: Any] = [:]
             
             // Extract only the needed fields
-            for field in ["name", "email", "cashAppHandle", "venmoHandle"] {
+            for field in ["name", "email"] {
                 userData[field] = snapshot.childSnapshot(forPath: field).value
-                //print("UserViewModel: fetchUser - \(field): \(String(describing: userData[field]))")
+            }
+            
+            // Handle optional fields
+            for optionalField in ["cashAppHandle", "venmoHandle"] {
+                if let value = snapshot.childSnapshot(forPath: optionalField).value as? String, !value.isEmpty {
+                    userData[optionalField] = value
+                }
             }
             
             // Add userID to the userData
             userData["id"] = userID
-            //print("UserViewModel: fetchUser - id: \(userID)")
             
             // Handle receipts separately as they might be more complex
             if let receipts = snapshot.childSnapshot(forPath: "receipts").value as? [String: Any] {
                 userData["receipts"] = receipts
-                //print("UserViewModel: fetchUser - receipts: \(receipts)")
             }
             
             do {
@@ -117,8 +160,6 @@ class UserViewModel: ObservableObject {
                     self.currentUser = user
                     self.isUserAuthenticated = true
                     self.isUserDataLoaded = true
-                    //print("UserViewModel: fetchUser - User data loaded successfully. isUserAuthenticated: \(self.isUserAuthenticated), isUserDataLoaded: \(self.isUserDataLoaded)")
-                    //print("UserViewModel: fetchUser - Decoded user: \(user)")
                 }
                 self.setupUserListener()
             } catch {
@@ -138,10 +179,6 @@ class UserViewModel: ObservableObject {
             }
         }
     }
-    
-    
-    
-    
 
     private func setupUserListener() {
         guard let userID = userID else { return }
@@ -275,7 +312,6 @@ class UserViewModel: ObservableObject {
         
         let onboardingData: [String: Any] = [
             "mostExcitedFeature": onboardingAnswers.mostExcitedFeature ?? "",
-//            "defaultTipPercentage": onboardingAnswers.defaultTipPercentage ?? false,
             "wantsPushNotifications": onboardingAnswers.wantsPushNotifications ?? false
         ]
         

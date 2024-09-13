@@ -13,8 +13,8 @@ class User: Identifiable, Codable, ObservableObject {
     @Published var id: String
     @Published var name: String
     @Published var email: String
-    @Published var venmoHandle: String
-    @Published var cashAppHandle: String
+    @Published var venmoHandle: String?
+    @Published var cashAppHandle: String?
     @Published var receipts: [String]?
 
     enum CodingKeys: CodingKey {

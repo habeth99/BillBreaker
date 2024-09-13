@@ -100,7 +100,7 @@ struct SettingsView: View {
                 if isEditing {
                     TextField("Venmo Handle", text: $editedVenmoHandle)
                 } else {
-                    SettingsRowView(imageName: "dollarsign.circle.fill", title: "Venmo: ", tintColor: .blue, descr: user.venmoHandle)
+                    SettingsRowView(imageName: "dollarsign.circle.fill", title: "Venmo: ", tintColor: .blue, descr: user.venmoHandle ?? "No Venmo")
                 }
             }
             
@@ -108,7 +108,7 @@ struct SettingsView: View {
                 if isEditing {
                     TextField("CashApp Handle", text: $editedCashAppHandle)
                 } else {
-                    SettingsRowView(imageName: "dollarsign.circle.fill", title: "CashApp: ", tintColor: .green, descr: user.cashAppHandle)
+                    SettingsRowView(imageName: "dollarsign.circle.fill", title: "CashApp: ", tintColor: .green, descr: user.cashAppHandle ?? "No CashApp")
                 }
             }
             

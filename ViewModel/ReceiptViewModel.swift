@@ -178,6 +178,30 @@ class ReceiptViewModel: ObservableObject {
         }
     }
     
+    func updatePersonPaidStatus(personId: String, isPaid: Bool) {
+        if let index = receipt.people?.firstIndex(where: { $0.id == personId }) {
+            receipt.people?[index].paid = isPaid
+            saveReceipt { success in
+                if success {
+                    print("Receipt saved successfully after updating paid status")
+                } else {
+                    print("Failed to save receipt after updating paid status")
+                }
+            }
+        }
+    }
+    
+    func updateTip(_ newTip: Decimal) {
+        receipt.tip = newTip
+        // Add any additional logic here, such as updating the backend or recalculating totals
+        saveReceipt() { success in
+            if success {
+                print("good")
+            } else {
+                print("bad")
+            }
+        }
+    }
     
 //================================================================================================
         //Listeners Section
@@ -455,6 +479,104 @@ class ReceiptViewModel: ObservableObject {
         print("New receipt created with ID: \(self.receipt.id)")
     }
     
+//=======================================
+    
+    func deleteReceipt(at offsets: IndexSet) {
+        guard let index = offsets.first, index < receiptList.count else { return }
+        let receiptToDelete = receiptList[index]
+        
+        print("Attempting to delete receipt with ID: \(receiptToDelete.id)")
+        
+        deleteReceiptFromReceiptNode(receiptId: receiptToDelete.id) { [weak self] success in
+            if success {
+                print("Successfully deleted receipt from receipt node")
+                self?.removeReceiptFromUserList(receiptId: receiptToDelete.id) { success in
+                    DispatchQueue.main.async {
+                        if success {
+                            self?.receiptList.remove(at: index)
+                            print("Successfully removed receipt from user's list")
+                        } else {
+                            print("Failed to remove receipt from user's list")
+                        }
+                    }
+                }
+            } else {
+                print("Failed to delete receipt from receipt node")
+            }
+        }
+    }
+    
+    private func deleteReceiptFromReceiptNode(receiptId: String, completion: @escaping (Bool) -> Void) {
+        let receiptRef = dbRef.child("receipts").child(receiptId)
+        receiptRef.removeValue { error, _ in
+            if let error = error {
+                print("Error deleting receipt from node: \(error.localizedDescription)")
+                completion(false)
+            } else {
+                print("Receipt successfully deleted from node")
+                completion(true)
+            }
+        }
+    }
+    
+    private func removeReceiptFromUserList(receiptId: String, completion: @escaping (Bool) -> Void) {
+        guard let userId = Auth.auth().currentUser?.uid else {
+            print("Error: No current user ID")
+            completion(false)
+            return
+        }
+        
+        print("Attempting to remove receipt \(receiptId) for user \(userId)")
+        
+        let userReceiptsRef = dbRef.child("users").child(userId).child("receipts")
+        
+        userReceiptsRef.observeSingleEvent(of: .value) { snapshot in
+            print("User receipts snapshot: \(snapshot.value ?? "nil")")
+            
+            guard var receipts = snapshot.value as? [String] else {
+                print("Error: Couldn't cast receipts to [String]")
+                completion(false)
+                return
+            }
+            
+            print("Current receipts: \(receipts)")
+            
+            // Remove the receipt ID from the local copy
+            let originalCount = receipts.count
+            receipts.removeAll { $0 == receiptId }
+            let newCount = receipts.count
+            
+            print("Receipts after filtering: \(receipts)")
+            print("Removed \(originalCount - newCount) receipt(s)")
+            
+            if receipts.isEmpty {
+                // If the receipts list is now empty, remove the entire "receipts" node
+                userReceiptsRef.removeValue { error, _ in
+                    if let error = error {
+                        print("Error removing receipts node: \(error.localizedDescription)")
+                        completion(false)
+                    } else {
+                        print("Successfully removed empty receipts node")
+                        completion(true)
+                    }
+                }
+            } else {
+                // Otherwise, update the receipts list
+                userReceiptsRef.setValue(receipts) { error, _ in
+                    if let error = error {
+                        print("Error updating receipts: \(error.localizedDescription)")
+                        completion(false)
+                    } else {
+                        print("Successfully updated receipts")
+                        completion(true)
+                    }
+                }
+            }
+        }
+    }
+    
+//=======================================
+    
     func setReceipt(receiptId: String) {
         Task {
             if let fetchedReceipt = await self.getReceipt(id: receiptId) {
@@ -514,8 +636,15 @@ class ReceiptViewModel: ObservableObject {
     }
     
     func selectPerson(_ person: LegitP) {
-        selectedPerson = person
-        selectedItemsIds = person.claims
+        
+        if person.id == selectedPerson?.id {
+            selectedPerson = nil
+            selectedItemsIds = [""]
+        } else {
+            selectedPerson = person
+            selectedItemsIds = person.claims
+        }
+        
     }
     
     func toggleItemSelection(_ item: Item) {

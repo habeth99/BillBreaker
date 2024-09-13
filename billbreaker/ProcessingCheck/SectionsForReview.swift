@@ -68,3 +68,127 @@ struct EditingItemView: View {
     }
 }
 
+//struct EditableTipView: View {
+//    let tipAmount: Decimal
+//    let isEditing: Bool
+//    let onEdit: () -> Void
+//    let onEndEdit: (Decimal) -> Void
+//
+//    var body: some View {
+//        if isEditing {
+//            EditingTipView(tipAmount: tipAmount, onEndEdit: onEndEdit)
+//        } else {
+//            DisplayTipView(tipAmount: tipAmount, onEdit: onEdit)
+//        }
+//    }
+//}
+//
+//struct DisplayTipView: View {
+//    let tipAmount: Decimal
+//    let onEdit: () -> Void
+//
+//    var body: some View {
+//        HStack {
+//            Text("Tip")
+//            Spacer()
+//            Text(tipAmount.formatted(.currency(code: "USD").precision(.fractionLength(2))))
+//        }
+//        .contentShape(Rectangle())
+//        .onTapGesture(perform: onEdit)
+//        .padding(.vertical, 8)
+//    }
+//}
+//
+//struct EditingTipView: View {
+//    @State private var editedTipString: String
+//    let tipAmount: Decimal
+//    let onEndEdit: (Decimal) -> Void
+//
+//    init(tipAmount: Decimal, onEndEdit: @escaping (Decimal) -> Void) {
+//        self.tipAmount = tipAmount
+//        self.onEndEdit = onEndEdit
+//        _editedTipString = State(initialValue: tipAmount.formatted(.number.precision(.fractionLength(2))))
+//    }
+//
+//    var body: some View {
+//        HStack {
+//            Text("Tip")
+//            Spacer()
+//            TextField("Tip", text: $editedTipString)
+//                .textFieldStyle(RoundedBorderTextFieldStyle())
+//        }
+//        .padding(.vertical, 8)
+//        .onDisappear {
+//            let updatedTip = Decimal(string: editedTipString) ?? tipAmount
+//            onEndEdit(updatedTip)
+//        }
+//    }
+//}
+
+struct EditingTipView: View {
+    @State private var editedTipString: String
+    @Binding var isEditing: Bool
+    let tipAmount: Decimal
+    let onEndEdit: (Decimal) -> Void
+
+    init(tipAmount: Decimal, isEditing: Binding<Bool>, onEndEdit: @escaping (Decimal) -> Void) {
+        self.tipAmount = tipAmount
+        self._isEditing = isEditing
+        self.onEndEdit = onEndEdit
+        _editedTipString = State(initialValue: tipAmount.formatted(.number.precision(.fractionLength(2))))
+    }
+
+    var body: some View {
+        HStack {
+            Text("Tip")
+            Spacer()
+            TextField("Tip", text: $editedTipString, onCommit: {
+                updateAndDismiss()
+            })
+            .textFieldStyle(RoundedBorderTextFieldStyle())
+        }
+        .padding(.vertical, 8)
+        .onDisappear {
+            updateAndDismiss()
+        }
+    }
+    
+    private func updateAndDismiss() {
+        let updatedTip = Decimal(string: editedTipString) ?? tipAmount
+        onEndEdit(updatedTip)
+        isEditing = false
+    }
+}
+
+struct EditableTipView: View {
+    let tipAmount: Decimal
+    @Binding var isEditing: Bool
+    let onEndEdit: (Decimal) -> Void
+
+    var body: some View {
+        if isEditing {
+            EditingTipView(tipAmount: tipAmount, isEditing: $isEditing, onEndEdit: onEndEdit)
+        } else {
+            DisplayTipView(tipAmount: tipAmount) {
+                isEditing = true
+            }
+        }
+    }
+}
+
+struct DisplayTipView: View {
+    let tipAmount: Decimal
+    let onEdit: () -> Void
+
+    var body: some View {
+        HStack {
+            Text("Tip")
+            Spacer()
+            Text(tipAmount.formatted(.currency(code: "USD").precision(.fractionLength(2))))
+        }
+        .contentShape(Rectangle())
+        .onTapGesture(perform: onEdit)
+        .padding(.vertical, 8)
+    }
+}
+

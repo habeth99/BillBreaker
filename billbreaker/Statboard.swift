@@ -35,7 +35,7 @@ struct StatboardView: View {
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: FatCheckTheme.Size.sm)
-            .padding( FatCheckTheme.Spacing.lg)
+            //.padding( FatCheckTheme.Spacing.lg)
         }
     }
 }

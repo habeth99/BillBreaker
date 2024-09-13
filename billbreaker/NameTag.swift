@@ -25,7 +25,7 @@ struct NameTag: View {
         Button(action: openLink) {
             HStack(spacing: 0) {
                 Rectangle()
-                    .fill(Color.gray.opacity(0.2))
+                    .fill(Color.gray.opacity(0.4))
                     .frame(width: 338, height: 32)
                     .overlay(
                         HStack (spacing: 0){

@@ -11,39 +11,28 @@ import SwiftUI
 struct ReceiptListView: View {
     @ObservedObject var rviewModel: ReceiptViewModel
     @EnvironmentObject var router: Router
-    @State private var showConfetti = false
     
     var body: some View {
-        //ZStack{
-            ScrollView {
-                VStack (spacing: 0) {
-                    StatboardView(rviewModel: rviewModel)
-                    HStack (spacing: 0) {
-                        Text("Recent Checks")
-                            .padding(.horizontal, FatCheckTheme.Spacing.sm)
-                        Spacer()
-                    }
-//                    Button("Celebrate!") {
-//                        showConfetti = true
-//                        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-//                            showConfetti = false
-//                        }
-//                    }
-                }
-                
-                VStack (spacing: 0) {
-                    ForEach(rviewModel.receiptList, id: \.id) { receipt in
-                        CheckCard(receipt: receipt)
-                            .padding(.horizontal, FatCheckTheme.Spacing.sm)
-                            .padding(.bottom, FatCheckTheme.Spacing.sm)
-                    }
-                }
+        List {
+            Section {
+                StatboardView(rviewModel: rviewModel)
             }
-            .background(Color(.systemGroupedBackground))
-            .refreshable {
-                await rviewModel.fetchUserReceipts()
+            
+            Section(header: Text("Recent Checks")) {
+                ForEach(rviewModel.receiptList, id: \.id) { receipt in
+                    CheckCard(receipt: receipt)
+                }
+                .onDelete(perform: deleteReceipt)
             }
-            //ConfettiAnimation(isShowing: $showConfetti)
-        //}
+        }
+        .refreshable {
+            await rviewModel.fetchUserReceipts()
+        }
+    }
+    
+    private func deleteReceipt(at offsets: IndexSet) {
+        // Implement the delete functionality here
+        // For example:
+        rviewModel.deleteReceipt(at: offsets)
     }
 }

@@ -68,7 +68,7 @@ struct CheckCard: View {
                     }
                 }
             }
-            .padding(FatCheckTheme.Spacing.md)
+            .padding(FatCheckTheme.Spacing.xs)
             .background(
                 RoundedRectangle(cornerRadius: FatCheckTheme.Spacing.sm)
                     .fill(FatCheckTheme.Colors.white)

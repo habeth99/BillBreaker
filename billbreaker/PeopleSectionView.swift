@@ -11,52 +11,253 @@ import SwiftUI
 struct PeopleSectionView: View {
     @ObservedObject var rviewModel: ReceiptViewModel
     
-    private let currencyFormatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        formatter.maximumFractionDigits = 2
-        formatter.minimumFractionDigits = 2
-        return formatter
-    }()
-    
-    private func formattedCurrency(_ amount: Decimal) -> String {
-        return currencyFormatter.string(from: NSDecimalNumber(decimal: amount)) ?? "$0.00"
-    }
-    
     var body: some View {
         ForEach(rviewModel.receipt.people ?? [], id: \.id) { person in
-            //Section {
-                personDetails(for: person)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-                    .padding(32)
-                    .background(Color.white)
-                    .cornerRadius(8)
-                    .contentShape(Rectangle())
-                    .listRowInsets(EdgeInsets())
-                    .onTapGesture {
-                        rviewModel.selectPerson(person)
+            PersonCard(person: person, rviewModel: rviewModel)
+        }
+    }
+}
+
+struct PersonCard: View {
+    let person: LegitP
+    @ObservedObject var rviewModel: ReceiptViewModel
+    
+    var body: some View {
+        ZStack {
+            // Card content
+            PersonDetails(person: person, rviewModel: rviewModel)
+                .padding()
+                .background(Color.white)
+                .cornerRadius(8)
+            
+            // Selection indicator
+            if person.id == rviewModel.selectedPerson?.id {
+                RoundedRectangle(cornerRadius: 8)
+                    .stroke(Color.green, lineWidth: 2)
+                    .padding(FatCheckTheme.Spacing.xs)
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+        .contentShape(Rectangle())
+        .onTapGesture {
+            rviewModel.selectPerson(person)
+        }
+        .swipeActions {
+            Button(role: .destructive) {
+                rviewModel.receipt.deletePerson(id: person.id)
+                rviewModel.saveReceipt { success in
+                    if success {
+                        print("Receipt saved successfully")
+                    } else {
+                        print("Failed to save receipt")
                     }
-            //}
-//            .listRowInsets(EdgeInsets())
-//            .listRowBackground(Color.blue)
-//            .swipeActions {
-//                Button(role: .destructive) {
-//                    rviewModel.receipt.deletePerson(id: person.id)
-//                    rviewModel.saveReceipt { success in
-//                        if success {
-//                            print("Receipt saved successfully")
-//                        } else {
-//                            print("Failed to save receipt")
-//                        }
-//                    }
-//                } label: {
-//                    Label("Delete", systemImage: "trash")
-//                }
-//            }
+                }
+            } label: {
+                Label("Delete", systemImage: "trash")
+            }
+        }
+    }
+}
+
+struct PersonDetails: View {
+    let person: LegitP
+    @ObservedObject var rviewModel: ReceiptViewModel
+    
+    var body: some View {
+        HStack(alignment: .top, spacing: FatCheckTheme.Spacing.md) {
+            PersonItemsList(person: person, rviewModel: rviewModel)
+            Spacer()
+            PersonTotalView(person: person, rviewModel: rviewModel)
+        }
+    }
+}
+
+struct PersonItemsList: View {
+    let person: LegitP
+    @ObservedObject var rviewModel: ReceiptViewModel
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: FatCheckTheme.Spacing.xs) {
+            PersonHeader(person: person)
+            ForEach(itemsWithPrice, id: \.0.id) { item, sharePrice in
+                ItemRow(item: item, sharePrice: sharePrice)
+            }
+            AdditionalCostsRows(tipShare: personTipShare, taxShare: personTaxShare)
         }
     }
     
-    private func personDetails(for person: LegitP) -> some View {
+    private var itemsWithPrice: [(Item, Decimal)] {
+        person.claims.compactMap { claimID in
+            if let item = rviewModel.receipt.findItemById(id: claimID) {
+                let numberOfClaimants = rviewModel.receipt.countPeopleClaiming(itemID: claimID)
+                let sharePrice = item.price / Decimal(numberOfClaimants)
+                return (item, sharePrice)
+            }
+            return nil
+        }
+    }
+    
+    private var personTotal: Decimal {
+        itemsWithPrice.reduce(into: Decimal.zero) { $0 += $1.1 }
+    }
+    
+    private var receiptTotal: Decimal {
+        rviewModel.receipt.items?.reduce(into: Decimal.zero) { $0 += $1.price } ?? 0.0
+    }
+    
+    private var personPercentage: Decimal {
+        personTotal / receiptTotal
+    }
+    
+    private var personTipShare: Decimal {
+        (rviewModel.receipt.tip) * personPercentage
+    }
+    
+    private var personTaxShare: Decimal {
+        (rviewModel.receipt.tax) * personPercentage
+    }
+}
+
+struct PersonHeader: View {
+    let person: LegitP
+    @EnvironmentObject var viewModel: UserViewModel
+    
+    var body: some View {
+        if viewModel.currentUser?.id == person.userId {
+            HStack {
+                Circle()
+                    .fill(person.color)
+                    .frame(width: 19, height: 19)
+                Text("You")
+                    .lineLimit(1)
+                    .font(.title2)
+                    .fontWeight(.semibold)
+            }
+        } else {
+            HStack {
+                Circle()
+                    .fill(person.color)
+                    .frame(width: 19, height: 19)
+                Text(person.name)
+                    .lineLimit(1)
+                    .font(.title2)
+                    .fontWeight(.semibold)
+            }
+        }
+    }
+}
+
+struct ItemRow: View {
+    let item: Item
+    let sharePrice: Decimal
+    
+    var body: some View {
+        HStack {
+            Text(item.name)
+                .lineLimit(1)
+                .truncationMode(.tail)
+                .font(.subheadline)
+            Spacer()
+            Text(formattedCurrency(sharePrice))
+                .font(.subheadline)
+        }
+    }
+}
+
+struct AdditionalCostsRows: View {
+    let tipShare: Decimal
+    let taxShare: Decimal
+    
+    var body: some View {
+        Group {
+            HStack {
+                Text("Tip")
+                Spacer()
+                Text(formattedCurrency(tipShare))
+            }
+            HStack {
+                Text("Tax")
+                Spacer()
+                Text(formattedCurrency(taxShare))
+            }
+        }
+        .font(.subheadline)
+    }
+}
+
+struct PersonTotalView: View {
+    let person: LegitP
+    @ObservedObject var rviewModel: ReceiptViewModel
+    @EnvironmentObject var viewModel: UserViewModel
+    
+    var body: some View {
+        VStack(alignment: .trailing, spacing: FatCheckTheme.Spacing.xs) {
+            Text(formattedCurrency(total))
+                .font(.title)
+                .fontWeight(.bold)
+            Text("Total")
+                .font(.subheadline)
+            if viewModel.currentUser?.id == rviewModel.receipt.userId{
+                
+                if person.userId != rviewModel.receipt.userId {
+                    Button(action: { request() }) {
+                        Text("Request")
+                            .foregroundColor(FatCheckTheme.Colors.white)
+                            .font(.subheadline)
+                            .padding(8)
+                            .frame(minWidth: 100)
+                            .background(FatCheckTheme.Colors.primaryColor)
+                            .cornerRadius(FatCheckTheme.Spacing.xs)
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                    //if viewModel.currentUser?.id == rviewModel.receipt.userId{
+                    Toggle(isOn: Binding(
+                        get: { person.paid },
+                        set: { newValue in
+                            rviewModel.updatePersonPaidStatus(personId: person.id, isPaid: newValue)
+                        }
+                    )) {
+                        Text("Paid")
+                            .font(.title2)
+                    }
+                    .toggleStyle(CheckboxToggleStyle())
+                }
+                
+            } else {
+                if person.id == rviewModel.selectedPerson?.id{
+                    Button(action: { request() }) {
+                        Text("Pay Up")
+                            .foregroundColor(FatCheckTheme.Colors.white)
+                            .font(.subheadline)
+                            .padding(8)
+                            .frame(minWidth: 100)
+                            .background(FatCheckTheme.Colors.primaryColor)
+                            .cornerRadius(FatCheckTheme.Spacing.xs)
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                }
+            }
+        }
+    }
+    
+    struct CheckboxToggleStyle: ToggleStyle {
+        func makeBody(configuration: Configuration) -> some View {
+            Button(action: {
+                configuration.isOn.toggle()
+            }) {
+                HStack {
+                    Image(systemName: configuration.isOn ? "checkmark.square.fill" : "square")
+                        .resizable()
+                        .frame(width: 24, height: 24)
+                        .foregroundColor(configuration.isOn ? .green : .gray)
+                    configuration.label
+                }
+            }
+            .buttonStyle(PlainButtonStyle())
+        }
+    }
+    
+    private var total: Decimal {
         let itemsWithPrice: [(Item, Decimal)] = person.claims.compactMap { claimID in
             if let item = rviewModel.receipt.findItemById(id: claimID) {
                 let numberOfClaimants = rviewModel.receipt.countPeopleClaiming(itemID: claimID)
@@ -77,78 +278,21 @@ struct PeopleSectionView: View {
         let personTipShare = tipAmount * personPercentage
         let personTaxShare = taxAmount * personPercentage
         
-        let total = personTotal + personTipShare + personTaxShare
-
-        return HStack(alignment: .top, spacing: FatCheckTheme.Spacing.md) {
-            VStack(alignment: .leading, spacing: FatCheckTheme.Spacing.xs) {
-                HStack{
-                    Circle()
-                        .fill(person.color)
-                        .frame(width: 19, height: 19)
-                    Text(person.name)
-                        .font(.title2)
-                        .fontWeight(.semibold)
-                }
-                ForEach(itemsWithPrice, id: \.0.id) { item, sharePrice in
-                    HStack {
-                        Text(item.name)
-                            .lineLimit(1)
-                            .truncationMode(.tail)
-                            .font(.subheadline)
-                        Spacer()
-                        Text(formattedCurrency(sharePrice))
-                            .font(.subheadline)
-                    }
-                }
-                HStack {
-                    Text("Tip")
-                    Spacer()
-                    Text(formattedCurrency(personTipShare))
-                }
-                .font(.subheadline)
-                HStack {
-                    Text("Tax")
-                    Spacer()
-                    Text(formattedCurrency(personTaxShare))
-                }
-                .font(.subheadline)
-            }
-            
-            Spacer()
-            
-            VStack(alignment: .trailing, spacing: FatCheckTheme.Spacing.xs) {
-                Text(formattedCurrency(total))
-                    .font(.title)
-                    .fontWeight(.bold)
-                Text("Total")
-                    .font(.subheadline)
-                Button(action: { payUp(total: total) }) {
-                    Text("Request")
-                        .foregroundColor(FatCheckTheme.Colors.white)
-                        .font(.subheadline)
-                        .padding(8)
-                        .frame(minWidth: 100)
-                        .background(FatCheckTheme.Colors.primaryColor)
-                        .cornerRadius(FatCheckTheme.Spacing.xs)
-                }
-                .buttonStyle(PlainButtonStyle())
-            }
-        }
+        return personTotal + personTipShare + personTaxShare
     }
     
-    private func payUp(total: Decimal) {
+    private func request() {
         let payViewModel = PayBack()
-        //payViewModel.fetchVenmoHandle(forUserID: rviewModel.receipt.userId) { venmoHandle in
-            //if let venmoHandle = venmoHandle {
-                // Use the venmoHandle to initiate the payment
-                //print("Venmo handle for payment: \(venmoHandle)")
-                // actually opens the venmo app
-                //payViewModel.requestVenmo(recipient: venmoHandle, amount: "\(total)")
         payViewModel.requestVenmo(amount: "\(total)")
-            //} else {
-                //print("Could not fetch Venmo handle for user")
-            //}
-        //}
     }
+}
+
+// Utility function for currency formatting
+func formattedCurrency(_ amount: Decimal) -> String {
+    let formatter = NumberFormatter()
+    formatter.numberStyle = .currency
+    formatter.maximumFractionDigits = 2
+    formatter.minimumFractionDigits = 2
+    return formatter.string(from: NSDecimalNumber(decimal: amount)) ?? "$0.00"
 }
 
