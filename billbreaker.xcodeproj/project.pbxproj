@@ -8,18 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		22EFCABF2C2D314F00E65601 /* BillDetailsPersonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EFCABE2C2D314F00E65601 /* BillDetailsPersonView.swift */; };
-		22EFCAC02C2D326600E65601 /* BillDetailsPersonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EFCABE2C2D314F00E65601 /* BillDetailsPersonView.swift */; };
 		E2019F062C714BE100094448 /* AddButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2019F052C714BE100094448 /* AddButton.swift */; };
 		E2019F082C73ACF200094448 /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2019F072C73ACF200094448 /* EmptyStateView.swift */; };
 		E2019F0A2C73BFF900094448 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2019F092C73BFF900094448 /* MainTabView.swift */; };
 		E2019F0C2C73F30500094448 /* Statboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2019F0B2C73F30500094448 /* Statboard.swift */; };
 		E203B13F2C5000CA00D16732 /* ShareButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E203B13E2C5000CA00D16732 /* ShareButton.swift */; };
 		E203B1412C500F9300D16732 /* FatCheckThemes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E203B1402C500F9300D16732 /* FatCheckThemes.swift */; };
-		E203B1422C500F9300D16732 /* FatCheckThemes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E203B1402C500F9300D16732 /* FatCheckThemes.swift */; };
 		E206BCAD2C471B9F003E6C84 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E206BCAC2C471B9F003E6C84 /* GoogleService-Info.plist */; };
 		E206BCAF2C479382003E6C84 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = E206BCAE2C479382003E6C84 /* Router.swift */; };
 		E2092B832C2C826200A6B4EF /* ReceiptViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2092B822C2C826100A6B4EF /* ReceiptViewModel.swift */; };
-		E2092B842C2C826200A6B4EF /* ReceiptViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2092B822C2C826100A6B4EF /* ReceiptViewModel.swift */; };
 		E209C6562C34F3C300D9E3A2 /* BillDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = E209C6552C34F3C300D9E3A2 /* BillDetails.swift */; };
 		E209C6582C35143300D9E3A2 /* ItemsSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E209C6572C35143300D9E3A2 /* ItemsSectionView.swift */; };
 		E209C65A2C35147D00D9E3A2 /* ItemRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E209C6592C35147D00D9E3A2 /* ItemRowView.swift */; };
@@ -60,24 +57,6 @@
 		E26472232C584B2300B2DF11 /* ReceiptJSONDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26472222C584B2300B2DF11 /* ReceiptJSONDecoder.swift */; };
 		E26472262C58983D00B2DF11 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26472252C58983D00B2DF11 /* APIService.swift */; };
 		E26472292C58985B00B2DF11 /* TextRecognitionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26472282C58985B00B2DF11 /* TextRecognitionService.swift */; };
-		E26472372C58AA0C00B2DF11 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFBF32BB1E77200BAD5AC /* Camera.swift */; };
-		E26472382C58AA1000B2DF11 /* ReceiptJSONDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26472222C584B2300B2DF11 /* ReceiptJSONDecoder.swift */; };
-		E26472392C58AA2000B2DF11 /* Receipt.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D1F29F2BC0B18200B27278 /* Receipt.swift */; };
-		E264723A2C58AA2500B2DF11 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26472252C58983D00B2DF11 /* APIService.swift */; };
-		E264723B2C58AA2800B2DF11 /* TextRecognitionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26472282C58985B00B2DF11 /* TextRecognitionService.swift */; };
-		E264723D2C58AA3300B2DF11 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFBF72BB1E7A500BAD5AC /* DataModel.swift */; };
-		E264723F2C58AA3900B2DF11 /* APIReceipt.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DBA9C52C58478B000F3559 /* APIReceipt.swift */; };
-		E26472402C58AAFC00B2DF11 /* PhotoAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFBF92BB1E7B600BAD5AC /* PhotoAsset.swift */; };
-		E26472412C58AB0000B2DF11 /* PhotoAssetCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFBFB2BB1E7C000BAD5AC /* PhotoAssetCollection.swift */; };
-		E26472422C58AB0400B2DF11 /* PhotoCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFBFD2BB1E7C900BAD5AC /* PhotoCollection.swift */; };
-		E26472432C58AB0800B2DF11 /* PhotoCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFBFF2BB1E7D400BAD5AC /* PhotoCollectionView.swift */; };
-		E26472442C58AB0B00B2DF11 /* PhotoItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC012BB1E7DD00BAD5AC /* PhotoItemView.swift */; };
-		E26472452C58AB0E00B2DF11 /* PhotoLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC032BB1E7E600BAD5AC /* PhotoLibrary.swift */; };
-		E26472462C58AB1200B2DF11 /* ThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC072BB1E7F700BAD5AC /* ThumbnailView.swift */; };
-		E26472472C58AB1500B2DF11 /* PhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC052BB1E7ED00BAD5AC /* PhotoView.swift */; };
-		E26472482C58AB1900B2DF11 /* ViewfinderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC092BB1E80300BAD5AC /* ViewfinderView.swift */; };
-		E26472492C58AB2F00B2DF11 /* CachedImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFBF12BB1E74A00BAD5AC /* CachedImageManager.swift */; };
-		E264724A2C58AB3300B2DF11 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFBF52BB1E79900BAD5AC /* CameraView.swift */; };
 		E27966032BC38F66000B0368 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27966022BC38F65000B0368 /* SignUpView.swift */; };
 		E27966052BC46D89000B0368 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27966042BC46D89000B0368 /* UserViewModel.swift */; };
 		E27966072BC476BD000B0368 /* LegitP.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27966062BC476BD000B0368 /* LegitP.swift */; };
@@ -86,24 +65,8 @@
 		E279660D2BC49D83000B0368 /* WhichView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E279660C2BC49D83000B0368 /* WhichView.swift */; };
 		E27966112BC4DA5E000B0368 /* ItemVIewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27966102BC4DA5E000B0368 /* ItemVIewModel.swift */; };
 		E27966132BC4DADB000B0368 /* PersonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27966122BC4DADB000B0368 /* PersonViewModel.swift */; };
-		E27F2EB12C268DA30050E190 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = E27F2EB02C268DA30050E190 /* FirebaseDatabase */; };
-		E27F2EB32C268DED0050E190 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = E27F2EB22C268DED0050E190 /* FirebaseAuth */; };
-		E27F2EB42C268E920050E190 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27966042BC46D89000B0368 /* UserViewModel.swift */; };
-		E27F2EB62C2690430050E190 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = E27F2EB52C2690430050E190 /* FirebaseFirestore */; };
-		E27F2EB82C26905E0050E190 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E27F2EB72C26905E0050E190 /* FirebaseFirestoreSwift */; };
-		E27F2EBA2C26937A0050E190 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E27F2EB92C26937A0050E190 /* GoogleService-Info.plist */; };
-		E29D0EBA2C2555CA00D8DFF0 /* LegitP.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27966062BC476BD000B0368 /* LegitP.swift */; };
-		E29D0EBB2C2555DD00D8DFF0 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27966082BC48178000B0368 /* Item.swift */; };
 		E2A47A272C1CE8140023E29D /* GuestSignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A47A262C1CE8140023E29D /* GuestSignInView.swift */; };
 		E2A47A2A2C1E2D7D0023E29D /* LandingPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A47A292C1E2D7D0023E29D /* LandingPageView.swift */; };
-		E2B5D7F32C25185400403F9D /* billbreakerAppClipApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B5D7F22C25185400403F9D /* billbreakerAppClipApp.swift */; };
-		E2B5D7F72C25185700403F9D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2B5D7F62C25185700403F9D /* Assets.xcassets */; };
-		E2B5D7FA2C25185700403F9D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2B5D7F92C25185700403F9D /* Preview Assets.xcassets */; };
-		E2B5D8062C25185800403F9D /* billbreakerAppClipTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B5D8052C25185800403F9D /* billbreakerAppClipTests.swift */; };
-		E2B5D8102C25185800403F9D /* billbreakerAppClipUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B5D80F2C25185800403F9D /* billbreakerAppClipUITests.swift */; };
-		E2B5D8122C25185800403F9D /* billbreakerAppClipUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B5D8112C25185800403F9D /* billbreakerAppClipUITestsLaunchTests.swift */; };
-		E2B5D8152C25185800403F9D /* billbreakerAppClip.app in Embed App Clips */ = {isa = PBXBuildFile; fileRef = E2B5D7F02C25185400403F9D /* billbreakerAppClip.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		E2B5D8212C25290E00403F9D /* ClipBillDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B5D8202C25290E00403F9D /* ClipBillDetailView.swift */; };
 		E2B83BC72BEC11EF00A29D71 /* NewReceiptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B83BC62BEC11EF00A29D71 /* NewReceiptView.swift */; };
 		E2C759EF2BC34A6F00F8894C /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = E2C759EE2BC34A6F00F8894C /* FirebaseDatabase */; };
 		E2D1D8DB2C7EDBC10045FA3A /* SelectorButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D1D8DA2C7EDBC10045FA3A /* SelectorButton.swift */; };
@@ -127,7 +90,10 @@
 		E2DDFC062BB1E7ED00BAD5AC /* PhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC052BB1E7ED00BAD5AC /* PhotoView.swift */; };
 		E2DDFC082BB1E7F700BAD5AC /* ThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC072BB1E7F700BAD5AC /* ThumbnailView.swift */; };
 		E2DDFC0A2BB1E80300BAD5AC /* ViewfinderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DDFC092BB1E80300BAD5AC /* ViewfinderView.swift */; };
-		E2E2680C2C29DA83009AE6EB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D1F2A12BC0CD3400B27278 /* User.swift */; };
+		E2E213FE2C98A0BB00D466AA /* SVGKit in Frameworks */ = {isa = PBXBuildFile; productRef = E2E213FD2C98A0BB00D466AA /* SVGKit */; };
+		E2E214002C98A0BB00D466AA /* SVGKitSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E2E213FF2C98A0BB00D466AA /* SVGKitSwift */; };
+		E2E214042C98A5EC00D466AA /* fat-check-logo-1.svg in Resources */ = {isa = PBXBuildFile; fileRef = E2E214032C98A5EC00D466AA /* fat-check-logo-1.svg */; };
+		E2E214062C98CD0600D466AA /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E214052C98CD0600D466AA /* TokenManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -145,27 +111,6 @@
 			remoteGlobalIDString = E21466BF2BAE72B2000A61DB;
 			remoteInfo = billbreaker;
 		};
-		E2B5D8022C25185800403F9D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E21466B82BAE72B2000A61DB /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E2B5D7EF2C25185400403F9D;
-			remoteInfo = billbreakerAppClip;
-		};
-		E2B5D80C2C25185800403F9D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E21466B82BAE72B2000A61DB /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E2B5D7EF2C25185400403F9D;
-			remoteInfo = billbreakerAppClip;
-		};
-		E2B5D8132C25185800403F9D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E21466B82BAE72B2000A61DB /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E2B5D7EF2C25185400403F9D;
-			remoteInfo = billbreakerAppClip;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -175,7 +120,6 @@
 			dstPath = "$(CONTENTS_FOLDER_PATH)/AppClips";
 			dstSubfolderSpec = 16;
 			files = (
-				E2B5D8152C25185800403F9D /* billbreakerAppClip.app in Embed App Clips */,
 			);
 			name = "Embed App Clips";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -245,15 +189,12 @@
 		E2A47A262C1CE8140023E29D /* GuestSignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestSignInView.swift; sourceTree = "<group>"; };
 		E2A47A282C1CFA520023E29D /* billbreaker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = billbreaker.entitlements; sourceTree = "<group>"; };
 		E2A47A292C1E2D7D0023E29D /* LandingPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingPageView.swift; sourceTree = "<group>"; };
-		E2B5D7F02C25185400403F9D /* billbreakerAppClip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = billbreakerAppClip.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2B5D7F22C25185400403F9D /* billbreakerAppClipApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = billbreakerAppClipApp.swift; sourceTree = "<group>"; };
 		E2B5D7F62C25185700403F9D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E2B5D7F92C25185700403F9D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		E2B5D7FB2C25185700403F9D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E2B5D7FC2C25185700403F9D /* billbreakerAppClip.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = billbreakerAppClip.entitlements; sourceTree = "<group>"; };
-		E2B5D8012C25185800403F9D /* billbreakerAppClipTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = billbreakerAppClipTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2B5D8052C25185800403F9D /* billbreakerAppClipTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = billbreakerAppClipTests.swift; sourceTree = "<group>"; };
-		E2B5D80B2C25185800403F9D /* billbreakerAppClipUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = billbreakerAppClipUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2B5D80F2C25185800403F9D /* billbreakerAppClipUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = billbreakerAppClipUITests.swift; sourceTree = "<group>"; };
 		E2B5D8112C25185800403F9D /* billbreakerAppClipUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = billbreakerAppClipUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		E2B5D8202C25290E00403F9D /* ClipBillDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipBillDetailView.swift; sourceTree = "<group>"; };
@@ -280,6 +221,8 @@
 		E2DDFC052BB1E7ED00BAD5AC /* PhotoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoView.swift; sourceTree = "<group>"; };
 		E2DDFC072BB1E7F700BAD5AC /* ThumbnailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThumbnailView.swift; sourceTree = "<group>"; };
 		E2DDFC092BB1E80300BAD5AC /* ViewfinderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewfinderView.swift; sourceTree = "<group>"; };
+		E2E214032C98A5EC00D466AA /* fat-check-logo-1.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "fat-check-logo-1.svg"; sourceTree = "<group>"; };
+		E2E214052C98CD0600D466AA /* TokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -287,6 +230,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E2E214002C98A0BB00D466AA /* SVGKitSwift in Frameworks */,
+				E2E213FE2C98A0BB00D466AA /* SVGKit in Frameworks */,
 				E20EC6192BB3D96500223B19 /* FirebaseAuth in Frameworks */,
 				E20EC61B2BB3D96500223B19 /* FirebaseFirestore in Frameworks */,
 				E2C759EF2BC34A6F00F8894C /* FirebaseDatabase in Frameworks */,
@@ -302,31 +247,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		E21466D72BAE72B7000A61DB /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E2B5D7ED2C25185400403F9D /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E27F2EB12C268DA30050E190 /* FirebaseDatabase in Frameworks */,
-				E27F2EB32C268DED0050E190 /* FirebaseAuth in Frameworks */,
-				E27F2EB62C2690430050E190 /* FirebaseFirestore in Frameworks */,
-				E27F2EB82C26905E0050E190 /* FirebaseFirestoreSwift in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E2B5D7FE2C25185800403F9D /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E2B5D8082C25185800403F9D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -387,9 +307,6 @@
 				E21466C02BAE72B2000A61DB /* billbreaker.app */,
 				E21466D02BAE72B7000A61DB /* billbreakerTests.xctest */,
 				E21466DA2BAE72B7000A61DB /* billbreakerUITests.xctest */,
-				E2B5D7F02C25185400403F9D /* billbreakerAppClip.app */,
-				E2B5D8012C25185800403F9D /* billbreakerAppClipTests.xctest */,
-				E2B5D80B2C25185800403F9D /* billbreakerAppClipUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -397,6 +314,7 @@
 		E21466C22BAE72B2000A61DB /* billbreaker */ = {
 			isa = PBXGroup;
 			children = (
+				E2E214032C98A5EC00D466AA /* fat-check-logo-1.svg */,
 				E21056DB2C75BA7900813084 /* OnBoarding */,
 				E219A38A2C5ECC99003254D9 /* Buttons */,
 				E264722B2C58A2EF00B2DF11 /* DeepLink */,
@@ -587,6 +505,7 @@
 				E27966102BC4DA5E000B0368 /* ItemVIewModel.swift */,
 				E27966122BC4DADB000B0368 /* PersonViewModel.swift */,
 				E2092B822C2C826100A6B4EF /* ReceiptViewModel.swift */,
+				E2E214052C98CD0600D466AA /* TokenManager.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -606,7 +525,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				E2B5D8142C25185800403F9D /* PBXTargetDependency */,
 			);
 			name = billbreaker;
 			packageProductDependencies = (
@@ -614,6 +532,8 @@
 				E20EC61A2BB3D96500223B19 /* FirebaseFirestore */,
 				E20EC61C2BB3D96500223B19 /* FirebaseFirestoreSwift */,
 				E2C759EE2BC34A6F00F8894C /* FirebaseDatabase */,
+				E2E213FD2C98A0BB00D466AA /* SVGKit */,
+				E2E213FF2C98A0BB00D466AA /* SVGKitSwift */,
 			);
 			productName = billbreaker;
 			productReference = E21466C02BAE72B2000A61DB /* billbreaker.app */;
@@ -655,65 +575,6 @@
 			productReference = E21466DA2BAE72B7000A61DB /* billbreakerUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
-		E2B5D7EF2C25185400403F9D /* billbreakerAppClip */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = E2B5D81D2C25185800403F9D /* Build configuration list for PBXNativeTarget "billbreakerAppClip" */;
-			buildPhases = (
-				E2B5D7EC2C25185400403F9D /* Sources */,
-				E2B5D7ED2C25185400403F9D /* Frameworks */,
-				E2B5D7EE2C25185400403F9D /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = billbreakerAppClip;
-			packageProductDependencies = (
-				E27F2EB02C268DA30050E190 /* FirebaseDatabase */,
-				E27F2EB22C268DED0050E190 /* FirebaseAuth */,
-				E27F2EB52C2690430050E190 /* FirebaseFirestore */,
-				E27F2EB72C26905E0050E190 /* FirebaseFirestoreSwift */,
-			);
-			productName = billbreakerAppClip;
-			productReference = E2B5D7F02C25185400403F9D /* billbreakerAppClip.app */;
-			productType = "com.apple.product-type.application.on-demand-install-capable";
-		};
-		E2B5D8002C25185800403F9D /* billbreakerAppClipTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = E2B5D81E2C25185800403F9D /* Build configuration list for PBXNativeTarget "billbreakerAppClipTests" */;
-			buildPhases = (
-				E2B5D7FD2C25185800403F9D /* Sources */,
-				E2B5D7FE2C25185800403F9D /* Frameworks */,
-				E2B5D7FF2C25185800403F9D /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				E2B5D8032C25185800403F9D /* PBXTargetDependency */,
-			);
-			name = billbreakerAppClipTests;
-			productName = billbreakerAppClipTests;
-			productReference = E2B5D8012C25185800403F9D /* billbreakerAppClipTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		E2B5D80A2C25185800403F9D /* billbreakerAppClipUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = E2B5D81F2C25185800403F9D /* Build configuration list for PBXNativeTarget "billbreakerAppClipUITests" */;
-			buildPhases = (
-				E2B5D8072C25185800403F9D /* Sources */,
-				E2B5D8082C25185800403F9D /* Frameworks */,
-				E2B5D8092C25185800403F9D /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				E2B5D80D2C25185800403F9D /* PBXTargetDependency */,
-			);
-			name = billbreakerAppClipUITests;
-			productName = billbreakerAppClipUITests;
-			productReference = E2B5D80B2C25185800403F9D /* billbreakerAppClipUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -735,17 +596,6 @@
 						CreatedOnToolsVersion = 15.3;
 						TestTargetID = E21466BF2BAE72B2000A61DB;
 					};
-					E2B5D7EF2C25185400403F9D = {
-						CreatedOnToolsVersion = 15.4;
-					};
-					E2B5D8002C25185800403F9D = {
-						CreatedOnToolsVersion = 15.4;
-						TestTargetID = E2B5D7EF2C25185400403F9D;
-					};
-					E2B5D80A2C25185800403F9D = {
-						CreatedOnToolsVersion = 15.4;
-						TestTargetID = E2B5D7EF2C25185400403F9D;
-					};
 				};
 			};
 			buildConfigurationList = E21466BB2BAE72B2000A61DB /* Build configuration list for PBXProject "billbreaker" */;
@@ -759,6 +609,7 @@
 			mainGroup = E21466B72BAE72B2000A61DB;
 			packageReferences = (
 				E20EC6172BB3D96500223B19 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				E2E213FC2C98A0BB00D466AA /* XCRemoteSwiftPackageReference "SVGKit" */,
 			);
 			productRefGroup = E21466C12BAE72B2000A61DB /* Products */;
 			projectDirPath = "";
@@ -767,9 +618,6 @@
 				E21466BF2BAE72B2000A61DB /* billbreaker */,
 				E21466CF2BAE72B7000A61DB /* billbreakerTests */,
 				E21466D92BAE72B7000A61DB /* billbreakerUITests */,
-				E2B5D7EF2C25185400403F9D /* billbreakerAppClip */,
-				E2B5D8002C25185800403F9D /* billbreakerAppClipTests */,
-				E2B5D80A2C25185800403F9D /* billbreakerAppClipUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -780,6 +628,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E21466CB2BAE72B6000A61DB /* Preview Assets.xcassets in Resources */,
+				E2E214042C98A5EC00D466AA /* fat-check-logo-1.svg in Resources */,
 				E21466C82BAE72B6000A61DB /* Assets.xcassets in Resources */,
 				E206BCAD2C471B9F003E6C84 /* GoogleService-Info.plist in Resources */,
 			);
@@ -793,30 +642,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		E21466D82BAE72B7000A61DB /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E2B5D7EE2C25185400403F9D /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E2B5D7FA2C25185700403F9D /* Preview Assets.xcassets in Resources */,
-				E2B5D7F72C25185700403F9D /* Assets.xcassets in Resources */,
-				E27F2EBA2C26937A0050E190 /* GoogleService-Info.plist in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E2B5D7FF2C25185800403F9D /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E2B5D8092C25185800403F9D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -901,6 +726,7 @@
 				E21056E92C75BC3000813084 /* MostExcitedView.swift in Sources */,
 				E21056F32C76EDC500813084 /* CheckProgressCirc.swift in Sources */,
 				E21466C42BAE72B2000A61DB /* billbreakerApp.swift in Sources */,
+				E2E214062C98CD0600D466AA /* TokenManager.swift in Sources */,
 				E21056EB2C75BC5D00813084 /* DefaultTipView.swift in Sources */,
 				E279660B2BC493CD000B0368 /* SignInView.swift in Sources */,
 			);
@@ -923,57 +749,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E2B5D7EC2C25185400403F9D /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E26472372C58AA0C00B2DF11 /* Camera.swift in Sources */,
-				E29D0EBA2C2555CA00D8DFF0 /* LegitP.swift in Sources */,
-				E264724A2C58AB3300B2DF11 /* CameraView.swift in Sources */,
-				E2B5D8212C25290E00403F9D /* ClipBillDetailView.swift in Sources */,
-				E26472412C58AB0000B2DF11 /* PhotoAssetCollection.swift in Sources */,
-				E26472462C58AB1200B2DF11 /* ThumbnailView.swift in Sources */,
-				E26472392C58AA2000B2DF11 /* Receipt.swift in Sources */,
-				E26472432C58AB0800B2DF11 /* PhotoCollectionView.swift in Sources */,
-				E264723B2C58AA2800B2DF11 /* TextRecognitionService.swift in Sources */,
-				E203B1422C500F9300D16732 /* FatCheckThemes.swift in Sources */,
-				E29D0EBB2C2555DD00D8DFF0 /* Item.swift in Sources */,
-				E2E2680C2C29DA83009AE6EB /* User.swift in Sources */,
-				E2B5D7F32C25185400403F9D /* billbreakerAppClipApp.swift in Sources */,
-				E26472482C58AB1900B2DF11 /* ViewfinderView.swift in Sources */,
-				E264723A2C58AA2500B2DF11 /* APIService.swift in Sources */,
-				E26472382C58AA1000B2DF11 /* ReceiptJSONDecoder.swift in Sources */,
-				E26472402C58AAFC00B2DF11 /* PhotoAsset.swift in Sources */,
-				E2092B842C2C826200A6B4EF /* ReceiptViewModel.swift in Sources */,
-				E26472442C58AB0B00B2DF11 /* PhotoItemView.swift in Sources */,
-				E264723D2C58AA3300B2DF11 /* DataModel.swift in Sources */,
-				E26472472C58AB1500B2DF11 /* PhotoView.swift in Sources */,
-				E26472422C58AB0400B2DF11 /* PhotoCollection.swift in Sources */,
-				E27F2EB42C268E920050E190 /* UserViewModel.swift in Sources */,
-				E26472452C58AB0E00B2DF11 /* PhotoLibrary.swift in Sources */,
-				E26472492C58AB2F00B2DF11 /* CachedImageManager.swift in Sources */,
-				E264723F2C58AA3900B2DF11 /* APIReceipt.swift in Sources */,
-				22EFCAC02C2D326600E65601 /* BillDetailsPersonView.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E2B5D7FD2C25185800403F9D /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E2B5D8062C25185800403F9D /* billbreakerAppClipTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E2B5D8072C25185800403F9D /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E2B5D8122C25185800403F9D /* billbreakerAppClipUITestsLaunchTests.swift in Sources */,
-				E2B5D8102C25185800403F9D /* billbreakerAppClipUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -986,21 +761,6 @@
 			isa = PBXTargetDependency;
 			target = E21466BF2BAE72B2000A61DB /* billbreaker */;
 			targetProxy = E21466DB2BAE72B7000A61DB /* PBXContainerItemProxy */;
-		};
-		E2B5D8032C25185800403F9D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = E2B5D7EF2C25185400403F9D /* billbreakerAppClip */;
-			targetProxy = E2B5D8022C25185800403F9D /* PBXContainerItemProxy */;
-		};
-		E2B5D80D2C25185800403F9D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = E2B5D7EF2C25185400403F9D /* billbreakerAppClip */;
-			targetProxy = E2B5D80C2C25185800403F9D /* PBXContainerItemProxy */;
-		};
-		E2B5D8142C25185800403F9D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = E2B5D7EF2C25185400403F9D /* billbreakerAppClip */;
-			targetProxy = E2B5D8132C25185800403F9D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1156,9 +916,13 @@
 				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.vmgmsoftware.billbreaker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1194,9 +958,13 @@
 				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.vmgmsoftware.billbreaker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -1213,9 +981,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicholashabeth.billbreakerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/billbreaker.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/billbreaker";
 			};
 			name = Debug;
@@ -1233,9 +1005,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicholashabeth.billbreakerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/billbreaker.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/billbreaker";
 			};
 			name = Release;
@@ -1251,9 +1027,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicholashabeth.billbreakerUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				TEST_TARGET_NAME = billbreaker;
 			};
 			name = Debug;
@@ -1269,156 +1049,14 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicholashabeth.billbreakerUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				TEST_TARGET_NAME = billbreaker;
-			};
-			name = Release;
-		};
-		E2B5D8172C25185800403F9D /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = billbreakerAppClip/billbreakerAppClip.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"billbreakerAppClip/Preview Content\"";
-				DEVELOPMENT_TEAM = UWF486GBFD;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = billbreakerAppClip/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = billbreaker;
-				INFOPLIST_KEY_NSCameraUsageDescription = "allow camera access to scan check";
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.vmgmsoftware.billbreaker.Clip;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		E2B5D8182C25185800403F9D /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = billbreakerAppClip/billbreakerAppClip.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"billbreakerAppClip/Preview Content\"";
-				DEVELOPMENT_TEAM = UWF486GBFD;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = billbreakerAppClip/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = billbreaker;
-				INFOPLIST_KEY_NSCameraUsageDescription = "allow camera access to scan check";
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.vmgmsoftware.billbreaker.Clip;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		E2B5D8192C25185800403F9D /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = BM6RWHC29F;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.vmgmsoftware.billbreaker.billbreakerAppClipTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/billbreakerAppClip.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/billbreakerAppClip";
-			};
-			name = Debug;
-		};
-		E2B5D81A2C25185800403F9D /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = BM6RWHC29F;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.vmgmsoftware.billbreaker.billbreakerAppClipTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/billbreakerAppClip.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/billbreakerAppClip";
-			};
-			name = Release;
-		};
-		E2B5D81B2C25185800403F9D /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = BM6RWHC29F;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.vmgmsoftware.billbreaker.billbreakerAppClipUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = billbreakerAppClip;
-			};
-			name = Debug;
-		};
-		E2B5D81C2C25185800403F9D /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = BM6RWHC29F;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.vmgmsoftware.billbreaker.billbreakerAppClipUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = billbreakerAppClip;
 			};
 			name = Release;
 		};
@@ -1461,33 +1099,6 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E2B5D81D2C25185800403F9D /* Build configuration list for PBXNativeTarget "billbreakerAppClip" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				E2B5D8172C25185800403F9D /* Debug */,
-				E2B5D8182C25185800403F9D /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		E2B5D81E2C25185800403F9D /* Build configuration list for PBXNativeTarget "billbreakerAppClipTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				E2B5D8192C25185800403F9D /* Debug */,
-				E2B5D81A2C25185800403F9D /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		E2B5D81F2C25185800403F9D /* Build configuration list for PBXNativeTarget "billbreakerAppClipUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				E2B5D81B2C25185800403F9D /* Debug */,
-				E2B5D81C2C25185800403F9D /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
@@ -1497,6 +1108,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 10.23.0;
+			};
+		};
+		E2E213FC2C98A0BB00D466AA /* XCRemoteSwiftPackageReference "SVGKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SVGKit/SVGKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -1517,30 +1136,20 @@
 			package = E20EC6172BB3D96500223B19 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestoreSwift;
 		};
-		E27F2EB02C268DA30050E190 /* FirebaseDatabase */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E20EC6172BB3D96500223B19 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseDatabase;
-		};
-		E27F2EB22C268DED0050E190 /* FirebaseAuth */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E20EC6172BB3D96500223B19 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAuth;
-		};
-		E27F2EB52C2690430050E190 /* FirebaseFirestore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E20EC6172BB3D96500223B19 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseFirestore;
-		};
-		E27F2EB72C26905E0050E190 /* FirebaseFirestoreSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E20EC6172BB3D96500223B19 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseFirestoreSwift;
-		};
 		E2C759EE2BC34A6F00F8894C /* FirebaseDatabase */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = E20EC6172BB3D96500223B19 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseDatabase;
+		};
+		E2E213FD2C98A0BB00D466AA /* SVGKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E2E213FC2C98A0BB00D466AA /* XCRemoteSwiftPackageReference "SVGKit" */;
+			productName = SVGKit;
+		};
+		E2E213FF2C98A0BB00D466AA /* SVGKitSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E2E213FC2C98A0BB00D466AA /* XCRemoteSwiftPackageReference "SVGKit" */;
+			productName = SVGKitSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

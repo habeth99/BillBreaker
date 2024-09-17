@@ -203,6 +203,18 @@ class ReceiptViewModel: ObservableObject {
         }
     }
     
+    func updateTax(_ newTax: Decimal) {
+        receipt.tax = newTax
+        // Add any additional logic here, such as updating the backend or recalculating totals
+        saveReceipt() { success in
+            if success {
+                print("good")
+            } else {
+                print("bad")
+            }
+        }
+    }
+    
 //================================================================================================
         //Listeners Section
 //================================================================================================
@@ -635,6 +647,12 @@ class ReceiptViewModel: ObservableObject {
         return userID
     }
     
+    func updateReceipt() {
+        // After making any changes to the receipt or its contents
+        objectWillChange.send()
+        self.receipt = self.receipt // This triggers the @Published property wrapper
+    }
+    
     func selectPerson(_ person: LegitP) {
         
         if person.id == selectedPerson?.id {
@@ -673,6 +691,7 @@ class ReceiptViewModel: ObservableObject {
             }
         }
 
+        updateReceipt()
         objectWillChange.send()
     }
 
@@ -735,6 +754,47 @@ class ReceiptViewModel: ObservableObject {
         return people.first { person in
             person.id != selectedPersonId && person.claims.contains(item.id)
         }
+    }
+    
+    func addItem(newItem: Item) {
+        newItem.id = self.createItemId(receiptId: receipt.id)
+        self.receipt.items?.append(newItem)
+        objectWillChange.send()
+    }
+    func createItemId(receiptId: String) -> String {
+        return dbRef.child("receipts").child(receiptId).child("items").childByAutoId().key ?? ""
+    }
+    
+    func createPersonId(receiptId: String) -> String {
+        return dbRef.child("receipts").child(receiptId).child("persons").childByAutoId().key ?? ""
+    }
+    
+    func addPerson(newPerson: LegitP) {
+        newPerson.id = self.createPersonId(receiptId: receipt.id)
+        self.receipt.people?.append(newPerson)
+        objectWillChange.send()
+    }
+    
+    func updatePerson(personId: String, editedName: String) {
+        if let index = receipt.people?.firstIndex(where: { $0.id == personId }) {
+            receipt.people?[index].name = editedName
+            objectWillChange.send()
+        }
+    }
+    
+    func getRandomColor() -> Color {
+        let allColors: [Color] = [.red, .blue, .green, .orange, .yellow, .gray, .purple, .pink, .teal, .black, .mint, .cyan, .indigo]
+        
+        let usedColors = Set(self.receipt.people?.map { $0.color } ?? [])
+
+        var availableColors = allColors.filter { !usedColors.contains($0) }
+        
+        if availableColors.isEmpty {
+            availableColors = allColors
+        }
+        
+        let randomIndex = Int.random(in: 0..<availableColors.count)
+        return availableColors[randomIndex]
     }
 }
 

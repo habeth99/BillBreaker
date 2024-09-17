@@ -10,12 +10,14 @@ import SwiftUI
 
 struct EditingItemView2: View {
     @ObservedObject var item: Item
+    @ObservedObject var rviewModel: ReceiptViewModel
     let onEndEdit: (Item) -> Void
     @State private var editedName: String
     @State private var editedPriceString: String
 
-    init(item: Item, onEndEdit: @escaping (Item) -> Void) {
+    init(item: Item, rviewModel: ReceiptViewModel, onEndEdit: @escaping (Item) -> Void) {
         self._item = ObservedObject(wrappedValue: item)
+        self.rviewModel = rviewModel
         self.onEndEdit = onEndEdit
         self._editedName = State(initialValue: item.name)
         self._editedPriceString = State(initialValue: item.price.formatted(.number.precision(.fractionLength(2))))
@@ -35,6 +37,14 @@ struct EditingItemView2: View {
                 item.price = updatedPrice
             }
             onEndEdit(item)
+            
+            rviewModel.saveReceipt { success in
+                if success {
+                    print("Receipt saved successfully")
+                } else {
+                    print("Failed to save receipt")
+                }
+            }
         }
     }
 }
@@ -49,7 +59,7 @@ struct ItemsSectionView: View {
             
             ZStack {
                 if editingItemId == item.id {
-                    EditingItemView2(item: item, onEndEdit: { updatedItem in
+                    EditingItemView2(item: item, rviewModel: rviewModel, onEndEdit: { updatedItem in
                         if let index = rviewModel.receipt.items?.firstIndex(where: { $0.id == updatedItem.id }) {
                             rviewModel.receipt.items?[index] = updatedItem
                         }
@@ -60,24 +70,12 @@ struct ItemsSectionView: View {
                         .padding(.vertical, FatCheckTheme.Spacing.md)
                         .contentShape(Rectangle())
                         .onTapGesture {
-                            editingItemId = item.id
-                        }
-                        .overlay(
-                            GeometryReader { geometry in
-                                HStack {
-                                    Spacer()
-                                        .frame(width: geometry.size.width * 0.5)
-                                    Rectangle()
-                                        .fill(Color.clear)
-                                        .contentShape(Rectangle())
-                                        .onTapGesture {
-                                            if rviewModel.selectedPerson != nil {
-                                                rviewModel.toggleItemSelection(item)
-                                            }
-                                        }
-                                }
+                            if rviewModel.selectedPerson == nil {
+                                editingItemId = item.id
+                            } else {
+                                rviewModel.toggleItemSelection(item)
                             }
-                        )
+                        }
                 }
             }
             .swipeActions {
@@ -120,7 +118,7 @@ struct ItemRowView2: View {
                 Text(item.name)
                     .lineLimit(1)
                     .truncationMode(.tail)
-                    .frame(width: geometry.size.width * 0.5, alignment: .leading)
+                    .frame(width: geometry.size.width * 0.4, alignment: .leading)
                 
                 Spacer()
                 

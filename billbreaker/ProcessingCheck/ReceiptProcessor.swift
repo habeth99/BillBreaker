@@ -159,37 +159,57 @@ class ReceiptProcessor: ObservableObject {
         }
     }
     
+//    func matchCurrentUser() async {
+//        guard let currentUser = Auth.auth().currentUser else {
+//            print("No current user")
+//            return
+//        }
+//
+//        do {
+//            let snapshot = try await Database.database().reference()
+//                .child("users")
+//                .child(currentUser.uid)
+//                .getData()
+//            
+//            guard let userData = snapshot.value as? [String: Any],
+//                  let currentUserName = userData["name"] as? String else {
+//                print("Unable to fetch current user's name")
+//                return
+//            }
+//
+//            if let index = receipt.people?.firstIndex(where: { $0.name.lowercased() == currentUserName.lowercased() }) {
+//                receipt.people?[index].userId = currentUser.uid
+//                print("Matched current user: \(currentUserName) with ID: \(currentUser.uid)")
+//            } else {
+//                print("No match found for current user: \(currentUserName)")
+//            }
+//            
+//            // Notify observers that the receipt has been updated
+//            await MainActor.run {
+//                objectWillChange.send()
+//            }
+//        } catch {
+//            print("Error fetching user data: \(error.localizedDescription)")
+//        }
+//    }
     func matchCurrentUser() async {
         guard let currentUser = Auth.auth().currentUser else {
             print("No current user")
             return
         }
 
-        do {
-            let snapshot = try await Database.database().reference()
-                .child("users")
-                .child(currentUser.uid)
-                .getData()
-            
-            guard let userData = snapshot.value as? [String: Any],
-                  let currentUserName = userData["name"] as? String else {
-                print("Unable to fetch current user's name")
-                return
-            }
-
-            if let index = receipt.people?.firstIndex(where: { $0.name.lowercased() == currentUserName.lowercased() }) {
-                receipt.people?[index].userId = currentUser.uid
-                print("Matched current user: \(currentUserName) with ID: \(currentUser.uid)")
-            } else {
-                print("No match found for current user: \(currentUserName)")
-            }
-            
-            // Notify observers that the receipt has been updated
-            await MainActor.run {
-                objectWillChange.send()
-            }
-        } catch {
-            print("Error fetching user data: \(error.localizedDescription)")
+        // Update the first person in the list with the current user's ID
+        if var firstPerson = receipt.people?.first {
+            firstPerson.userId = currentUser.uid
+            receipt.people?[0] = firstPerson
+            print("Updated first person's userId to: \(currentUser.uid)")
+        } else {
+            print("No people in the receipt")
+        }
+        
+        // Notify observers that the receipt has been updated
+        await MainActor.run {
+            objectWillChange.send()
         }
     }
     

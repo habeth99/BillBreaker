@@ -192,3 +192,70 @@ struct DisplayTipView: View {
     }
 }
 
+struct EditingTaxView: View {
+    @State private var editedTaxString: String
+    @Binding var isEditing: Bool
+    let taxAmount: Decimal
+    let onEndEdit: (Decimal) -> Void
+
+    init(taxAmount: Decimal, isEditing: Binding<Bool>, onEndEdit: @escaping (Decimal) -> Void) {
+        self.taxAmount = taxAmount
+        self._isEditing = isEditing
+        self.onEndEdit = onEndEdit
+        _editedTaxString = State(initialValue: taxAmount.formatted(.number.precision(.fractionLength(2))))
+    }
+
+    var body: some View {
+        HStack {
+            Text("Tax")
+            Spacer()
+            TextField("Tax", text: $editedTaxString, onCommit: {
+                updateAndDismiss()
+            })
+            .textFieldStyle(RoundedBorderTextFieldStyle())
+        }
+        .padding(.vertical, 8)
+        .onDisappear {
+            updateAndDismiss()
+        }
+    }
+    
+    private func updateAndDismiss() {
+        let updatedTax = Decimal(string: editedTaxString) ?? taxAmount
+        onEndEdit(updatedTax)
+        isEditing = false
+    }
+}
+
+struct EditableTaxView: View {
+    let taxAmount: Decimal
+    @Binding var isEditing: Bool
+    let onEndEdit: (Decimal) -> Void
+
+    var body: some View {
+        if isEditing {
+            EditingTaxView(taxAmount: taxAmount, isEditing: $isEditing, onEndEdit: onEndEdit)
+        } else {
+            DisplayTaxView(taxAmount: taxAmount) {
+                isEditing = true
+            }
+        }
+    }
+}
+
+struct DisplayTaxView: View {
+    let taxAmount: Decimal
+    let onEdit: () -> Void
+
+    var body: some View {
+        HStack {
+            Text("Tax")
+            Spacer()
+            Text(taxAmount.formatted(.currency(code: "USD").precision(.fractionLength(2))))
+        }
+        .contentShape(Rectangle())
+        .onTapGesture(perform: onEdit)
+        .padding(.vertical, 8)
+    }
+}
+

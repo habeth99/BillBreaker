@@ -71,51 +71,6 @@ class UserViewModel: ObservableObject {
         }
     }
     
-//    func fetchUser() {
-//        guard let userID = userID else {
-//            print("UserViewModel: fetchUser - UserID is nil.")
-//            return
-//        }
-//
-//        dbRef.child("users").child(userID).observeSingleEvent(of: .value) { [weak self] snapshot in
-//            guard let self = self else { return }
-//            
-//            guard snapshot.exists() else {
-//                print("UserViewModel: fetchUser - User data does not exist.")
-//                return
-//            }
-//            
-//            var userData: [String: Any] = [:]
-//            
-//            // Extract only the needed fields
-//            for field in ["name", "email", "cashAppHandle", "venmoHandle"] {
-//                userData[field] = snapshot.childSnapshot(forPath: field).value
-//                //print("UserViewModel: fetchUser - \(field): \(String(describing: userData[field]))")
-//            }
-//            
-//            // Add userID to the userData
-//            userData["id"] = userID
-//            
-//            // Handle receipts separately as they might be more complex
-//            if let receipts = snapshot.childSnapshot(forPath: "receipts").value as? [String: Any] {
-//                userData["receipts"] = receipts
-//            }
-//            
-//            do {
-//                let data = try JSONSerialization.data(withJSONObject: userData)
-//                let user = try JSONDecoder().decode(User.self, from: data)
-//                
-//                Task { @MainActor in
-//                    self.currentUser = user
-//                    self.isUserAuthenticated = true
-//                    self.isUserDataLoaded = true
-//                }
-//                self.setupUserListener()
-//            } catch {
-//                print("UserViewModel: Error decoding user: \(error.localizedDescription)")
-//            }
-//        }
-//    }
     func fetchUser() {
         guard let userID = userID else {
             print("UserViewModel: fetchUser - UserID is nil.")
@@ -299,6 +254,7 @@ class UserViewModel: ObservableObject {
             
         } catch {
             print("Error deleting user authentication account: \(error.localizedDescription)")
+            await signOut()
         }
     }
     
@@ -420,8 +376,10 @@ class UserViewModel: ObservableObject {
         var userData: [String: Any] = [
             "id": currentUser.id,
             "email": currentUser.email,
-            "receipts": currentUser.receipts,
-            "name": fullName ?? currentUser.name
+            "receipts": currentUser.receipts ?? [],
+            "name": "Your Name",
+            "venmoHandle": "Example-Venmo",
+            "cashAppHandle": "Example-CashApp"
         ]
 
         // Store user data in Firebase

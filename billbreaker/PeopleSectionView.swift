@@ -8,12 +8,22 @@
 import Foundation
 import SwiftUI
 
+struct ForceUpdater: Equatable, Hashable {
+    let update: Bool
+}
+
 struct PeopleSectionView: View {
     @ObservedObject var rviewModel: ReceiptViewModel
+    @State private var forceUpdate = ForceUpdater(update: false)
     
     var body: some View {
         ForEach(rviewModel.receipt.people ?? [], id: \.id) { person in
             PersonCard(person: person, rviewModel: rviewModel)
+                .id(person.claims.count)
+        }
+        .id(forceUpdate)
+        .onReceive(rviewModel.$receipt) { _ in
+            forceUpdate = ForceUpdater(update: !forceUpdate.update)
         }
     }
 }
@@ -27,17 +37,15 @@ struct PersonCard: View {
             // Card content
             PersonDetails(person: person, rviewModel: rviewModel)
                 .padding()
-                .background(Color.white)
                 .cornerRadius(8)
             
             // Selection indicator
             if person.id == rviewModel.selectedPerson?.id {
                 RoundedRectangle(cornerRadius: 8)
-                    .stroke(Color.green, lineWidth: 2)
+                    .stroke(FatCheckTheme.Colors.primaryColor, lineWidth: 3)
                     .padding(FatCheckTheme.Spacing.xs)
             }
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
         .contentShape(Rectangle())
         .onTapGesture {
             rviewModel.selectPerson(person)
@@ -78,7 +86,7 @@ struct PersonItemsList: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: FatCheckTheme.Spacing.xs) {
-            PersonHeader(person: person)
+            PersonHeader(person: person, rviewModel: rviewModel)
             ForEach(itemsWithPrice, id: \.0.id) { item, sharePrice in
                 ItemRow(item: item, sharePrice: sharePrice)
             }
@@ -121,6 +129,15 @@ struct PersonItemsList: View {
 struct PersonHeader: View {
     let person: LegitP
     @EnvironmentObject var viewModel: UserViewModel
+    @ObservedObject var rviewModel: ReceiptViewModel
+    @State private var isEditing = false
+    @State private var editedName: String
+
+    init(person: LegitP, rviewModel: ReceiptViewModel) {
+        self.person = person
+        self._editedName = State(initialValue: person.name)
+        self.rviewModel = rviewModel
+    }
     
     var body: some View {
         if viewModel.currentUser?.id == person.userId {
@@ -138,10 +155,30 @@ struct PersonHeader: View {
                 Circle()
                     .fill(person.color)
                     .frame(width: 19, height: 19)
-                Text(person.name)
-                    .lineLimit(1)
+                if isEditing {
+                    TextField("Enter name", text: $editedName, onCommit: {
+                        isEditing = false
+                        rviewModel.updatePerson(personId: person.id, editedName: editedName)
+                        rviewModel.saveReceipt() { success in
+                            if success {
+                                print("good")
+                            } else {
+                                print("bad")
+                            }
+                        }
+                    })
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
                     .font(.title2)
                     .fontWeight(.semibold)
+                } else {
+                    Text(person.name)
+                        .lineLimit(1)
+                        .font(.title2)
+                        .fontWeight(.semibold)
+                        .onTapGesture {
+                            isEditing = true
+                        }
+                }
             }
         }
     }
@@ -191,7 +228,7 @@ struct PersonTotalView: View {
     @EnvironmentObject var viewModel: UserViewModel
     
     var body: some View {
-        VStack(alignment: .trailing, spacing: FatCheckTheme.Spacing.xs) {
+        VStack(alignment: .leading, spacing: FatCheckTheme.Spacing.xs) {
             Text(formattedCurrency(total))
                 .font(.title)
                 .fontWeight(.bold)
@@ -210,7 +247,7 @@ struct PersonTotalView: View {
                             .cornerRadius(FatCheckTheme.Spacing.xs)
                     }
                     .buttonStyle(PlainButtonStyle())
-                    //if viewModel.currentUser?.id == rviewModel.receipt.userId{
+
                     Toggle(isOn: Binding(
                         get: { person.paid },
                         set: { newValue in
@@ -248,8 +285,9 @@ struct PersonTotalView: View {
                 HStack {
                     Image(systemName: configuration.isOn ? "checkmark.square.fill" : "square")
                         .resizable()
-                        .frame(width: 24, height: 24)
-                        .foregroundColor(configuration.isOn ? .green : .gray)
+                        .frame(width: 20, height: 20)
+                        .foregroundColor(configuration.isOn ? FatCheckTheme.Colors.primaryColor : .gray.opacity(0.4))
+                    //Spacer()
                     configuration.label
                 }
             }
