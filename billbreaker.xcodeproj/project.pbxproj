@@ -900,8 +900,8 @@
 				INFOPLIST_FILE = billbreaker/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Fat Check";
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
-				INFOPLIST_KEY_NSCameraUsageDescription = "Allow camera access to scan receipt";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Bill Breaker needs Photo Library access";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Allow camera access to scan receipts.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Photo library access allows you to upload photos of old receipts.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -913,7 +913,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.vmgmsoftware.billbreaker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -942,8 +942,8 @@
 				INFOPLIST_FILE = billbreaker/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Fat Check";
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
-				INFOPLIST_KEY_NSCameraUsageDescription = "Allow camera access to scan receipt";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Bill Breaker needs Photo Library access";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Allow camera access to scan receipts.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Photo library access allows you to upload photos of old receipts.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -955,7 +955,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.vmgmsoftware.billbreaker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

@@ -28,6 +28,6 @@
 		<false/>
 	</dict>
 	<key>NSUserNotificationsUsageDescription</key>
-	<string>Allow notifications for check reminders and updates</string>
+	<string>Allow notifications for check reminders and updates.</string>
 </dict>
 </plist>
