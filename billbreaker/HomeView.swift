@@ -7,44 +7,29 @@
 
 import Foundation
 import SwiftUI
+import Combine
+import PhotosUI
 
 struct HomeView: View {
-    @State private var showingNewReceiptSheet = false
-    @State private var showingJoinSheet = false
-    
-    @ObservedObject var rviewModel: ReceiptViewModel
-    @EnvironmentObject var viewModel: UserViewModel
+    @StateObject var rviewModel: ReceiptViewModel
     @EnvironmentObject var router: Router
     
-    let customLinkColor = Color(hex: "#30cd31")
-    
-    init(rviewModel: ReceiptViewModel) {
-        self.rviewModel = rviewModel
-    }
-    
     var body: some View {
-            ReceiptListView(rviewModel: rviewModel)
-                .foregroundColor(customLinkColor)
-                .navigationTitle("My Checks")
-                .toolbar {
-                    HomeToolbar(
-                        onEdit: rviewModel.handleEdit,
-                        onJoin: { showingJoinSheet = true },
-                        onAdd: { showingNewReceiptSheet = true }
-                    )
-                }
-        .sheet(isPresented: $showingNewReceiptSheet) {
-            NewReceiptView(isPresented: $showingNewReceiptSheet, rviewModel: ReceiptViewModel(user: viewModel))
+        Group {
+            if rviewModel.receiptList.isEmpty {
+                EmptyStateView()
+            } else {
+                ReceiptListView(rviewModel: rviewModel)
+            }
         }
-        .sheet(isPresented: $showingJoinSheet) {
-            JoinReceiptView(isPresented: $showingJoinSheet, rviewModel: rviewModel)
-        }
+        .navigationTitle("Fat Check")
         .onAppear {
-            print("Homeview appears")
             Task {
                 await rviewModel.fetchUserReceipts()
             }
+            
         }
     }
 }
+
 

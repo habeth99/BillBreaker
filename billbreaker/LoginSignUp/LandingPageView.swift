@@ -11,68 +11,60 @@ import AuthenticationServices
 import FirebaseAuth
 
 struct LandingPageView: View {
-    @EnvironmentObject var viewModel: UserViewModel
+    @EnvironmentObject var router: Router
     
     var body: some View {
-        VStack {
-            Text("Welcome to fatcheck!")
-                .font(.largeTitle)
-                .padding()
-            
-            Spacer()
-            
-            Button(action: {
-                viewModel.showLoginView = true
-            }) {
-                Text("Login")
-                    .frame(maxWidth: .infinity)
-                    .frame(maxHeight: 30)
-                    .font(.title)
-                    .padding()
-                    .background(Color.green.opacity(0.5))
-                    .foregroundColor(.black)
-                    .cornerRadius(6)
-            }
-            .padding(.horizontal)
-            .sheet(isPresented: $viewModel.showLoginView) {
-                LoginView()
-                    .environmentObject(viewModel)
-            }
-            
-            Button(action: {
-                viewModel.showSignupView = true
-            }) {
-                Text("Sign Up")
-                    .frame(maxWidth: .infinity)
-                    .frame(maxHeight: 30)
-                    .font(.title)
-                    .padding()
-                    .background(Color.green)
-                    .foregroundColor(.black)
-                    .cornerRadius(6)
-            }
-            .padding(.horizontal)
-            .sheet(isPresented: $viewModel.showSignupView) {
-                SignUpView()
-                    .environmentObject(viewModel)
-            }
-            
-            // Sign In with Apple Button
-            SignInWithAppleButton(
-                .signIn,
-                onRequest: { request in
-                    viewModel.handleSignInWithAppleRequest(request)
-                },
-                onCompletion: { result in
-                    print("before handle with completion call")
-                    viewModel.handleSignInWithCompletion(result)
-                    print("after handle with completion call")
+        NavigationStack(path: $router.authPath) {
+            VStack {
+                Text("FatCheck")
+                    .font(.system(size: 50))
+                    .padding(.top, FatCheckTheme.Spacing.xxxl)
+
+                Text("tab splitter")
+                    .font(.subheadline)
+                    .padding(.bottom, FatCheckTheme.Spacing.xxxl)
+                
+                Spacer()
+                
+                Button(action: {
+                    router.navigateAuth(to: .signIn)
+                }) {
+                    Text("Sign In")
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .padding()
                 }
-            )
-            .signInWithAppleButtonStyle(.black)
-            .frame(maxWidth: .infinity)
-            .frame(maxHeight: 60)
-            .padding(.horizontal)
+                .background(FatCheckTheme.Colors.primaryColor)
+                .cornerRadius(FatCheckTheme.Spacing.sm)
+                .padding(.horizontal, FatCheckTheme.Spacing.xl)
+
+                Button(action: {
+                    router.navigateAuth(to: .signUp)
+                }) {
+                    Text("Sign Up")
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                }
+                .background(FatCheckTheme.Colors.primaryColor)
+                .cornerRadius(FatCheckTheme.Spacing.sm)
+                .padding(.horizontal, FatCheckTheme.Spacing.xl)
+                
+                .padding(.bottom, FatCheckTheme.Spacing.xxxl)
+            }
+            .navigationDestination(for: AuthRoute.self) { route in
+                switch route {
+                case .signIn:
+                    SignInView()
+                case .signUp:
+                    SignUpView()
+                case .mostExcited:
+                    MostExcitedView()
+                case .pushNot:
+                    PushNotView()
+
+                }
+            }
         }
     }
 }

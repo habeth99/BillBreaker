@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 class LegitP: Identifiable, ObservableObject, Codable {
+    
     @Published var id: String
     @Published var name: String
     @Published var userId: String
@@ -55,7 +56,9 @@ class LegitP: Identifiable, ObservableObject, Codable {
         return [
             "id": self.id,
             "name": self.name,
+            "userId": self.userId,
             "claims": self.claims,
+            "paid": self.paid,
             "color": LegitP.colorToStr[self.color]!
         ]
     }
@@ -85,4 +88,11 @@ class LegitP: Identifiable, ObservableObject, Codable {
         "purple": .purple,
         "pink": .pink
     ]
+    
+    func getFirstInitial() -> String {
+        guard let firstChar = name.first else {
+            return ""
+        }
+        return String(firstChar).uppercased()
+    }
 }

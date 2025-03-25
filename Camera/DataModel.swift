@@ -6,62 +6,146 @@ import AVFoundation
 import SwiftUI
 import os.log
 import Vision
+import Combine
+import CoreImage
 
+//final class DataModel: ObservableObject {
+//    let camera = Camera()
+//    let photoCollection = PhotoCollection(smartAlbum: .smartAlbumUserLibrary)
+//    var isPhotosLoaded = false
+//    private let apiService = APIService.shared
+//    private let textRecognitionService = TextRecognitionService.shared
+//    @Published var capturedImage: UIImage?
+//    @Published var showFullScreenImage: Bool = false
+//    
+//    //@Published var viewfinderImage: Image?
+//    @Published var thumbnailImage: Image?
+//    @Published var recognizedText: String = ""
+//    @Published var prices: [String] = []
+//    @Published var processedReceipt = APIReceipt()
+//    @Published var isProcessing: Bool = false
+//    @Published var isProcessingComplete: Bool = false
+//    @Published var viewfinderImage: Image?
+//    private var viewfinderCancellable: AnyCancellable?
+//    private let context = CIContext()
+//    
+//    @Published var processingTime: TimeInterval = 0
+//    private var processingStartTime: Date?
+//    private var processingTimer: Timer?
+//    
+//    init() {
+//        Task {
+//            await handleCameraPreviews()
+//        }
+//        
+//        Task {
+//            await handleCameraPhotos()
+//        }
+//    }
+//
+//    func handleCameraPreviews() async {
+//        let imageStream = camera.previewStream
+//            .map { $0.image }
+//
+//        for await image in imageStream {
+//            await MainActor.run {
+//                viewfinderImage = image
+//            }
+//        }
+//    }
+//    
+//    @MainActor
+//    func handleCameraPhotos() async {
+//        let unpackedPhotoStream = camera.photoStream
+//            .compactMap { self.unpackPhoto($0) }
+//        
+//        for await photoData in unpackedPhotoStream {
+//            await processPhoto(imageData: photoData.imageData)
+//        }
+//    }
 final class DataModel: ObservableObject {
     let camera = Camera()
     let photoCollection = PhotoCollection(smartAlbum: .smartAlbumUserLibrary)
     var isPhotosLoaded = false
     private let apiService = APIService.shared
     private let textRecognitionService = TextRecognitionService.shared
-    
-    @Published var viewfinderImage: Image?
+    @Published var capturedImage: UIImage?
+    @Published var showFullScreenImage: Bool = false
+
     @Published var thumbnailImage: Image?
     @Published var recognizedText: String = ""
     @Published var prices: [String] = []
     @Published var processedReceipt = APIReceipt()
     @Published var isProcessing: Bool = false
     @Published var isProcessingComplete: Bool = false
+    @Published var viewfinderImage: Image?
+    private var viewfinderCancellable: AnyCancellable?
+    private let context = CIContext()
 
-    
+    @Published var processingTime: TimeInterval = 0
+    private var processingStartTime: Date?
+    private var processingTimer: Timer?
+
     init() {
         Task {
             await handleCameraPreviews()
         }
-        
+
         Task {
             await handleCameraPhotos()
         }
     }
-    
+
     func handleCameraPreviews() async {
         let imageStream = camera.previewStream
             .map { $0.image }
 
         for await image in imageStream {
-            Task { @MainActor in
+            await MainActor.run {
                 viewfinderImage = image
             }
         }
     }
-    
+
     @MainActor
     func handleCameraPhotos() async {
         let unpackedPhotoStream = camera.photoStream
             .compactMap { self.unpackPhoto($0) }
-        
+
         for await photoData in unpackedPhotoStream {
+            if let image = UIImage(data: photoData.imageData) {
+                self.capturedImage = image
+                self.showFullScreenImage = true
+            }
             await processPhoto(imageData: photoData.imageData)
         }
     }
 
-    @MainActor
+
+
+
     func processPhoto(imageData: Data) async {
-        isProcessing = true
-        isProcessingComplete = false // Reset at the start of processing
+        await MainActor.run {
+            isProcessing = true
+            isProcessingComplete = false
+            processingStartTime = Date()
+        }
+        
+        // Start a timer to update processing time
+        await MainActor.run {
+            self.processingTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
+                guard let self = self, let startTime = self.processingStartTime else { return }
+                self.processingTime = Date().timeIntervalSince(startTime)
+            }
+        }
         
         defer {
-            isProcessing = false
-            isProcessingComplete = true // Set to true when processing is complete, even if there's an error
+            Task { @MainActor in
+                self.isProcessing = false
+                self.isProcessingComplete = true
+                self.processingTimer?.invalidate()
+                self.processingTimer = nil
+            }
         }
         
         do {
@@ -70,17 +154,24 @@ final class DataModel: ObservableObject {
                     continuation.resume(returning: result)
                 }
             }
-            self.recognizedText = recognizedText
+            await MainActor.run {
+                self.recognizedText = recognizedText
+            }
             logger.debug("Recognized text: \(recognizedText)")
             
             let processedReceipt = try await apiService.sendExtractedTextToAPI(extractedText: recognizedText)
-            self.processedReceipt = processedReceipt
+            await MainActor.run {
+                self.processedReceipt = processedReceipt
+            }
             print("Processed Receipt: \(processedReceipt)")
         } catch {
-            logger.error("Error processing photo: \(error.localizedDescription)")
-            self.processedReceipt = APIReceipt() // Clear any previous receipt in case of error
+            await MainActor.run {
+                logger.error("Error processing photo: \(error.localizedDescription)")
+                self.processedReceipt = APIReceipt() // Clear any previous receipt in case of error
+            }
         }
     }
+    
     
     func importPhoto(image: UIImage) {
         guard let imageData = image.jpegData(compressionQuality: 0.8) else {

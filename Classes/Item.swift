@@ -6,11 +6,11 @@
 
 import Foundation
 
-class Item: Identifiable, Codable, ObservableObject, Hashable {
+class Item: Identifiable, Codable, ObservableObject, Hashable, CustomStringConvertible {
     @Published var id: String
     @Published var name: String
     @Published var quantity: Int?
-    @Published var price: Double
+    @Published var price: Decimal
     //@Published var claimedBy: [String]?
     @Published var claimedBy: [String]?
     @Published var details: String
@@ -19,7 +19,7 @@ class Item: Identifiable, Codable, ObservableObject, Hashable {
         case id, name, quantity, price, claimedBy, details
     }
 
-    init(id: String = "", name: String = "", quantity: Int = 0, price: Double = 0.00, claimedBy: [String] = [], details: String = "") {
+    init(id: String = "", name: String = "", quantity: Int = 0, price: Decimal = 0.00, claimedBy: [String] = [], details: String = "") {
         self.id = id
         self.name = name
         self.quantity = quantity
@@ -33,7 +33,7 @@ class Item: Identifiable, Codable, ObservableObject, Hashable {
         id = try container.decode(String.self, forKey: .id)
         name = try container.decode(String.self, forKey: .name)
         quantity = try container.decodeIfPresent(Int.self, forKey: .quantity) ?? 0
-        price = try container.decode(Double.self, forKey: .price)
+        price = try container.decode(Decimal.self, forKey: .price)
         claimedBy = try container.decodeIfPresent([String].self, forKey: .claimedBy) ?? []
         details = try container.decodeIfPresent(String.self, forKey: .details) ?? ""
     }
@@ -62,4 +62,6 @@ class Item: Identifiable, Codable, ObservableObject, Hashable {
     var description: String {
         return "Item(id: \(id), name: \(name), price: \(price), quantity: \(quantity ?? 0), claimedBy: \(claimedBy ?? []))"
     }
+    
+
 }

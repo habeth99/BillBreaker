@@ -12,7 +12,7 @@ import FirebaseDatabase
 import FirebaseAuth
 import Combine
 
-class APIReceipt: Codable {
+class APIReceipt: Codable, CustomStringConvertible {
     
     let name: String
     let address: String
@@ -22,13 +22,13 @@ class APIReceipt: Codable {
     struct Item: Codable {
         let quantity: Int
         let name: String
-        let price: Double
+        let price: Decimal
         let details: String
     }
-    let subTotal: Double
-    let tax: Double
-    let tip: Double
-    let total: Double
+    let subTotal: Decimal
+    let tax: Decimal
+    let tip: Decimal
+    let total: Decimal
     let method: String?
     let cardLastFour: String?
     
@@ -37,10 +37,10 @@ class APIReceipt: Codable {
         address: String = "",
         dateTime: String = "",
         items: [Item] = [],
-        subTotal: Double = 0.0,
-        tax: Double = 0.0,
-        tip: Double = 0.0,
-        total: Double = 0.0,
+        subTotal: Decimal = 0.0,
+        tax: Decimal = 0.0,
+        tip: Decimal = 0.0,
+        total: Decimal = 0.0,
         method: String? = nil,
         cardLastFour: String? = nil
     ) {
@@ -56,6 +56,8 @@ class APIReceipt: Codable {
         self.cardLastFour = cardLastFour
     }
 
-    
+    var description: String {
+        return "Receipt(name: \(name), items: \(items ?? []), subTotal: \(subTotal) tax: \(tax), total: \(total)"
+    }
     
 }

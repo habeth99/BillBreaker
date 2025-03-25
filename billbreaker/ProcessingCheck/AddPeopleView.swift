@@ -8,126 +8,95 @@
 import Foundation
 import SwiftUI
 
-import SwiftUI
-
-//struct AddPeopleView: View {
-//    @State private var guests: [String] = [""]
-//
-//    var body: some View {
-//        VStack {
-//            
-//                ForEach(0..<guests.count, id: \.self) { index in
-//                    TextField("Guest \(index + 1)", text: $guests[index])
-//                }
-//                
-//                if guests.count < 10 {
-//                    Button(action: addGuest) {
-//                        Text("Add Guest")
-//                    }
-//                }
-//
-//        }
-//    }
-//
-//    private func addGuest() {
-//        if guests.count < 10 {
-//            guests.append("")
-//        } else {
-//            print("Max reached no more guests can be added")
-//        }
-//    }
-//}
-//struct AddPeopleView: View {
-//    @State private var guests: [String] = [""]
-//    
-//    var body: some View {
-//        VStack {
-//            ForEach(0..<guests.count, id: \.self) { index in
-//                TextField("Guest \(index + 1)", text: $guests[index])
-//                    .font(.system(size: 18))
-//                    .padding()
-//                    .overlay(
-//                        RoundedRectangle(cornerRadius: 10)
-//                            .stroke(Color.gray, lineWidth: 1)
-//                    )
-//                    .background(Color.white)
-//            }
-//            
-//            if guests.count < 10 {
-//                Button(action: addGuest) {
-//                    Text("Add Guest")
-//                        .foregroundColor(.white)
-//                        .padding()
-//                        .background(Color.blue)
-//                        .cornerRadius(10)
-//                }
-//            }
-//        }
-//        .cornerRadius(15)
-//    }
-//    
-//    private func addGuest() {
-//        if guests.count < 10 {
-//            guests.append("")
-//        } else {
-//            print("Max reached no more guests can be added")
-//        }
-//    }
-//}
 struct AddPeopleView: View {
-    @State private var guests: [String] = [""]
+    @State private var guests: [String]
+    @State private var errorMessage: String?
+    @State private var errorMessage2: String?
+    private let maxGuests = 10
+    var transformer: ReceiptProcessor
+    @EnvironmentObject var router: Router
+    
+    init(userName: String, transformer: ReceiptProcessor) {
+        //self._guests = State(initialValue: [userName])
+        self._guests = State(initialValue: [userName, ""])
+        self.transformer = transformer
+    }
     
     var body: some View {
-        VStack(spacing: 10) {  // Add some spacing between elements
-            ForEach(0..<guests.count, id: \.self) { index in
-                TextField("Guest \(index + 1)", text: $guests[index])
-                    .font(.system(size: 18))
-                    .padding()
-                    .background(
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(Color.white)
-                    )
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color.gray, lineWidth: 1)
-                    )
+        ZStack {
+            Color(.systemGroupedBackground)
+                .ignoresSafeArea()
+            VStack {
+                if let errorMessage = errorMessage {
+                    Text(errorMessage)
+                        .foregroundColor(.red)
+                        .padding(.top)
+                        .padding(.horizontal)
+                }
+                if let errorMessage2 = errorMessage2 {
+                    Text(errorMessage2)
+                        .foregroundColor(.red)
+                        .padding(.top)
+                        .padding(.horizontal)
+                }
+                
+                List {
+                    ForEach(guests.indices, id: \.self) { index in
+                        guestTextField(index: index)
+                    }
+                    .onDelete(perform: deleteGuests)
+                }
+                .navigationBarItems(
+                    trailing: Button("Next", action: next)
+                )
+                .navigationBarTitle("Add Friends", displayMode: .inline)
             }
             
-            if guests.count < 10 {
-                Button(action: addGuest) {
-                    Text("Add Guest")
-                        .foregroundColor(.white)
-//                        .frame(width: 395, height: 55)
-                        .padding()
-                        .padding(.horizontal)
-                        .padding(.horizontal)
-                        .padding(.horizontal)
-                        .padding(.horizontal)
-                        .padding(.horizontal)
-                        .padding(.horizontal)
-                        .padding(.horizontal)
-                        .background(Color.blue)
-                        .cornerRadius(10)
-                }
-                .padding(.vertical)
+            VStack {
+                Spacer()
+                AddButton(action: addGuest)
+                    .padding(.trailing, 22)
+                    .padding(.bottom, -12)
             }
         }
-//        .padding()  // Add padding around the VStack
-//        .background(Color.gray.opacity(0.1))  // Light gray background
-        .cornerRadius(15)
+    }
+    
+    private func guestTextField(index: Int) -> some View {
+        TextField("Friend \(index - 1 + 1)", text: $guests[index])
+            .padding(.vertical, FatCheckTheme.Spacing.xs)
     }
     
     private func addGuest() {
-        if guests.count < 10 {
+        guard guests.count < maxGuests else {
+            print("Maximum number of guests reached")
+            return
+        }
+        
+        if let lastGuest = guests.last, !lastGuest.isEmpty {
             guests.append("")
         } else {
-            print("Max reached no more guests can be added")
+            errorMessage2 = "fill in name before adding more friends."
+        }
+    }
+    
+    private func deleteGuests(at offsets: IndexSet) {
+        guests.remove(atOffsets: offsets)
+        if guests.isEmpty {
+            guests = [""]
+        }
+    }
+    
+    private func next() {
+        let nonEmptyGuests = guests.filter { !$0.isEmpty }
+        
+        if nonEmptyGuests.count >= 2 {
+            errorMessage = nil // Clear any previous error message
+            transformer.createLegitPs(guests: guests)
+            router.navigateInScanFlow(to: .review)
+        } else {
+            errorMessage = "Please add at least one friend to continue."
         }
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        AddPeopleView()
-    }
-}
+

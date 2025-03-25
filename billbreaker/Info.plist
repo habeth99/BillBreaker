@@ -15,6 +15,11 @@
 			</array>
 		</dict>
 	</array>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>venmo</string>
+		<string>cashapp</string>
+	</array>
 	<key>NSAppClip</key>
 	<dict>
 		<key>NSAppClipRequestEphemeralUserNotification</key>
@@ -22,5 +27,7 @@
 		<key>NSAppClipRequestLocationConfirmation</key>
 		<false/>
 	</dict>
+	<key>NSUserNotificationsUsageDescription</key>
+	<string>Allow notifications for check reminders and updates.</string>
 </dict>
 </plist>

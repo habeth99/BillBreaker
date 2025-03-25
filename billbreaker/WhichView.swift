@@ -19,8 +19,9 @@ struct WhichView: View {
             ZStack {
                 if isLoading {
                     SplashView()
-                } else if viewModel.isUserAuthenticated {
-                    HomeCameraView(viewModel: viewModel)
+                } else if (viewModel.isUserAuthenticated && !viewModel.isNewUser) {
+                    MainTabView()
+                    //need to figure out how to router nav right to the homeview
                 } else {
                     LandingPageView()
                 }

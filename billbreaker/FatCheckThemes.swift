@@ -8,6 +8,37 @@
 import Foundation
 import SwiftUI
 
+struct FatCheckTheme {
+    // MARK: - Colors
+    struct Colors {
+        static let primaryColor = Color(hex: "#30cd31")
+        static let secondaryColor = Color(hex: "#000000")
+        static let accentColor = Color(hex: "#B8D8D8")
+        static let white = Color.white
+        static let black = Color.black
+    }
+    
+    // MARK: - Spacing
+    struct Spacing {
+        static let xxxs: CGFloat = 2
+        static let xxs: CGFloat = 4
+        static let xs: CGFloat = 8
+        static let sm: CGFloat = 12
+        static let md: CGFloat = 16
+        static let lg: CGFloat = 24
+        static let xl: CGFloat = 32
+        static let xxl: CGFloat = 48
+        static let xxxl: CGFloat = 64
+    }
+    
+    struct Size {
+        static let sm: CGFloat = 100
+        static let md: CGFloat = 200
+        static let lg: CGFloat = 300
+    }
+}
+
+// Your existing Color extension
 extension Color {
     init(hex: String) {
         let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)

@@ -7,6 +7,7 @@
 
 import Foundation
 import Firebase
+import SwiftUI
 
 class Receipt: Codable, Identifiable, ObservableObject, CustomStringConvertible {
     @Published var id: String
@@ -14,22 +15,21 @@ class Receipt: Codable, Identifiable, ObservableObject, CustomStringConvertible 
     @Published var name: String
     @Published var date: String
     @Published var createdAt: String
-    @Published var tax: Double
-    @Published var tip: Double
+    @Published var tax: Decimal
+    @Published var tip: Decimal
     @Published var items: [Item]?
     @Published var people: [LegitP]?
     // NEW PROPERTIES
     @Published var restaurantName: String
     @Published var restaurantAddress: String
     @Published var dateTime: String
-    @Published var subTotal: Double
-    @Published var total: Double
+    @Published var subTotal: Decimal
+    @Published var total: Decimal
     @Published var paymentMethod: String
     @Published var cardLastFour: String
     
-//    enum CodingKeys: CodingKey {
-//        case id, userId, name, date, createdAt, tax, tip, items, people
-//    }
+    private let dbRef = Database.database().reference()
+    
     enum CodingKeys: String, CodingKey {
         case restaurant, items, summary, payment
         case id, userId, name, date, createdAt, tax, tip, people
@@ -48,7 +48,7 @@ class Receipt: Codable, Identifiable, ObservableObject, CustomStringConvertible 
     }
 
 
-    init(id: String = "", userId: String = "", name: String = "", date: String = "", createdAt: String = "", tax: Double = 0.00, tip: Double = 0.00, items: [Item] = [], people: [LegitP] = [], restaurantName: String = "", restaurantAddress: String = "", dateTime: String = "", subTotal: Double = 0.0, total: Double = 0.0, paymentMethod: String = "", cardLastFour: String = ""
+    init(id: String = "", userId: String = "", name: String = "", date: String = "", createdAt: String = "", tax: Decimal = 0.00, tip: Decimal = 0.00, items: [Item] = [], people: [LegitP] = [], restaurantName: String = "", restaurantAddress: String = "", dateTime: String = "", subTotal: Decimal = 0.0, total: Decimal = 0.0, paymentMethod: String = "", cardLastFour: String = ""
     ) {
         self.id = id
         self.userId = userId
@@ -67,7 +67,6 @@ class Receipt: Codable, Identifiable, ObservableObject, CustomStringConvertible 
         self.total = total
         self.paymentMethod = paymentMethod
         self.cardLastFour = cardLastFour
-        
     }
 
     required init(from decoder: Decoder) throws {
@@ -88,9 +87,9 @@ class Receipt: Codable, Identifiable, ObservableObject, CustomStringConvertible 
         createdAt = try container.decode(String.self, forKey: .createdAt)
         
         //print("Decoding tax")
-        tax = try container.decode(Double.self, forKey: .tax)
+        tax = try container.decode(Decimal.self, forKey: .tax)
         
-        tip = try container.decode(Double.self, forKey: .tip)
+        tip = try container.decode(Decimal.self, forKey: .tip)
         
         //print("Decoding items")
         //items = try container.decode([Item].self, forKey: .items)
@@ -122,9 +121,8 @@ class Receipt: Codable, Identifiable, ObservableObject, CustomStringConvertible 
         try container.encodeIfPresent(people, forKey: .people)
     }
     
-    //====================================================================================//
-    //                               Receipt Class Functions                              //
-    //====================================================================================//
+    //====================================================================================
+    // functions for calculating totals for amounts owed
     
     func findItemById(id: String) -> Item? {
         return self.items?.first { $0.id == id }
@@ -136,126 +134,162 @@ class Receipt: Codable, Identifiable, ObservableObject, CustomStringConvertible 
         } ?? 0
     }
     
-    func calcTipShare(user: LegitP, userTotal: Double) -> Double {
-        var sharedTip = 0.0
-        var total = 0.0
-        
-        total = getTotal()
-        
-        sharedTip = userTotal/total
-        sharedTip = sharedTip * self.tip
-        
-        return sharedTip
-    }
-    
-    func calcTaxShare(){
-        //TODO
-    }
-    
-    func getTotal() -> Double {
-        var total = 0.0
-        
+    func getTotal() -> Decimal {
+        var total = Decimal()
         for item in self.items ?? [] {
-            total += item.price
+            total += item.price // Assuming item.price is Decimal
         }
         
+        total = total + self.tip + self.tax // Assuming self.tip and self.tax are Decimal
         return total
     }
+    
+    private func calculatePersonAmount(_ person: LegitP) -> Decimal {
+        guard let items = items else { return Decimal(0) }
+
+        let claimedItemsAmount = person.claims.compactMap { claimedItemId -> Decimal? in
+            guard let item = items.first(where: { $0.id == claimedItemId }) else {
+                return nil
+            }
+            let peopleClaimingItem = Decimal(countPeopleClaiming(itemID: claimedItemId))
+            return item.price / peopleClaimingItem
+        }.reduce(Decimal(0), +)
+        
+        let totalItemsPrice = items.reduce(Decimal(0)) { $0 + $1.price }
+        let personShare = claimedItemsAmount / totalItemsPrice
+        let taxShare = personShare * tax
+        let tipShare = personShare * tip
+        
+        return claimedItemsAmount + taxShare + tipShare
+    }
+
+//    func calculateStillOwed() -> Decimal {
+//        guard let people = people, let items = items else {
+//            return Decimal(0)
+//        }
+//        // Calculate the total of all items, tax, and tip
+//        let totalAmount = items.reduce(Decimal(0)) { $0 + $1.price } + tax + tip
+//        var amountPaid = Decimal(0)
+//        // Find the user (assuming user has a non-empty userId)
+//        if let user = people.first(where: { !$0.userId.isEmpty }) {
+//            if !user.claims.isEmpty {
+//                // If the user has claimed items, subtract their amount
+//                amountPaid += calculatePersonAmount(user)
+//            }
+//        }
+//        // Subtract amounts for all paid people (excluding the user if already counted)
+//        for person in people {
+//            
+//            if person.paid && person.userId.isEmpty {
+//                amountPaid += calculatePersonAmount(person)
+//            }
+//        }
+//        // Calculate the amount still owed
+//        let stillOwed = totalAmount - amountPaid
+//        return max(stillOwed, Decimal(0))
+//    }
+    func calculateStillOwed() -> Decimal {
+        guard let people = people, let items = items else {
+            return Decimal(0)
+        }
+        
+        // Calculate the total of all items, tax, and tip
+        let totalAmount = items.reduce(Decimal(0)) { $0 + $1.price } + tax + tip
+        var amountPaid = Decimal(0)
+        
+        // Find the receipt creator (the real user who created the receipt)
+        if let receiptCreator = people.first(where: { $0.userId == self.userId }) {
+            // Treat the receipt creator as paid
+            amountPaid += calculatePersonAmount(receiptCreator)
+        }
+        
+        // Subtract amounts for all other paid people
+        for person in people {
+            if person.paid && person.userId != self.userId {
+                amountPaid += calculatePersonAmount(person)
+            }
+        }
+        
+        // Calculate the amount still owed
+        let stillOwed = totalAmount - amountPaid
+        return max(stillOwed, Decimal(0))
+    }
+
+    func amountOwedByPerson(_ personId: String) -> Decimal {
+        guard let person = people?.first(where: { $0.id == personId }) else {
+            return 0.0
+        }
+        
+        if person.claims.isEmpty {
+            // If this person has no claims, return 0
+            return 0.0
+        }
+        
+        let claimedItemsTotalPrice = person.claims.reduce(Decimal(0)) { total, claimedItemId in
+            guard let item = items?.first(where: { $0.id == claimedItemId }) else {
+                return total
+            }
+            let peopleClaimingItem = max(countPeopleClaiming(itemID: claimedItemId), 1)
+            let itemShare = item.price / Decimal(peopleClaimingItem)
+            return total + itemShare
+        }
+
+        let totalClaimedPrice = (items ?? []).reduce(Decimal(0)) { $0 + $1.price }
+        let personShare = totalClaimedPrice > 0 ? claimedItemsTotalPrice / totalClaimedPrice : 0
+        let taxShare = personShare * tax
+        let tipShare = personShare * tip
+
+        return claimedItemsTotalPrice + taxShare + tipShare
+    }
+    
+    // end calculation functions
+    //=========================================================================================
+    
+    func deleteItem(id: String) {
+        items?.removeAll { $0.id == id }
+        for person in people ?? [] {
+            person.claims.removeAll { $0 == id }
+        }
+    }
+    
+    func deletePerson(id: String) {
+        people?.removeAll { $0.id == id }
+    }
+    
+    func formatDate() -> Date {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd" // Adjust this format to match your date string format
+        
+        return dateFormatter.date(from: self.date) ?? Date()
+    }
+    
+    func sharePersonalCheck(receiptId: String, personName: String, receiptName: String) {
+        // Create a web URL for your app
+        let webURLString = "https://www.fatcheck.app/receipt/\(receiptId)"
+        guard let url = URL(string: webURLString) else { return }
+        
+        // Create the personalized message
+        let message = "Hey \(personName), you need to pay your check from \(receiptName)"
+        
+        // Combine the message and the URL
+        let shareText = "\(message)\n\(webURLString)"
+        
+        let activityViewController = UIActivityViewController(
+            activityItems: [shareText],
+            applicationActivities: nil
+        )
+        
+        // Present the view controller
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let rootViewController = windowScene.windows.first?.rootViewController {
+            rootViewController.present(activityViewController, animated: true, completion: nil)
+        }
+    }
+    
     
     var description: String {
         return "Receipt(id: \(id), userId: \(userId), name: \(name), date: \(date), createdAt: \(createdAt), tax: \(tax), items: \(items ?? []), people: \(people ?? []))"
     }
-    
-    
-    //++++++++++++++++//    //++++++++++++++++//    //++++++++++++++++//
-    //    DATABASE    //    //    DATABASE    //    //    DATABASE    //
-    //++++++++++++++++//    //++++++++++++++++//    //++++++++++++++++//
-    
-    
-//    func fetchUserReceipts() async {
-//        guard let userID = userViewModel.currentUser?.id else {
-//            print("fetchUserReceipts: User not authenticated or user ID not available")
-//            return
-//        }
-//        
-//        do {
-//            let snapshot = try await dbRef.child("users").child(userID).getData()
-//            guard let userData = snapshot.value as? [String: Any],
-//                  let receiptIDs = userData["receipts"] as? [String] else {
-//                print("User data or receipts not found")
-//                return
-//            }
-//            await fetchReceipts(receiptIDs: receiptIDs)
-//        } catch {
-//            print("Error fetching user data: \(error.localizedDescription)")
-//        }
-//    }
-//    
-//    private func fetchReceipts(receiptIDs: [String]) async {
-//        var fetchedReceipts: [Receipt] = []
-//
-//        for receiptID in receiptIDs {
-//            do {
-//                let snapshot = try await dbRef.child("receipts").child(receiptID).getData()
-//                guard let receiptData = snapshot.value as? [String: Any] else {
-//                    print("Receipt data not found for ID: \(receiptID)")
-//                    continue
-//                }
-//                
-//                //print("Receipt data snapshot value for \(receiptID): \(receiptData)")
-//
-//                let data = try JSONSerialization.data(withJSONObject: receiptData, options: [])
-//                let receipt = try JSONDecoder().decode(Receipt.self, from: data)
-//                if !fetchedReceipts.contains(where: { $0.id == receipt.id }) {
-//                    fetchedReceipts.append(receipt)
-//                }
-//            } catch {
-//                print("Error decoding receipt: \(error.localizedDescription)")
-//            }
-//        }
-//
-//        self.receiptList = fetchedReceipts
-//        print("All receipts fetched: \(self.receiptList)")
-//        
-//        if !listenersSetUp {
-//            setupReceiptListeners(receiptIDs: receiptIDs)
-//        } else {
-//            print("Listeners already set up, skipping setup")
-//        }
-//    }
-//    
-//    func getReceipt(id: String) async -> Receipt? {
-//        reset()
-//        do {
-//            let snapshot = try await dbRef.child("receipts").child(id).getData()
-//            
-//            guard let value = snapshot.value as? [String: Any] else {
-//                print("Receipt data not found for ID: \(id)")
-//                return nil
-//            }
-//            
-//            print("Receipt data snapshot value: \(value)")
-//            
-//            let data = try JSONSerialization.data(withJSONObject: value)
-//            let loadedReceipt = try JSONDecoder().decode(Receipt.self, from: data)
-//            
-//            self.receipt = loadedReceipt
-//            //print("Receipt loaded: \(loadedReceipt.name)")
-//            
-//            // Temp variables to match what the methods need
-//            let tempReceiptList = [id]
-//            let receiptRef = dbRef.child("receipts").child(id)
-//            // Set up listeners for real-time updates
-//            setupReceiptListeners(receiptIDs: tempReceiptList)
-//            setupPeopleListeners(receiptRef, receiptID: id)
-//            setupItemListeners(receiptRef, receiptID: id)
-//            
-//            return self.receipt
-//        } catch {
-//            print("Error loading receipt: \(error.localizedDescription)")
-//            return nil
-//        }
-//    }
     
     static func getUserdId() -> String? {
         if let user = Auth.auth().currentUser {
@@ -265,10 +299,6 @@ class Receipt: Codable, Identifiable, ObservableObject, CustomStringConvertible 
         }
     }
     
-    
-    //++++++++++++++++//    //++++++++++++++++//    //++++++++++++++++//
-    //    DATABASE    //    //    DATABASE    //    //    DATABASE    //
-    //++++++++++++++++//    //++++++++++++++++//    //++++++++++++++++//
 }
 
 extension Receipt {
@@ -277,7 +307,8 @@ extension Receipt {
             id: "",
             userId: "",
             name: apiReceipt.name,
-            date: apiReceipt.dateTime,
+            date: Date().ISO8601Format(),
+                //apiReceipt.dateTime,
             createdAt: Date().ISO8601Format(),
             tax: apiReceipt.tax,
             tip: apiReceipt.tip,
